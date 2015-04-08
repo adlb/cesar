@@ -1,0 +1,7 @@
+.navbar-default .navbar-nav > li > a.cx_adminonly  {
+  color: #FFE4C4;
+}
+
+.dropdown-menu > li > a.cx_adminonly  {
+  color: #FFE4C4;
+}
