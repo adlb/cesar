@@ -1,3 +1,4 @@
 # Criteo Build System
-config.json
-medias/
+src/config.json
+src/medias/
+*.config
