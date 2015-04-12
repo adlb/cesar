@@ -7,6 +7,7 @@ class ControllerBuilder {
 	var $translator;
 	var $config;
 	var $formatter;
+	var $authentication;
 	
 	function ControllerBuilder($services) {
 		$this->articleDal = $services['articleDal'];
@@ -14,6 +15,7 @@ class ControllerBuilder {
 		$this->translator = $services['translator'];
 		$this->config = $services['config'];
 		$this->formatter = $services['formatter'];
+		$this->authentication = $services['authentication'];
 	}
 
 	function action_hideArticle(&$obj) {
@@ -136,7 +138,8 @@ class ControllerBuilder {
 		if (!$this->articleDal->TrySave($article)) {
 			$obj['form'] = $_POST;
 			$obj['errors'][] = ':CANT_SAVE_Article';
-			return 'editArticle';
+			$view = 'editArticle';
+			return;
 		}
 		
 		if (isset($_POST['home']) && $_POST['home'])
@@ -181,9 +184,13 @@ class ControllerBuilder {
     }
 	
 	function view_config(&$obj, &$view) {
-		$conf = $this->config->current;
-		$conf['Languages'] = join('; ', $conf['Languages']);
-		$obj['config'] = $conf;
+		if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
+			$conf = $this->config->current;
+			$conf['Languages'] = join('; ', $conf['Languages']);
+			$obj['config'] = $conf;
+		} else {
+			redirectTo(array('controller' => 'site', 'view' => 'home'));
+		}
 	}
 	
 	function view_help(&$obj, &$view) {
@@ -223,11 +230,14 @@ class ControllerBuilder {
 		die('Nothing Else To Do');
 	}
 	
-	function action_saveConfig(&$obj) {
-		$this->config->Save($_POST);
-		
-		file_put_contents('config.json', json_encode($this->config->current));
-		redirectTo(array('controller' => 'site'));
+	function action_saveConfig(&$obj, &$view) {
+		if ($this->config->TrySave($_POST)) {
+			redirectTo(array('controller' => 'site'));
+		} else {
+			$obj['errors'][] = ':CANT_SAVE_Config';
+			$view = 'config';
+			$this->view_config($obj, $view);
+		}
 	}
 }
 ?>

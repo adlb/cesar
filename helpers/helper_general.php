@@ -17,6 +17,12 @@ require('models/media_dal.php');
 
 $services['config'] = new Config('config.json');
 
+if (!isset($_GET['language'])) {
+	$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+	header('Location: '.$language.'/');
+	die();
+}
+
 $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 if (!in_array($language, $services['config']->current['Languages'])) {
     $language = $services['config']->current['Languages'][0];

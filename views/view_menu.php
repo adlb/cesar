@@ -15,23 +15,14 @@
         <?php foreach($obj['menu'] as $menu) { ?>
                 <?php displayPartial('site', 'subMenu', $menu); ?>
         <?php } ?>
-        <?php if ($obj['user']['role'] == 'Administrator') { ?> 
-            <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>">&nbsp;<span class="glyphicon glyphicon-plus"></span>&nbsp;</a></li>
-        <?php } ?>
       </ul>
-	  <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
       <ul class="nav navbar-nav navbar-right">
         <?php if ($obj['user']) { ?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php disp($obj['user'], 'email') ?> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Mon Profil</a></li>
-            <li><a href="?controller=user&action=logout">Logout</a></li>
+            <li><a href="<?php echo url(array('controller' => 'user', 'action' => 'logout')) ?>">Logout</a></li>
           </ul>
         </li>
         <?php } else { ?>
@@ -49,6 +40,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Administration<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+			<li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><?php t(':ADD_ARTICLE')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'config')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'user', 'view' => 'userList')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'translationManager', 'view' => 'translationList')) ?>"><?php t(':TRANSLATION_MANAGEMENT')?></a></li>

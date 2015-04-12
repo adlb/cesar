@@ -1,4 +1,20 @@
+<?php
+
+$action = isset($_GET['action']) ? $_GET['action'] : '';
+
+switch ($action) {
+	case 'clear':
+		
+
+}
+
+
+?>
+
+
 <!doctype html>
+<html>
+<head>
 <title>Site Maintenance</title>
 <style>
 body { text-align: center; padding: 150px; }
@@ -8,12 +24,14 @@ article { display: block; text-align: left; width: 650px; margin: 0 auto; }
 a { color: #dc8100; text-decoration: none; }
 a:hover { color: #333; text-decoration: none; }
 </style>
- 
-<article>
+</head>
+<body> 
 <h1>Maintenance!</h1>
 <div>
 <p><?php echo htmlentities($message) ?></p>
+<hr />
 <p>&mdash; The Team</p>
 <a href="?controller=user&view=login">Admin</a>
 </div>
-</article> 
+</body>
+</html>

@@ -11,7 +11,11 @@ class Dal {
             $value = $this->cache[$key]['value'];
             return $this->cache[$key]['exists'];
         }
-        $sqlFields = array();
+		
+        if ($this->db == null)
+			return false;
+		
+		$sqlFields = array();
         foreach($this->fields as $k => $v)
             $sqlFields[] = '`'.$k.'`';
         $sql = 'SELECT '.join(',', $sqlFields).' FROM `'.$this->tableName.'` WHERE `'.$this->keyName.'` = :key';

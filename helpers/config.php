@@ -5,11 +5,13 @@ class Config {
 	var $file;
 	var $current;
 	var $dbh;
+	var $configExists;
 
 	function Config($file) {
 		$this->file = $file;
-		
 		$old = null;
+		
+		$this->configExists = file_exists($this->file);
 		if (file_exists($this->file)) {
 			$old = json_decode(file_get_contents($this->file), true, 3);
 		}
@@ -25,16 +27,20 @@ class Config {
 			'Maintenance' => isset($old['Maintenance']) && $old['Maintenance'] ? true : false,
 			'MaintenanceMessage' => isset($old['MaintenanceMessage']) ? $old['MaintenanceMessage'] : '',
 			'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
-			'Home' => isset($old['Home']) ? $old['Home'] : 0,
+			'Home' => isset($old['Home']) ? $old['Home'] : 0
 		);
 
 		try {
+			$opt = array(
+				PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+			);
 			$this->dbh = new PDO(
 				$this->current['DBConnectionString'], 
 				$this->current['DBUser'], 
-				$this->current['DBPassword']
+				$this->current['DBPassword'],
+				$opt
 			);
-			$this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (Exception $e) {
 			$this->dbh = null;
 		}
@@ -45,7 +51,7 @@ class Config {
 		file_put_contents($this->file, json_encode($this->current));
 	}
 	
-	function Save($data) {
+	function TrySave($data) {
 		$new = array(
 			'Title' => $data['Title'],
 			'DBConnectionString' => $data['DBConnectionString'],
@@ -60,16 +66,22 @@ class Config {
 		
 		$this->current = $new;
 		try {
+			$opt = array(
+				PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+			);
 			$this->dbh = new PDO(
 				$this->current['DBConnectionString'], 
 				$this->current['DBUser'], 
-				$this->current['DBPassword']
+				$this->current['DBPassword'],
+				$opt
 			);
-			$this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			file_put_contents($this->file, json_encode($new));
+			return true;
 		} catch (Exception $e) {
 			$this->dbh = null;
 		}
-		file_put_contents($this->file, json_encode($new));
+		return false;
 	}
 }
 
