@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="?controller=site">Brand</a>
+      <a class="navbar-brand" href="?controller=site"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
