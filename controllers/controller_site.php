@@ -16,7 +16,7 @@ class ControllerSite {
 		$this->translator = $services['translator'];
 		$this->formatter = $services['formatter'];
 	}
-		
+
 	function view_menu(&$obj, &$view) {
 		$obj['user'] = $this->authentication->currentUser;
 		$obj['language'] = $this->translator->language;
