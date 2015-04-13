@@ -151,13 +151,33 @@ class Dal {
         return $value[$this->keyName];
     }
     
-    function Dal($db, $prefix) {
-		if ($db == null)
+	function ClearAll() {
+		if ($this->db == null)
 			return;
-        $this->db = $db;
-        $this->tableName = $prefix.$this->tableSuffix;
 		
-        $sqlColumn = array();
+		try {
+		    $this->db->prepare('DELETE IGNORE FROM `'.$this->tableName.'`')->execute();
+        } catch (PDOException $e) {
+		    die('connection impossible');
+        }
+	}
+	
+	function DropTable() {
+		if ($this->db == null)
+			return;
+		
+		try {
+		    $this->db->prepare('DROP TABLE IF EXISTS `'.$this->tableName.'`')->execute();
+        } catch (PDOException $e) {
+		    die('connection impossible');
+        }
+	}
+	
+	function CreateTable() {
+		if ($this->db == null)
+			return;
+		
+		$sqlColumn = array();
         foreach($this->fields as $k => $v) {
 			$sqlFields[] = '`'.$k.'` '.$v['create'].' NOT NULL';
             if (isset($v['primaryKey']) && $v['primaryKey'])
@@ -166,13 +186,19 @@ class Dal {
                 $sqlFields[] = 'KEY `'.$k.'` (`'.$k.'`)';
         }
 		try {
-            $db->prepare('CREATE TABLE IF NOT EXISTS `'.$this->tableName.'` (
+            $this->db->prepare('CREATE TABLE IF NOT EXISTS `'.$this->tableName.'` (
                           '.join(', ', $sqlFields).'
                         )')->execute();
         } catch (PDOException $e) {
-            var_dump($e);
             die('connection impossible');
         }
+	}
+	
+    function Dal($db, $prefix) {
+		if ($db == null)
+			return;
+        $this->db = $db;
+        $this->tableName = $prefix.$this->tableSuffix;
     }
 }
 ?>

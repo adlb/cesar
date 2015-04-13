@@ -51,6 +51,10 @@ class Config {
 		file_put_contents($this->file, json_encode($this->current));
 	}
 	
+	function DeleteConfig() {
+		unlink($this->file);
+	}
+	
 	function TrySave($data) {
 		$new = array(
 			'Title' => $data['Title'],
