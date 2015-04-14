@@ -1,5 +1,5 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
-<div ng-app ng-init="
+<div ng-init="
 	texts=<?php echo htmlspecialchars(json_encode($obj['texts']));?>;
 	languages=<?php echo htmlspecialchars(json_encode($obj['languages']));?>;
 	prefixUrl='<?php echo htmlspecialchars(url(array('controller' => 'translationManager', 'view' => 'editText')));?>';
@@ -23,9 +23,4 @@
 </table>
 
 <script>
-jQuery(document).ready(function($) {
-      $(".clickableCell").click(function() {
-            window.document.location = $(this).attr("href");
-      });
-});
 </script>

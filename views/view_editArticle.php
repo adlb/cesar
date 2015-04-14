@@ -1,10 +1,9 @@
 <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
-<script src="js/angular.min.js"></script>
 
 <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveArticle'))?>">
-<fieldset ng-app ng-init="type='<?php echo $obj['form']['type']?>'" ng-cloak>
+<fieldset ng-init="type='<?php echo $obj['form']['type']?>'" ng-cloak>
 
 <input type="hidden" id="id" name="id" value="<?php echo $obj['form']['id'] ?>">
 <input type="hidden" id="language" name="language" value="<?php disp($obj, 'language') ?>" />

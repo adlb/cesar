@@ -58,25 +58,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<script>
-jQuery(function($) {
-    var panelList = $('.draggableMenuItem');
-
-    panelList.sortable({
-        // Only make the .panel-heading child elements support dragging.
-        // Omit this to make then entire <li>...</li> draggable.
-        //handle: '.panel-heading', 
-        update: function() {
-            var url = $(this).data('movehandler');
-            var data = $(this).sortable('serialize');
-
-            // POST to server using $.post or $.ajax
-            $.ajax({
-                data: data,
-                type: 'POST',
-                url: url
-            });
-        }
-    });
-});
-</script>

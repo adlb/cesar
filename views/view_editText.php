@@ -1,6 +1,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
 
-<div ng-app ng-init="
+<div ng-init="
 	currentLanguage=<?php echo htmlspecialchars(json_encode($obj['language']));?>;
 	languages=<?php echo htmlspecialchars(json_encode($obj['languages']));?>;
 	selectedLanguage=<?php echo htmlspecialchars(json_encode($obj['lg']));?>;

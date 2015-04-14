@@ -7,14 +7,25 @@
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/framework.css">
 <link rel="stylesheet" href="css/malteLiban.css">
-
-<script src="js/jquery-1.11.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/uicustom/jquery-ui.min.js"></script>
+<script>
+var getScope = function(id, f) {
+	if (typeof angular != 'undefined') {
+		elm = angular.element(document.getElementById(id));
+		if (typeof elm != 'undefined') {
+			scope = elm.scope();
+			if (typeof scope != 'undefined') {
+				scope.$apply(f(scope));
+				return;
+			} 
+		}
+	}
+	window.setTimeout(function() getScope(id, f), 0);
+};
+</script>
 
 </head>
 <body>
-<div class="container">
+<div class="container" ng-app="cesarApp">
   
 <br/>Header
 <?php displayPartial('site', 'menu', $obj); ?>
@@ -34,5 +45,11 @@
 
 </div>
 </body>
-
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/uicustom/jquery-ui.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/ui-bootstrap-0.12.1.min.js"></script>
+<script src="js/smart-table.min.js"></script>
+<script src="js/cesar.js"></script>
 </html>
