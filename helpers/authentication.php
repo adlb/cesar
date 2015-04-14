@@ -18,8 +18,17 @@ class Authentication {
 		$this->roles = array();
     }
     
+	//Check if $role is in current roles
+	//or check if one of $role is in current roles.
     function CheckRole($role) {
-        return in_array($role, $this->roles);
+        if (is_array($role)) {
+			foreach($role as $r) {
+				if (in_array($r, $this->roles))
+					return true;
+			}
+			return false;
+		}
+		return in_array($role, $this->roles);
     }
     
     function Authentication () {

@@ -28,7 +28,9 @@
         <?php } else { ?>
         <li><a href="?controller=user&view=login">Login</a></li>
         <?php } ?>
-        <li class="dropdown">
+        
+		<?php if (count($obj['languages'])>1) { ?>
+		<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?php t(':LANG_'.strtoupper($obj['language'])); ?><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
 			<?php foreach($obj['languages'] as $lg) { ?>
@@ -36,6 +38,8 @@
 			<?php } ?>
     	  </ul>
         </li>
+		<?php } ?>
+		
 		<?php if ($obj['user']['role'] == 'Administrator') { ?> 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Administration<span class="caret"></span></a>

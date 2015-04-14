@@ -186,7 +186,8 @@ class ControllerBuilder {
 	function view_config(&$obj, &$view) {
 		if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
 			$conf = $this->config->current;
-			$conf['Languages'] = join('; ', $conf['Languages']);
+			$conf['Languages'] = join(';', $conf['Languages']);
+			$conf['ActiveLanguages'] = join(';', $conf['ActiveLanguages']);
 			$obj['config'] = $conf;
 		} else {
 			redirectTo(array('controller' => 'site', 'view' => 'home'));

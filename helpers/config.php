@@ -27,6 +27,7 @@ class Config {
 			'Maintenance' => isset($old['Maintenance']) && $old['Maintenance'] ? true : false,
 			'MaintenanceMessage' => isset($old['MaintenanceMessage']) ? $old['MaintenanceMessage'] : '',
 			'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
+			'ActiveLanguages' => isset($old['ActiveLanguages']) && is_array($old['ActiveLanguages']) ? $old['ActiveLanguages'] : array('fr'),
 			'Home' => isset($old['Home']) ? $old['Home'] : 0
 		);
 
@@ -65,6 +66,7 @@ class Config {
 			'Maintenance' => isset($data['Maintenance']) ? $data['Maintenance'] : false,
 			'MaintenanceMessage' => $data['MaintenanceMessage'],
 			'Languages' => array_map('trim', explode(';', $data['Languages'])),
+			'ActiveLanguages' => array_map('trim', explode(';', $data['ActiveLanguages'])),
 			'Home' => $this->current['Home'],
 		);
 		

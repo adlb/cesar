@@ -56,6 +56,15 @@
   </div>
 </div>
 
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Languages">ActiveLanguages</label>  
+  <div class="col-md-5">
+  <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
+  <span class="help-block">Languages separated with ";"</span>  
+  </div>
+</div>
+
 <!-- Multiple Checkboxes -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="Maintenance">Maintenance Page</label>

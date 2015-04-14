@@ -16,6 +16,7 @@ require('models/textShort_dal.php');
 require('models/media_dal.php');
 
 $services['config'] = new Config('config.json');
+$services['authentication'] = new Authentication();
 
 if (!isset($_GET['language'])) {
 	$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -24,11 +25,12 @@ if (!isset($_GET['language'])) {
 }
 
 $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-if (!in_array($language, $services['config']->current['Languages'])) {
-    $language = $services['config']->current['Languages'][0];
+$languages = ($services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $services['config']->current['Languages'] : $services['config']->current['ActiveLanguages'];
+
+if (!in_array($language, $languages)) {
+    $language = $languages[0];
 }
 
-$services['authentication'] = new Authentication();
 $services['userDal'] = 		new UserDal		($services['config']->dbh, $services['config']->current['DBPrefix']);
 $services['userShortDal'] = new UserShortDal($services['config']->dbh, $services['config']->current['DBPrefix']);
 $services['articleDal'] = 	new ArticleDal	($services['config']->dbh, $services['config']->current['DBPrefix']);
@@ -37,7 +39,7 @@ $services['textShortDal'] = new TextShortDal($services['config']->dbh, $services
 $services['mediaDal'] = 	new MediaDal	($services['config']->dbh, $services['config']->current['DBPrefix']);
 $services['formatter'] = 	new Transformer ();
 $services['gallery'] = 		new Gallery		($services['mediaDal']);
-$services['translator'] = 	new Translator	($services['textDal'], $language, $services['config']->current['Languages']);
+$services['translator'] = 	new Translator	($services['textDal'], $language, $languages);
 $services['crowd'] =        new Crowd		($services['userDal'], $services['userShortDal'], $services['authentication']);
 $controllerFactory = 		new ControllerFactory($services);
 
