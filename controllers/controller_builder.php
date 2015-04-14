@@ -18,7 +18,15 @@ class ControllerBuilder {
 		$this->authentication = $services['authentication'];
 	}
 
+	function CheckRights($role, $obj) {
+		if (!$this->authentication->CheckRole($role)) {
+			$obj['errors'][] = ':NOT_ALLOWED';
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+		}
+	}
+	
 	function action_hideArticle(&$obj) {
+		CheckRights('Administrator', $obj);
 		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
 			$article['status'] = 'hide';
 			$this->articleDal->TrySave($article);
@@ -28,6 +36,7 @@ class ControllerBuilder {
 	}
 	
 	function action_deleteArticle(&$obj, &$view) {
+		CheckRights('Administrator', $obj);
 		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
 			$children = $this->articleDal->GetWhere(array('father' => $article['id']));
 			if (count($children) > 0) {
@@ -48,6 +57,7 @@ class ControllerBuilder {
 	}
 	
 	function action_showArticle(&$obj) {
+		CheckRights('Administrator', $obj);
 		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
 			$article['status'] = 'show';
 			$this->articleDal->TrySave($article);
@@ -57,6 +67,7 @@ class ControllerBuilder {
 	}
 	
 	function action_saveArticle(&$obj, &$view) {
+		CheckRights('Administrator', $obj);
 		if (!isset($_POST['language']) || $_POST['language'] == '') {
 			$obj['form'] = $_POST;
 			$obj['errors'][] = ':BAD_LANGUAGE';
@@ -151,7 +162,8 @@ class ControllerBuilder {
 	}
 
 	function view_editArticle(&$obj, &$view) {
-        if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
+        CheckRights('Administrator', $obj);
+		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
             $obj['form'] = $article;
             $obj['form']['show'] = $article['status'] == 'show' || $article['status'] == 'home' ? 1 : 0;
 			$obj['form']['home'] = $this->config->current['Home'] == $article['id'] ? 1 : 0;
@@ -214,12 +226,14 @@ class ControllerBuilder {
 	
 	
 	function action_format(&$obj, &$view) {
-        $rawData = file_get_contents("php://input");
+        CheckRights(array('Administrator', 'Translator'), $obj);
+		$rawData = file_get_contents("php://input");
         $html = $this->formatter->ToHtml($rawData);
         echo $html;
     }
 	
 	function action_moveEntry(&$obj) {
+		CheckRights('Administrator', $obj);
 		$rows = $_POST['row'];
 		
 		$i = 0;
@@ -235,13 +249,18 @@ class ControllerBuilder {
 	}
 	
 	function action_saveConfig(&$obj, &$view) {
-		if ($this->config->TrySave($_POST)) {
-			$obj['errors'][] = ':CONFIG_SAVED';
-			redirectTo(array('controller' => 'site'), $obj['errors']);
+		if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
+			if ($this->config->TrySave($_POST)) {
+				$obj['errors'][] = ':CONFIG_SAVED';
+				redirectTo(array('controller' => 'site'), $obj['errors']);
+			} else {
+				$obj['errors'][] = ':CANT_SAVE_Config';
+				$view = 'config';
+				$this->view_config($obj, $view);
+			}
 		} else {
-			$obj['errors'][] = ':CANT_SAVE_Config';
-			$view = 'config';
-			$this->view_config($obj, $view);
+			$obj['errors'][] = ':NOT_ALLOWED';
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 		}
 	}
 }

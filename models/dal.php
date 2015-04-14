@@ -107,7 +107,7 @@ class Dal {
             while ($result = $statement->fetch(PDO::FETCH_ASSOC)){
                 $results[] = $result;
             }
-            return $results;
+			return $results;
         } catch (PDOException $e) {
             var_dump($e);
             return false;

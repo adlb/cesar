@@ -1,4 +1,4 @@
-<div ng-app ng-init="viewedalerts=localStorage.getItem('alerts') || [];">
+<div ng-app="emptyApp" ng-init="viewedalerts=localStorage.getItem('alerts') || [];">
 
 <?php foreach($obj['alerts'] as $alert) { ?>
 <div ng-show="viewedalerts.contains(<?php echo $alert['id'] ?>)">
@@ -12,3 +12,5 @@
 	</div>
 </div>
 <?php } ?>
+
+</div>
