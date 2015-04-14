@@ -22,7 +22,7 @@ class ControllerBuilder {
 		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
 			$article['status'] = 'hide';
 			$this->articleDal->TrySave($article);
-			redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']));
+			redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']), $obj['errors']);
 			die();
 		}
 	}
@@ -41,7 +41,8 @@ class ControllerBuilder {
 			$this->textDal->DeleteWhere(array('key' => $article['title']));
 			$this->textDal->DeleteWhere(array('key' => $article['content']));
 			$this->articleDal->DeleteWhere(array('id' => $article['id']));
-			redirectTo(array('controller' => 'site', 'view' => 'home'));
+			$obj['errors'][] = ':ARTICLE_DELETED';
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 			die();
 		}
 	}
@@ -50,7 +51,7 @@ class ControllerBuilder {
 		if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
 			$article['status'] = 'show';
 			$this->articleDal->TrySave($article);
-			redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']));
+			redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']), $obj['errors']);
 			die();
 		}
 	}
@@ -145,7 +146,8 @@ class ControllerBuilder {
 		if (isset($_POST['home']) && $_POST['home'])
 			$this->config->Set('Home', $article['id']);
 		
-		redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+		$obj['errors'][] = ':ARTICLE_SAVED';
+		redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), $obj['errors']);
 	}
 
 	function view_editArticle(&$obj, &$view) {
@@ -190,7 +192,8 @@ class ControllerBuilder {
 			$conf['ActiveLanguages'] = join(';', $conf['ActiveLanguages']);
 			$obj['config'] = $conf;
 		} else {
-			redirectTo(array('controller' => 'site', 'view' => 'home'));
+			$obj['errors'][] = ':NOT_ALLOWED';
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 		}
 	}
 	
@@ -233,7 +236,8 @@ class ControllerBuilder {
 	
 	function action_saveConfig(&$obj, &$view) {
 		if ($this->config->TrySave($_POST)) {
-			redirectTo(array('controller' => 'site'));
+			$obj['errors'][] = ':CONFIG_SAVED';
+			redirectTo(array('controller' => 'site'), $obj['errors']);
 		} else {
 			$obj['errors'][] = ':CANT_SAVE_Config';
 			$view = 'config';

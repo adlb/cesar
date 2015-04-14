@@ -59,7 +59,7 @@ class ControllerTranslationManager {
 			return 'editText';
 		}
 		
-		redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'));
+		redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'), $obj['errors']);
 	}
 	
 	function view_translationList(&$obj, &$view) {

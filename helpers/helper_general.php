@@ -79,7 +79,9 @@ function url($param) {
     return '?'.join('&', $queryString);
 }
 
-function redirectTo($param) {
+function redirectTo($param, $errors) {
+	$_SESSION['errors'] = $errors;
+	
 	header('Location: '.url($param));
 	die();
 }

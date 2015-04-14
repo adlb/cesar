@@ -6,10 +6,13 @@ include('helpers/helper_general.php');
 $containerView = 'container';
 $defaultController = 'site';
 $defaultView = 'home';
+$obj = array();
 
 $controller = (isset($_GET['controller'])) ? $_GET['controller'] : $defaultController;
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $defaultView;
 $action = (isset($_GET['action'])) ? $_GET['action'] : '';
+$obj['errors'] = (isset($_SESSION['errors'])) ? $_SESSION['errors'] : array();
+$_SESSION['errors'] = null;
 
 if (isset($_GET['forceMaintenance']) ||
 	($services['config']->current['Maintenance'] && $services['authentication']->Role() != 'Administrator'

@@ -39,8 +39,7 @@ class Authentication {
 		} else {
 			$this->Logout();
 		}
-		
-   }
+    }
 }
 
 ?>

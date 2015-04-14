@@ -19,7 +19,7 @@ class ControllerUser {
 			$view = 'register';
 			return;
 		}
-		redirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $_POST['id']));
+		redirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $_POST['id']), $obj['errors']);
 	}
 	
     function action_saveUser(&$obj, &$view) {
@@ -30,7 +30,7 @@ class ControllerUser {
 			return;
 		}
 	
-		redirectTo(array('controller' => 'site'));
+		redirectTo(array('controller' => 'site'), $obj['errors']);
     }
     
 	function action_login(&$obj, &$view){
@@ -44,7 +44,7 @@ class ControllerUser {
             return;
         }
 		
-		redirectTo(array('controller' => 'site'));
+		redirectTo(array('controller' => 'site'), $obj['errors']);
 	}
 	
 	function action_delete(&$obj, &$view) {
@@ -64,25 +64,27 @@ class ControllerUser {
 	
     function action_logout(&$obj, &$view){
         $this->authentication->logout();
-		redirectTo(array('controller' => 'site'));
+		redirectTo(array('controller' => 'site'), $obj['errors']);
     }
 	
 	function view_login(&$obj, &$view) {
 		if ($this->authentication->CheckRole('Logged'))
-            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'));
+            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'), $obj['errors']);
     }
 	
 	function view_register(&$obj, &$view) {
 	    if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
-            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'));
+            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'), $obj['errors']);
 		
 		$obj['form'] = array();
 	}
 	
 	function view_editUser(&$obj, &$view) {
-        //if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
-        //    redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'));
-        
+        if (!$this->authentication->CheckRole('Administrator') &&
+			($this->authentication->currentUser == null ||
+			$_GET['id'] != $this->authentication->currentUser['id']))
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+		
 		$obj['isAdministrator'] = $this->authentication->CheckRole('Administrator');
 		
 		if (isset($_GET['id']) && $this->crowd->TryGet($_GET['id'], $user))

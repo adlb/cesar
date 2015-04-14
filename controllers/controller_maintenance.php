@@ -20,7 +20,7 @@ class ControllerMaintenance {
 	
 	function action_reCreateTables(&$obj) {
 		if (!$this->authentication->CheckRole('Administrator'))
-			redirectTo(array('controller' => 'site', 'view' => 'home'));
+			redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 		
 		$this->articleDal->DropTable();
 		$this->articleDal->CreateTable();
@@ -31,12 +31,12 @@ class ControllerMaintenance {
 		$this->userDal->DropTable();
 		$this->userDal->CreateTable();
 		
-		redirectTo(array('controller' => 'site', 'view' => 'home'));
+		redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 	}
 
 	function action_deleteConfig(&$obj) {
 		$this->config->deleteConfig();
-		redirectTo(array('controller' => 'site', 'view' => 'home'));
+		redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
 	}
 }
 ?>
