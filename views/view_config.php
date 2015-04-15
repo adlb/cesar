@@ -6,7 +6,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Title">Title</label>  
+  <label class="col-md-4 control-label" for="Title">Title</label>
   <div class="col-md-5">
   <input id="Title" name="Title" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" autocomplete="off">
   </div>
@@ -14,16 +14,16 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="DBConnectionString">ConnectionString</label>  
+  <label class="col-md-4 control-label" for="DBConnectionString">ConnectionString</label>
   <div class="col-md-8">
   <input id="DBConnectionString" name="DBConnectionString" placeholder="ConnectionString" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'DBConnectionString'); ?>">
-  <span class="help-block">Something like "mysql:host=localhost;dbname=test"</span>  
+  <span class="help-block">Something like "mysql:host=localhost;dbname=test"</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="DBUser">DB User</label>  
+  <label class="col-md-4 control-label" for="DBUser">DB User</label>
   <div class="col-md-5">
   <input id="DBUser" name="DBUser" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'DBUser'); ?>" autocomplete="off">
   </div>
@@ -34,34 +34,34 @@
   <label class="col-md-4 control-label" for="DBPassword">DB Password</label>
   <div class="col-md-5">
     <input id="DBPassword" name="DBPassword" placeholder="password" class="form-control input-md" type="password" autocomplete="off">
-    
+
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="DBPrefix">DB Prefix</label>  
+  <label class="col-md-4 control-label" for="DBPrefix">DB Prefix</label>
   <div class="col-md-6">
   <input id="DBPrefix" name="DBPrefix" placeholder="prefix" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'DBPrefix'); ?>">
-  <span class="help-block">This text will prefix all table names</span>  
+  <span class="help-block">This text will prefix all table names</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Languages">Languages</label>  
+  <label class="col-md-4 control-label" for="Languages">Languages</label>
   <div class="col-md-5">
   <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Languages'); ?>">
-  <span class="help-block">Languages separated with ";"</span>  
+  <span class="help-block">Languages separated with ";"</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Languages">ActiveLanguages</label>  
+  <label class="col-md-4 control-label" for="Languages">ActiveLanguages</label>
   <div class="col-md-5">
   <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
-  <span class="help-block">Languages separated with ";"</span>  
+  <span class="help-block">Languages separated with ";"</span>
   </div>
 </div>
 
@@ -74,14 +74,14 @@
       <input name="Maintenance" id="Maintenance" value="true" type="checkbox" <?php echo $obj['config']['Maintenance'] ? 'CHECKED' : ''; ?>>
       Activate
     </label>
-	</div>
+    </div>
   </div>
 </div>
 
 <!-- Textarea -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="MaintenanceMessage">Text Area</label>
-  <div class="col-md-4">                     
+  <div class="col-md-4">
     <textarea class="form-control" id="MaintenanceMessage" name="MaintenanceMessage"><?php disp($obj['config'], 'MaintenanceMessage'); ?></textarea>
   </div>
 </div>

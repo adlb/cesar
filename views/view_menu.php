@@ -28,23 +28,23 @@
         <?php } else { ?>
         <li><a href="?controller=user&view=login">Login</a></li>
         <?php } ?>
-        
-		<?php if (count($obj['languages'])>1) { ?>
-		<li class="dropdown">
+
+        <?php if (count($obj['languages'])>1) { ?>
+        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?php t(':LANG_'.strtoupper($obj['language'])); ?><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-			<?php foreach($obj['languages'] as $lg) { ?>
-				<li><a href="../<?php echo $lg ;?>/"><?php t(':LANG_'.strtoupper($lg)); ?></a></li>
-			<?php } ?>
-    	  </ul>
+            <?php foreach($obj['languages'] as $lg) { ?>
+                <li><a href="../<?php echo $lg ;?>/"><?php t(':LANG_'.strtoupper($lg)); ?></a></li>
+            <?php } ?>
+          </ul>
         </li>
-		<?php } ?>
-		
-		<?php if ($obj['user']['role'] == 'Administrator') { ?> 
+        <?php } ?>
+
+        <?php if ($obj['user']['role'] == 'Administrator') { ?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Administration<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-			<li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><?php t(':ADD_ARTICLE')?></a></li>
+            <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><?php t(':ADD_ARTICLE')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'config')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'user', 'view' => 'userList')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'translationManager', 'view' => 'translationList')) ?>"><?php t(':TRANSLATION_MANAGEMENT')?></a></li>
@@ -53,7 +53,7 @@
             <li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
           </ul>
         </li>
-		<?php } ?>
+        <?php } ?>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -1,7 +1,7 @@
 <?php
 
 class LexerParser {
-    
+
     //start line with space or 'end of line' right after
     var $lineTransformers = array(
         '|' => 'array',
@@ -14,7 +14,7 @@ class LexerParser {
         'q.' => 'quote',
         'p.' => 'preformatted'
     );
-    
+
     //space before and no space after means start. no space before and space after or EoL means stop.
     var $inlineTransformers = array(
         '*' => 'strong',
@@ -23,15 +23,15 @@ class LexerParser {
         '+' => 'underline',
         '$' => 'monospaced'
     );
-    
+
     //used like {html}blah blah blah{/html}
     var $blockTransformers = array(
         'html' => 'html'
     );
-    
+
     // link: no specific array but [ksjfqksfjsdfkjh]
     // image: no specific array but !qsjqksjdhqsd.jpg!
-    
+
     function lex(&$string) {
         $result = array();
         $pos = 0;
@@ -53,7 +53,7 @@ class LexerParser {
         }
         return $result;
     }
-    
+
     private function ReadEndOfLine(&$string, &$pos) {
         $previousChain = '';
         $stop = false;
@@ -61,20 +61,20 @@ class LexerParser {
             $current = substr($string, $pos, 1);
             if ($current != "\n")
                 $previousChain .= $current;
-            else 
+            else
                 $stop = true;
             $pos++;
         }
         return $previousChain;
     }
-    
+
     private function ReadQuote(&$string, &$pos) {
         $result = $this->ReadLine($string, $pos, "\n");
         while (TryReadSpecificHeadLine('q.', $string, $pos)) {
             array_merge($result, $this->ReadLine($string, $pos, "\n"));
         }
     }
-    
+
     private function ReadArray(&$string, &$pos) {
         $header = $this->ReadEndOfLine($string, $pos);
         $headers = explode('|', $header);
@@ -98,7 +98,7 @@ class LexerParser {
         }
         return array('type' => 'array', 'content' => $rows);
     }
-    
+
     private function ReadBullet(&$string, &$pos, $level) {
         $bullet = array('* ' => 'bullet1',
                         '** ' => 'bullet2',
@@ -119,7 +119,7 @@ class LexerParser {
         }
         return array('type' => 'list', 'content' => $result);
     }
-    
+
     private function ReadLine(&$string, &$pos, $previousChar, $stack) {
         $result = array();
         $previousChain = '';
@@ -145,8 +145,8 @@ class LexerParser {
                 $previousChar = 'a';
                 continue;
             }
-            if ($previousChar != ' ' && $previousChar != "\n" && 
-                    ($next == ' ' || $next == "\n" || $next == '' || in_array($next, array_keys($this->inlineTransformers))) && 
+            if ($previousChar != ' ' && $previousChar != "\n" &&
+                    ($next == ' ' || $next == "\n" || $next == '' || in_array($next, array_keys($this->inlineTransformers))) &&
                     in_array($current, array_keys($this->inlineTransformers))) {
                 if ($previousChain != '')
                     $result[] = array('type' => 'text', 'content' => $previousChain);
@@ -195,7 +195,7 @@ class LexerParser {
                     $pos--;
                 }
             }
-            
+
             if ($current == "\n") {
                 if ($previousChain != '')
                     $result[] = array('type' => 'text', 'content' => $previousChain);
@@ -212,7 +212,7 @@ class LexerParser {
             $result[] = array('type' => 'text', 'content' => $previousChain);
         return $result;
     }
-    
+
     private function ReadHeadLine(&$string, &$pos, &$type) {
         foreach($this->lineTransformers as $k => $newType) {
             if ($this->TryReadSpecificHeadLine($k, $string, $pos)) {
@@ -223,7 +223,7 @@ class LexerParser {
         $type = 'normal';
         return true;
     }
-    
+
     private function TryReadSpecificHeadLine($key, &$string, &$pos) {
         if (substr($string, $pos, strlen($key)) == $key) {
             $pos += strlen($key);
@@ -231,7 +231,7 @@ class LexerParser {
         }
         return false;
     }
-    
+
     private function TryReadSpecificHeadLineArray($keyArray, &$string, &$pos, &$type) {
         foreach($keyArray as $key => $t) {
             if (substr($string, $pos, strlen($key)) == $key) {
@@ -242,7 +242,7 @@ class LexerParser {
         }
         return false;
     }
-    
+
     private function TryReadLink(&$string, &$pos, &$display, &$link) {
         $res = preg_match("/^([^\]]+)\]/", substr($string, $pos), $reg);
         if ($res == 1) {
@@ -255,7 +255,7 @@ class LexerParser {
         }
         return false;
     }
-    
+
     private function TryReadPicture(&$string, &$pos, &$key) {
         $a = substr($string, $pos);
         $res = preg_match("/^([^\!]+)\!/", substr($string, $pos), $reg);
@@ -266,7 +266,7 @@ class LexerParser {
         }
         return false;
     }
-    
+
     private function TryReadHTML(&$string, &$pos, &$key) {
         if (substr($string, $pos, 5) != 'html}')
             return false;
@@ -289,16 +289,16 @@ class LexerParser {
 
 class Transformer {
     var $lexerParser;
-    
+
     function Transformer() {
         $this->lexerParser = new LexerParser();
     }
-    
+
     function ToHtml($string) {
         $decoded = $this->lexerParser->lex($string);
         return $this->Encode($decoded);
     }
-    
+
     function Encode($decoded) {
         $string = '';
         foreach($decoded as $item) {

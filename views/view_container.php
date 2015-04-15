@@ -9,24 +9,24 @@
 <link rel="stylesheet" href="css/malteLiban.css">
 <script>
 var getScope = function(id, f) {
-	if (typeof angular != 'undefined') {
-		elm = angular.element(document.getElementById(id));
-		if (typeof elm != 'undefined') {
-			scope = elm.scope();
-			if (typeof scope != 'undefined') {
-				scope.$apply(f(scope));
-				return;
-			} 
-		}
-	}
-	window.setTimeout(function() getScope(id, f), 0);
+    if (typeof angular != 'undefined') {
+        elm = angular.element(document.getElementById(id));
+        if (typeof elm != 'undefined') {
+            scope = elm.scope();
+            if (typeof scope != 'undefined') {
+                scope.$apply(f(scope));
+                return;
+            }
+        }
+    }
+    window.setTimeout(function() getScope(id, f), 0);
 };
 </script>
 
 </head>
 <body>
 <div class="container" ng-app="cesarApp">
-  
+
 <br/>Header
 <?php displayPartial('site', 'menu', $obj); ?>
 <?php if (isset($obj['errors'])) { renderPartial('errors', $obj['errors']); } ?>

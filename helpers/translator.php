@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Translator {
     var $textDal;
@@ -7,13 +7,13 @@ class Translator {
     var $defaultLanguage;
     var $defaultGroupKey = 'GROUPED';
     var $languages;
-	
+
     function Translator($textDal, $language, $languages) { //First element of $languages is default
         $this->textDal = $textDal;
         $this->groupedCache = array();
         $this->language = $language;
         $this->defaultLanguage = $languages[0];
-		$this->languages = $languages;
+        $this->languages = $languages;
 
         $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
         if (count($lines) == 1) {
@@ -23,12 +23,12 @@ class Translator {
                     $this->groupedCache[$split[0]] = $split[1];
             }
         }
-        
+
         $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->language));
         foreach($lines as $line) {
             $goupedCache[$line['key']] = $line['text'];
         }
-        
+
         if ($this->defaultLanguage != $this->language) {
             $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->defaultLanguage));
             foreach($lines as $line) {
@@ -37,20 +37,20 @@ class Translator {
             }
         }
     }
-    
+
     //if key starts with : that means that it is a grouped translation
     function GetTranslation($key) {
         if ($key == '')
             return $key;
         if (substr($key, 0, 1) == ':')
             return htmlspecialchars($this->GetGroupedTranslation(substr($key, 1)));
-        
+
         $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
         if (count($lines) == 0) {
             $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
-			if (count($lines) == 0)
-				return '['.$key.']';
-		}
+            if (count($lines) == 0)
+                return '['.$key.']';
+        }
         return htmlspecialchars($lines[0]['text']);
     }
 
@@ -60,23 +60,23 @@ class Translator {
             return '';
         }
         $key = $key == '' ? $this->CreateNewKey($value) : $key;
-        
+
         $newValue = array(
                 'key' => $key,
                 'language' => $language,
                 'prefetch' => $prefetch,
                 'text' => $value,
                 'nextText' => $value,
-				'usage' => $usage,
+                'usage' => $usage,
                 'textStatus' => 'ready',
             );
-            
+
         $oldValues = $this->textDal->GetWhere(array('key' => $key, 'language' => $language));
         if (count($oldValues) == 0) {
             $this->textDal->DeleteWhere(array('key' => $key));
             $this->textDal->TrySave($newValue);
             return $key;
-        } 
+        }
 
         $oldValue = $oldValues[0];
         if ($newValue['text'] == $oldValue['text']) {
@@ -84,7 +84,7 @@ class Translator {
             $this->textDal->TrySave($newValue);
             return $key;
         }
-        
+
         $oldValues = $this->textDal->GetWhere(array('key' => $key));
         foreach($oldValues as $oldValue) {
             if ($oldValue['language'] == $language) {
@@ -95,10 +95,10 @@ class Translator {
                 $this->textDal->TrySave($oldValue);
             }
         }
-        
+
         return $key;
     }
-    
+
     private function CreateNewKey($string) {
         $alphabet = array(
             'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -112,7 +112,7 @@ class Translator {
         $newKey = strtr(trim($string), $alphabet);
         $newKey = strtolower(preg_replace("/\W+/", "-", $newKey));
         $newKey = substr($newKey, 0, 20);
-        
+
         $new = $newKey;
         $result = $newKey;
         do {
@@ -120,10 +120,10 @@ class Translator {
             $result = $newKey;
             $newKey = $new.substr(md5(uniqid(mt_rand(), true)), 0, 3);
         } while (count($exists) > 0);
-        
+
         return $result;
     }
-    
+
     private function GetGroupedTranslation($key) {
         if (isset($this->groupedCache[$key]))
             return $this->groupedCache[$key];
@@ -137,7 +137,7 @@ class Translator {
                 'key' => $this->defaultGroupKey,
                 'language' => $this->language,
                 'prefetch' => true,
-				'usage' => 'grouped',
+                'usage' => 'grouped',
                 'textStatus' => 'notTranslated',
             );
         } else {

@@ -7,7 +7,7 @@
 
 <input type="hidden" id="id" name="id" value="<?php echo $obj['form']['id'] ?>">
 <input type="hidden" id="language" name="language" value="<?php disp($obj, 'language') ?>" />
-    
+
 <!-- Form Name -->
 <legend>Create new element</legend>
 
@@ -17,8 +17,8 @@
   <div class="col-md-6">
     <select id="type" name="type" class="form-control" ng-model="type">
       <option value="menu"    ><?php t(':TYPE_MENU') ?></option>
-	  <option value="article" ><?php t(':TYPE_ARTICLE') ?></option>
-	  <option value="news"    ><?php t(':TYPE_NEWS') ?></option>
+      <option value="article" ><?php t(':TYPE_ARTICLE') ?></option>
+      <option value="news"    ><?php t(':TYPE_NEWS') ?></option>
     </select>
   </div>
 </div>
@@ -49,7 +49,7 @@
 
 <!-- Text input-->
 <div class="form-group" ng-show="type == 'menu' || type == 'article' || type == 'news'">
-  <label class="col-md-4 control-label" for="title">Title</label>  
+  <label class="col-md-4 control-label" for="title">Title</label>
   <div class="col-md-6">
   <input id="title" name="title" placeholder="placeholder" class="form-control input-md" type="text" value="<?php t($obj['form']['title']) ?>">
   </div>
@@ -57,7 +57,7 @@
 
 <!-- Text input-->
 <div class="form-group" ng-show="type == 'article' || type == 'news'">
-  <label class="col-md-4 control-label" for="date">Date</label>  
+  <label class="col-md-4 control-label" for="date">Date</label>
   <div class="col-md-3">
     <div class='input-group date' id='datetimepicker2'>
         <input id="date" name="date" placeholder="placeholder" type='text' class="form-control" />
@@ -77,33 +77,33 @@
 </div>
 
 <div class="form-group" ng-show="type == 'menu' || type == 'article' || type == 'news'">
-  <label class="col-md-4 control-label" for="show"><?php t(':SHOW') ?></label>  
+  <label class="col-md-4 control-label" for="show"><?php t(':SHOW') ?></label>
   <div class="col-md-1">
     <div class="checkbox">
-	  <label class="checkbox-0" for="show">
-		<input id="show" name="show" type="checkbox" value="1" <?php echo $obj['form']['show'] == 1 ? 'checked' : '' ?> />
-	  </label>
-	</div>
+      <label class="checkbox-0" for="show">
+        <input id="show" name="show" type="checkbox" value="1" <?php echo $obj['form']['show'] == 1 ? 'checked' : '' ?> />
+      </label>
+    </div>
   </div>
 </div>
 <div class="form-group" ng-show="type == 'article'">
-  <label class="col-md-4 control-label" for="home"><?php t(':HOME') ?></label>  
+  <label class="col-md-4 control-label" for="home"><?php t(':HOME') ?></label>
   <div class="col-md-1">
     <div class="checkbox">
-	  <label class="checkbox-0" for="home">
-		<input id="home" name="home" type="checkbox" value="1" <?php echo $obj['form']['home'] == 1 ? 'checked' : '' ?> />
-	  </label>
-	</div>
+      <label class="checkbox-0" for="home">
+        <input id="home" name="home" type="checkbox" value="1" <?php echo $obj['form']['home'] == 1 ? 'checked' : '' ?> />
+      </label>
+    </div>
   </div>
 </div>
 <div class="form-group" ng-show="type == 'news'">
-  <label class="col-md-4 control-label" for="alert"><?php t(':ALERT') ?></label>  
+  <label class="col-md-4 control-label" for="alert"><?php t(':ALERT') ?></label>
   <div class="col-md-1">
     <div class="checkbox">
-	  <label class="checkbox-0" for="alert">
-		<input id="alert" name="alert" type="checkbox" value="1" <?php echo $obj['form']['alert'] == 1 ? 'checked' : '' ?> />
-	  </label>
-	</div>
+      <label class="checkbox-0" for="alert">
+        <input id="alert" name="alert" type="checkbox" value="1" <?php echo $obj['form']['alert'] == 1 ? 'checked' : '' ?> />
+      </label>
+    </div>
   </div>
 </div>
 
@@ -111,9 +111,9 @@
 <div class="form-group" ng-show="type == 'article' || type == 'news'">
   <!--<label class="col-md-4 control-label" for="text">Text</label>-->
   <div class="col-md-12">
-	<a id="viewHelp"  target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help'))?>">
-		<span class="glyphicon glyphicon-cog pull-right"></span>
-	</a>
+    <a id="viewHelp"  target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help'))?>">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+    </a>
     <a id="actionShow" href="#"><span class="glyphicon glyphicon-inbox pull-right"></span></a>
     <script>
       $(function() {
@@ -134,13 +134,13 @@
                   },
                 error: function() {
                   alert('La requête n\'a pas abouti'); }
-              });    
-        });  
+              });
+        });
       });
     </script>
-  </div>  
+  </div>
 
-  <div class="col-md-12">                     
+  <div class="col-md-12">
     <textarea class="form-control" id="text" name="text" rows="30"><?php t($obj['form']['text']) ?></textarea>
     <div id="textHTML" width="500px" style="border: 1px; display: none;"><!-- placeholder for previsualisation !--></div>
   </div>

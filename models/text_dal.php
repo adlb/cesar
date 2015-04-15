@@ -11,10 +11,10 @@ class TextDal extends Dal {
         'text' => array('create' => 'TEXT', 'bind' => PDO::PARAM_STR),
         'nextText' => array('create' => 'TEXT', 'bind' => PDO::PARAM_STR),
         'usage' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
-			//usage can be :
-			// * grouped
-			// * pureText
-			// * decoratedText
+            //usage can be :
+            // * grouped
+            // * pureText
+            // * decoratedText
         'textStatus' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
             //status can be :
             //  * ready : entered by an admin or validated by an admin means it is the same as textStatus

@@ -7,10 +7,10 @@
 <?php } else { ?>
     <li class="dropdown" id="row_<?php echo $obj['id'] ?>" <?php echo $obj['status'] == 'hide' ? 'class="x_disabled"' : '' ?>>
         <a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['id']))?>" class="dropdown-toggle" data-toggle="dropdown" role="button">
-			<?php t($obj['title']) ?>&nbsp;
-			<span class="caret"></span>
-		</a>
-        
+            <?php t($obj['title']) ?>&nbsp;
+            <span class="caret"></span>
+        </a>
+
         <ul class="dropdown-menu draggableMenuItem" role="menu" data-moveHandler="<?php echo url(array('controller' => 'builder', 'action' => 'moveEntry')) ?>">
             <?php foreach($obj['sons'] as $son) { ?>
                 <li id="row_<?php echo $son['id'] ?>">

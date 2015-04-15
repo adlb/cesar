@@ -40,13 +40,13 @@
   border-top-right-radius: 0;
 }
 </style>
-      
+
       <form class="form-signin" method="POST" action="?controller=user&action=login" enctype="x-www-form-urlencoded">
         <h2 class="form-signin-heading"><?php t(':PLEASE_SIGN_IN')?></h2>
         <label for="inputEmail" class="sr-only"><?php t(':EMAIL_ADDRESS')?></label>
         <input type="email" name="email" class="form-control" placeholder="<?php t(':EMAIL_ADDRESS')?>" required autofocus value="<?php disp($obj, 'email') ?>">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required> 
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me

@@ -3,8 +3,8 @@
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 switch ($action) {
-	case 'clear':
-		
+    case 'clear':
+
 
 }
 
@@ -25,7 +25,7 @@ a { color: #dc8100; text-decoration: none; }
 a:hover { color: #333; text-decoration: none; }
 </style>
 </head>
-<body> 
+<body>
 <h1>Maintenance!</h1>
 <div>
 <p><?php echo htmlentities($message) ?></p>

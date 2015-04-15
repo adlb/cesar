@@ -15,30 +15,30 @@ $obj['errors'] = (isset($_SESSION['errors'])) ? $_SESSION['errors'] : array();
 $_SESSION['errors'] = null;
 
 if (isset($_GET['forceMaintenance']) ||
-	($services['config']->current['Maintenance'] && $services['authentication']->Role() != 'Administrator'
-	&& $controller!='user' && $view != 'login')) {
-	$message = $services['config']->current['MaintenanceMessage'];
-	include('maintenance.php');
-	die();
+    ($services['config']->current['Maintenance'] && $services['authentication']->Role() != 'Administrator'
+    && $controller!='user' && $view != 'login')) {
+    $message = $services['config']->current['MaintenanceMessage'];
+    include('maintenance.php');
+    die();
 }
 
 $controllerInstance = $controllerFactory->GetController($controller);
 
 if ($action != '') {
-	$actionFunction = 'action_'.$action;
+    $actionFunction = 'action_'.$action;
     $controllerInstance->$actionFunction($obj, $view);
 } else {
-	$viewFunction = 'view_'.$view;
-	$controllerInstance->$viewFunction($obj, $view);
+    $viewFunction = 'view_'.$view;
+    $controllerInstance->$viewFunction($obj, $view);
 }
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-	//Ajax
-	header( 'content-type: application/json; charset=utf-8' );
-	renderPartial($view, $obj);
+    //Ajax
+    header( 'content-type: application/json; charset=utf-8' );
+    renderPartial($view, $obj);
 } else {
-	header( 'content-type: text/html; charset=utf-8' );
-	render($controllerInstance->container, $view, $obj);
+    header( 'content-type: text/html; charset=utf-8' );
+    render($controllerInstance->container, $view, $obj);
 }
 
 ?>

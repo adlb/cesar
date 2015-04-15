@@ -6,7 +6,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="email"><?php t(':EMAIL')?></label>  
+  <label class="col-md-4 control-label" for="email"><?php t(':EMAIL')?></label>
   <div class="col-md-3">
   <input id="email" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL')?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'email') ?>">
   </div>

@@ -7,7 +7,7 @@
 <input type="hidden" name="id" id="id" value="<?php disp($obj['form'], 'id')?>" />
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="email">email</label>  
+  <label class="col-md-4 control-label" for="email">email</label>
   <div class="col-md-5">
   <input id="email" name="email" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'email') ?>">
   </div>
@@ -15,7 +15,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="firstName">Prenom</label>  
+  <label class="col-md-4 control-label" for="firstName">Prenom</label>
   <div class="col-md-4">
   <input id="firstName" name="firstName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'firstName') ?>">
   </div>
@@ -23,7 +23,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="lastName">Nom</label>  
+  <label class="col-md-4 control-label" for="lastName">Nom</label>
   <div class="col-md-4">
   <input id="lastName" name="lastName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'lastName') ?>">
   </div>
@@ -34,55 +34,55 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="addressLine1"><?php t(':ADDRESS_LINE_1')?></label>  
+  <label class="col-md-4 control-label" for="addressLine1"><?php t(':ADDRESS_LINE_1')?></label>
   <div class="col-md-6">
   <input id="addressLine1" name="addressLine1" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="addressLine2"><?php t(':ADDRESS_LINE_2')?></label>  
+  <label class="col-md-4 control-label" for="addressLine2"><?php t(':ADDRESS_LINE_2')?></label>
   <div class="col-md-6">
   <input id="addressLine2" name="addressLine2" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="postalCode"><?php t(':POSTAL_CODE')?></label>  
+  <label class="col-md-4 control-label" for="postalCode"><?php t(':POSTAL_CODE')?></label>
   <div class="col-md-6">
   <input id="postalCode" name="postalCode" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="city"><?php t(':CITY')?></label>  
+  <label class="col-md-4 control-label" for="city"><?php t(':CITY')?></label>
   <div class="col-md-6">
   <input id="city" name="city" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'city') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="country"><?php t(':country')?></label>  
+  <label class="col-md-4 control-label" for="country"><?php t(':country')?></label>
   <div class="col-md-6">
   <input id="country" name="country" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'country') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="phone"><?php t(':phone')?></label>  
+  <label class="col-md-4 control-label" for="phone"><?php t(':phone')?></label>
   <div class="col-md-6">
   <input id="phone" name="phone" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'phone') ?>">
-  <span class="help-block">help</span>  
+  <span class="help-block">help</span>
   </div>
 </div>
 

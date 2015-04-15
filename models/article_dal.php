@@ -11,22 +11,22 @@ class ArticleDal extends Dal {
         'date' => array('create' => 'date', 'bind' => PDO::PARAM_STR),
         'text' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         'rank' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
-		'alert' => array('create' => 'boolean', 'bind' => PDO::PARAM_BOOL),
+        'alert' => array('create' => 'boolean', 'bind' => PDO::PARAM_BOOL),
         'status' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
         //Can be
         // * show
-        // * hide   
+        // * hide
     );
     var $keyName = 'id';
     var $tableSuffix = "articles";
-	
-	function GetFathersForMenu() {
-		return $this->GetWhere(array('type' => 'menu'));
-	}
-	
-	function GetFathersForNews() {
-		return $this->GetWhere(array('type' => 'article'));
-	}
+
+    function GetFathersForMenu() {
+        return $this->GetWhere(array('type' => 'menu'));
+    }
+
+    function GetFathersForNews() {
+        return $this->GetWhere(array('type' => 'article'));
+    }
 }
 
 ?>

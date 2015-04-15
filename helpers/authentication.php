@@ -1,44 +1,44 @@
 <?php
 
 class Authentication {
-    
-	var $currentUser;
-	var $roles;
-	
-	function SetUser($user) {
+
+    var $currentUser;
+    var $roles;
+
+    function SetUser($user) {
         $_SESSION['user'] = $user;
-		$this->currentUser = $user;
-		$this->roles = explode(';', $user['role']);
-		array_push($this->roles, 'Logged');
+        $this->currentUser = $user;
+        $this->roles = explode(';', $user['role']);
+        array_push($this->roles, 'Logged');
     }
-    
+
     function Logout() {
         unset($_SESSION['user']);
-		$this->currentUser = null;
-		$this->roles = array();
+        $this->currentUser = null;
+        $this->roles = array();
     }
-    
-	//Check if $role is in current roles
-	//or check if one of $role is in current roles.
+
+    //Check if $role is in current roles
+    //or check if one of $role is in current roles.
     function CheckRole($role) {
         if (is_array($role)) {
-			foreach($role as $r) {
-				if (in_array($r, $this->roles))
-					return true;
-			}
-			return false;
-		}
-		return in_array($role, $this->roles);
+            foreach($role as $r) {
+                if (in_array($r, $this->roles))
+                    return true;
+            }
+            return false;
+        }
+        return in_array($role, $this->roles);
     }
-    
+
     function Authentication () {
         if(session_id() == "")
             session_start();
-		if (isset($_SESSION['user'])) {
-			$this->SetUser($_SESSION['user']);
-		} else {
-			$this->Logout();
-		}
+        if (isset($_SESSION['user'])) {
+            $this->SetUser($_SESSION['user']);
+        } else {
+            $this->Logout();
+        }
     }
 }
 
