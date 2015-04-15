@@ -259,3 +259,33 @@ jQuery(document).ready(function($) {
             window.document.location = $(this).attr("href");
       });
 });
+
+$(function () {
+    $('#datetimepicker').datetimepicker({
+        locale: '', //<?php echo $obj['language'] ?>
+        format: 'DD/MM/YYYY',
+        defaultDate: "", //<?php echo date('Y-m-d') ?>",
+    });
+});
+
+$(function() {
+        $('#actionShow').click(function() {
+          if ( $('#text').css('display') == 'none' ) {
+                $('#textHTML').css('display','none');
+                $('#text').css('display','inline');
+          } else
+              $.ajax({
+                type: 'POST',
+                url: '?controller=builder&action=format',
+                data: $('#text').val(),
+                timeout: 3000,
+                success: function(data) {
+                  $('#text').css("display","none");
+                  $('#textHTML').html(data);
+                  $('#textHTML').css("display","inline");
+                  },
+                error: function() {
+                  alert('La requête n\'a pas abouti'); }
+              });
+        });
+      });

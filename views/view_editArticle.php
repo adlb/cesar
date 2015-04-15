@@ -1,6 +1,3 @@
-<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
 
 <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveArticle'))?>">
 <fieldset ng-init="type='<?php echo $obj['form']['type']?>'" ng-cloak>
@@ -59,20 +56,11 @@
 <div class="form-group" ng-show="type == 'article' || type == 'news'">
   <label class="col-md-4 control-label" for="date">Date</label>
   <div class="col-md-3">
-    <div class='input-group date' id='datetimepicker2'>
+    <div class='input-group date' id='datetimepicker'>
         <input id="date" name="date" placeholder="placeholder" type='text' class="form-control" />
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
         </span>
     </div>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker2').datetimepicker({
-                locale: '<?php echo $obj['language'] ?>',
-                format: 'DD/MM/YYYY',
-                defaultDate: "<?php echo date('Y-m-d') ?>",
-            });
-        });
-    </script>
   </div>
 </div>
 
@@ -115,29 +103,6 @@
         <span class="glyphicon glyphicon-cog pull-right"></span>
     </a>
     <a id="actionShow" href="#"><span class="glyphicon glyphicon-inbox pull-right"></span></a>
-    <script>
-      $(function() {
-        $('#actionShow').click(function() {
-          if ( $('#text').css('display') == 'none' ) {
-                $('#textHTML').css('display','none');
-                $('#text').css('display','inline');
-          } else
-              $.ajax({
-                type: 'POST',
-                url: '?controller=builder&action=format',
-                data: $('#text').val(),
-                timeout: 3000,
-                success: function(data) {
-                  $('#text').css("display","none");
-                  $('#textHTML').html(data);
-                  $('#textHTML').css("display","inline");
-                  },
-                error: function() {
-                  alert('La requête n\'a pas abouti'); }
-              });
-        });
-      });
-    </script>
   </div>
 
   <div class="col-md-12">

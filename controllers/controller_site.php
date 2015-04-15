@@ -59,6 +59,24 @@ class ControllerSite {
         }
     }
 
+    private function enrich_Article($article, $isAdmin) {
+        $article['rawContent'] = $this->translator->GetTranslation($article['text']);
+        $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
+        $conditionForSubArticles = array('father' => $article['id']);
+        if (!$isAdmin) {
+            $conditionForSubArticles['status'] = 'show';
+        }
+        $article['links'] = array();
+        if ($isAdmin) {
+            $article['links'][] = array('type' => 'edit', 'url' => url(array('controller' => 'builder', 'view' => 'editArticle', 'id' => $article['id'])));
+        }
+        $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 6);
+        $article['subArticles'] = array();
+        foreach($subArticles as $subArticle)
+            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin);
+        return $article;
+    }
+    
     private function view_articleInternal(&$obj, &$view, $id) {
         if (!$this->articleDal->TryGet($id, $article)) {
             $view = 'noArticle';
@@ -69,9 +87,9 @@ class ControllerSite {
             $view = 'noArticle';
             return;
         }
-
-        $article['rawContent'] = $this->translator->GetTranslation($article['text']);
-        $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
+        
+        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
+        
         $obj['article'] = $article;
         $view = 'article';
     }
