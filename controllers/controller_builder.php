@@ -66,9 +66,37 @@ class ControllerBuilder {
         }
     }
 
+	private function GetMenuFathers($id) {
+		$menuFathers = array();
+        $menuFathers = ':TOP_LEVEL_MENU';
+        $menuItems = $this->articleDal->GetFathersForMenu();
+        foreach($menuItems as $v) {
+            if ($v['id'] != $id)
+                $menuFathers[$v['id']] = $v['title'];
+        }
+		return $menuFathers;
+	}
+	
+	private function GetNewsFathers($id) {
+		$newsFathers = array();
+        $menuItems = $this->articleDal->GetFathersForNews();
+        foreach($menuItems as $v) {
+            if ($v['id'] != $id)
+                $newsFathers[$v['id']] = $v['title'];
+        }
+		return $newsFathers;
+	}
+	
     function action_saveArticle(&$obj, &$view) {
         $this->CheckRights('Administrator', $obj);
-        if (!isset($_POST['language']) || $_POST['language'] == '') {
+        
+		$_POST['show'] = (isset($_POST['show']) &&  $_POST['show'] == 1) ? 1 : 0;
+        $_POST['home'] = (isset($_POST['home']) &&  $_POST['home'] == 1) ? 1 : 0;
+        $_POST['alert'] = (isset($_POST['alert']) &&  $_POST['alert']) == 1 ? 1 : 0;
+        $obj['menuFathers'] = $this->GetMenuFathers($_POST['id']);
+        $obj['newsFathers'] = $this->GetNewsFathers($_POST['id']);
+		
+		if (!isset($_POST['language']) || $_POST['language'] == '') {
             $obj['form'] = $_POST;
             $obj['errors'][] = ':BAD_LANGUAGE';
             $view = 'editArticle';
@@ -165,6 +193,8 @@ class ControllerBuilder {
         $this->CheckRights('Administrator', $obj);
         if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
             $obj['form'] = $article;
+            $obj['form']['text'] = $this->translator->GetTranslation($article['text']);
+            $obj['form']['title'] = $this->translator->GetTranslation($article['title']);
             $obj['form']['show'] = $article['status'] == 'show' || $article['status'] == 'home' ? 1 : 0;
             $obj['form']['home'] = $this->config->current['Home'] == $article['id'] ? 1 : 0;
         } else {
@@ -182,19 +212,8 @@ class ControllerBuilder {
                 'alert' => 0
             );
         }
-        $obj['menuFathers'] = array();
-        $obj['menuFathers'][-1] = ':TOP_LEVEL_MENU';
-        $menuItems = $this->articleDal->GetFathersForMenu();
-        foreach($menuItems as $v) {
-            if ($v['id'] != $obj['form']['id'])
-                $obj['menuFathers'][$v['id']] = $v['title'];
-        }
-        $obj['newsFathers'] = array();
-        $menuItems = $this->articleDal->GetFathersForNews();
-        foreach($menuItems as $v) {
-            if ($v['id'] != $obj['form']['id'])
-                $obj['newsFathers'][$v['id']] = $v['title'];
-        }
+        $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);
+        $obj['newsFathers'] = $this->GetNewsFathers($obj['form']['id']);
     }
 
     function view_config(&$obj, &$view) {

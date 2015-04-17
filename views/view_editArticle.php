@@ -48,7 +48,7 @@
 <div class="form-group" ng-show="type == 'menu' || type == 'article' || type == 'news'">
   <label class="col-md-4 control-label" for="title">Title</label>
   <div class="col-md-6">
-  <input id="title" name="title" placeholder="placeholder" class="form-control input-md" type="text" value="<?php t($obj['form']['title']) ?>">
+  <input id="title" name="title" placeholder="placeholder" class="form-control input-md" type="text" value="<?php echo $obj['form']['title'] ?>">
   </div>
 </div>
 
@@ -106,7 +106,7 @@
   </div>
 
   <div class="col-md-12">
-    <textarea class="form-control" id="text" name="text" rows="30"><?php t($obj['form']['text']) ?></textarea>
+    <textarea class="form-control" id="text" name="text" rows="10"><?php echo $obj['form']['text'] ?></textarea>
     <div id="textHTML" width="500px" style="border: 1px; display: none;"><!-- placeholder for previsualisation !--></div>
   </div>
 </div>

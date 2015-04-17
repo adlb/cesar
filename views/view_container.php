@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/framework.css">
 <link rel="stylesheet" href="css/malteLiban.css">
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <script>
 var getScope = function(id, f) {
     if (typeof angular != 'undefined') {
@@ -51,7 +52,6 @@ var getScope = function(id, f) {
 <script src="js/angular.min.js"></script>
 <script src="js/ui-bootstrap-0.12.1.min.js"></script>
 <script src="js/smart-table.min.js"></script>
-<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
 <script src="js/cesar.js"></script>
