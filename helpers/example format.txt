@@ -1,0 +1,49 @@
+Decorate your text with :
+\*text\* will show text in *bold*
+\_text\_ will show text as _italic_
+\-text\- will show text as -deleted-
+\+text\+ will show text as +underline+
+\$text\$ will show text as $monospaced$
+
+You can also combine different decorators like
+\*\_text\_\* will show text as *_bold and Italic_*
+
+You can also include links in your text with
+\[http://google.com\] that will add a link to [http://google.com]
+\[id]\ that will add a link to the article with the specified id
+\[home]\ that will add a link to your home page.
+
+You can start your lines with these informations for :
+\| to create an array.
+p. |head1    |head2       |head3     
+p. |line1    |info1 *g*   |super _i_ 
+p. |line2    |info2 [id]  |cool      
+Will display
+|head1    |head2       |head3     
+|line1    |info1 *g*   |super _i_ 
+|line2    |info2 [id]  |cool      
+
+
+		
+		'|' => 'array',
+        'h1.' => 'head1',
+        'h2.' => 'head2',
+        '* ' => 'bullet1',
+        '** ' => 'bullet2',
+        '*** ' => 'bullet3',
+        '----' => 'separator',
+        'q.' => 'quote',
+        
+		
+		'*' => 'strong',
+        '_' => 'italic',
+        '-' => 'delete',
+        '+' => 'underline',
+        '$' => 'monospaced'
+		
+		
+		{html} {/html}
+		{pre} {/pre}
+		
+		// link: no specific array but [ksjfqksfjsdfkjh]
+		// image: no specific array but !qsjqksjdhqsd.jpg!

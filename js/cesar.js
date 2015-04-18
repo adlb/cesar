@@ -260,14 +260,6 @@ jQuery(document).ready(function($) {
       });
 });
 
-$(function () {
-    $('#datetimepicker').datetimepicker({
-        locale: '', //<?php echo $obj['language'] ?>
-        format: 'DD/MM/YYYY',
-        defaultDate: "", //<?php echo date('Y-m-d') ?>",
-    });
-});
-
 $(function() {
         $('#actionShow').click(function() {
           if ( $('#text').css('display') == 'none' ) {

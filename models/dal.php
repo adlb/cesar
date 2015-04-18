@@ -113,7 +113,7 @@ class Dal {
     }
 
     function TrySave(&$value) { //return key
-        if ($this->db == null)
+		if ($this->db == null)
             return false;
 
         $sqlFields = array();
@@ -133,8 +133,14 @@ class Dal {
         try {
             $statement = $this->db->prepare ($sql);
             foreach($this->fields as $k => $v)
-                if (isset($value[$k]))
-                    $statement->bindParam (':'.$k, $value[$k], $v['bind']);
+                if (isset($value[$k])) {
+                    if ($this->fields[$k]['create'] == 'date') {
+						$date = $value[$k]->format('Y-m-d');
+						$statement->bindParam (':'.$k, $date, $v['bind']);
+					} else {
+						$statement->bindParam (':'.$k, $value[$k], $v['bind']);
+					}
+				}
             $statement->execute ();
             if (!isset($value[$this->keyName])) {
                 $value[$this->keyName] = $this->db->lastInsertId();

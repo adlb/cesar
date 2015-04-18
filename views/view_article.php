@@ -17,7 +17,7 @@
     <a href="<?php echo $link['url'] ?>"><?php echo $link['type'] ?></a>
 <?php } ?>
 
-<div class="articleContent">
+<div class="cx_article">
 <?php echo $obj['article']['htmlContent']; ?>
 </div>
 <?php foreach($obj['article']['subArticles'] as $article)

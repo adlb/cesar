@@ -1,290 +1,283 @@
 <?php
+ini_set('xdebug.var_display_max_depth', 35);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+
+class TextDecorator {
+	var $type;
+	var $identifierIn;
+	var $identifierOut;
+	var $needSpace;
+	var $canIncludeDecorator;
+	var $canIncludeNewLine;
+	var $canEscape;
+	var $keepIdentifierOut;
+	
+	function __construct($type, $identifierIn, $identifierOut, $needSpace, $canIncludeDecorator, $canIncludeNewLine, $canEscape, $keepIdentifierOut) {
+		$this->type = $type;
+		$this->identifierIn = $identifierIn;
+		$this->identifierOut = $identifierOut;
+		$this->needSpace = $needSpace;
+		$this->canIncludeDecorator = $canIncludeDecorator;
+		$this->canIncludeNewLine = $canIncludeNewLine;
+		$this->canEscape = $canEscape;
+		$this->keepIdentifierOut = $keepIdentifierOut;
+	}
+	
+	function StartHere(&$string, &$pos, &$currentJob) {
+		if (
+			$this->needSpace &&
+			!(strlen($currentJob) == 0) &&
+			substr($currentJob, -1, 1) != ' ')
+			return false;
+		
+		if (substr($string, $pos, strlen($this->identifierIn)) != $this->identifierIn)
+			return false;
+		
+		$pos += strlen($this->identifierIn);
+		return true;
+	}
+	
+	function StopHere(&$string, &$pos, &$currentJob, &$type) {
+		if ($this->identifierOut == '')
+			return false;
+		
+		if ($this->needSpace && substr($currentJob, -1, 1) == ' ')
+			return false;
+		
+		if (!$this->canIncludeNewLine && substr($string, $pos, 1) == "\n")
+			$id = "\n";
+		else
+			$id = $this->identifierOut;
+		
+		if (substr($string, $pos, strlen($id)) != $id)
+			return false;
+		
+		if (!$this->keepIdentifierOut)
+			$pos += strlen($id);
+		
+		$type = $this->type;
+		return true;
+	}
+
+	function Read(&$string, &$pos, $decorators) {
+		$content = array();
+		$currentJob = '';
+		$type = '';
+		
+		while (
+			(strlen($string) > $pos) && 
+			!$this->StopHere($string, $pos, $currentJob, $type)
+			) {
+			$break = false;
+			if ($this->canIncludeDecorator) {
+				for($index = 0; $index < count($decorators); $index++) {
+					if ($decorators[$index]->StartHere($string, $pos, $currentJob)) {
+						if ($currentJob != '') {
+							$content[] = array('type' => 'text', 'content' => $currentJob);
+							$currentJob = '';
+						}
+						$content[] = $decorators[$index]->Read($string, $pos, $decorators);
+						$break = true;
+						break;
+					}
+				}
+			}
+			
+			if (!$break) {
+				if ($this->canEscape && substr($string, $pos, 1) == '\\') {
+					$pos++;
+				}
+				
+				$currentJob .= substr($string, $pos, 1);
+				$pos++;
+			}
+		}
+		
+		if ($currentJob != '') {
+			$content[] = array('type' => 'text', 'content' => $currentJob);
+			$currentJob = '';
+		}
+		
+		return array('type' => $this->type, 'content' => $content);
+	}
+}
+
+class LineDecorator {
+	var $type;
+	var $identifier;
+	var $textDecorators;
+	
+	function __construct($type, $identifier, $textDecorators) {
+		$this->type = $type;
+		$this->identifier = $identifier;
+		$this->textDecorators = $textDecorators;
+	}
+	
+	function StartHere(&$string, &$pos, $level = 0) {
+		if (strlen($string) <= $pos)
+			return false;
+			
+		if (substr($string, $pos, strlen($this->identifier)) != $this->identifier)
+			return false;
+		
+		return true;
+	}
+	
+	function ReadLineOrLines(&$string, &$pos, $level = 0) {
+		$pos += strlen($this->identifier);
+		
+		$decorator = new TextDecorator($this->type, 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
+		
+		return $decorator->Read($string, $pos, $this->textDecorators);
+	}
+}
+
+class ArrayLineDecorator extends LineDecorator {
+	var $headReader;
+	var $rowReader;
+	var $textDecoratorsHead;
+	var $textDecoratorsRow;
+	
+	function ArrayLineDecorator($type, $identifier, $textDecorators) {
+		$this->textDecoratorsHead = array_merge($textDecorators, array(new TextDecorator('cellhead', $identifier, $identifier, false, true, false, true, true)));
+		$this->textDecoratorsRow = array_merge($textDecorators, array(new TextDecorator('cellrow', $identifier, $identifier, false, true, false, true, true)));
+		
+		parent::__construct($type, $identifier, null);
+		$this->headReader = new TextDecorator('head', 'xxx', '¤¤¤EOF¤¤¤', false, true, false, true, false);
+		$this->rowReader = new TextDecorator('row', 'xxx', '¤¤¤EOF¤¤¤', false, true, false, true, false);
+	}
+	
+	function ReadLineOrLines(&$string, &$pos, $level = 0) {
+		$table = array();
+	
+		$table[] = $this->headReader->Read($string, $pos, $this->textDecoratorsHead);
+		while (parent::StartHere($string, $pos, $level)) {
+			$table[] = $this->rowReader->Read($string, $pos, $this->textDecoratorsRow);
+		}
+		
+		return array('type' => $this->type, 'content' => $table);
+	}
+}
+
+class QuoteLineDecorator extends LineDecorator {
+
+	function __construct($type, $identifier, $textDecorators){
+		parent::__construct($type, $identifier, $textDecorators);
+	}
+	
+	function ReadLineOrLines(&$string, &$pos, $level = 0) {
+		$pos += strlen($this->identifier);
+		$quote = array();
+	
+		$decorator = new TextDecorator('paragraph', 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
+		$quote[] = $decorator->Read($string, $pos, $this->textDecorators);
+		while (parent::StartHere($string, $pos, $level)) {
+			$quote[] = $decorator->Read($string, $pos, $this->textDecorators);
+		}
+		return array('type' => $this->type, 'content' => $quote);
+	}
+}
+
+class PreformatedLineDecorator extends LineDecorator {
+
+	function __construct($type, $identifier, $textDecorators){
+		parent::__construct($type, $identifier, $textDecorators);
+	}
+	
+	function ReadLineOrLines(&$string, &$pos, $level = 0) {
+		$pos += strlen($this->identifier);
+		$quote = array();
+	
+		$decorator = new TextDecorator('paragraph', 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
+		$quote[] = $decorator->Read($string, $pos, $this->textDecorators);
+		while (parent::StartHere($string, $pos, $level)) {
+			$quote[] = $decorator->Read($string, $pos, $this->textDecorators);
+		}
+		return array('type' => $this->type, 'content' => $quote);
+	}
+}
+
+class BulletLineDecorator extends LineDecorator {
+	var $decorator;
+	
+	function __construct($type, $identifier, $textDecorators){
+		parent::__construct($type, $identifier, $textDecorators);
+		$this->decorator = new TextDecorator('listItem', 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
+	}
+	
+	function StartHere(&$string, &$pos, $level = 0) {
+		if (strlen($string) <= $pos)
+			return false;
+		$id = str_repeat($this->identifier, $level + 1).' ';			
+		if (substr($string, $pos, strlen($id)) != $id)
+			return false;
+		
+		return true;
+	}
+	
+	function ReadLineOrLines(&$string, &$pos, $level = 0) {
+		$list = array();
+		
+		while (	$this->StartHere($string, $pos, $level) || 
+				$this->StartHere($string, $pos, $level + 1)
+				) {
+			if ($this->StartHere($string, $pos, $level + 1)) {
+				$list[] = $this->ReadLineOrLines($string, $pos, $level + 1);
+			} else {
+				$id = str_repeat($this->identifier, $level + 1).' ';
+				$pos += strlen($id);
+				$list[] = $this->decorator->Read($string, $pos, $this->textDecorators);
+			}
+		}
+		
+		return array('type' => $this->type, 'content' => $list);
+	}
+}
 
 class LexerParser {
+	var $textDecoratorMinimalSet;
+	var $textDecoratorFullSet;
+	var $lineDecorators;
 
-    //start line with space or 'end of line' right after
-    var $lineTransformers = array(
-        '|' => 'array',
-        'h1.' => 'head1',
-        'h2.' => 'head2',
-        '* ' => 'bullet1',
-        '** ' => 'bullet2',
-        '*** ' => 'bullet3',
-        '----' => 'separator',
-        'q.' => 'quote',
-        'p.' => 'preformatted'
-    );
-
-    //space before and no space after means start. no space before and space after or EoL means stop.
-    var $inlineTransformers = array(
-        '*' => 'strong',
-        '_' => 'italic',
-        '-' => 'delete',
-        '+' => 'underline',
-        '$' => 'monospaced'
-    );
-
-    //used like {html}blah blah blah{/html}
-    var $blockTransformers = array(
-        'html' => 'html'
-    );
-
-    // link: no specific array but [ksjfqksfjsdfkjh]
-    // image: no specific array but !qsjqksjdhqsd.jpg!
-
-    function lex(&$string) {
-        $result = array();
-        $pos = 0;
-        while ($pos < strlen($string)) {
-            $previousPos = $pos;
-            $this->ReadHeadLine($string, $pos, $type);
-            if ($type == 'separator' || $type == 'preformatted') {
-                $result[] = array('type' => $type, 'content' => $this->ReadEndOfLine($string, $pos));
-            } elseif ($type == 'quote') {
-                $result[] = array('type' => $type, 'content' => $this->ReadQuote($string, $pos));
-            } elseif ($type == 'array') {
-                $result[] = array('type' => $type, 'content' => $this->ReadArray($string, $pos));
-            } elseif ($type == 'bullet1' || $type == 'bullet2' || $type == 'bullet3') {
-                $pos = $previousPos;
-                $result[] = $this->ReadBullet($string, $pos, 1);
-            } else {
-                $result[] = array('type' => $type, 'content' => $this->ReadLine($string, $pos, "\n", "\n"));
-            }
-        }
-        return $result;
-    }
-
-    private function ReadEndOfLine(&$string, &$pos) {
-        $previousChain = '';
-        $stop = false;
-        while(!$stop && $pos < strlen($string)) {
-            $current = substr($string, $pos, 1);
-            if ($current != "\n")
-                $previousChain .= $current;
-            else
-                $stop = true;
-            $pos++;
-        }
-        return $previousChain;
-    }
-
-    private function ReadQuote(&$string, &$pos) {
-        $result = $this->ReadLine($string, $pos, "\n");
-        while (TryReadSpecificHeadLine('q.', $string, $pos)) {
-            array_merge($result, $this->ReadLine($string, $pos, "\n"));
-        }
-    }
-
-    private function ReadArray(&$string, &$pos) {
-        $header = $this->ReadEndOfLine($string, $pos);
-        $headers = explode('|', $header);
-        $headerSize = array();
-        $cells = array();
-        $rows = array();
-        foreach($headers as $head) {
-            $headerSize[] = strlen($head);
-            $cells[] = array('type' => 'headCell', 'content' => $head);
-        }
-        $rows[] = array('type' => 'headRow', 'content' => $cells);
-        while(TryReadSpecificHeadLine('|', $string, $pos)) {
-            $line = $this->ReadEndOfLine($string, $pos);
-            $cells = array();
-            $inPos = 0;
-            foreach($headerSize as $length) {
-                $cells[] = array('type' => 'cell', 'content' => substr($line, $inPos, $length));
-                $inPos += $length + 1;
-            }
-            $rows[] = array('type' => 'row', 'content' => $cells);
-        }
-        return array('type' => 'array', 'content' => $rows);
-    }
-
-    private function ReadBullet(&$string, &$pos, $level) {
-        $bullet = array('* ' => 'bullet1',
-                        '** ' => 'bullet2',
-                        '*** ' => 'bullet3');
-        $result = array();
-        $nextPos = $pos;
-        while($this->TryReadSpecificHeadLineArray($bullet, $string, $nextPos, $type)) {
-            $newLevel = intval(substr($type, -1));
-            if ($newLevel < $level)
-                return array('type' => 'list', 'content' => $result);
-            if ($newLevel == $level) {
-                $pos = $nextPos;
-                $result[] = array('type' => 'listElement', 'content' => $this->ReadLine($string, $pos, '', "\n"));
-            }
-            if ($newLevel > $level)
-                $result[] = $this->ReadBullet($string, $pos, $level + 1);
-            $nextPos = $pos;
-        }
-        return array('type' => 'list', 'content' => $result);
-    }
-
-    private function ReadLine(&$string, &$pos, $previousChar, $stack) {
-        $result = array();
-        $previousChain = '';
-        while($pos < strlen($string)) {
-            $current = substr($string, $pos, 1);
-            $next = substr($string, $pos + 1, 1);
-            if ($current == '\r') {
-                $pos++;
-                continue;
-            }
-            if ($current == '\\') {
-                $previousChain .= substr($string, $pos+1, 1);
-                $previousChar = '';
-                $pos += 2;
-                continue;
-            }
-            if (($previousChar == ' ' || $previousChar == "\n") && $next != ' ' && in_array($current, array_keys($this->inlineTransformers))) {
-                if ($previousChain != '')
-                    $result[] = array('type' => 'text', 'content' => $previousChain);
-                $previousChain = '';
-                $pos++;
-                $result[] = array('type' => $this->inlineTransformers[$current], 'content' => $this->ReadLine($string, $pos, ' ', $current));
-                $previousChar = 'a';
-                continue;
-            }
-            if ($previousChar != ' ' && $previousChar != "\n" &&
-                    ($next == ' ' || $next == "\n" || $next == '' || in_array($next, array_keys($this->inlineTransformers))) &&
-                    in_array($current, array_keys($this->inlineTransformers))) {
-                if ($previousChain != '')
-                    $result[] = array('type' => 'text', 'content' => $previousChain);
-                $pos++;
-                if ($current != $stack) {
-                    $pos--;
-                }
-                return $result;
-            }
-            if (($previousChar == ' ' || $previousChar == "\n") && $current == '[') {
-                $pos++;
-                if ($this->TryReadLink($string, $pos, $display, $link)) {
-                    if ($previousChain != '')
-                        $result[] = array('type' => 'text', 'content' => $previousChain);
-                    $result[] = array('type' => 'link', 'display' => $display, 'link' => $link);
-                    $previousChain = '';
-                    $previousChar='a';
-                    continue;
-                } else {
-                    $pos--;
-                }
-            }
-            if (($previousChar == ' ' || $previousChar == "\n") && $current == '!') {
-                $pos++;
-                if ($this->TryReadPicture($string, $pos, $link)) {
-                    if ($previousChain != '')
-                        $result[] = array('type' => 'text', 'content' => $previousChain);
-                    $result[] = array('type' => 'picture', 'content' => $link);
-                    $previousChain = '';
-                    $previousChar='a';
-                    continue;
-                } else {
-                    $pos--;
-                }
-            }
-            if ($current == '{') {
-                $pos++;
-                if ($this->TryReadHTML($string, $pos, $html)) {
-                    if ($previousChain != '')
-                        $result[] = array('type' => 'text', 'content' => $previousChain);
-                    $result[] = array('type' => 'html', 'content' => $html);
-                    $previousChain = '';
-                    $previousChar='a';
-                    continue;
-                } else {
-                    $pos--;
-                }
-            }
-
-            if ($current == "\n") {
-                if ($previousChain != '')
-                    $result[] = array('type' => 'text', 'content' => $previousChain);
-                if ($stack == '' || $current == $stack) {
-                    $pos++;
-                }
-                return $result;
-            }
-            $previousChar = $current;
-            $previousChain .= $current;
-            $pos++;
-        }
-        if ($previousChain != '')
-            $result[] = array('type' => 'text', 'content' => $previousChain);
-        return $result;
-    }
-
-    private function ReadHeadLine(&$string, &$pos, &$type) {
-        foreach($this->lineTransformers as $k => $newType) {
-            if ($this->TryReadSpecificHeadLine($k, $string, $pos)) {
-                $type = $newType;
-                return true;
-            }
-        }
-        $type = 'normal';
-        return true;
-    }
-
-    private function TryReadSpecificHeadLine($key, &$string, &$pos) {
-        if (substr($string, $pos, strlen($key)) == $key) {
-            $pos += strlen($key);
-            return true;
-        }
-        return false;
-    }
-
-    private function TryReadSpecificHeadLineArray($keyArray, &$string, &$pos, &$type) {
-        foreach($keyArray as $key => $t) {
-            if (substr($string, $pos, strlen($key)) == $key) {
-                $pos += strlen($key);
-                $type = $t;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private function TryReadLink(&$string, &$pos, &$display, &$link) {
-        $res = preg_match("/^([^\]]+)\]/", substr($string, $pos), $reg);
-        if ($res == 1) {
-            $key = $reg[1];
-            $separator = strpos($key, '|');
-            $display = $separator ? substr($key, 0, $separator) : $key;
-            $link = $separator ? substr($key, $separator + 1) : $key;
-            $pos = $pos + strlen($key) + 1;
-            return true;
-        }
-        return false;
-    }
-
-    private function TryReadPicture(&$string, &$pos, &$key) {
-        $a = substr($string, $pos);
-        $res = preg_match("/^([^\!]+)\!/", substr($string, $pos), $reg);
-        if ($res == 1) {
-            $key = $reg[1];
-            $pos = $pos + strlen($key) + 1;
-            return true;
-        }
-        return false;
-    }
-
-    private function TryReadHTML(&$string, &$pos, &$key) {
-        if (substr($string, $pos, 5) != 'html}')
-            return false;
-        $pos += 5;
-        $previousChain = '';
-        while($pos < strlen($string)) {
-            if (substr($string, $pos, 7) != '{/html}') {
-                $previousChain .= substr($string, $pos, 1);
-                $pos++;
-            } else {
-                $key = $previousChain;
-                $pos += 7;
-                return true;
-            }
-        }
-        $key = $previousChain;
-        return true;
-    }
+	function __construct() {
+		$this->textDecoratorMinimalSet = array(
+			new TextDecorator('strong', '*', '*', true, true, false, true, false),
+			new TextDecorator('italic', '_', '_', true, true, false, true, false),
+			new TextDecorator('delete', '-', '-', true, true, false, true, false),
+			new TextDecorator('underline', '+', '+', true, true, false, true, false),
+			new TextDecorator('monospaced', '$', '$', true, true, false, true, false),
+			new TextDecorator('image', '!', '!', false, false, false, false, false),
+			new TextDecorator('link', '[', ']', false, false, false, false, false),
+		);
+		$this->textDecoratorFullSet = array_merge($this->textDecoratorMinimalSet, array(
+			new TextDecorator('html', '{html}', '{/html}', false, false, true, false, false),
+			new TextDecorator('preformatted', '{pre}', '{/pre}', false, false, true, false, false),
+		));
+		$this->lineDecorators = array(
+			new LineDecorator('head1', 'h1. ', $this->textDecoratorMinimalSet),
+			new LineDecorator('head2', 'h2. ', $this->textDecoratorMinimalSet),
+			new LineDecorator('separator', '----', $this->textDecoratorMinimalSet),
+			new ArrayLineDecorator('table', '|', $this->textDecoratorMinimalSet),
+			new QuoteLineDecorator('quote', 'q. ', $this->textDecoratorFullSet),
+			new BulletLineDecorator('list', '*', $this->textDecoratorMinimalSet),
+			new LineDecorator('paragraph', '', $this->textDecoratorFullSet)
+		);
+	}
+	
+	function lex(&$string) {
+		$result = array();
+		$pos = 0;
+		while (strlen($string)>$pos) {
+			foreach($this->lineDecorators as $decorator) {
+				if ($decorator->StartHere($string, $pos)) {
+					$result[] = $decorator->ReadLineOrLines($string, $pos);
+					break;
+				}
+			}
+		}
+		return $result;
+	}
 }
 
 class Transformer {
@@ -296,6 +289,7 @@ class Transformer {
 
     function ToHtml($string) {
         $decoded = $this->lexerParser->lex($string);
+		//var_dump($decoded);
 	    return $this->Encode($decoded);
     }
 
@@ -308,7 +302,7 @@ class Transformer {
                 case 'text' :
                     $string .= htmlentities($item['content']);
                     break;
-                case 'normal' :
+                case 'paragraph' :
                     $string .= '<P>'.$this->Encode($item['content']).'</P>';
                     break;
                 case 'head1' :
@@ -321,37 +315,54 @@ class Transformer {
                     $string .= $item['content'];
                     break;
                 case 'strong' :
-                    $string .= '<span style="font-weight:bold;">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<span class="cx_bold">'.$this->Encode($item['content']).'</span>';
                     break;
                 case 'delete' :
-                    $string .= '<span style="text-decoration: line-through;">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<span class="cx_linethrough">'.$this->Encode($item['content']).'</span>';
                     break;
                 case 'italic' :
-                    $string .= '<span style="font-style: italic;">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<span class="cx_italic">'.$this->Encode($item['content']).'</span>';
                     break;
                 case 'underline' :
-                    $string .= '<span style="text-decoration: underline;">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<span class="cx_underline">'.$this->Encode($item['content']).'</span>';
                     break;
                 case 'monospaced' :
-                    $string .= '<span style="font-family:Courier New, Courier, monospace;">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<span class="cx_monospace">'.$this->Encode($item['content']).'</span>';
                     break;
                 case 'list' :
                     $string .= '<ul>'.$this->Encode($item['content']).'</ul>';
                     break;
-                case 'listElement' :
+                case 'listItem' :
                     $string.= '<li>'.$this->Encode($item['content']).'</li>';
                     break;
                 case 'link' :
-                    $string.= '<a href="'.$item['link'].'">'.htmlentities($item['display']).'</a>';
+					//var_dump($item['content']);
+                    //$string.= '<a href="'.$item['content'].'">'.htmlentities($item['content']).'</a>';
                     break;
                 case 'picture' :
-                    $string.= '<img src="'.$item['content'].'">';
+                    //$string.= '<img src="'.$item['content'].'">';
                     break;
                 case 'separator' :
                     $string.= '<hr />';
                     break;
                 case 'preformatted' :
-                    $string.= '<pre>'.htmlentities($item['content']).'</pre>';
+					$string.= '<pre>'.htmlentities($this->Encode($item['content'])).'</pre>';
+                    break;
+				case 'table' :
+                    $string.= '<table>'.$this->Encode($item['content']).'</table>';
+                    break;
+				case 'table' :
+                    $string.= '<table>'.$this->Encode($item['content']).'</table>';
+                    break;
+				case 'head' :
+                case 'row' :
+                    $string.= '<tr>'.$this->Encode($item['content']).'</tr>';
+                    break;
+				case 'cellhead' :
+				    $string.= '<th>'.$this->Encode($item['content']).'</th>';
+                    break;
+				case 'cellrow' :
+				    $string.= '<td>'.$this->Encode($item['content']).'</td>';
                     break;
             }
         }

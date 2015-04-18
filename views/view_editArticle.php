@@ -107,7 +107,7 @@
 
   <div class="col-md-12">
     <textarea class="form-control" id="text" name="text" rows="10"><?php echo $obj['form']['text'] ?></textarea>
-    <div id="textHTML" width="500px" style="border: 1px; display: none;"><!-- placeholder for previsualisation !--></div>
+    <div id="textHTML" width="500px" class="cx_article" style="display: none;"><!-- placeholder for previsualisation !--></div>
   </div>
 </div>
 <!-- Button (Double) -->
@@ -119,3 +119,12 @@
 </div>
 </fieldset>
 </form>
+<script>
+$(function () {
+	$('#datetimepicker').datetimepicker({
+		locale: '<?php echo $obj['language'] ?>',
+		format: 'DD/MM/YYYY',
+		defaultDate: "<?php echo $obj['form']['date'] ?>"
+	});
+});
+</script>

@@ -5,3 +5,23 @@
 .dropdown-menu > li > a.cx_adminonly  {
   color: #FFE4C4;
 }
+
+div.cx_article .cx_bold {
+	font-weight:bold;
+}
+
+div.cx_article .cx_linethrough {
+	text-decoration: line-through;
+}
+
+div.cx_article .cx_italic {
+	font-style: italic;
+}
+
+div.cx_article .cx_underline {
+	text-decoration: underline;
+}
+
+div.cx_article .cx_monospace {
+	font-family:Courier New, Courier, monospace;
+}

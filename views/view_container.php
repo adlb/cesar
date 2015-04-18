@@ -5,9 +5,10 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <link rel="stylesheet" href="css/framework.css">
 <link rel="stylesheet" href="css/malteLiban.css">
-<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<script src="js/jquery-1.11.2.min.js"></script>
 <script>
 var getScope = function(id, f) {
     if (typeof angular != 'undefined') {
@@ -46,7 +47,6 @@ var getScope = function(id, f) {
 
 </div>
 </body>
-<script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/uicustom/jquery-ui.min.js"></script>
 <script src="js/angular.min.js"></script>

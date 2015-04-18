@@ -4,6 +4,6 @@
     <a href="<?php echo $link['url'] ?>"><?php echo $link['type'] ?></a>
 <?php } ?>
 
-<div class="articleContent">
+<div class="ox_article">
 <?php echo $obj['htmlContent']; ?>
 </div>
