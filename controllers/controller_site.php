@@ -45,18 +45,17 @@ class ControllerSite {
     }
 
     function view_alerts(&$obj, &$view) {
-        $alerts = $this->articleDal->GetWhere(array('alert' => true, 'status' => 'show'));
-        $obj['alerts'] = [];
-        foreach($alerts as $alert) {
-            if ($alert['date'] < date('Y-m-d')) {
-                $alert['rawContent'] = $this->translator->GetTranslation($alert['text']);
-                $alert['htmlContent'] = $this->formatter->ToHtml($alert['rawContent']);
-                $obj['alerts'][] = $alert;
-            } else {
-                $alert['alert']  = false;
-                //$this->articleDal->TrySave($alert);
-            }
-        }
+        $alerts = $this->articleDal->GetWhere(array('alert' => 1, 'status' => 'show'));
+		$alertsActives = array();
+		foreach($alerts as $alert) {
+			if (strtotime($alert['datealert']) < strtotime(date('Y-m-d'))) {
+				$alert['alert'] = 0;
+				$this->articleDal->TrySave($alert);
+			} else {
+				$alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'));
+			}
+		}
+		$obj['alerts'] = $alertsActives;
     }
 
     private function enrich_Article($article, $isAdmin) {
@@ -83,15 +82,17 @@ class ControllerSite {
             return;
         }
 
-        if ($article['status'] == 'hide' && !$this->authentication->CheckRole('Administrator')) {
+        if (
+			$this->config->current['Home'] != $id &&
+			$article['status'] == 'hide' && 
+			!$this->authentication->CheckRole('Administrator')) {
             $view = 'noArticle';
             return;
         }
         
         $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
         
-        $obj['article'] = $article;
-        $view = 'article';
+		$obj['article'] = $article;
     }
 
     function view_home(&$obj, &$view) {

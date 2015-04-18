@@ -94,6 +94,16 @@
     </div>
   </div>
 </div>
+<div class="form-group" ng-show="type == 'news'">
+  <label class="col-md-4 control-label" for="date">DateAlert</label>
+  <div class="col-md-3">
+    <div class='input-group date' id='datetimepickerAlert'>
+        <input id="datealert" name="datealert" placeholder="placeholder" type='text' class="form-control" />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+  </div>
+</div>
 
 <!-- Textarea -->
 <div class="form-group" ng-show="type == 'article' || type == 'news'">
@@ -125,6 +135,11 @@ $(function () {
 		locale: '<?php echo $obj['language'] ?>',
 		format: 'DD/MM/YYYY',
 		defaultDate: "<?php echo $obj['form']['date'] ?>"
+	});
+	$('#datetimepickerAlert').datetimepicker({
+		locale: '<?php echo $obj['language'] ?>',
+		format: 'DD/MM/YYYY',
+		defaultDate: "<?php echo $obj['form']['datealert'] ?>"
 	});
 });
 </script>

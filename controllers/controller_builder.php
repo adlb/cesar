@@ -170,12 +170,14 @@ class ControllerBuilder {
         $article['father'] = $father;
         $article['type'] = $_POST['type'];
         $article['title'] = $this->translator->UpdateTranslation($_POST['language'], $article['title'], $_POST['title'], 1, 'pureText');
-        $article['date'] = date_create_from_format('d/m/Y', $_POST['date']);
+        $article['date'] = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['date'])));
+        $article['datealert'] = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['datealert'])));
         $article['text'] = $this->translator->UpdateTranslation($_POST['language'], $article['text'], $_POST['text'], 0, 'decoratedText');
         $article['alert'] = $_POST['alert'] == 1;
         $article['status'] = isset($_POST['show']) && $_POST['show'] == 1 ? "show" : "hide";
 
-        if (!$this->articleDal->TrySave($article)) {
+		var_dump($article);
+		if (!$this->articleDal->TrySave($article)) {
             $obj['form'] = $_POST;
             $obj['errors'][] = ':CANT_SAVE_Article';
             $view = 'editArticle';
@@ -197,7 +199,6 @@ class ControllerBuilder {
             $obj['form']['title'] = $this->translator->GetTranslation($article['title']);
             $obj['form']['show'] = $article['status'] == 'show' || $article['status'] == 'home' ? 1 : 0;
             $obj['form']['home'] = $this->config->current['Home'] == $article['id'] ? 1 : 0;
-			//$obj['form']['date'] = $article['date']->format('Y-m-d');
         } else {
             $obj['form'] = array(
                 'id' => '',
@@ -210,7 +211,8 @@ class ControllerBuilder {
                 'date' => date('Y-m-d'),
                 'show' => 1,
                 'home' => 0,
-                'alert' => 0
+                'alert' => 0,
+				'datealert' => date('Y-m-d', strtotime("+2 week"))
             );
         }
         $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);

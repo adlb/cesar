@@ -134,12 +134,7 @@ class Dal {
             $statement = $this->db->prepare ($sql);
             foreach($this->fields as $k => $v)
                 if (isset($value[$k])) {
-                    if ($this->fields[$k]['create'] == 'date') {
-						$date = $value[$k]->format('Y-m-d');
-						$statement->bindParam (':'.$k, $date, $v['bind']);
-					} else {
-						$statement->bindParam (':'.$k, $value[$k], $v['bind']);
-					}
+                    $statement->bindParam (':'.$k, $value[$k], $v['bind']);
 				}
             $statement->execute ();
             if (!isset($value[$this->keyName])) {

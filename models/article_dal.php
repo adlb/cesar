@@ -12,6 +12,7 @@ class ArticleDal extends Dal {
         'text' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         'rank' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
         'alert' => array('create' => 'boolean', 'bind' => PDO::PARAM_BOOL),
+        'datealert' => array('create' => 'date', 'bind' => PDO::PARAM_STR),
         'status' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
         //Can be
         // * show
