@@ -281,7 +281,7 @@ $(function() {
                 timeout: 3000,
                 success: function(data) {
                   $('#text').css("display","none");
-                  $('#textHTML').html(data);
+                  $('#textHTML').html(data.formattedText);
                   $('#textHTML').css("display","inline");
                   },
                 error: function() {

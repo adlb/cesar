@@ -296,7 +296,7 @@ class Transformer {
 
     function ToHtml($string) {
         $decoded = $this->lexerParser->lex($string);
-        return $this->Encode($decoded);
+	    return $this->Encode($decoded);
     }
 
     function Encode($decoded) {

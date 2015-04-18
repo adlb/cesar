@@ -35,7 +35,8 @@ if ($action != '') {
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     //Ajax
     header( 'content-type: application/json; charset=utf-8' );
-    renderPartial($view, $obj);
+    echo json_encode($obj);
+	die();
 } else {
     header( 'content-type: text/html; charset=utf-8' );
     render($controllerInstance->container, $view, $obj);

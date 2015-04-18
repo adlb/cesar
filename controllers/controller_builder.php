@@ -68,7 +68,7 @@ class ControllerBuilder {
 
 	private function GetMenuFathers($id) {
 		$menuFathers = array();
-        $menuFathers = ':TOP_LEVEL_MENU';
+        $menuFathers[-1] = ':TOP_LEVEL_MENU';
         $menuItems = $this->articleDal->GetFathersForMenu();
         foreach($menuItems as $v) {
             if ($v['id'] != $id)
@@ -247,8 +247,7 @@ class ControllerBuilder {
     function action_format(&$obj, &$view) {
         $this->CheckRights(array('Administrator', 'Translator'), $obj);
         $rawData = file_get_contents("php://input");
-        $html = $this->formatter->ToHtml($rawData);
-        echo $html;
+        $obj['formattedText'] = $this->formatter->ToHtml($rawData);
     }
 
     function action_moveEntry(&$obj) {
