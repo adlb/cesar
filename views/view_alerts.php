@@ -1,16 +1,20 @@
-<div ng-init="viewedalerts=localStorage.getItem('alerts') || [];">
+<div>
 
 <?php foreach($obj['alerts'] as $alert) { ?>
-<div ng-show="viewedalerts.contains(<?php echo $alert['id'] ?>)">
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAlert<?php echo $alert['id'] ?>" ng-click="viewedalerts.push(<?php echo $alert['id'] ?>);localStorage.setItem('alerts',viewedalerts);">
-        <?php t($alert['title']); ?>
-    </button>
-    <div class="collapse" id="collapseAlert<?php echo $alert['id'] ?>">
-        <div class="well">
-            <?php echo $alert['htmlContent'] ?>
-        </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="alert<?php echo $alert['id'] ?>">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#Dalert<?php echo $alert['id'] ?>">
+          <?php t($alert['title']); ?>
+        </a>
+      </h4>
     </div>
-</div>
+    <div id="Dalert<?php echo $alert['id'] ?>" class="panel-collapse collapse in" role="tabpanel">
+      <div class="panel-body">
+        <?php echo $alert['htmlContent'] ?>
+      </div>
+    </div>
+  </div>
 <?php } ?>
 
 </div>
