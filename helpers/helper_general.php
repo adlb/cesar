@@ -16,64 +16,83 @@ require('models/textShort_dal.php');
 require('models/media_dal.php');
 
 class WebSite {
+    var $obj;
+    var $services;
+    var $controllerFactory;
+    
+    function __construct($configFile) {
+        $this->services['config'] = new Config($configFile);
+        $this->services['authentication'] = new Authentication();
+    
+        if (!isset($_GET['language'])) {
+            $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            header('Location: '.$language.'/');
+            die();
+        }
 
-	var $obj;
-	var $services;
-	var $controllerFactory;
-	
-	function __construct($configFile) {
-		$this->services['config'] = new Config($configFile);
-		$this->services['authentication'] = new Authentication();
-	
-		if (!isset($_GET['language'])) {
-			$this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-			header('Location: '.$language.'/');
-			die();
-		}
+        $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $languages = ($this->services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $this->services['config']->current['Languages'] : $this->services['config']->current['ActiveLanguages'];
 
-		$language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		$languages = ($this->services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $this->services['config']->current['Languages'] : $this->services['config']->current['ActiveLanguages'];
+        if (!in_array($language, $languages)) {
+            $language = $languages[0];
+        }
 
-		if (!in_array($language, $languages)) {
-			$language = $languages[0];
-		}
+        $this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['userShortDal'] =   new UserShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['formatter'] =      new Transformer     ();
+        $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
+        $this->services['translator'] =     new Translator      ($this->services['textDal'], $language, $languages);
+        $this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
+        $this->controllerFactory =             new ControllerFactory($this->services);
 
-		$this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['userShortDal'] =   new UserShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-		$this->services['formatter'] =      new Transformer     ();
-		$this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
-		$this->services['translator'] =     new Translator      ($this->services['textDal'], $language, $languages);
-		$this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
-		$this->controllerFactory =         	new ControllerFactory($this->services);
+        $this->obj['language'] = $this->services['translator']->language;
+        $this->obj['title'] = $this->services['config']->current['Title'];
+        $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
+        $_SESSION['messages'] = null;
+    }
 
-		$this->obj['language'] = $this->services['translator']->language;
-		$this->obj['title'] = $this->services['config']->current['Title'];
-	}
+    //could be moved to translator
+    function Translate($key) {
+        global $services;
+        if (!is_array($key)) {
+            return $this->services['translator']->GetTranslation($key);
+        } else {
+            $k = array_shift($key);
+            $trad = $services['translator']->GetTranslation($k);
+            for($i = 0; $i < count($key); $i++) {
+                $trad = str_replace('{'.$i.'}', $key[$i], $trad);
+            }
+            return $trad;
+        }
+    }
 
-	//could be moved to translator
-	function translate($key) {
-		global $services;
-		if (!is_array($key)) {
-			return $this->services['translator']->GetTranslation($key);
-		} else {
-			$k = array_shift($key);
-			$trad = $services['translator']->GetTranslation($k);
-			for($i = 0; $i < count($key); $i++) {
-				$trad = str_replace('{'.$i.'}', $key[$i], $trad);
-			}
-			return $trad;
-		}
-	}
+    function AddMessage($level, $text) {
+        $levels = array('success' => ':SUCCESS', 'info' => ':INFORMATION', 'warning' => ':WARNING', 'error' => ':ERROR');
+        if (!in_array($level, array_keys($levels)))
+            $level = 'info';
+        
+        $this->obj['messages'][] = array(
+            'level' => $level,
+            'strongText' => $levels[$level],
+            'text' => $text
+        );
+    }
+    
+    function RedirectTo($param) {
+        $_SESSION['messages'] = $this->obj['messages'];
+        header('Location: '.url($param));
+        die();
+    }
 }
 
 //shortcut for translation
 function t($key) {
-	global $webSite;
-    echo $webSite->translate($key);
+    global $webSite;
+    echo $webSite->Translate($key);
 }
 
 function disp($obj, $key) {
@@ -90,8 +109,8 @@ function url($param) {
     return '?'.join('&', $queryString);
 }
 
-function redirectTo($param, $errors) {
-    $_SESSION['errors'] = $errors;
+function redirectTo($param, $messages) {
+    $_SESSION['messages'] = $messages;
 
     header('Location: '.url($param));
     die();

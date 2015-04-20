@@ -46,9 +46,9 @@
 
 <!-- Text input-->
 <div class="form-group" ng-show="type == 'menu' || type == 'article' || type == 'news'">
-  <label class="col-md-4 control-label" for="title">Title</label>
+  <label class="col-md-4 control-label" for="titleTrad">Title</label>
   <div class="col-md-6">
-  <input id="title" name="title" placeholder="placeholder" class="form-control input-md" type="text" value="<?php echo $obj['form']['title'] ?>">
+  <input id="title" name="titleTrad" placeholder="placeholder" class="form-control input-md" type="text" value="<?php echo $obj['form']['titleTrad'] ?>">
   </div>
 </div>
 
@@ -69,6 +69,7 @@
   <div class="col-md-1">
     <div class="checkbox">
       <label class="checkbox-0" for="show">
+        <input type="hidden" name="show" value="0">
         <input id="show" name="show" type="checkbox" value="1" <?php echo $obj['form']['show'] == 1 ? 'checked' : '' ?> />
       </label>
     </div>
@@ -79,6 +80,7 @@
   <div class="col-md-1">
     <div class="checkbox">
       <label class="checkbox-0" for="home">
+        <input type="hidden" name="home" value="0">
         <input id="home" name="home" type="checkbox" value="1" <?php echo $obj['form']['home'] == 1 ? 'checked' : '' ?> />
       </label>
     </div>
@@ -89,6 +91,7 @@
   <div class="col-md-1">
     <div class="checkbox">
       <label class="checkbox-0" for="alert">
+        <input type="hidden" name="alert" value="0">
         <input id="alert" name="alert" type="checkbox" value="1" <?php echo $obj['form']['alert'] == 1 ? 'checked' : '' ?> />
       </label>
     </div>
@@ -116,7 +119,7 @@
   </div>
 
   <div class="col-md-12">
-    <textarea class="form-control" id="text" name="text" rows="10"><?php echo $obj['form']['text'] ?></textarea>
+    <textarea class="form-control" id="textTrad" name="textTrad" rows="10"><?php echo $obj['form']['textTrad'] ?></textarea>
     <div id="textHTML" width="500px" class="cx_article" style="display: none;"><!-- placeholder for previsualisation !--></div>
   </div>
 </div>

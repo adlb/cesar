@@ -58,7 +58,7 @@ class ControllerSite {
 		$obj['alerts'] = $alertsActives;
     }
 
-    private function enrich_Article($article, $isAdmin) {
+    protected function enrich_Article($article, $isAdmin) {
         $article['rawContent'] = $this->translator->GetTranslation($article['text']);
         $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
         $conditionForSubArticles = array('father' => $article['id']);
@@ -68,6 +68,7 @@ class ControllerSite {
         $article['links'] = array();
         if ($isAdmin) {
             $article['links'][] = array('type' => 'edit', 'url' => url(array('controller' => 'builder', 'view' => 'editArticle', 'id' => $article['id'])));
+            $article['links'][] = array('type' => 'delete', 'url' => url(array('controller' => 'builder', 'action' => 'deleteArticle', 'id' => $article['id'])));
         }
         $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 6);
         $article['subArticles'] = array();
@@ -83,16 +84,16 @@ class ControllerSite {
         }
 
         if (
-			$this->config->current['Home'] != $id &&
-			$article['status'] == 'hide' && 
-			!$this->authentication->CheckRole('Administrator')) {
+            $this->config->current['Home'] != $id &&
+            $article['status'] == 'hide' && 
+            !$this->authentication->CheckRole('Administrator')) {
             $view = 'noArticle';
             return;
         }
         
         $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
         
-		$obj['article'] = $article;
+        $obj['article'] = $article;
     }
 
     function view_home(&$obj, &$view) {

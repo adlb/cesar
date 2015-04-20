@@ -31,7 +31,7 @@ var getScope = function(id, f) {
 
 <br/>Header
 <?php displayPartial('site', 'menu', $obj); ?>
-<?php if (isset($obj['errors'])) { renderPartial('errors', $obj['errors']); } ?>
+<?php renderPartial('messages', $obj['messages']); ?>
 <?php renderPartial($obj['innerView'], $obj); ?>
 <br/>Footer
 <br />

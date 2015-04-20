@@ -13,7 +13,7 @@ class ControllerFactory {
         if (isset($this->cache[$controllerName]))
             return $this->cache[$controllerName];
 
-        require('controllers/controller_'.$controllerName.'.php');
+        require_once('controllers/controller_'.$controllerName.'.php');
         $controllerClassName = 'Controller'.$controllerName;
         $controller = new $controllerClassName($this->services);
         $this->cache[$controllerName] = $controller;

@@ -9,13 +9,11 @@ $webSite = new WebSite('config.json');
 $containerView = 'container';
 $defaultController = 'site';
 $defaultView = 'home';
-$obj = $webSite->obj;
+$obj =& $webSite->obj;
 
 $controller = (isset($_GET['controller'])) ? $_GET['controller'] : $defaultController;
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $defaultView;
 $action = (isset($_GET['action'])) ? $_GET['action'] : '';
-$obj['errors'] = (isset($_SESSION['errors'])) ? $_SESSION['errors'] : array();
-$_SESSION['errors'] = null;
 
 if (isset($_GET['forceMaintenance']) ||
     ($webSite->services['config']->current['Maintenance'] && $webSite->services['authentication']->Role() != 'Administrator'
@@ -29,10 +27,10 @@ $controllerInstance = $webSite->controllerFactory->GetController($controller);
 
 if ($action != '') {
     $actionFunction = 'action_'.$action;
-    $controllerInstance->$actionFunction($obj, $view);
+    $controllerInstance->$actionFunction($webSite->obj, $view);
 } else {
     $viewFunction = 'view_'.$view;
-    $controllerInstance->$viewFunction($obj, $view);
+    $controllerInstance->$viewFunction($webSite->obj, $view);
 }
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {

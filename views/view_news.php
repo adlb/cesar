@@ -1,9 +1,11 @@
-<h2><?php t($obj['title'])?></h2>
-
-<?php foreach($obj['links'] as $link) { ?>
-    <a href="<?php echo $link['url'] ?>"><?php echo $link['type'] ?></a>
-<?php } ?>
+<ol class="breadcrumb">
+    <li class="active"><a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['id'])) ?>"><?php t($obj['title'])?></a></li>
+    
+    <?php foreach($obj['links'] as $link) { ?>
+        <a href="<?php echo $link['url'] ?>" class="pull-right">&nbsp;&nbsp;<?php echo $link['type'] ?></a>
+    <?php } ?>
+</ol>
 
 <div class="ox_article">
-<?php echo $obj['htmlContent']; ?>
+    <?php echo $obj['htmlContent']; ?>
 </div>
