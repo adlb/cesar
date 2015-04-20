@@ -1,6 +1,6 @@
 <?php foreach($obj as $error) { ?>
-<div class="alert alert-warning alert-dismissible" role="alert">
+<div class="alert alert-<?php echo $error['level'] ?> alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Warning!</strong> <?php t($error) ?>
+  <strong><?php t($error['strongText']) ?></strong> <?php t($error['text']) ?>
 </div>
 <?php } ?>

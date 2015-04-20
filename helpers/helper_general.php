@@ -15,54 +15,65 @@ require('models/text_dal.php');
 require('models/textShort_dal.php');
 require('models/media_dal.php');
 
-$services['config'] = new Config('config.json');
-$services['authentication'] = new Authentication();
+class WebSite {
 
-if (!isset($_GET['language'])) {
-    $language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-    header('Location: '.$language.'/');
-    die();
-}
+	var $obj;
+	var $services;
+	var $controllerFactory;
+	
+	function __construct($configFile) {
+		$this->services['config'] = new Config($configFile);
+		$this->services['authentication'] = new Authentication();
+	
+		if (!isset($_GET['language'])) {
+			$this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			header('Location: '.$language.'/');
+			die();
+		}
 
-$language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-$languages = ($services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $services['config']->current['Languages'] : $services['config']->current['ActiveLanguages'];
+		$language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		$languages = ($this->services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $this->services['config']->current['Languages'] : $this->services['config']->current['ActiveLanguages'];
 
-if (!in_array($language, $languages)) {
-    $language = $languages[0];
-}
+		if (!in_array($language, $languages)) {
+			$language = $languages[0];
+		}
 
-$services['userDal'] =          new UserDal         ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['userShortDal'] =     new UserShortDal    ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['articleDal'] =       new ArticleDal      ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['textDal'] =          new TextDal         ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['textShortDal'] =     new TextShortDal    ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['mediaDal'] =         new MediaDal        ($services['config']->dbh, $services['config']->current['DBPrefix']);
-$services['formatter'] =        new Transformer     ();
-$services['gallery'] =          new Gallery         ($services['mediaDal']);
-$services['translator'] =       new Translator      ($services['textDal'], $language, $languages);
-$services['crowd'] =            new Crowd           ($services['userDal'], $services['userShortDal'], $services['authentication']);
-$controllerFactory =            new ControllerFactory($services);
+		$this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['userShortDal'] =   new UserShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+		$this->services['formatter'] =      new Transformer     ();
+		$this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
+		$this->services['translator'] =     new Translator      ($this->services['textDal'], $language, $languages);
+		$this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
+		$this->controllerFactory =         	new ControllerFactory($this->services);
 
-$obj['language'] = $services['translator']->language;
-$obj['title'] = $services['config']->current['Title'];
+		$this->obj['language'] = $this->services['translator']->language;
+		$this->obj['title'] = $this->services['config']->current['Title'];
+	}
 
-function translate($key) {
-    global $services;
-    if (!is_array($key)) {
-        return $services['translator']->GetTranslation($key);
-    } else {
-        $k = array_shift($key);
-        $trad = $services['translator']->GetTranslation($k);
-        for($i = 0; $i < count($key); $i++) {
-            $trad = str_replace('{'.$i.'}', $key[$i], $trad);
-        }
-        return $trad;
-    }
+	//could be moved to translator
+	function translate($key) {
+		global $services;
+		if (!is_array($key)) {
+			return $this->services['translator']->GetTranslation($key);
+		} else {
+			$k = array_shift($key);
+			$trad = $services['translator']->GetTranslation($k);
+			for($i = 0; $i < count($key); $i++) {
+				$trad = str_replace('{'.$i.'}', $key[$i], $trad);
+			}
+			return $trad;
+		}
+	}
 }
 
 //shortcut for translation
 function t($key) {
-    echo translate($key);
+	global $webSite;
+    echo $webSite->translate($key);
 }
 
 function disp($obj, $key) {
@@ -92,9 +103,9 @@ function Render($container, $view, &$obj) {
 }
 
 function displayPartial($controller, $view, &$obj) {
-    global $controllerFactory;
+    global $webSite;
 
-    $controllerInstance = $controllerFactory->GetController($controller);
+    $controllerInstance = $webSite->controllerFactory->GetController($controller);
     $viewFunction = 'view_'.$view;
     $controllerInstance->$viewFunction($obj, $view);
     renderPartial($view, $obj);

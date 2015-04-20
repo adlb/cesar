@@ -20,7 +20,7 @@ class ControllerBuilder {
 
     function CheckRights($role, $obj) {
         if (!$this->authentication->CheckRole($role)) {
-            $obj['errors'][] = ':NOT_ALLOWED';
+            $this->config->SetError('warning', ':NOT_ALLOWED');
             redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
         }
     }

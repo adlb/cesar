@@ -89,6 +89,24 @@ class Config {
         }
         return false;
     }
+
+	function Log($level, $text) {
+	}
+	
+	function SetError(&$obj, $level, $text) {
+		$levels = array('success' => ':SUCCESS', 'info' => ':INFORMATION', 'warning' => ':WARNING', 'error' => ':ERROR');
+		if (!in_array($level, array_keys($levels)))
+			$level = 'info';
+		
+		if (!isset($obj['errors']))
+			$obj['errors'] = array();
+		
+		$obj['errors'][] = array(
+			'level' => $level,
+			'strongText' => $levels[$level],
+			'text' => $text
+		);
+	}
 }
 
 ?>

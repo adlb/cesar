@@ -1,12 +1,15 @@
 <?php
+
 @session_start();
 
 include('helpers/helper_general.php');
 
+$webSite = new WebSite('config.json');
+
 $containerView = 'container';
 $defaultController = 'site';
 $defaultView = 'home';
-$obj = array();
+$obj = $webSite->obj;
 
 $controller = (isset($_GET['controller'])) ? $_GET['controller'] : $defaultController;
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $defaultView;
@@ -15,14 +18,14 @@ $obj['errors'] = (isset($_SESSION['errors'])) ? $_SESSION['errors'] : array();
 $_SESSION['errors'] = null;
 
 if (isset($_GET['forceMaintenance']) ||
-    ($services['config']->current['Maintenance'] && $services['authentication']->Role() != 'Administrator'
+    ($webSite->services['config']->current['Maintenance'] && $webSite->services['authentication']->Role() != 'Administrator'
     && $controller!='user' && $view != 'login')) {
-    $message = $services['config']->current['MaintenanceMessage'];
+    $message = $webSite->services['config']->current['MaintenanceMessage'];
     include('maintenance.php');
     die();
 }
 
-$controllerInstance = $controllerFactory->GetController($controller);
+$controllerInstance = $webSite->controllerFactory->GetController($controller);
 
 if ($action != '') {
     $actionFunction = 'action_'.$action;
