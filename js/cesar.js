@@ -75,26 +75,11 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
 
 }]);
 
-cesarApp.directive('ngConfirmClick', [
-  function() {
-    return {
-      priority: 1,
-      link: function(scope, element, attr) {
-        var msg = attr.ngConfirmClick || "Are you sure?";
-        element.bind('click', function(event) {
-          if (window.confirm(msg)) {
-            scope.$eval(attr.ngRealClick)
-          }
-        });
-      }
-    };
-  }
-]);
-
 cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 	$scope.users=localStorage.getItem("users");
 	$scope.filterRadio = '';
 	$scope.errors=[];
+    $scope.usersAnalysed=false;
 	
 	$scope.init = function(checkUrl, sendUpdateUrl) {
 		$scope.checkUrl=checkUrl;
@@ -212,7 +197,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 
 }]);
 
-cesarApp.controller('usersCtrl', ['$scope', function($scope) {
+cesarApp.controller('usersListCtrl', ['$scope', function($scope) {
   $scope.init = function(users, deleteUrl) {
 	$scope.users = users;
 	$scope.deleteUrl = deleteUrl;
@@ -235,6 +220,22 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 	});
   };
 }]);
+
+cesarApp.directive('ngConfirmClick', [
+  function() {
+    return {
+      priority: 1,
+      link: function(scope, element, attr) {
+        var msg = attr.ngConfirmClick || "Are you sure?";
+        element.bind('click', function(event) {
+          if (window.confirm(msg)) {
+            scope.$apply(function() {scope.$eval(attr.ngRealClick);});
+          }
+        });
+      }
+    };
+  }
+]);
 
 //Not angular functions
 jQuery(function($) {

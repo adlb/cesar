@@ -13,7 +13,7 @@
     <form class="form-horizontal" method="POST" action="#">
       <fieldset>
         <p>Enter a list of user. One user per line.</p>
-        <p>First line must contains colmun names separated by ';'</p>
+        <p>First line must contains colmun names separated by ';' ('email' and 'lastname' at least).</p>
         <div ng-show="usersAnalysed">
         <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
         <div class="btn-group">
@@ -51,8 +51,8 @@
         <div class="form-group">
           <div class="col-md-4 pull-right">
             <a class="btn btn-default" ng-real-click="usersAnalysed=false;" ng-confirm-click="AYS ?">Back</a>
-            <button id="buttonRemove" type="button" class="btn btn-primary" ng-click="removeUpToDate();">Remove Up to date</button>
-            <button id="buttonInsert" type="button" class="btn btn-primary" ng-click="uploadAll();" ng-confirm-click="AYS ?">Update All</button>
+            <button id="buttonRemove" type="button" class="btn btn-primary" ng-click="removeUpToDate()">Remove Up to date</button>
+            <button id="buttonInsert" type="button" class="btn btn-primary" ng-click="uploadAll()" ng-confirm-click="AYS ?">Update All</button>
           </div>
         </div>
         </div>

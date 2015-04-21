@@ -38,20 +38,17 @@ class Translator {
         }
     }
 
-    //if key starts with : that means that it is a grouped translation
     function GetTranslation($key) {
-        if ($key == '')
-            return $key;
-        if (substr($key, 0, 1) == ':')
-            return htmlspecialchars($this->GetGroupedTranslation(substr($key, 1)));
-
-        $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
-        if (count($lines) == 0) {
-            $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
-            if (count($lines) == 0)
-                return '['.$key.']';
+        if (!is_array($key)) {
+            return $this->InternalGetTranslation($key);
+        } else {
+            $k = array_shift($key);
+            $trad = $this->services['translator']->InternalGetTranslation($k);
+            for($i = 0; $i < count($key); $i++) {
+                $trad = str_replace('{'.$i.'}', $key[$i], $trad);
+            }
+            return $trad;
         }
-        return htmlspecialchars($lines[0]['text']);
     }
 
     function UpdateTranslation($language, $key, $value, $prefetch, $usage) { //return the key
@@ -97,6 +94,22 @@ class Translator {
         }
 
         return $key;
+    }
+
+    //if key starts with : that means that it is a grouped translation
+    private function InternalGetTranslation($key) {
+        if ($key == '')
+            return $key;
+        if (substr($key, 0, 1) == ':')
+            return htmlspecialchars($this->GetGroupedTranslation(substr($key, 1)));
+
+        $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
+        if (count($lines) == 0) {
+            $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
+            if (count($lines) == 0)
+                return '['.$key.']';
+        }
+        return htmlspecialchars($lines[0]['text']);
     }
 
     private function CreateNewKey($string) {

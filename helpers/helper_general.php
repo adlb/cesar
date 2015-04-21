@@ -24,17 +24,17 @@ class WebSite {
         $this->services['config'] = new Config($configFile);
         $this->services['authentication'] = new Authentication();
     
-        if (!isset($_GET['language'])) {
-            $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            header('Location: '.$language.'/');
-            die();
-        }
-
         $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         $languages = ($this->services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $this->services['config']->current['Languages'] : $this->services['config']->current['ActiveLanguages'];
 
         if (!in_array($language, $languages)) {
             $language = $languages[0];
+        }
+
+        if (!isset($_GET['language'])) {
+            $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            header('Location: '.$language.'/');
+            die();
         }
 
         $this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
@@ -55,23 +55,8 @@ class WebSite {
         $_SESSION['messages'] = null;
     }
 
-    //could be moved to translator
-    function Translate($key) {
-        global $services;
-        if (!is_array($key)) {
-            return $this->services['translator']->GetTranslation($key);
-        } else {
-            $k = array_shift($key);
-            $trad = $services['translator']->GetTranslation($k);
-            for($i = 0; $i < count($key); $i++) {
-                $trad = str_replace('{'.$i.'}', $key[$i], $trad);
-            }
-            return $trad;
-        }
-    }
-
     function AddMessage($level, $text) {
-        $levels = array('success' => ':SUCCESS', 'info' => ':INFORMATION', 'warning' => ':WARNING', 'error' => ':ERROR');
+        $levels = array('success' => ':SUCCESS', 'info' => ':INFORMATION', 'warning' => ':WARNING', 'danger' => ':DANGER');
         if (!in_array($level, array_keys($levels)))
             $level = 'info';
         
@@ -92,7 +77,7 @@ class WebSite {
 //shortcut for translation
 function t($key) {
     global $webSite;
-    echo $webSite->Translate($key);
+    echo $webSite->services['translator']->GetTranslation($key);
 }
 
 function disp($obj, $key) {

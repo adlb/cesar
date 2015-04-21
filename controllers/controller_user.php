@@ -6,10 +6,12 @@ class ControllerUser {
     var $salt = 'M4LT3-L184N-By-Adlb';
     var $authentication;
     var $crowd;
+    var $translator;
 
     function ControllerUser($services) {
         $this->authentication = $services['authentication'];
         $this->crowd = $services['crowd'];
+        $this->translator = $services['translator'];
     }
 
     function action_register(&$obj, &$view) {
@@ -107,7 +109,10 @@ class ControllerUser {
         $users = file_get_contents("php://input");
         $lines = explode("\n", $users);
         if (!$this->crowd->AnalyzeFirstLine($lines, $analyzedColumns, $errors)) {
-            $obj = array('errors' => array_map('translate', $errors));
+            $obj['errors'] = array();
+            foreach($errors as $error) {
+                $obj['errors'][] = $this->translator->GetTranslation($error);
+            }
             $view = 'ajax';
             return;
         }

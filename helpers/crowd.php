@@ -165,7 +165,7 @@ class Crowd {
             $errors[] = ':NEED_AT_LEAST_EMAIL_FIELD';
             $ready = false;
         }
-
+        
         $analyzedColumns = array('rawLine' => $headLine, 'columns' => $columns);
         return $ready;
     }

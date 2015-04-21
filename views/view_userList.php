@@ -7,7 +7,7 @@
     });
 </script>
 
-<div id="usersCtrlDiv" ng-controller="usersCtrl">
+<div id="usersCtrlDiv" ng-controller="usersListCtrl">
 
     <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
     <a href="<?php echo url(array('controller' => 'user', 'view' => 'register')) ?>"><span class="glyphicon glyphicon-plus"></span></a>

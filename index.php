@@ -1,5 +1,4 @@
 <?php
-
 @session_start();
 
 include('helpers/helper_general.php');
@@ -16,8 +15,9 @@ $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $default
 $action = (isset($_GET['action'])) ? $_GET['action'] : '';
 
 if (isset($_GET['forceMaintenance']) ||
-    ($webSite->services['config']->current['Maintenance'] && $webSite->services['authentication']->Role() != 'Administrator'
-    && $controller!='user' && $view != 'login')) {
+    ($webSite->services['config']->current['Maintenance'] && 
+    !$webSite->services['authentication']->CheckRole('Administrator') && 
+    $controller!='user' && $view != 'login')) {
     $message = $webSite->services['config']->current['MaintenanceMessage'];
     include('maintenance.php');
     die();
@@ -37,7 +37,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     //Ajax
     header( 'content-type: application/json; charset=utf-8' );
     echo json_encode($obj);
-	die();
+    die();
 } else {
     header( 'content-type: text/html; charset=utf-8' );
     render($controllerInstance->container, $view, $obj);
