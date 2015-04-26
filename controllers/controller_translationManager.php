@@ -99,6 +99,7 @@ class ControllerTranslationManager {
         }
         
         $fakeArticle = array(
+            'type' => 'groupedTrad',
             'titleTrad' => $this->translator->GetTranslation(':DEFAULTGROUPKEY'),
             'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $this->translator->defaultGroupKey),
             'titleKey' => '',

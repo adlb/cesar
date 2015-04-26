@@ -51,7 +51,7 @@
             <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><?php t(':ADD_ARTICLE')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'config')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'user', 'view' => 'userList')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
-            <li><a href="<?php echo url(array('controller' => 'translationManager', 'view' => 'translationList')) ?>"><?php t(':TRANSLATION_MANAGEMENT')?></a></li>
+            <li><a href="<?php echo url(array('controller' => 'translationManager', 'view' => 'translationList')) ?>"><?php t(':ARTICLE_MANAGEMENT')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'medias', 'view' => 'medias')) ?>"><?php t(':MEDIA_MANAGEMENT')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'reCreateTables')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
             <li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
