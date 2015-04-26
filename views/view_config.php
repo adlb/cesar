@@ -1,3 +1,8 @@
+<ul>
+<li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'reCreateTables')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
+<li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
+</ul>          
+
 <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveConfig'))?>">
 <fieldset>
 
