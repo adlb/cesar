@@ -58,7 +58,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Languages">ActiveLanguages</label>
+  <label class="col-md-4 control-label" for="ActiveLanguages">ActiveLanguages</label>
   <div class="col-md-5">
   <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
   <span class="help-block">Languages separated with ";"</span>
@@ -83,6 +83,24 @@
   <label class="col-md-4 control-label" for="MaintenanceMessage">Text Area</label>
   <div class="col-md-4">
     <textarea class="form-control" id="MaintenanceMessage" name="MaintenanceMessage"><?php disp($obj['config'], 'MaintenanceMessage'); ?></textarea>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="IdLegal">Id article mentions légales</label>
+  <div class="col-md-5">
+  <input id="IdLegal" name="IdLegal" placeholder="Id Article For Legal" class="form-control input-md" type="text" value="<?php echo $obj['config']['IdLegal']; ?>">
+  <span class="help-block">Id de l'article pour les mentions légales</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="IdHelp">Id article aide syntax</label>
+  <div class="col-md-5">
+  <input id="IdLegal" name="IdHelp" placeholder="Id article aide syntax" class="form-control input-md" type="text" value="<?php echo $obj['config']['IdHelp']; ?>">
+  <span class="help-block">Id de l'article pour les aides de syntax</span>
   </div>
 </div>
 

@@ -28,6 +28,8 @@ class Config {
             'MaintenanceMessage' => isset($old['MaintenanceMessage']) ? $old['MaintenanceMessage'] : '',
             'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
             'ActiveLanguages' => isset($old['ActiveLanguages']) && is_array($old['ActiveLanguages']) ? $old['ActiveLanguages'] : array('fr'),
+            'IdLegal' => isset($old['IdLegal']) ? $old['IdLegal'] : '',
+            'IdHelp' => isset($old['IdHelp']) ? $old['IdHelp'] : '',
             'Home' => isset($old['Home']) ? $old['Home'] : 0
         );
 
@@ -67,7 +69,9 @@ class Config {
             'MaintenanceMessage' => $data['MaintenanceMessage'],
             'Languages' => array_map('trim', explode(';', $data['Languages'])),
             'ActiveLanguages' => array_map('trim', explode(';', $data['ActiveLanguages'])),
-            'Home' => $this->current['Home'],
+            'IdLegal' => $data['IdLegal'],
+            'IdHelp' => $data['IdHelp'],
+            'Home' => $this->current['Home']
         );
 
         $this->current = $new;
