@@ -1,5 +1,9 @@
 <ol class="breadcrumb">
-    <li class="active"><a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['id'])) ?>"><?php t($obj['title'])?></a></li>
+    <li class="active">
+        <a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['id'])) ?>">
+            <?php t($obj['titleKey'])?>
+        </a>
+    </li>
     
     <?php foreach($obj['links'] as $link) { ?>
         <a href="<?php echo $link['url'] ?>" class="pull-right">&nbsp;&nbsp;<?php echo $link['type'] ?></a>

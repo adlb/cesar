@@ -197,6 +197,30 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 
 }]);
 
+cesarApp.controller('editTextTradCtrl', ['$scope', function($scope) {
+    $scope.titleKey = '';
+    $scope.textKey = '';
+    $scope.languageFrom = '';
+    $scope.languageTo = '';
+    $scope.languages = {};
+    $scope.titles = [];
+    $scope.texts = [];
+    $scope.actionSave = '';
+    $scope.actionEdit = '';
+    
+    $scope.init=function(titleKey, textKey, languageFrom, languageTo, languages, titles, texts, actionSave, actionEdit) {
+        $scope.titleKey = titleKey;
+        $scope.textKey = textKey;
+        $scope.languageFrom = languageFrom;
+        $scope.languageTo = languageTo;
+        $scope.languages = languages;
+        $scope.titles = titles;
+        $scope.texts = texts;
+        $scope.actionSave = actionSave;
+        $scope.actionEdit = actionEdit;
+    }
+}]);
+
 cesarApp.controller('usersListCtrl', ['$scope', function($scope) {
   $scope.init = function(users, deleteUrl) {
 	$scope.users = users;

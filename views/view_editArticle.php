@@ -3,7 +3,9 @@
 <fieldset ng-init="type='<?php echo $obj['form']['type']?>'" ng-cloak>
 
 <input type="hidden" id="id" name="id" value="<?php echo $obj['form']['id'] ?>">
-<input type="hidden" id="language" name="language" value="<?php disp($obj, 'language') ?>" />
+<input type="hidden" id="language" name="language" value="<?php echo $obj['language'] ?>" />
+<input type="hidden" id="titleKey" name="titleKey" value="<?php echo $obj['form']['titleKey'] ?>" />
+<input type="hidden" id="textKey" name="textKey" value="<?php echo $obj['form']['textKey'] ?>" />
 
 <!-- Form Name -->
 <legend>Create new element</legend>

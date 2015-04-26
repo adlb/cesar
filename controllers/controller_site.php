@@ -59,7 +59,7 @@ class ControllerSite {
     }
 
     protected function enrich_Article($article, $isAdmin) {
-        $article['rawContent'] = $this->translator->GetTranslation($article['text']);
+        $article['rawContent'] = $this->translator->GetTranslation($article['textKey']);
         $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
         $conditionForSubArticles = array('father' => $article['id']);
         if (!$isAdmin) {

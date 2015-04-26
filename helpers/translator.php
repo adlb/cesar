@@ -8,13 +8,33 @@ class Translator {
     var $defaultGroupKey = 'GROUPED';
     var $languages;
 
-    function Translator($textDal, $language, $languages) { //First element of $languages is default
+    function __construct($config, $textDal, $language, $isAdmin) {
         $this->textDal = $textDal;
         $this->groupedCache = array();
-        $this->language = $language;
-        $this->defaultLanguage = $languages[0];
-        $this->languages = $languages;
-
+        $this->defaultLanguage = $config->current['Languages'][0];
+        
+        //can be override with values
+        $this->languages = array();
+        $this->language = $language; 
+        
+        if (!$isAdmin) {
+            foreach($config->current['ActiveLanguages'] as $lang) {
+                $this->languages[] = array('name' => $lang, 'active' => true);
+            }
+            
+            if (!in_array($language, $config->current['ActiveLanguages'])) {
+                $this->language = $config->current['ActiveLanguages'][0];
+            }
+        } else {
+            foreach($config->current['Languages'] as $lang) {
+                $this->languages[] = array('name' => $lang, 'active' => in_array($lang, $config->current['ActiveLanguages']));
+            }
+            
+            if (!in_array($language, $config->current['Languages'])) {
+                $this->language = $config->current['ActiveLanguages'][0];
+            }
+        }
+        
         $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
         if (count($lines) == 1) {
             foreach(explode("\n", $lines[0]['text']) as $line) {
@@ -51,51 +71,129 @@ class Translator {
         }
     }
 
-    function UpdateTranslation($language, $key, $value, $prefetch, $usage) { //return the key
+    //update translation and save with 'ready' : case where you write the article directly
+    //  * update the text field + nextText field.
+    //  * change other language to :
+    //              'don't exists' => do nothing
+    //              ready => translationToBeUpdated
+    //              translationToBeValidated => translationToBeUpdated
+    //              translationToBeUpdated => translationToBeUpdated
+    //              firstTranslationToBeValidated => toBeTranslated
+    //              toBeTranslated => toBeTranslated
+    //update translation and just save it : case where you want to save translation work:
+    //  * update the nextText field but do not change status.
+    //  * If no previous text => toBeTranslated
+    //update translation and ask to validate it : case 'submitForValidation'
+    //  * update the nextText field and change status.
+    //              'don't exists' => firstTranslationToBeValidated
+    //              ready => translationToBeValidated
+    //              translationToBeValidated => translationToBeValidated
+    //              translationToBeUpdated => translationToBeValidated
+    //              firstTranslationToBeValidated => firstTranslationToBeValidated
+    //              toBeTranslated => firstTranslationToBeValidated
+    //update translation and ask to validate it : case 'Validate'
+    //  * update the text and nextText field and change status.
+    //              'don't exists' => 'ready'
+    //              ready => 'ready'
+    //              translationToBeValidated => 'ready'
+    //              translationToBeUpdated => 'ready'
+    //              firstTranslationToBeValidated => 'ready'
+    //              toBeTranslated => 'ready'
+    
+    private function Validate(&$text) {
+        $text['text'] = $text['nextText'];
+        $text['textStatus'] = 'ready';
+    }
+    
+    private function Save(&$text) {
+    }
+    
+    private function SubmitForValidation(&$text) {
+        if (in_array($text['textStatus'], array('ready', 'translationToBeValidated', 'translationToBeUpdated')))
+            $text['textStatus'] = 'translationToBeValidated';
+        else
+            $text['textStatus'] = 'firstTranslationToBeValidated';
+    }
+    
+    private function NeedUpdate(&$text) {
+        if (in_array($text['textStatus'], array('ready', 'translationToBeValidated', 'translationToBeUpdated')))
+            $text['textStatus'] = 'translationToBeUpdated';
+        else
+            $text['textStatus'] = 'toBeTranslated';
+    }
+    
+    function DirectUpdate($language, $key, $value, $prefetch, $usage) {
         if ($value == '') {
             $this->textDal->DeleteWhere(array('key' => $key));
             return '';
         }
+        
         $key = $key == '' ? $this->CreateNewKey($value) : $key;
-
-        $newValue = array(
+        
+        $text = array(
                 'key' => $key,
                 'language' => $language,
                 'prefetch' => $prefetch,
-                'text' => $value,
+                'text' => '',
                 'nextText' => $value,
                 'usage' => $usage,
-                'textStatus' => 'ready',
+                'textStatus' => 'toBeTranslated',
             );
-
-        $oldValues = $this->textDal->GetWhere(array('key' => $key, 'language' => $language));
-        if (count($oldValues) == 0) {
-            $this->textDal->DeleteWhere(array('key' => $key));
-            $this->textDal->TrySave($newValue);
-            return $key;
-        }
-
-        $oldValue = $oldValues[0];
-        if ($newValue['text'] == $oldValue['text']) {
-            $newValue['id'] = $oldValue['id'];
-            $this->textDal->TrySave($newValue);
-            return $key;
-        }
-
-        $oldValues = $this->textDal->GetWhere(array('key' => $key));
-        foreach($oldValues as $oldValue) {
-            if ($oldValue['language'] == $language) {
-                $newValue['id'] = $oldValue['id'];
-                $this->textDal->TrySave($newValue);
-            } else {
-                $oldValue['nextTextStatus'] = 'notTranslated';
-                $this->textDal->TrySave($oldValue);
+        
+        $this->Validate($text);
+        $this->textDal->TrySave($text);
+        
+        $oldTexts = $this->textDal->GetWhere(array('key' => $key));
+        foreach($oldTexts as $oldText) {
+            if ($oldText['language'] != $language) {
+                $this->NeedUpdate($oldText);
+                $this->textDal->TrySave($oldText);
             }
         }
-
         return $key;
     }
+    
+    function UpdateTranslation($action, $language, $key, $value) {
+        $oldTexts = $this->textDal->GetWhere(array('key' => $key));
+        
+        if (count($oldTexts) == 0) {
+            return;
+        }
+        $text = array(
+            'key' => $key,
+            'language' => $language,
+            'prefetch' => $oldTexts[0]['prefetch'],
+            'text' => '',
+            'nextText' => $value,
+            'usage' => $oldTexts[0]['usage'],
+            'textStatus' => 'toBeTranslated',
+        );
 
+        $oldTexts = $this->textDal->GetWhere(array('key' => $key, 'language' => $language));
+        if (count($oldTexts) != 0) {
+            $text['id'] = $oldTexts[0]['id'];
+            $text['text'] = $oldTexts[0]['text'];
+            $text['textStatus'] = $oldTexts[0]['textStatus'];
+        }
+        
+        switch ($action) {
+            case 'save':
+                $this->Save($text);
+                break;
+            case 'validate':
+                $this->Validate($text);
+                break;
+            case 'submitForValidation':
+                $this->SubmitForValidation($text);
+                break;
+            default:
+                break;
+        }
+
+        $this->textDal->TrySave($text);
+        return;
+    }
+    
     //if key starts with : that means that it is a grouped translation
     private function InternalGetTranslation($key) {
         if ($key == '')

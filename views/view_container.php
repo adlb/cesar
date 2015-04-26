@@ -27,7 +27,7 @@ var getScope = function(id, f) {
 
 </head>
 <body>
-<div class="container" ng-app="cesarApp">
+<div class="container" ng-app="cesarApp" ng-cloak>
 
 <br/>Header
 <?php displayPartial('site', 'menu', $obj); ?>

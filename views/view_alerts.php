@@ -5,7 +5,7 @@
     <div class="panel-heading" role="tab" id="alert<?php echo $alert['id'] ?>">
       <h4 class="panel-title">
         <a data-toggle="collapse" href="#Dalert<?php echo $alert['id'] ?>">
-          <?php t($alert['title']); ?>
+          <?php t($alert['titleKey']); ?>
         </a>
       </h4>
     </div>

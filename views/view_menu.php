@@ -34,7 +34,11 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?php t(':LANG_'.strtoupper($obj['language'])); ?><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <?php foreach($obj['languages'] as $lg) { ?>
-                <li><a href="../<?php echo $lg ;?>/"><?php t(':LANG_'.strtoupper($lg)); ?></a></li>
+                <li><a  class="<?php echo $lg['active'] ? "" : "cx_adminonly" ?>"
+                        href="../<?php echo $lg['name'] ;?>/">
+                    <?php t(':LANG_'.strtoupper($lg['name'])); ?>
+                    </a>
+                </li>
             <?php } ?>
           </ul>
         </li>

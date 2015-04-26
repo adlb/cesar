@@ -11,11 +11,11 @@
         <div class="col-md-6">From
             <ul class="nav nav-pills">
                 <?php foreach($obj['languages'] as $lang) { ?>
-                    <li role="presentation" ng-class="{ active: langNav.<?php echo $lang?> }">
+                    <li role="presentation" ng-class="{ active: langNav.<?php echo $lang['name']?> }">
                         <a ng-href="#"
                             ng-click="langNav[currentLanguage] = false;
-                                      langNav.<?php echo $lang?> = true;
-                                      currentLanguage = '<?php echo $lang?>';"><?php echo $lang?></a></li>
+                                      langNav.<?php echo $lang['name']?> = true;
+                                      currentLanguage = '<?php echo $lang['name']?>';"><?php echo $lang['name']?></a></li>
                 <?php } ?>
             </ul>
             <div class="form-group">
@@ -33,7 +33,7 @@
                 <input type="hidden" id="lg" name="lg" value="<?php echo $obj['lg'] ?>" />
 
                 <ul class="nav nav-pills">
-                    <li ng-repeat="language in languages" role="presentation" ng-class="{ active: selectedLanguage == language}"><a ng-href="{{ prefixUrl }}&lg={{ language }}">{{ language }}</a></li>
+                    <li ng-repeat="language in languages" role="presentation" ng-class="{ active: selectedLanguage == language.name}"><a ng-href="{{ prefixUrl }}&lg={{ language.name }}">{{ language.name }}</a></li>
                 </ul>
                 <textarea class="form-control" style="font-family: monospace; white-space: pre;" id="text" name="nextText" rows="<?php max(count(explode("\n", $obj['text']['nextText'])),4) ?>"><?php echo htmlspecialchars($obj['text']['nextText']) ?></textarea>
                 <div class="form-group">

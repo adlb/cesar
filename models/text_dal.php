@@ -18,8 +18,10 @@ class TextDal extends Dal {
         'textStatus' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
             //status can be :
             //  * ready : entered by an admin or validated by an admin means it is the same as textStatus
-            //  * notValidated : traduction done but need to be validated by admin
-            //  * notTranslated : no traduction done or need an update on traduction
+            //  * translationToBeValidated : first translation done but need to be validated by admin
+            //  * translationToBeUpdated : need an update on translation
+            //  * firstTranslationToBeValidated : first translation done but need to be validated by admin
+            //  * toBeTranslated : no translation done
     );
     var $keyName = 'id';
     var $tableSuffix = "texts";

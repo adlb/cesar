@@ -23,33 +23,26 @@ class WebSite {
     function __construct($configFile) {
         $this->services['config'] = new Config($configFile);
         $this->services['authentication'] = new Authentication();
-    
         $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-        $languages = ($this->services['authentication']->CheckRole(array('Administrator', 'Translator'))) ? $this->services['config']->current['Languages'] : $this->services['config']->current['ActiveLanguages'];
-
-        if (!in_array($language, $languages)) {
-            $language = $languages[0];
-        }
-
-        if (!isset($_GET['language'])) {
-            $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            header('Location: '.$language.'/');
-            die();
-        }
-
+        
         $this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['userShortDal'] =   new UserShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['formatter'] =      new Transformer     ();
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
-        $this->services['translator'] =     new Translator      ($this->services['textDal'], $language, $languages);
         $this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
         $this->controllerFactory =             new ControllerFactory($this->services);
 
-        $this->obj['language'] = $this->services['translator']->language;
+        if (!isset($_GET['language'])) {
+            $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+            header('Location: '.$this->services['translator']->language.'/');
+            die();
+        }
+        
         $this->obj['title'] = $this->services['config']->current['Title'];
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
         $_SESSION['messages'] = null;

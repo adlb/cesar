@@ -75,7 +75,7 @@ class ControllerBuilder extends controllerSite{
         $menuItems = $this->articleDal->GetFathersForMenu();
         foreach($menuItems as $v) {
             if ($v['id'] != $id)
-                $menuFathers[$v['id']] = $v['title'];
+                $menuFathers[$v['id']] = $v['titleKey'];
         }
         return $menuFathers;
     }
@@ -85,7 +85,7 @@ class ControllerBuilder extends controllerSite{
         $menuItems = $this->articleDal->GetFathersForNews();
         foreach($menuItems as $v) {
             if ($v['id'] != $id)
-                $newsFathers[$v['id']] = $v['title'];
+                $newsFathers[$v['id']] = $v['titleKey'];
         }
         return $newsFathers;
     }
@@ -128,7 +128,7 @@ class ControllerBuilder extends controllerSite{
             return;
         }
         
-        if (trim($_POST['id']) == '' || !$this->articleDal->TryGet($_POST['id'], $articleDummy)) {
+        if (trim($_POST['id']) == '' || !$this->articleDal->TryGet($_POST['id'], $articleSaved)) {
             $article['rank'] = 1000;
         }
         
@@ -145,9 +145,9 @@ class ControllerBuilder extends controllerSite{
         if ($article['type'] == 'news') {
             $article['home'] = 0;
         }
-
-        $article['title'] = $this->translator->UpdateTranslation($_POST['language'], $article['titleKey'], $_POST['titleTrad'], 1, 'pureText');
-        $article['text'] = $this->translator->UpdateTranslation($_POST['language'], $article['textKey'], $_POST['textTrad'], 0, 'decoratedText');
+        
+        $article['titleKey'] = $this->translator->DirectUpdate($_POST['language'], $article['titleKey'], $_POST['titleTrad'], 1, 'pureText');
+        $article['textKey'] = $this->translator->DirectUpdate($_POST['language'], $article['textKey'], $_POST['textTrad'], 0, 'decoratedText');
         $article['status'] = $article['show'] == 1 ? "show" : "hide";
 
         $isHome = ($article['home'] == 1); 
@@ -200,8 +200,8 @@ class ControllerBuilder extends controllerSite{
         $a['datealert'] = isset($article['datealert']) ? date('Y-m-d', strtotime(str_replace('/', '-', $article['datealert']))) : date('Y-m-d', strtotime("+2 week"));
 
         if (!isset($article['textTrad'])) {
-            if (isset($article['text'])) {
-                $a['textTrad'] = $this->translator->GetTranslation($article['text']);
+            if (isset($article['textKey'])) {
+                $a['textTrad'] = $this->translator->GetTranslation($article['textKey']);
             } else {
                 $a['textTrad'] = '';
             }
@@ -210,8 +210,8 @@ class ControllerBuilder extends controllerSite{
         }
         
         if (!isset($article['titleTrad'])) {
-            if (isset($article['title'])) {
-                $a['titleTrad'] = $this->translator->GetTranslation($article['title']);
+            if (isset($article['titleKey'])) {
+                $a['titleTrad'] = $this->translator->GetTranslation($article['titleKey']);
             } else {
                 $a['titleTrad'] = '';
             }

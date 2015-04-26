@@ -1,94 +1,149 @@
 <?php
+class TextManager {
+    var $textsDico;
+    var $languages;
+    
+    function __construct($textShortDal, $languages) {
+        $this->languages = $languages;
+        $texts = $textShortDal->GetWhere(array());
+        foreach($texts as $text) {
+            if (!isset($this->textsDico[$text['key']]))
+                $this->textsDico[$text['key']] = array();
+            $this->textsDico[$text['key']][$text['language']] = $text['textStatus'];
+        }
+    }
+    
+    function GetKeyStatus($key, $language) {
+        if ($key == '')
+            return 'ready';
+        if (!isset($this->textsDico[$key]))
+            return 'toBeTranslated';
+        if (!isset($this->textsDico[$key][$language]))
+            return 'toBeTranslated';
+        return $this->textsDico[$key][$language];
+    }
+    
+    //      Status 1 \ Status 2 | ready | t-tb-V | t-tb-U | ft-tb-V | tb-T |
+    //------------------------------------------------------------------------------------------
+    //                    ready | ready | t-tb-V | t-tb-U | ft-tb-V | tb-T |
+    // translationToBeValidated |       | t-tb-V | t-tb-U | ft-tb-V | tb-T |
+    //   translationToBeUpdated |       |        | t-tb-U | ft-tb-V | tb-T |
+    // firstTranslationToBeVali |       |        |        | ft-tb-V | tb-T |
+    //           toBeTranslated |       |        |        |         | tb-T |
+    function GetStatus($key1, $key2, $language) {
+        $status = array('unkown', 'ready', 'translationToBeValidated', 'translationToBeUpdated', 'firstTranslationToBeValidated', 'toBeTranslated');
+        
+        $status1 = array_search($this->GetKeyStatus($key1, $language), $status);
+        $status2 = array_search($this->GetKeyStatus($key2, $language), $status);
+        return $status[max($status1, $status2)];
+    }
+    
+    function GetStatusPerLanguage($key1, $key2) {
+        $result = array();
+        foreach($this->languages as $language) {
+            $result[$language['name']] = $this->GetStatus($key1, $key2, $language['name']);
+        }
+        return $result;
+    }
+}
+
 class ControllerTranslationManager {
 
     var $container = 'container';
     var $textDal;
     var $textShortDal;
+    var $articleDal;
     var $translator;
     var $authentication;
-
+    var $config;
+    var $webSite;
+    
     function ControllerTranslationManager($services) {
+        Global $webSite;
+        $this->webSite = $webSite;
+        
+        $this->config = $services['config'];
         $this->textDal = $services['textDal'];
         $this->translator = $services['translator'];
         $this->authentication = $services['authentication'];
         $this->textShortDal = $services['textShortDal'];
+        $this->articleDal = $services['articleDal'];
     }
 
     function action_saveText(&$obj) {
-        $nextText = $_POST['nextText'];
+        $nextTitle = isset($_POST['nextTitle']) ? $_POST['nextTitle'] : '';
+        $nextText = isset($_POST['nextText']) ? $_POST['nextText'] : '';
 
-        $key = isset($_POST['key']) ? $_POST['key'] : die('ERREUR, what are you trying to do ?');
+        $titleKey = isset($_POST['titleKey']) ? $_POST['titleKey'] : die('ERREUR, what are you trying to do ?');
+        $textKey = isset($_POST['textKey']) ? $_POST['textKey'] : die('ERREUR, what are you trying to do ?');
+        
         $lg = isset($_POST['lg']) ? $_POST['lg'] : die('ERREUR, what are you trying to do ?');
 
-        $action = isset($_POST['actionpushed']) ? $_POST['actionpushed'] : die('ERREUR, what are you trying to do ?');
-
-        if ($action == 'validate' && !$this->authentication->CheckRole('Administrator'))
-            die('ERREUR, what are you trying to do ?');
-
-        $olds = $this->textDal->GetWhere(array('key' => $key));
-        if (count($olds) == 0)
-            die('ERREUR, what are you trying to do ?');
-
-        if (!isset($_POST['id']) ||
-                trim($_POST['id']) == '' ||
-                !$this->textDal->TryGet($_POST['id'], $text)) {
-            $text = array();
-            $text['key'] = $key;
-            $text['language'] = $lg;
-            $text['prefetch'] = $olds[0]['prefetch'];
-            $text['text'] = $olds[0]['text'];
-            $text['usage'] = $olds[0]['usage'];
-            $text['textStatus'] = 'notValidated';
-        }
-
-        if ($action == 'validate') {
-            $text['nextText'] = $nextText;
-            $text['text'] = $nextText;
-            $text['textStatus'] = 'ready';
-        } elseif ($action == 'save') {
-            $text['nextText'] = $nextText;
-            $text['textStatus'] = 'notTranslated';
-        } else {
-            $text['nextText'] = $nextText;
-            $text['textStatus'] = 'notValidated';
-        }
-
-        if (!$this->textDal->TrySave($text)) {
-            $obj['text'] = $_POST;
-            $obj['errors'][] = ':CANT_SAVE_TRANSLATION';
-            return 'editText';
-        }
-
-        redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'), $obj['errors']);
+        $action = isset($_POST['actionPushed']) ? $_POST['actionPushed'] : die('ERREUR, what are you trying to do ?');
+        
+        $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle);
+        $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText);
+        
+        redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'));
     }
 
     function view_translationList(&$obj, &$view) {
-        $obj['texts'] = array();
-        $obj['languages'] = $this->translator->languages;
-        foreach($this->textShortDal->GetWhere(array()) as $text) {
-            if (!isset($obj['texts'][$text['key']]))
-                $obj['texts'][$text['key']] = array();
-            $obj['texts'][$text['key']][$text['language']] = $text;
+        $languages = $this->translator->languages;
+        $textManager = new TextManager($this->textShortDal, $languages);
+        
+        $articles = $this->articleDal->GetWhere(array());
+        foreach($articles as &$article) {
+            $article['titleTrad'] = $this->translator->GetTranslation($article['titleKey']);
+            $article['StatusPerLanguage'] = $textManager->GetStatusPerLanguage($article['titleKey'], $article['textKey']);
+            $article['link'] = true;
         }
+        
+        $fakeArticle = array(
+            'titleTrad' => $this->translator->GetTranslation(':DEFAULTGROUPKEY'),
+            'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $this->translator->defaultGroupKey),
+            'titleKey' => '',
+            'textKey' => $this->translator->defaultGroupKey,
+            'link' => false
+        );
+        
+        array_unshift($articles, $fakeArticle);
+        
+        $obj['articles'] = $articles;
+        $obj['languages'] = $languages;
     }
 
-    function view_editText(&$obj, &$view) {
-        $obj['key'] = $_GET['key'];
-        $obj['lg'] = isset($_GET['lg']) && in_array($_GET['lg'], $this->translator->languages) ? $_GET['lg'] : $this->translator->languages[0];
-
-        $texts = $this->textDal->GetWhere(array('key' => $_GET['key'], 'language' => $obj['lg']));
-        if (count($texts) == 0) {
-            $obj['text'] = array(
-                'id' => '',
-                'nextText' => '',
-                'key' => $_GET['key']
-            );
-        } else {
-            $obj['text'] = $texts[0];
+    private function GetTextForEditing($key) {
+        $texts = array();
+        foreach($this->textDal->GetWhere(array('key' => $key)) as $text) {
+            $texts[$text['language']] = $text;
         }
-        $obj['texts'] = $texts = $this->textDal->GetWhere(array('key' => $_GET['key']));
+        foreach($this->translator->languages as $lg) {
+            if (!isset($texts[$lg['name']])) {
+                $texts[$lg['name']] = array('nextText' => '', 'language' => $lg['name']);
+            }
+        }
+        return $texts;
+    }
+    
+    function view_editArticleTrad(&$obj, &$view) {
+        $lg = (isset($_GET['lg']) && in_array($_GET['lg'], $this->config->current['Languages'])) ? $_GET['lg'] : $this->config->current['Languages'][0];
+
+        $obj['titleKey'] = isset($_GET['titleKey']) ? $_GET['titleKey'] : '';
+        $obj['textKey'] = isset($_GET['textKey']) ? $_GET['textKey'] : '';
+        
+        $obj['titles'] = $this->GetTextForEditing($obj['titleKey']);
+        $obj['texts'] = $this->GetTextForEditing($obj['textKey']);
+        
+        $obj['languageFrom'] = $this->translator->language;
+        $obj['languageTo'] = $lg;
         $obj['languages'] = $this->translator->languages;
-        $obj['lg'] = isset($_GET['lg']) && in_array($_GET['lg'], $this->translator->languages) ? $_GET['lg'] : $this->translator->languages[0];
+        
+        $obj['actions'] = array();
+        $obj['actions'][] = array('name' => 'Cancel', 'type' => 'default', 'value' => 'cancel');
+        $obj['actions'][] = array('name' => 'Save', 'type' => 'primary', 'value' => 'save');
+        $obj['actions'][] = array('name' => 'SubmitForValidation', 'type' => 'primary', 'value' => 'submitForValidation');
+        if ($this->authentication->CheckRole('Administrator'))
+            $obj['actions'][] = array('name' => 'Validate', 'type' => 'primary', 'value' => 'validate');
     }
 }
 ?>
