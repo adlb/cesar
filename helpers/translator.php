@@ -153,19 +153,31 @@ class Translator {
         return $key;
     }
     
-    function UpdateTranslation($action, $language, $key, $value) {
+    function UpdateTranslation($action, $language, $key, $value, $prefetch, $usage) {
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
         
         if (count($oldTexts) == 0) {
-            return;
+            $oldText = array(
+                'id' => '',
+                'key' => $key,
+                'language' => $language,
+                'prefetch' => $prefetch,
+                'text' => '',
+                'nextText' => $value,
+                'usage' => $usage,
+                'textStatus' => 'toBeTranslated',
+            );
+        } else {
+            $oldText = $oldTexts[0];
         }
+        
         $text = array(
             'key' => $key,
             'language' => $language,
-            'prefetch' => $oldTexts[0]['prefetch'],
+            'prefetch' => $oldText['prefetch'],
             'text' => '',
             'nextText' => $value,
-            'usage' => $oldTexts[0]['usage'],
+            'usage' => $oldText['usage'],
             'textStatus' => 'toBeTranslated',
         );
 

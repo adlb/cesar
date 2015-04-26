@@ -81,8 +81,8 @@ class ControllerTranslationManager {
 
         $action = isset($_POST['actionPushed']) ? $_POST['actionPushed'] : die('ERREUR, what are you trying to do ?');
         
-        $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle);
-        $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText);
+        $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle, true, 'pureText');
+        $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText, false, 'decoratedText');
         
         redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'));
     }
