@@ -82,7 +82,7 @@ class ControllerSite {
             $view = 'noArticle';
             return;
         }
-
+        
         if (
             $this->config->current['Home'] != $id &&
             $article['status'] == 'hide' && 

@@ -140,16 +140,19 @@ class Translator {
                 'textStatus' => 'toBeTranslated',
             );
         
-        $this->Validate($text);
-        $this->textDal->TrySave($text);
-        
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
+        
         foreach($oldTexts as $oldText) {
-            if ($oldText['language'] != $language) {
+            if ($oldText['language'] == $language) {
+                $this->Validate($text);
+                $text['id'] = $oldText['id'];
+            } else {
                 $this->NeedUpdate($oldText);
                 $this->textDal->TrySave($oldText);
             }
         }
+        
+        $this->textDal->TrySave($text);
         return $key;
     }
     

@@ -289,8 +289,7 @@ class Transformer {
 
     function ToHtml($string) {
         $decoded = $this->lexerParser->lex($string);
-		//var_dump($decoded);
-	    return $this->Encode($decoded);
+		return $this->Encode($decoded);
     }
 
     function Encode($decoded) {
@@ -369,22 +368,5 @@ class Transformer {
         return $string;
     }
 }
-/*
-$t = new Transformer();
-$p = new LexerParser();
-
-$string = "----
-p.Ce text à la bonne taille ?
-";
-
-var_dump($string);
-$t = new Transformer();
-echo json_encode($p->lex($string));
-echo htmlentities($t->ToHtml($string));
-echo $t->ToHtml($string);
-echo '<HR/>';
-*/
-
-
 
 ?>
