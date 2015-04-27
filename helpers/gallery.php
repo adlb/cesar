@@ -18,6 +18,18 @@ class Gallery {
         return $this->mediaDal->GetWhere(array());
     }
 
+    function TryGet($nameOrId, &$image) {
+        if ($this->mediaDal->TryGet($nameOrId, $image))
+            return true;
+            
+        $results = $this->mediaDal->GetWhere(array('name' => $nameOrId));
+        if (count($results) == 0) 
+            return false;
+        
+        $image = $results[0];
+        return true;
+    }
+    
     function TrySaveAsNew($file, &$error, &$media) {
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $baseName = pathinfo($file['name'], PATHINFO_BASENAME);

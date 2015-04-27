@@ -282,8 +282,10 @@ class LexerParser {
 
 class Transformer {
     var $lexerParser;
+    var $gallery;
 
-    function Transformer() {
+    function __construct($gallery) {
+        $this->gallery = $gallery;
         $this->lexerParser = new LexerParser();
     }
 
@@ -338,8 +340,9 @@ class Transformer {
 					//var_dump($item['content']);
                     //$string.= '<a href="'.$item['content'].'">'.htmlentities($item['content']).'</a>';
                     break;
-                case 'picture' :
-                    //$string.= '<img src="'.$item['content'].'">';
+                case 'image' :
+                    if ($this->gallery->TryGet($item['content'][0]['content'], $image))
+                        $string.= '<img src="'.$image['file'].'">';
                     break;
                 case 'separator' :
                     $string.= '<hr />';

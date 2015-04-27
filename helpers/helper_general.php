@@ -33,8 +33,8 @@ class WebSite {
         $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
-        $this->services['formatter'] =      new Transformer     ();
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
+        $this->services['formatter'] =      new Transformer     ($this->services['gallery']);
         $this->services['crowd'] =          new Crowd           ($this->services['config']->current['SecretLine'], $this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
         $this->services['mailer'] =         new Mailer          ($this->services['config']);
         $this->controllerFactory =          new ControllerFactory($this->services);
