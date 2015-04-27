@@ -20,10 +20,14 @@ class Config {
         }
         $this->current = array(
             'Title' => isset($old['Title']) ? $old['Title'] : '',
+            'Contact' => isset($old['Contact']) ? $old['Contact'] : '',
             'DBConnectionString' => isset($old['DBConnectionString']) ? $old['DBConnectionString'] : '',
             'DBUser' => isset($old['DBUser']) ? $old['DBUser'] : '',
             'DBPassword' => isset($old['DBPassword']) ? $old['DBPassword'] : '',
             'DBPrefix' => isset($old['DBPrefix']) ? $old['DBPrefix'] : '',
+            'SMTPHosts' => isset($old['SMTPHosts']) ? $old['SMTPHosts'] : '',
+            'SMTPUser' => isset($old['SMTPUser']) ? $old['SMTPUser'] : '',
+            'SMTPPassword' => isset($old['SMTPPassword']) ? $old['SMTPPassword'] : '',
             'Maintenance' => isset($old['Maintenance']) && $old['Maintenance'] ? true : false,
             'MaintenanceMessage' => isset($old['MaintenanceMessage']) ? $old['MaintenanceMessage'] : '',
             'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
@@ -61,10 +65,14 @@ class Config {
     function TrySave($data) {
         $new = array(
             'Title' => $data['Title'],
+            'Contact' => $data['Contact'],
             'DBConnectionString' => $data['DBConnectionString'],
             'DBUser' => $data['DBUser'],
             'DBPassword' => $data['DBPassword'],
             'DBPrefix' => $data['DBPrefix'],
+            'SMTPHosts' => $data['SMTPHosts'],
+            'SMTPUser' => $data['SMTPUser'],
+            'SMTPPassword' => $data['SMTPPassword'],
             'Maintenance' => isset($data['Maintenance']) ? $data['Maintenance'] : false,
             'MaintenanceMessage' => $data['MaintenanceMessage'],
             'Languages' => array_map('trim', explode(';', $data['Languages'])),

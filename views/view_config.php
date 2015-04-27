@@ -7,7 +7,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Configuration</legend>
+<legend>Configuration Site</legend>
 
 <!-- Text input-->
 <div class="form-group">
@@ -16,6 +16,34 @@
   <input id="Title" name="Title" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" autocomplete="off">
   </div>
 </div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Contact">Contact Email</label>
+  <div class="col-md-5">
+  <input id="Contact" name="Contact" placeholder="email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" autocomplete="off">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Languages">Languages</label>
+  <div class="col-md-5">
+  <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Languages'); ?>">
+  <span class="help-block">Languages separated with ";"</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="ActiveLanguages">ActiveLanguages</label>
+  <div class="col-md-5">
+  <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
+  <span class="help-block">Languages separated with ";"</span>
+  </div>
+</div>
+
+<legend>Configuration Base de données</legend>
 
 <!-- Text input-->
 <div class="form-group">
@@ -52,23 +80,36 @@
   </div>
 </div>
 
+<legend>Configuration Mail</legend>
+
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Languages">Languages</label>
-  <div class="col-md-5">
-  <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Languages'); ?>">
-  <span class="help-block">Languages separated with ";"</span>
+  <label class="col-md-4 control-label" for="SMTPHosts">SMTP Hosts</label>
+  <div class="col-md-6">
+  <input id="SMTPHosts" name="SMTPHosts" placeholder="host;secondary_host" class="form-control input-md" type="text" value="<?php echo $obj['config']['SMTPHosts']; ?>">
+  <span class="help-block">Host and secondary host separated with ';'</span>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="ActiveLanguages">ActiveLanguages</label>
-  <div class="col-md-5">
-  <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
-  <span class="help-block">Languages separated with ";"</span>
+  <label class="col-md-4 control-label" for="SMTPUser">SMTP User</label>
+  <div class="col-md-6">
+  <input id="SMTPUser" name="SMTPUser" placeholder="user" class="form-control input-md" type="text" value="<?php echo $obj['config']['SMTPUser']; ?>">
+  <span class="help-block">User name for smtp hosts</span>
   </div>
 </div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="SMTPPassword">SMTP Password</label>
+  <div class="col-md-6">
+  <input id="SMTPPassword" name="SMTPPassword" placeholder="password" class="form-control input-md" type="text" value="<?php echo $obj['config']['SMTPPassword']; ?>">
+  <span class="help-block">Password for smtp hosts</span>
+  </div>
+</div>
+
+<legend>Configuration Page de maintenance</legend>
 
 <!-- Multiple Checkboxes -->
 <div class="form-group">
@@ -85,11 +126,13 @@
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="MaintenanceMessage">Text Area</label>
+  <label class="col-md-4 control-label" for="MaintenanceMessage">Text For Maintenance</label>
   <div class="col-md-4">
     <textarea class="form-control" id="MaintenanceMessage" name="MaintenanceMessage"><?php disp($obj['config'], 'MaintenanceMessage'); ?></textarea>
   </div>
 </div>
+
+<legend>Liens Spécifiques</legend>
 
 <!-- Text input-->
 <div class="form-group">
