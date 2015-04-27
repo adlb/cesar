@@ -54,6 +54,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit"><?php t(':SIGN_IN') ?></button>
         <div class="checkbox">
-          <a href="?controller=user&view=register"><?php t(':CREATE_ACCOUNT') ?></a>
+          <a href="?controller=user&view=register"><?php t(':CREATE_ACCOUNT') ?></a><br />
+          <a href="?controller=user&view=lostPassword"><?php t(':LOST_PASSWORD') ?></a>
         </div>
       </form>

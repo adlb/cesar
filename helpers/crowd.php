@@ -130,6 +130,14 @@ class Crowd {
         return $this->userDal->TryGet($id, $user);
     }
 
+    function TryGetFromEmail($email, &$user) {
+        $users = $this->userDal->GetWhere(array('email' => $email));
+        if (count($users) == 0)
+            return false;
+        $user = $users[0];
+        return true;
+    }
+    
     function Update($object) {
         return $this->userDal->TrySave($object);
     }

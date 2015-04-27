@@ -7,8 +7,11 @@ class ControllerUser {
     var $authentication;
     var $crowd;
     var $translator;
+    var $webSite;
 
     function ControllerUser($services) {
+        global $webSite;
+        $this->webSite = $webSite;
         $this->authentication = $services['authentication'];
         $this->crowd = $services['crowd'];
         $this->translator = $services['translator'];
@@ -139,12 +142,20 @@ class ControllerUser {
         $view = 'ajax';
     }
 
-    private function Mapper($array) {
-        return array_map(array($this, 'GetLines'), $array);
+    function view_lostPassword(&$obj, &$view) {
+        //nothing to do
     }
-
-    private function GetLines($object) {
-        return $object['line'];
+    
+    function action_retreivePassword(&$obj, &$view) {
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        if (!$this->crowd->TryGetFromEmail($email, $user)) {
+            $this->webSite->AddMessage('warning', ':THIS_USER_DOES_NOT_EXIST');
+            $view = 'lostPassword';
+            return;
+        }
+        //Send email to user...
+        $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
+        $view = 'login';
     }
 }
 

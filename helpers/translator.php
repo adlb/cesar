@@ -63,7 +63,7 @@ class Translator {
             return $this->InternalGetTranslation($key);
         } else {
             $k = array_shift($key);
-            $trad = $this->services['translator']->InternalGetTranslation($k);
+            $trad = $this->InternalGetTranslation($k);
             for($i = 0; $i < count($key); $i++) {
                 $trad = str_replace('{'.$i.'}', $key[$i], $trad);
             }
