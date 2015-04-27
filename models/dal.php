@@ -6,6 +6,14 @@ class Dal {
     var $tableName;
     var $cache = array();
 
+    function __construct($db, $prefix) {
+        if ($db == null)
+            return;
+        $this->db = $db;
+        $this->tableName = $prefix.$this->tableSuffix;
+        $this->CreateTable();
+    }
+    
     function TryGet($key, &$value){
         if (isset($this->cache[$key])){
             $value = $this->cache[$key]['value'];
@@ -191,14 +199,6 @@ class Dal {
         } catch (PDOException $e) {
             die('connection impossible');
         }
-    }
-
-    function Dal($db, $prefix) {
-        if ($db == null)
-            return;
-        $this->db = $db;
-        $this->tableName = $prefix.$this->tableSuffix;
-        $this->CreateTable();
     }
 }
 ?>

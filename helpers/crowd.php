@@ -1,12 +1,13 @@
 <?php
 
 class Crowd {
-    var $salt = 'M4LT3-L184N-By-Adlb';
+    var $salt;
     var $userDal;
     var $userShortDal;
     var $authentication;
 
-    function Crowd($userDal, $userShortDal, $authentication) {
+    function Crowd($salt, $userDal, $userShortDal, $authentication) {
+        $this->salt = $salt;
         $this->userDal = $userDal;
         $this->userShortDal = $userShortDal;
         $this->authentication = $authentication;
@@ -86,31 +87,29 @@ class Crowd {
             return false;
         }
 
-
         return true;
     }
 
-    function TryLogin($email, $password, &$errors) {
-
+    function TryLogin($email, $password, &$error) {
         $users = $this->userShortDal->GetWhere(array('email' => $email));
-
+        
         if (count($users) == 0) {
-            $errors[] = ':UNKOWN_LOGIN';
+            $error = ':UNKOWN_LOGIN';
             return false;
         }
 
         if (strlen($password) < 5) {
-            $errors[] = ':WRONG_PASSWORD';
+            $error = ':WRONG_PASSWORD';
             return false;
         }
 
         if ($users[0]['passwordHashed'] != md5($password.$this->salt)) {
-            $errors[] = ':WRONG_PASSWORD';
+            $error = ':WRONG_PASSWORD';
             return false;
         }
 
         if (!$this->userDal->TryGet($users[0]['id'], $user)) {
-            $errors[] = ':INTERNAL_ERROR';
+            $error = ':INTERNAL_ERROR';
             return false;
         }
 

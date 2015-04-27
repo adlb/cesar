@@ -25,7 +25,7 @@ class WebSite {
         $this->services['config'] = new Config($configFile);
         $this->services['authentication'] = new Authentication();
         $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-        
+                
         $this->services['userDal'] =        new UserDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['userShortDal'] =   new UserShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
@@ -35,7 +35,7 @@ class WebSite {
         $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['formatter'] =      new Transformer     ();
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
-        $this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
+        $this->services['crowd'] =          new Crowd           ($this->services['config']->current['SecretLine'], $this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
         $this->services['mailer'] =         new Mailer          ($this->services['config']);
         $this->controllerFactory =          new ControllerFactory($this->services);
 

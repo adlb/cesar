@@ -43,6 +43,15 @@
   </div>
 </div>
 
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="SecretLine">SecretLine</label>
+  <div class="col-md-5">
+  <input id="SecretLine" name="SecretLine" placeholder="long chain to be kept secret" class="form-control input-md" type="text" value="<?php echo $obj['config']['SecretLine']; ?>">
+  <span class="help-block">Long chain to be kept secret</span>
+  </div>
+</div>
+
 <legend>Configuration Base de données</legend>
 
 <!-- Text input-->

@@ -44,14 +44,14 @@ class ControllerUser {
         $email = isset($_POST['email']) ? $_POST['email'] : "";
         $password = isset($_POST['password']) ? $_POST['password'] : "";
 
-        if (!$this->crowd->TryLogin($email, $password, $errors)) {
+        if (!$this->crowd->TryLogin($email, $password, $error)) {
             $obj['email'] = $email;
-            $obj['errors'] = $errors;
+            $this->webSite->AddMessage('warning', $error);
             $view = 'login';
             return;
         }
 
-        redirectTo(array('controller' => 'site'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site'));
     }
 
     function action_delete(&$obj, &$view) {

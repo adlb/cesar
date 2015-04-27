@@ -7,7 +7,7 @@ class Config {
     var $dbh;
     var $configExists;
 
-    function Config($file) {
+    function __construct($file) {
         $this->file = $file;
         $old = null;
 
@@ -21,6 +21,7 @@ class Config {
         $this->current = array(
             'Title' => isset($old['Title']) ? $old['Title'] : '',
             'Contact' => isset($old['Contact']) ? $old['Contact'] : '',
+            'SecretLine' => isset($old['SecretLine']) ? $old['SecretLine'] : '',
             'DBConnectionString' => isset($old['DBConnectionString']) ? $old['DBConnectionString'] : '',
             'DBUser' => isset($old['DBUser']) ? $old['DBUser'] : '',
             'DBPassword' => isset($old['DBPassword']) ? $old['DBPassword'] : '',
@@ -66,6 +67,7 @@ class Config {
         $new = array(
             'Title' => $data['Title'],
             'Contact' => $data['Contact'],
+            'SecretLine' => $data['SecretLine'],
             'DBConnectionString' => $data['DBConnectionString'],
             'DBUser' => $data['DBUser'],
             'DBPassword' => $data['DBPassword'],
