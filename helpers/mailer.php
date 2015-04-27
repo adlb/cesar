@@ -12,6 +12,8 @@ class Mailer {
     }
     
     public function TrySendSimpleMail($to, $subject, $contentHtml, $content) {
+        $mail = new PHPMailer();
+        
         $mail->isSMTP();                                            // Set mailer to use SMTP
         $mail->Host = $this->config->current['SMTPHosts'];          // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                                     // Enable SMTP authentication
