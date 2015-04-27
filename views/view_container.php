@@ -54,4 +54,5 @@ var getScope = function(id, f) {
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
 <script src="js/cesar.js"></script>
+<?php echo $obj['analytics'];?>
 </html>

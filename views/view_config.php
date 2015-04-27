@@ -52,6 +52,14 @@
   </div>
 </div>
 
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Analytics">Analytics</label>
+  <div class="col-md-4">
+    <textarea class="form-control" id="Analytics" name="Analytics"><?php echo $obj['config']['Analytics']; ?></textarea>
+  </div>
+</div>
+
 <legend>Configuration Base de données</legend>
 
 <!-- Text input-->

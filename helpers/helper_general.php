@@ -46,6 +46,7 @@ class WebSite {
         }
         
         $this->obj['title'] = $this->services['config']->current['Title'];
+        $this->obj['analytics'] = $this->services['config']->current['Analytics'];
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
         $_SESSION['messages'] = null;
     }
