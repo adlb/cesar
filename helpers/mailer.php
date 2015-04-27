@@ -7,7 +7,7 @@ class Mailer {
 
     var $config;
     
-    public __construct($config) {
+    public function __construct($config) {
         $this->config = $config;
     }
     

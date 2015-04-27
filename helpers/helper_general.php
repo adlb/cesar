@@ -8,13 +8,13 @@ require('helpers/translator.php');
 require('helpers/authentication.php');
 require('helpers/controllerFactory.php');
 require('helpers/crowd.php');
+require('helpers/mailer.php');
 require('models/user_dal.php');
 require('models/userShort_dal.php');
 require('models/article_dal.php');
 require('models/text_dal.php');
 require('models/textShort_dal.php');
 require('models/media_dal.php');
-require('models/mailer.php');
 
 class WebSite {
     var $obj;
