@@ -14,6 +14,7 @@ require('models/article_dal.php');
 require('models/text_dal.php');
 require('models/textShort_dal.php');
 require('models/media_dal.php');
+require('models/mailer.php');
 
 class WebSite {
     var $obj;
@@ -30,12 +31,13 @@ class WebSite {
         $this->services['articleDal'] =     new ArticleDal      ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
-        $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['formatter'] =      new Transformer     ();
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
         $this->services['crowd'] =          new Crowd           ($this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
-        $this->controllerFactory =             new ControllerFactory($this->services);
+        $this->services['mailer'] =         new Mailer          ($this->services['config']);
+        $this->controllerFactory =          new ControllerFactory($this->services);
 
         if (!isset($_GET['language'])) {
             $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);

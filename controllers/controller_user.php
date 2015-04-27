@@ -7,6 +7,7 @@ class ControllerUser {
     var $authentication;
     var $crowd;
     var $translator;
+    var $mailer;
     var $webSite;
 
     function ControllerUser($services) {
@@ -14,6 +15,7 @@ class ControllerUser {
         $this->webSite = $webSite;
         $this->authentication = $services['authentication'];
         $this->crowd = $services['crowd'];
+        $this->mailer = $services['mailer'];
         $this->translator = $services['translator'];
     }
 
@@ -153,9 +155,13 @@ class ControllerUser {
             $view = 'lostPassword';
             return;
         }
-        //Send email to user...
-        $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
-        $view = 'login';
+        if ($this->mailer->TrySendSimpleMail($email, 'SiteWebPasswordRecovery', 'HTML COntent', 'Text Content')) {
+            $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
+            $view = 'login';
+        } else {
+            $this->webSite->AddMessage('warning', array(':CANT_SEND_EMAIL', $email));
+            $view = 'login';
+        }
     }
 }
 

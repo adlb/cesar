@@ -12,13 +12,13 @@ class Mailer {
     }
     
     public function TrySendSimpleMail($to, $subject, $contentHtml, $content) {
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = $this->config->current['SMTPHosts'];    // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = $this->config->current['SMTPUser'];                 // SMTP username
-        $mail->Password = $this->config->current['SMTPPassword'];                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
+        $mail->isSMTP();                                            // Set mailer to use SMTP
+        $mail->Host = $this->config->current['SMTPHosts'];          // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                                     // Enable SMTP authentication
+        $mail->Username = $this->config->current['SMTPUser'];       // SMTP username
+        $mail->Password = $this->config->current['SMTPPassword'];   // SMTP password
+        $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                          // TCP port to connect to
 
         $mail->From = $this->config->current['ContactEmail'];
         $mail->FromName = $this->config->current['ContactEmail'];
