@@ -111,6 +111,9 @@ class ControllerSite {
 
     function view_article(&$obj, &$view) {
         $id = isset($_GET['id']) ? $_GET['id'] : -1;
+        if ($id == $this->config->current['Home']) {
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
         $this->view_articleInternal($obj, $view, $id);
     }
 }

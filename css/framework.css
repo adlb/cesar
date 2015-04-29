@@ -25,3 +25,7 @@ div.cx_article .cx_underline {
 div.cx_article .cx_monospace {
 	font-family:Courier New, Courier, monospace;
 }
+
+div.cx_article img {
+    float: right;
+}
