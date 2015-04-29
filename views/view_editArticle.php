@@ -125,10 +125,16 @@
 <div class="form-group" ng-show="type == 'article' || type == 'news'">
   <!--<label class="col-md-4 control-label" for="text">Text</label>-->
   <div class="col-md-12">
-    <a id="viewHelp"  target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help'))?>">
-        <span class="glyphicon glyphicon-cog pull-right"></span>
-    </a>
-    <a id="actionShow" href="#"><span class="glyphicon glyphicon-inbox pull-right"></span></a>
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group pull-right">
+        <a type="button" class="btn btn-default" aria-label="Left Align"target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help'))?>">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+        </a>
+        <a id="actionShow" href="#" type="button" class="btn btn-default" aria-label="Center Align">
+            <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="col-md-12">
