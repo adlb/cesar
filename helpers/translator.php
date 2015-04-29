@@ -134,17 +134,16 @@ class Translator {
                 'key' => $key,
                 'language' => $language,
                 'prefetch' => $prefetch,
-                'text' => '',
+                'text' => $value,
                 'nextText' => $value,
                 'usage' => $usage,
-                'textStatus' => 'toBeTranslated',
+                'textStatus' => 'ready',
             );
         
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
         
         foreach($oldTexts as $oldText) {
             if ($oldText['language'] == $language) {
-                $this->Validate($text);
                 $text['id'] = $oldText['id'];
             } else {
                 $this->NeedUpdate($oldText);

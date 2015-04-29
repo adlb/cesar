@@ -8,8 +8,11 @@ class ControllerSite {
     var $config;
     var $translator;
     var $formatter;
+    var $webSite;
 
     function ControllerSite($services) {
+        Global $webSite;
+        $this->webSite = $webSite;
         $this->authentication = $services['authentication'];
         $this->articleDal = $services['articleDal'];
         $this->config = $services['config'];
@@ -81,6 +84,11 @@ class ControllerSite {
         if (!$this->articleDal->TryGet($id, $article)) {
             $view = 'noArticle';
             return;
+        }
+        
+        if ($article['needLogin']) {
+            $this->webSite->AddMessage('info', 'You have to login or create an account to access this page.');
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
         }
         
         if (

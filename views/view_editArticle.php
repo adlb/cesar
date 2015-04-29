@@ -88,6 +88,17 @@
     </div>
   </div>
 </div>
+<div class="form-group" ng-show="type == 'menu' || type == 'article'">
+  <label class="col-md-4 control-label" for="needLogin"><?php t(':NEED_LOGIN') ?></label>
+  <div class="col-md-1">
+    <div class="checkbox">
+      <label class="checkbox-0" for="needLogin">
+        <input type="hidden" name="needLogin" value="0">
+        <input id="needLogin" name="needLogin" type="checkbox" value="1" <?php echo $obj['form']['needLogin'] == 1 ? 'checked' : '' ?> />
+      </label>
+    </div>
+  </div>
+</div>
 <div class="form-group" ng-show="type == 'news'">
   <label class="col-md-4 control-label" for="alert"><?php t(':ALERT') ?></label>
   <div class="col-md-1">

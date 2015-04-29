@@ -1,4 +1,5 @@
 <?php
+
 require_once('controllers/controller_site.php');
 
 class ControllerBuilder extends controllerSite{
@@ -135,6 +136,7 @@ class ControllerBuilder extends controllerSite{
         //clean before store
         if ($article['type'] == 'menu') {
             $article['alert'] = 0;
+            $article['needLogin'] = 0;
             $article['text'] = '';
             $article['home'] = 0;
             $article['father'] = -1;
@@ -143,6 +145,7 @@ class ControllerBuilder extends controllerSite{
             $article['alert'] = 0;
         }
         if ($article['type'] == 'news') {
+            $article['needLogin'] = 0;
             $article['home'] = 0;
         }
         
@@ -196,6 +199,7 @@ class ControllerBuilder extends controllerSite{
             $a['home'] = $article['home'];
         }
         
+        $a['needLogin'] = isset($article['needLogin']) ? $article['needLogin'] : 0;
         $a['alert'] = isset($article['alert']) ? $article['alert'] : 0;
         $a['datealert'] = isset($article['datealert']) ? date('Y-m-d', strtotime(str_replace('/', '-', $article['datealert']))) : date('Y-m-d', strtotime("+2 week"));
 
