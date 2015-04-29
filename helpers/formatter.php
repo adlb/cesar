@@ -285,9 +285,13 @@ class LexerParser {
 class Transformer {
     var $lexerParser;
     var $gallery;
-
-    function __construct($gallery) {
+    var $articleDal;
+    var $translator;
+    
+    function __construct($gallery, $articleDal, $translator) {
         $this->gallery = $gallery;
+        $this->articleDal = $articleDal;
+        $this->translator = $translator;
         $this->lexerParser = new LexerParser();
     }
 
@@ -345,8 +349,14 @@ class Transformer {
                     $string.= '<li>'.$this->Encode($item['content']).'</li>';
                     break;
                 case 'link' :
-					//var_dump($item['content']);
-                    //$string.= '<a href="'.$item['content'].'">'.htmlentities($item['content']).'</a>';
+					$split = explode('|', $item['content'][0]['content']);
+                    if (count($split) == 1) {
+                        $string .= $this->CreateLinkTo($split[0], $split[0]);
+                    } elseif (count($split) > 1) {
+                        $string .= $this->CreateLinkTo($split[0], $split[1]);
+                    } else {
+                        $string .= "???";
+                    }
                     break;
                 case 'image' :
                     if ($this->gallery->TryGet($item['content'][0]['content'], $image))
@@ -377,6 +387,19 @@ class Transformer {
             }
         }
         return $string;
+    }
+    
+    private function CreateLinkTo($link, $display) {
+        if ($link == 'home') {
+            return '<a href="'.url(array('controller' => 'site', 'view' => 'home')).'">'.$display.'</a>';
+        } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
+            if ($display == $link) {
+                $display = $this->translator->GetTranslation($article['titleKey']);
+            }
+            return '<a href="'.url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id'])).'">'.$display.'</a>';
+        } else {
+            return '<a href="'.$link.'">'.$display.'</a>';
+        }
     }
 }
 
