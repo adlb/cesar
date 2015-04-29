@@ -287,17 +287,17 @@ jQuery(document).ready(function($) {
 
 $(function() {
         $('#actionShow').click(function() {
-          if ( $('#text').css('display') == 'none' ) {
+          if ( $('#textTrad').css('display') == 'none' ) {
                 $('#textHTML').css('display','none');
-                $('#text').css('display','inline');
+                $('#textTrad').css('display','inline');
           } else
               $.ajax({
                 type: 'POST',
                 url: '?controller=builder&action=format',
-                data: $('#text').val(),
+                data: $('#textTrad').val(),
                 timeout: 3000,
                 success: function(data) {
-                  $('#text').css("display","none");
+                  $('#textTrad').css("display","none");
                   $('#textHTML').html(data.formattedText);
                   $('#textHTML').css("display","inline");
                   },

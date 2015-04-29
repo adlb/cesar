@@ -303,7 +303,7 @@ class Transformer {
                 die("can't find type in array. (".json_encode($item).")");
             switch ($item['type']) {
                 case 'text' :
-                    $string .= htmlentities($item['content']);
+                    $string .= $item['content'];
                     break;
                 case 'paragraph' :
                     $string .= '<P>'.$this->Encode($item['content']).'</P>';
