@@ -397,6 +397,11 @@ class Transformer {
                 $display = $this->translator->GetTranslation($article['titleKey']);
             }
             return '<a href="'.url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id'])).'">'.$display.'</a>';
+        } elseif (substr($link, 0, 1) == '!' && $this->gallery->TryGet(substr($link, 1), $media)) {
+            if ($display == $link) {
+                $display = $media['name'];
+            }
+            return '<a href="'.$media['file'].'">'.$display.'</a>';
         } else {
             return '<a href="'.$link.'">'.$display.'</a>';
         }
