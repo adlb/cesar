@@ -38,7 +38,7 @@ class Crowd {
         if (count($this->userShortDal->GetWhere(array('role' => 'Administrator'))) == 0) {
             $role = 'Administrator';
         } else {
-            $role = 'Simple';
+            $role = 'Visitor';
         }
 
         $userToCreate = array(
