@@ -76,16 +76,38 @@ class ControllerUser {
 
     function view_login(&$obj, &$view) {
         if ($this->authentication->CheckRole('Logged'))
-            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'), $obj['errors']);
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
     }
 
     function view_register(&$obj, &$view) {
         if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
-            redirectTo(array('controller' => 'user', 'view' => 'alreadyLogged'), $obj['errors']);
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
 
         $obj['form'] = array();
     }
 
+    function view_profil(&$obj, &$view) {
+        $id = isset($_GET['id']) ? $_GET['id'] : '';
+        if ($id == '') {
+            if (isset($this->authentication->currentUser)) {
+                $id = $this->authentication->currentUser['id'];
+            }
+        }
+        
+        if (!$this->authentication->CheckRole('Administrator') &&
+            $id != $this->authentication->currentUser['id']) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'home'));
+        }
+        
+        if (!$this->crowd->TryGet($id, $user)) {
+            $this->webSite->AddMessage('warning', ':CANT_FIND_USER');
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'home'));
+        }
+        
+        $obj['user'] = $user;
+    }
+    
     function view_editUser(&$obj, &$view) {
         if (!$this->authentication->CheckRole('Administrator') &&
             ($this->authentication->currentUser == null ||

@@ -6,6 +6,8 @@
     prefixUrlArticle='<?php echo htmlspecialchars(url(array('controller' => 'builder', 'view' => 'editArticle')));?>';
 ">
 <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
+<a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><span class="glyphicon glyphicon-plus"></span></a>
+
 <table class="table table-hover table-bordered table-condensed table-striped">
   <caption>Optional table caption.</caption>
       <thead>

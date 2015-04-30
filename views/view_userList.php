@@ -12,6 +12,7 @@
     <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
     <a href="<?php echo url(array('controller' => 'user', 'view' => 'register')) ?>"><span class="glyphicon glyphicon-plus"></span></a>
     <a href="<?php echo url(array('controller' => 'user', 'view' => 'userInsert')) ?>"><span class="glyphicon glyphicon-th-list"></span></a>
+    <a href="<?php echo url(array('controller' => 'user', 'view' => 'export')) ?>"><span class="glyphicon glyphicon-download-alt"></span></a>
     <table st-table="rowCollection" class="table table-striped">
         <thead>
         <tr>
