@@ -268,7 +268,7 @@ class LexerParser {
 	}
 	
 	function lex(&$string) {
-		$result = array();
+        $result = array();
 		$pos = 0;
 		while (strlen($string)>$pos) {
 			foreach($this->lineDecorators as $decorator) {
@@ -297,7 +297,7 @@ class Transformer {
 
     function ToHtml($string) {
         $decoded = $this->lexerParser->lex($string);
-		return $this->Encode($decoded);
+    	return $this->Encode($decoded);
     }
 
     function Encode($decoded) {
@@ -307,7 +307,7 @@ class Transformer {
                 die("can't find type in array. (".json_encode($item).")");
             switch ($item['type']) {
                 case 'text' :
-                    $string .= $item['content'];
+                    $string .= htmlentities($item['content']);
                     break;
                 case 'paragraph' :
                     $string .= '<P>'.$this->Encode($item['content']).'</P>';
@@ -325,7 +325,7 @@ class Transformer {
                     $string .= '<H4>'.$this->Encode($item['content']).'</H4>';
                     break;
                 case 'html' :
-                    $string .= $item['content'];
+                    $string .= $item['content'][0]['content'];
                     break;
                 case 'strong' :
                     $string .= '<span class="cx_bold">'.$this->Encode($item['content']).'</span>';
@@ -351,7 +351,7 @@ class Transformer {
                 case 'link' :
 					$split = explode('|', $item['content'][0]['content']);
                     if (count($split) == 1) {
-                        $string .= $this->CreateLinkTo($split[0], $split[0]);
+                        $string .= $this->CreateLinkTo($split[0], '');
                     } elseif (count($split) > 1) {
                         $string .= $this->CreateLinkTo($split[0], $split[1]);
                     } else {
@@ -359,8 +359,14 @@ class Transformer {
                     }
                     break;
                 case 'image' :
-                    if ($this->gallery->TryGet($item['content'][0]['content'], $image))
-                        $string.= '<img src="'.$image['file'].'">';
+                    $split = explode('|', $item['content'][0]['content']);
+                    if (count($split) == 1) {
+                        $string .= $this->CreateLinkTo('', '@'.$split[0]);
+                    } elseif (count($split) > 1) {
+                        $string .= $this->CreateLinkTo($split[1], '@'.$split[0]);
+                    } else {
+                        $string .= "???";
+                    }
                     break;
                 case 'separator' :
                     $string.= '<hr />';
@@ -390,21 +396,33 @@ class Transformer {
     }
     
     private function CreateLinkTo($link, $display) {
+        if (substr($display,0,1) == '@' && $this->gallery->TryGet(substr($display, 1), $media)) {
+            $display = '<img src="'.$media['file'].'">';
+        } else {
+            $display = htmlentities($display);
+        }
+        
         if ($link == 'home') {
-            return '<a href="'.url(array('controller' => 'site', 'view' => 'home')).'">'.$display.'</a>';
+            $display = 'home';
+            $link = url(array('controller' => 'site', 'view' => 'home'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
-            if ($display == $link) {
+            if ($display == '') {
                 $display = $this->translator->GetTranslation($article['titleKey']);
             }
-            return '<a href="'.url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id'])).'">'.$display.'</a>';
-        } elseif (substr($link, 0, 1) == '!' && $this->gallery->TryGet(substr($link, 1), $media)) {
-            if ($display == $link) {
+            $link = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        } elseif (substr($link, 0, 1) == '@' && $this->gallery->TryGet(substr($link, 1), $media)) {
+            if ($display == '') {
                 $display = $media['name'];
             }
-            return '<a href="'.$media['file'].'">'.$display.'</a>';
+            $link = $media['file'];
+        } elseif ($link != '') {
+            if ($display == '') {
+                $display = $link;
+            }
         } else {
-            return '<a href="'.$link.'">'.$display.'</a>';
+            return $display;
         }
+        return '<a href="'.$link.'">'.$display.'</a>';
     }
 }
 

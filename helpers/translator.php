@@ -221,7 +221,7 @@ class Translator {
             if (count($lines) == 0)
                 return '['.$key.']';
         }
-        return htmlspecialchars($lines[0]['text']);
+        return $lines[0]['text'];
     }
 
     private function CreateNewKey($string) {
