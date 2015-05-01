@@ -1,9 +1,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
 <div ng-init="
-    articles=<?php echo htmlspecialchars(json_encode($obj['articles']));?>;
+    articles=<?php echo htmlspecialchars(json_encode($obj['articles'], JSON_NUMERIC_CHECK));?>;
     languages=<?php echo htmlspecialchars(json_encode($obj['languages']));?>;
     prefixUrl='<?php echo htmlspecialchars(url(array('controller' => 'translationManager', 'view' => 'editArticleTrad')));?>';
     prefixUrlArticle='<?php echo htmlspecialchars(url(array('controller' => 'builder', 'view' => 'editArticle')));?>';
+    predicate='id';
 ">
 <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
 <a href="<?php echo url(array('controller' => 'builder', 'view' => 'editArticle')) ?>"><span class="glyphicon glyphicon-plus"></span></a>

@@ -3,7 +3,6 @@
 class ControllerUser {
 
     var $container = 'container';
-    var $salt = 'M4LT3-L184N-By-Adlb';
     var $authentication;
     var $crowd;
     var $translator;

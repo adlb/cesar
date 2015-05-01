@@ -21,7 +21,7 @@ var getScope = function(id, f) {
             }
         }
     }
-    window.setTimeout(function() getScope(id, f), 0);
+    window.setTimeout(function() {getScope(id, f);}, 0);
 };
 </script>
 

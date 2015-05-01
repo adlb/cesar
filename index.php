@@ -5,7 +5,6 @@ include('helpers/helper_general.php');
 
 $webSite = new WebSite('config.json');
 
-$containerView = 'container';
 $defaultController = 'site';
 $defaultView = 'home';
 $obj =& $webSite->obj;

@@ -67,6 +67,39 @@ class Dal {
         }
     }
 
+    function SelectDistinct($fieldName, $conditions = array()) {
+        if ($this->db == null)
+            return array();
+
+        $sqlField = '`'.$fieldName.'`';
+        $sql = 'SELECT DISTINCT '.$sqlField.' FROM `'.$this->tableName.'`';
+        
+        $sqlConditions = $this->AddSQLConditions($conditions, $sql);
+        $sqlConditions = $this->AddSQLOrderBy(array($fieldName => true), $sql);
+        
+        try {
+            $statement = $this->db->prepare($sql);
+            foreach($conditions as $k => $v) {
+                if (is_array($v)) {
+                    for($i = 0; $i < count($v); $i++) {
+                        $statement->bindValue(':'.$k.'_'.$i, $v[$i], $this->fields[$k]['bind']);
+                    }
+                } else {
+                    $statement->bindValue(':'.$k, $v, $this->fields[$k]['bind']);
+                }
+            }
+            $statement->execute();
+            $results = array();
+            while ($result = $statement->fetch(PDO::FETCH_ASSOC)){
+                $results[] = $result[$fieldName];
+            }
+            return $results;
+        } catch (PDOException $e) {
+            return array();
+        }
+        
+    }
+    
     function GetWhere($conditions, $orderBy = array()) {
         if ($this->db == null)
             return array();
@@ -76,28 +109,9 @@ class Dal {
             $sqlFields[] = '`'.$k.'`';
         $sql = 'SELECT '.join(',', $sqlFields).' FROM `'.$this->tableName.'`';
 
-        $sqlConditions = array();
-        foreach($conditions as $k => $v)
-            if (is_array($v)) {
-                if (count($v)>0) {
-                    $orConditions = array();
-                    for($i = 0; $i < count($v); $i++) {
-                        $orConditions[] = '`'.$k.'` = :'.$k.'_'.$i.'';
-                    }
-                    $sqlConditions[] = '('.join($orConditions, ' OR ').')';
-                }
-            } else {
-                $sqlConditions[] = '`'.$k.'` = :'.$k.'';
-            }
-        if (count($sqlConditions) > 0)
-            $sql = $sql.' WHERE '.join(' AND ', $sqlConditions);
-
-        $sqlOrderBy = array();
-        foreach ($orderBy as $k => $growing)
-            $sqlOrderBy[] = '`'.$k.'`'.($growing ? '' : ' DESC');
-        if (count($sqlOrderBy) > 0)
-            $sql = $sql.' ORDER BY '.join(', ', $sqlOrderBy);
-
+        $sqlConditions = $this->AddSQLConditions($conditions, $sql);
+        $sqlOrderBy = $this->AddSQLOrderBy($orderBy, $sql);
+        
         try {
             $statement = $this->db->prepare($sql);
             foreach($conditions as $k => $v) {
@@ -199,6 +213,33 @@ class Dal {
         } catch (PDOException $e) {
             die('connection impossible');
         }
+    }
+    
+    private function AddSQLConditions($conditions, &$sql) {
+        $sqlConditions = array();
+        foreach($conditions as $k => $v) {
+            if (is_array($v)) {
+                if (count($v)>0) {
+                    $orConditions = array();
+                    for($i = 0; $i < count($v); $i++) {
+                        $orConditions[] = '`'.$k.'` = :'.$k.'_'.$i.'';
+                    }
+                    $sqlConditions[] = '('.join($orConditions, ' OR ').')';
+                }
+            } else {
+                $sqlConditions[] = '`'.$k.'` = :'.$k.'';
+            }
+        }
+        if (count($sqlConditions) > 0)
+            $sql = $sql.' WHERE '.join(' AND ', $sqlConditions);
+    }
+    
+    private function AddSQLOrderBy($orderBy, &$sql) {
+        $sqlOrderBy = array();
+        foreach ($orderBy as $k => $growing)
+            $sqlOrderBy[] = '`'.$k.'`'.($growing ? '' : ' DESC');
+        if (count($sqlOrderBy) > 0)
+            $sql = $sql.' ORDER BY '.join(', ', $sqlOrderBy);
     }
 }
 ?>

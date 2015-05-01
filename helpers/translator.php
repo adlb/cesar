@@ -5,7 +5,7 @@ class Translator {
     var $groupedCache;
     var $language;
     var $defaultLanguage;
-    var $defaultGroupKey = 'GROUPED';
+    var $defaultGroupKey = 'GENERAL';
     var $languages;
 
     function __construct($config, $textDal, $language, $isAdmin) {
@@ -35,29 +35,39 @@ class Translator {
             }
         }
         
-        $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
-        if (count($lines) == 1) {
-            foreach(explode("\n", $lines[0]['text']) as $line) {
-                $split = explode('|', $line);
-                if (count($split) >= 2)
-                    $this->groupedCache[$split[0]] = $split[1];
-            }
-        }
 
-        $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->language));
-        foreach($lines as $line) {
-            $goupedCache[$line['key']] = $line['text'];
-        }
+        $this->fetchGroup($this->defaultGroupKey);
+        $this->fetchGroup('');
+    }
 
-        if ($this->defaultLanguage != $this->language) {
-            $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->defaultLanguage));
+    function fetchGroup($groupKey) {
+        if ($groupKey == '') {
+            $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->language));
             foreach($lines as $line) {
-                if (!isset($this->goupedCache[$line['key']]))
-                    $this->goupedCache[$line['key']] = $line['text'];
+                $goupedCache[$line['key']] = $line['text'];
+            }
+
+            if ($this->defaultLanguage != $this->language) {
+                $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->defaultLanguage));
+                foreach($lines as $line) {
+                    if (!isset($this->goupedCache[$line['key']]))
+                        $this->goupedCache[$line['key']] = $line['text'];
+                }
+            }
+        } else {
+            if (!isset($this->groupedCache[$groupKey]))
+                $this->groupedCache[$groupKey] = array();
+            $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
+            if (count($lines) == 1) {
+                foreach(explode("\n", $lines[0]['text']) as $line) {
+                    $split = explode('|', $line);
+                    if (count($split) >= 2)
+                        $this->groupedCache[$groupKey][$split[0]] = $split[1];
+                }
             }
         }
     }
-
+    
     function GetTranslation($key) {
         if (!is_array($key)) {
             return $this->InternalGetTranslation($key);
@@ -156,6 +166,9 @@ class Translator {
     }
     
     function UpdateTranslation($action, $language, $key, $value, $prefetch, $usage) {
+        if ($key == '')
+            return;
+
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
         
         if (count($oldTexts) == 0) {
@@ -167,7 +180,7 @@ class Translator {
                 'text' => '',
                 'nextText' => $value,
                 'usage' => $usage,
-                'textStatus' => 'toBeTranslated',
+                'textStatus' => 'notTranslated',
             );
         } else {
             $oldText = $oldTexts[0];
@@ -212,9 +225,12 @@ class Translator {
     private function InternalGetTranslation($key) {
         if ($key == '')
             return $key;
-        if (substr($key, 0, 1) == ':')
-            return htmlspecialchars($this->GetGroupedTranslation(substr($key, 1)));
-
+        $split = explode(':', $key);
+        if (count($split) == 2) {
+            $group = $split[0] == '' ? $this->defaultGroupKey : $split[0];
+            return htmlspecialchars($this->GetGroupedTranslation($group, substr($key, 1)));
+        }
+        
         $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
         if (count($lines) == 0) {
             $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
@@ -249,19 +265,24 @@ class Translator {
         return $result;
     }
 
-    private function GetGroupedTranslation($key) {
-        if (isset($this->groupedCache[$key]))
-            return $this->groupedCache[$key];
-        $this->groupedCache[$key] = $key;
+    private function GetGroupedTranslation($groupedKey, $key) {
+        if (!isset($this->groupedCache[$groupedKey]))
+            $this->groupedCache[$groupedKey] = array();
+        
+        if (isset($this->groupedCache[$groupedKey][$key]))
+            return $this->groupedCache[$groupedKey][$key];
+        
+        //Not in cache then add it in cache and DB
+        $this->groupedCache[$groupedKey][$key] = $key;
         $lines = array();
-        foreach($this->groupedCache as $k => $v)
+        foreach($this->groupedCache[$groupedKey] as $k => $v)
             $lines[] = $k.'|'.$v;
-        $dbLines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
+        $dbLines = $this->textDal->GetWhere(array('key' => $groupedKey, 'language' => $this->language));
         if (count($dbLines) == 0) {
             $new = array(
-                'key' => $this->defaultGroupKey,
+                'key' => $groupedKey,
                 'language' => $this->language,
-                'prefetch' => true,
+                'prefetch' => false,
                 'usage' => 'grouped',
                 'textStatus' => 'notTranslated',
             );
@@ -271,7 +292,7 @@ class Translator {
         $new['text'] = join("\n", $lines);
         $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);
-        return $this->groupedCache[$key];
+        return $this->groupedCache[$groupedKey][$key];
     }
 }
 

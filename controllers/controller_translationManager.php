@@ -1,4 +1,5 @@
 <?php
+
 class TextManager {
     var $textsDico;
     var $languages;
@@ -91,23 +92,26 @@ class ControllerTranslationManager {
         $languages = $this->translator->languages;
         $textManager = new TextManager($this->textShortDal, $languages);
         
-        $articles = $this->articleDal->GetWhere(array());
+        $articles = $this->articleDal->GetWhere(array(), array('id' => true));
         foreach($articles as &$article) {
             $article['titleTrad'] = $this->translator->GetTranslation($article['titleKey']);
             $article['StatusPerLanguage'] = $textManager->GetStatusPerLanguage($article['titleKey'], $article['textKey']);
             $article['link'] = true;
         }
         
-        $fakeArticle = array(
-            'type' => 'groupedTrad',
-            'titleTrad' => $this->translator->GetTranslation(':DEFAULTGROUPKEY'),
-            'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $this->translator->defaultGroupKey),
-            'titleKey' => '',
-            'textKey' => $this->translator->defaultGroupKey,
-            'link' => false
-        );
-        
-        array_unshift($articles, $fakeArticle);
+        foreach($this->textDal->SelectDistinct('key', array('usage' => 'grouped')) as $groupedKey) {
+            $fakeArticle = array(
+                'id' => 0,
+                'type' => 'groupedTrad',
+                'titleTrad' => $this->translator->GetTranslation(':GROUPED_KEY_'.$groupedKey),
+                'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $groupedKey),
+                'titleKey' => '',
+                'textKey' => $groupedKey,
+                'link' => false
+            );
+            
+            array_unshift($articles, $fakeArticle);
+        }
         
         $obj['articles'] = $articles;
         $obj['languages'] = $languages;
