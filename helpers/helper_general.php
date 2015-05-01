@@ -9,12 +9,14 @@ require('helpers/authentication.php');
 require('helpers/controllerFactory.php');
 require('helpers/crowd.php');
 require('helpers/mailer.php');
+require('helpers/journal.php');
 require('models/user_dal.php');
 require('models/userShort_dal.php');
 require('models/article_dal.php');
 require('models/text_dal.php');
 require('models/textShort_dal.php');
 require('models/media_dal.php');
+require('models/event_dal.php');
 
 class WebSite {
     var $obj;
@@ -32,11 +34,13 @@ class WebSite {
         $this->services['textDal'] =        new TextDal         ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['eventDal'] =       new EventDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
         $this->services['formatter'] =      new Transformer     ($this->services['gallery'], $this->services['articleDal'], $this->services['translator']);
         $this->services['crowd'] =          new Crowd           ($this->services['config']->current['SecretLine'], $this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
         $this->services['mailer'] =         new Mailer          ($this->services['config']);
+        $this->services['journal'] =        new Journal         ($this->services['eventDal'], $this->services['authentication']);
         $this->controllerFactory =          new ControllerFactory($this->services);
 
         if (!isset($_GET['language'])) {

@@ -23,7 +23,7 @@ class Journal {
             'data' => json_encode($data)
         );
         
-        $this->eventDat->TrySave($event);
+        $this->eventDal->TrySave($event);
     }
 }
 

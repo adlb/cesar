@@ -13,25 +13,25 @@ class Crowd {
         $this->authentication = $authentication;
     }
 
-    function TryRegister(&$user, &$errors) {
+    function TryRegister(&$user, &$error) {
         if (!isset($user['password1']) || !isset($user['password2']) ||
             trim($user['password1']) == '' || trim($user['password2']) == '') {
-            $errors[] = ':PASSWORD_EMPTY';
+            $error = ':PASSWORD_EMPTY';
             return false;
         }
 
         if ($user['password2'] != $user['password1']) {
-            $errors[] = ':PASSWORDS_DONT_MATCH';
+            $error = ':PASSWORDS_DONT_MATCH';
             return false;
         }
 
         if (strlen($user['password2']) <= 5) {
-            $errors[] = ':PASSWORDS_TOO_SHORT';
+            $error = ':PASSWORDS_TOO_SHORT';
             return false;
         }
-
+        
         if (count($this->userDal->GetWhere(array('email' => $_POST['email']))) > 0) {
-            $errors[] = ':USER_EXISTS';
+            $error = ':USER_EXISTS';
             return false;
         }
 
@@ -44,12 +44,11 @@ class Crowd {
         $userToCreate = array(
             'email' => $user['email'],
             'passwordHashed' => md5($user['password1'].$this->salt),
-            'passwordClear' => $user['password1'],
             'role' => $role
         );
 
         if (!$this->userShortDal->TrySave($userToCreate)) {
-            $errors[] = ':CANT_CREATE_USER';
+            $error = ':CANT_CREATE_USER';
             return false;
         }
 
@@ -59,9 +58,9 @@ class Crowd {
         return true;
     }
 
-    function TryUpdateUser($user, &$errors) {
+    function TryUpdateUser($user, &$error) {
         if (!$this->userDal->TryGet($user['id'], $userOld)) {
-            $errors[] = ':USER_DOEAS_NOT_EXISTS';
+            $error = ':USER_DOEAS_NOT_EXISTS';
             return false;
         }
 
@@ -83,10 +82,13 @@ class Crowd {
         );
 
         if (!$this->userDal->TrySave($userToUpdate)) {
-            $errors[] = ':CANT SAVE USER';
+            $error = ':CANT SAVE USER';
             return false;
         }
 
+        if ($this->authentication->currentUser['id'] == $userToUpdate['id'])
+            $this->authentication->SetUser($userToUpdate);
+        
         return true;
     }
 

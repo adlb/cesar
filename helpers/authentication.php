@@ -7,9 +7,7 @@ class Authentication {
 
     function SetUser($user) {
         $_SESSION['user'] = $user;
-        $user['passwordClear'] = null;
         $user['passwordHashed'] = null;
-        unset($user['passwordClear']);
         unset($user['passwordHashed']);
         $this->currentUser = $user;
         $this->roles = explode(';', $user['role']);
