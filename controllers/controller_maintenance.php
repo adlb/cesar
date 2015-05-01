@@ -8,8 +8,11 @@ class ControllerMaintenance {
     var $userDal;
     var $config;
     var $authentication;
+    var $webSite;
 
     function ControllerMaintenance($services) {
+        global $webSite;
+        $this->webSite = $webSite;
         $this->config = $services['config'];
         $this->authentication = $services['authentication'];
         $this->articleDal = $services['articleDal'];
@@ -20,7 +23,7 @@ class ControllerMaintenance {
 
     function action_reCreateTables(&$obj) {
         if (!$this->authentication->CheckRole('Administrator'))
-            redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
 
         $this->articleDal->DropTable();
         $this->articleDal->CreateTable();
@@ -31,12 +34,15 @@ class ControllerMaintenance {
         $this->userDal->DropTable();
         $this->userDal->CreateTable();
 
-        redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
     }
 
     function action_deleteConfig(&$obj) {
+        if (!$this->authentication->CheckRole('Administrator'))
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        
         $this->config->deleteConfig();
-        redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
     }
 }
 ?>

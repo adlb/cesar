@@ -31,42 +31,20 @@ class ControllerBuilder extends controllerSite{
         }
     }
 
-    function action_hideArticle(&$obj) {
+    function action_deleteArticle(&$obj, $params) {
         $this->CheckRights('Administrator', $obj);
-        if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
-            $article['status'] = 'hide';
-            $this->articleDal->TrySave($article);
-            redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']), $obj['errors']);
-            die();
-        }
-    }
-
-    function action_deleteArticle(&$obj, &$view) {
-        $this->CheckRights('Administrator', $obj);
-        if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
+        if (isset($_GET['id']) && $this->articleDal->TryGet($params['id'], $article)) {
             $children = $this->articleDal->GetWhere(array('father' => $article['id']));
             if (count($children) > 0) {
                 $this->webSite->AddMessage('warning', ':CANT_DELETE_ARTICLE_WITH_SONS');
                 $obj['article'] = $this->enrich_Article($article, true);
-                $view = 'article';
-                return;
+                return 'article';
             }
             $this->textDal->DeleteWhere(array('key' => $article['title']));
             $this->textDal->DeleteWhere(array('key' => $article['content']));
             $this->articleDal->DeleteWhere(array('id' => $article['id']));
             $this->webSite->AddMessage('success', ':ARTICLE_DELETED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
-            die();
-        }
-    }
-
-    function action_showArticle(&$obj) {
-        $this->CheckRights('Administrator', $obj);
-        if (isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article)) {
-            $article['status'] = 'show';
-            $this->articleDal->TrySave($article);
-            redirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $_GET['id']), $obj['errors']);
-            die();
         }
     }
 
@@ -91,42 +69,37 @@ class ControllerBuilder extends controllerSite{
         return $newsFathers;
     }
     
-    function action_saveArticle(&$obj, &$view) {
+    function action_saveArticle(&$obj, $params) {
         $this->CheckRights('Administrator', $obj);
         
-        $obj['menuFathers'] = $this->GetMenuFathers($_POST['id']);
-        $obj['newsFathers'] = $this->GetNewsFathers($_POST['id']);
-        $article = $this->PrepareArticleForEditing($_POST);
+        $obj['menuFathers'] = $this->GetMenuFathers($params['id']);
+        $obj['newsFathers'] = $this->GetNewsFathers($params['id']);
+        $article = $this->PrepareArticleForEditing($params);
         $obj['form'] = $article;
         
-        if (!isset($_POST['language']) || $_POST['language'] == '') {
+        if (!isset($params['language']) || $params['language'] == '') {
             $this->webSite->AddMessage('warning', ':BAD_LANGUAGE');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
        
        if (!in_array($article['type'], array('menu', 'article', 'news'))) {
             $this->webSite->AddMessage('warning', ':NO_TYPE_PROVIDED');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
 
         if (trim($article['titleTrad']) == '') {
             $this->webSite->AddMessage('warning', ':BAD_TITLE');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
 
         if ($article['type'] == 'article' && $article['father'] != -1 && !$this->articleDal->TryGet($article['father'], $fatherEntity)) {
             $this->webSite->AddMessage('warning', ':NO_MENUFATHER');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
 
         if ($article['type'] == 'news' && !$this->articleDal->TryGet($article['father'], $fatherEntity)) {
             $this->webSite->AddMessage('warning', ':NO_NEWSFATHER');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
         
         if (trim($_POST['id']) == '' || !$this->articleDal->TryGet($_POST['id'], $articleSaved)) {
@@ -149,15 +122,14 @@ class ControllerBuilder extends controllerSite{
             $article['home'] = 0;
         }
         
-        $article['titleKey'] = $this->translator->DirectUpdate($_POST['language'], $article['titleKey'], $_POST['titleTrad'], 1, 'pureText');
-        $article['textKey'] = $this->translator->DirectUpdate($_POST['language'], $article['textKey'], $_POST['textTrad'], 0, 'decoratedText');
+        $article['titleKey'] = $this->translator->DirectUpdate($params['language'], $article['titleKey'], $params['titleTrad'], 1, 'pureText');
+        $article['textKey'] = $this->translator->DirectUpdate($params['language'], $article['textKey'], $params['textTrad'], 0, 'decoratedText');
         $article['status'] = $article['show'] == 1 ? "show" : "hide";
 
         $isHome = ($article['home'] == 1); 
         if (!$this->articleDal->TrySave($article)) {
             $this->webSite->AddMessage('warning', ':CANT_SAVE_Article');
-            $view = 'editArticle';
-            return;
+            return 'editArticle';
         }
 
         if ($isHome)
@@ -235,6 +207,8 @@ class ControllerBuilder extends controllerSite{
         $obj['form'] = $this->PrepareArticleForEditing($article);
         $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($obj['form']['id']);
+        
+        return 'editArticle';
     }
 
     function view_config(&$obj, &$view) {

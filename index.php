@@ -26,17 +26,24 @@ $controllerInstance = $webSite->controllerFactory->GetController($controller);
 
 if ($action != '') {
     $actionFunction = 'action_'.$action;
-    $controllerInstance->$actionFunction($webSite->obj, $view);
+    $params = $_POST;
+    $params['rawData'] = file_get_contents("php://input");
+    $view = $controllerInstance->$actionFunction($webSite->obj, $params);
 } else {
     $viewFunction = 'view_'.$view;
-    $controllerInstance->$viewFunction($webSite->obj, $view);
+    $view = $controllerInstance->$viewFunction($webSite->obj, $_GET);
 }
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     //Ajax
     header( 'content-type: application/json; charset=utf-8' );
-    echo json_encode($obj);
-    die();
+    echo json_encode($webSite->obj);
+} elseif (isset($_GET['respType']) && $_GET['respType'] == 'json') {
+    header( 'content-type: application/json; charset=utf-8' );
+    echo json_encode($webSite->obj);
+} elseif (isset($_GET['respType']) && $_GET['respType'] == 'debug') {
+    header( 'content-type: text/html; charset=utf-8' );
+    var_dump($webSite->obj);
 } else {
     header( 'content-type: text/html; charset=utf-8' );
     render($controllerInstance->container, $view, $obj);

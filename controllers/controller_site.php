@@ -20,7 +20,7 @@ class ControllerSite {
         $this->formatter = $services['formatter'];
     }
 
-    function view_menu(&$obj, &$view) {
+    function view_menu(&$obj, $params) {
         $obj['user'] = $this->authentication->currentUser;
         $obj['language'] = $this->translator->language;
         $obj['languages'] = $this->translator->languages;
@@ -41,13 +41,15 @@ class ControllerSite {
                 $articles[$article['father']]['sons'][] = &$article;
             }
         }
+        return 'menu';
     }
 
-    function view_subMenu(&$obj, &$view) {
+    function view_subMenu(&$obj, $params) {
         //nothing to do here. $obj is already filled by view_menu.
+        return 'subMenu';
     }
 
-    function view_alerts(&$obj, &$view) {
+    function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => 1, 'status' => 'show'));
 		$alertsActives = array();
 		foreach($alerts as $alert) {
@@ -59,6 +61,7 @@ class ControllerSite {
 			}
 		}
 		$obj['alerts'] = $alertsActives;
+        return 'alerts';
     }
 
     protected function enrich_Article($article, $isAdmin) {
@@ -80,41 +83,53 @@ class ControllerSite {
         return $article;
     }
     
-    private function view_articleInternal(&$obj, &$view, $id) {
-        if (!$this->articleDal->TryGet($id, $article)) {
-            $view = 'noArticle';
-            return;
-        }
+    private function TryViewArticleInternal(&$obj, $id) {
+        if (!$this->articleDal->TryGet($id, $article))
+            return false;
         
         if ($article['needLogin'] && !$this->authentication->CheckRole(array('Administrator', 'Translator', 'Visitor'))) {
             $this->webSite->AddMessage('info', 'You have to login or create an account to access this page.');
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
         }
         
-        if (
-            $this->config->current['Home'] != $id &&
+        if ($this->config->current['Home'] != $id &&
             $article['status'] == 'hide' && 
             !$this->authentication->CheckRole('Administrator')) {
-            $view = 'noArticle';
-            return;
+            return false;
         }
         
         $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
         
         $obj['article'] = $article;
+        return true;
     }
 
-    function view_home(&$obj, &$view) {
+    function view_home(&$obj, $params) {
         $home = $this->config->current['Home'];
-        $this->view_articleInternal($obj, $view, $home);
+        if (!$this->TryViewArticleInternal($obj, $home))
+            return 'noArticle';
+        else
+            return 'home';
     }
 
-    function view_article(&$obj, &$view) {
-        $id = isset($_GET['id']) ? $_GET['id'] : -1;
+    function view_article(&$obj, $params) {
+        $id = isset($params['id']) ? $params['id'] : -1;
         if ($id == $this->config->current['Home']) {
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        $this->view_articleInternal($obj, $view, $id);
+        
+        if (!$this->TryViewArticleInternal($obj, $id))
+            return 'noArticle';
+        else
+            return 'article';
+    }
+    
+    function view_fixedArticle(&$obj, $params) {
+        $titleKey = $params['titleKey'];
+        $article = $this->articleDal->GetFixedArticle($titleKey);
+        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
+        $obj['article'] = $article;
+        return 'article';
     }
 }
 

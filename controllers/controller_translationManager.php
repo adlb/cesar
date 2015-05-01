@@ -14,7 +14,7 @@ class TextManager {
         }
     }
     
-    function GetKeyStatus($key, $language) {
+    private function GetKeyStatus($key, $language) {
         if ($key == '')
             return 'ready';
         if (!isset($this->textsDico[$key]))
@@ -31,7 +31,7 @@ class TextManager {
     //   translationToBeUpdated |       |        | t-tb-U | ft-tb-V | tb-T |
     // firstTranslationToBeVali |       |        |        | ft-tb-V | tb-T |
     //           toBeTranslated |       |        |        |         | tb-T |
-    function GetStatus($key1, $key2, $language) {
+    private function GetStatus($key1, $key2, $language) {
         $status = array('unkown', 'ready', 'translationToBeValidated', 'translationToBeUpdated', 'firstTranslationToBeValidated', 'toBeTranslated');
         
         $status1 = array_search($this->GetKeyStatus($key1, $language), $status);
@@ -71,16 +71,16 @@ class ControllerTranslationManager {
         $this->articleDal = $services['articleDal'];
     }
 
-    function action_saveText(&$obj) {
-        $nextTitle = isset($_POST['nextTitle']) ? $_POST['nextTitle'] : '';
-        $nextText = isset($_POST['nextText']) ? $_POST['nextText'] : '';
+    function action_saveText(&$obj, $params) {
+        $nextTitle = isset($params['nextTitle']) ? $params['nextTitle'] : '';
+        $nextText = isset($params['nextText']) ? $params['nextText'] : '';
 
-        $titleKey = isset($_POST['titleKey']) ? $_POST['titleKey'] : die('ERREUR, what are you trying to do ?');
-        $textKey = isset($_POST['textKey']) ? $_POST['textKey'] : die('ERREUR, what are you trying to do ?');
+        $titleKey = isset($params['titleKey']) ? $params['titleKey'] : die('ERREUR, what are you trying to do ?');
+        $textKey = isset($params['textKey']) ? $params['textKey'] : die('ERREUR, what are you trying to do ?');
         
-        $lg = isset($_POST['lg']) ? $_POST['lg'] : die('ERREUR, what are you trying to do ?');
+        $lg = isset($params['lg']) ? $params['lg'] : die('ERREUR, what are you trying to do ?');
 
-        $action = isset($_POST['actionPushed']) ? $_POST['actionPushed'] : die('ERREUR, what are you trying to do ?');
+        $action = isset($params['actionPushed']) ? $params['actionPushed'] : die('ERREUR, what are you trying to do ?');
         
         $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle, true, 'pureText');
         $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText, false, 'decoratedText');
@@ -88,7 +88,7 @@ class ControllerTranslationManager {
         redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'));
     }
 
-    function view_translationList(&$obj, &$view) {
+    function view_translationList(&$obj, $params) {
         $languages = $this->translator->languages;
         $textManager = new TextManager($this->textShortDal, $languages);
         
@@ -115,6 +115,8 @@ class ControllerTranslationManager {
         
         $obj['articles'] = $articles;
         $obj['languages'] = $languages;
+        
+        return 'translationList';
     }
 
     private function GetTextForEditing($key) {
@@ -130,11 +132,11 @@ class ControllerTranslationManager {
         return $texts;
     }
     
-    function view_editArticleTrad(&$obj, &$view) {
-        $lg = (isset($_GET['lg']) && in_array($_GET['lg'], $this->config->current['Languages'])) ? $_GET['lg'] : $this->config->current['Languages'][0];
+    function view_editArticleTrad(&$obj, $params) {
+        $lg = (isset($params['lg']) && in_array($params['lg'], $this->config->current['Languages'])) ? $params['lg'] : $this->config->current['Languages'][0];
 
-        $obj['titleKey'] = isset($_GET['titleKey']) ? $_GET['titleKey'] : '';
-        $obj['textKey'] = isset($_GET['textKey']) ? $_GET['textKey'] : '';
+        $obj['titleKey'] = isset($params['titleKey']) ? $params['titleKey'] : '';
+        $obj['textKey'] = isset($params['textKey']) ? $params['textKey'] : '';
         
         $obj['titles'] = $this->GetTextForEditing($obj['titleKey']);
         $obj['texts'] = $this->GetTextForEditing($obj['textKey']);
@@ -149,6 +151,8 @@ class ControllerTranslationManager {
         $obj['actions'][] = array('name' => 'SubmitForValidation', 'type' => 'primary', 'value' => 'submitForValidation');
         if ($this->authentication->CheckRole('Administrator'))
             $obj['actions'][] = array('name' => 'Validate', 'type' => 'primary', 'value' => 'validate');
+            
+        return 'editArticleTrad';
     }
 }
 ?>

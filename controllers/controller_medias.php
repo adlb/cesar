@@ -10,7 +10,7 @@ class ControllerMedias {
         $this->gallery = $services['gallery'];
     }
 
-    function action_upload(&$obj, &$view) {
+    function action_upload(&$obj, $params) {
         $output = array();
         if (isset($_FILES['files'])) {
             foreach($this->diverse_array($_FILES['files']) as $file) {
@@ -21,29 +21,28 @@ class ControllerMedias {
                 }
             }
         } else {
-            if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) )
+            if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($params) )
                 $output['errors'][] = htmlentities('The uploaded zip was too large. You must upload files smaller than ' . min(ini_get("upload_max_filesize"), ini_get('post_max_size')));
             else
                 $output['errors'][] = "No File uploaded";
         }
 
         $obj = $output;
-        $view = 'ajax';
     }
 
-    function action_delete(&$obj, &$view) {
-        if (isset($_POST['id']) && trim($_POST['id']) != '') {
-            $this->gallery->Delete($_POST['id']);
+    function action_delete(&$obj, $params) {
+        if (isset($params['id']) && trim($params['id']) != '') {
+            $this->gallery->Delete($params['id']);
             $output = array('status' => 'ok');
         } else {
             $output = array('status' => 'error');
         }
         $obj = $output;
-        $view = 'ajax';
     }
 
-    function view_medias(&$obj, &$view) {
+    function view_medias(&$obj, $params) {
         $obj['medias'] = $this->gallery->GetAll();
+        return 'medias';
     }
 
     private function diverse_array($vector) {

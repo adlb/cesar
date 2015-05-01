@@ -20,87 +20,84 @@ class ControllerUser {
         $this->journal = $services['journal'];
     }
 
-    function action_register(&$obj, &$view) {
-        if (!$this->crowd->TryRegister($_POST, $error)) {
+    function action_register(&$obj, $params) {
+        if (!$this->crowd->TryRegister($params, $error)) {
             $this->webSite->AddMessage('warning', $error);
-            $obj['form']['email'] = $_POST['email'];
+            $obj['form']['email'] = $params['email'];
             $view = 'register';
             return;
         }
         $this->journal->LogEvent('user', 'register', $this->authentication->currentUser);
-        $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $_POST['id']));
+        $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $this->authentication->currentUser['id']));
     }
 
-    function action_saveUser(&$obj, &$view) {
-        if (!$this->authentication->CheckRole('Administrator') && $_POST['id'] != $this->authentication->currentUser['id']) {
+    function action_saveUser(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator') && $params['id'] != $this->authentication->currentUser['id']) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        if (!$this->crowd->TryUpdateUser($_POST, $errors)) {
-            $obj['errors'] = $errors;
-            $obj['form'] = $_POST;
-            $view = 'editUser';
-            return;
+        if (!$this->crowd->TryUpdateUser($params, $error)) {
+            $this->webSite->AddMessage('warning', $error);
+            $obj['form'] = $params;
+            return 'editUser';
         }
 
         $this->journal->LogEvent('user', 'updateUser', $this->authentication->currentUser);
-        redirectTo(array('controller' => 'site'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site'));
     }
 
-    function action_login(&$obj, &$view){
-        $email = isset($_POST['email']) ? $_POST['email'] : "";
-        $password = isset($_POST['password']) ? $_POST['password'] : "";
+    function action_login(&$obj, $params){
+        $email = isset($params['email']) ? $params['email'] : "";
+        $password = isset($params['password']) ? $params['password'] : "";
 
         if (!$this->crowd->TryLogin($email, $password, $error)) {
-            $obj['email'] = $email;
             $this->webSite->AddMessage('warning', $error);
-            $view = 'login';
-            return;
+            $obj['email'] = $email;
+            return 'login';
         }
         
         $this->journal->LogEvent('user', 'login', $this->authentication->currentUser);
         $this->webSite->RedirectTo(array('controller' => 'site'));
     }
 
-    function action_delete(&$obj, &$view) {
+    function action_delete(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        if ($this->authentication->currentUser['id'] == $_POST['id']) {
-            $obj['errors'][] = ':CANT_DELETE_YOURSELF';
-            $view = 'userList';
-            view_userList($obj, $view);
+        if ($this->authentication->currentUser['id'] == $params['id']) {
+            $this->webSite->AddMessage('warning', ':CANT_DELETE_YOURSELF');
             $output = array('status' => 'error');
         } else {
-            $this->crowd->Delete($_POST['id']);
+            $this->crowd->Delete($params['id']);
             $output = array('status' => 'ok');
             $this->journal->LogEvent('user', 'delete', $_POST['id']);
         }
 
         $obj = $output;
-        $view = 'ajax';
     }
 
-    function action_logout(&$obj, &$view){
+    function action_logout(&$obj, $params){
         $this->authentication->logout();
-        redirectTo(array('controller' => 'site'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site'));
     }
 
-    function view_login(&$obj, &$view) {
+    function view_login(&$obj, $params) {
         if ($this->authentication->CheckRole('Logged'))
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
+        return 'login';
     }
 
-    function view_register(&$obj, &$view) {
+    function view_register(&$obj, $params) {
         if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
 
         $obj['form'] = array();
+        return 'register';
     }
 
-    function view_profil(&$obj, &$view) {
-        $id = isset($_GET['id']) ? $_GET['id'] : '';
+    function view_profil(&$obj, $params) {
+        $id = isset($params['id']) ? $params['id'] : '';
         if ($id == '') {
             if (isset($this->authentication->currentUser)) {
                 $id = $this->authentication->currentUser['id'];
@@ -119,10 +116,11 @@ class ControllerUser {
         }
         
         $obj['user'] = $user;
+        return 'profil';
     }
     
-    function view_editUser(&$obj, &$view) {
-        $id = isset($_GET['id']) ? $_GET['id'] : '';
+    function view_editUser(&$obj, $params) {
+        $id = isset($params['id']) ? $params['id'] : '';
         if ($id == '') {
             if (isset($this->authentication->currentUser)) {
                 $id = $this->authentication->currentUser['id'];
@@ -137,50 +135,53 @@ class ControllerUser {
         
         $obj['isAdministrator'] = $this->authentication->CheckRole('Administrator');
 
-        if (isset($_GET['id']) && $this->crowd->TryGet($_GET['id'], $user))
+        if (isset($params['id']) && $this->crowd->TryGet($params['id'], $user))
             $obj['form'] = $user;
 
         if (!isset($obj['form']))
             $obj['form'] = array();
+        
+        return 'editUser';
     }
 
-    function view_userList(&$obj, &$view) {
+    function view_userList(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
         $obj['users'] = $this->crowd->GetAll();
+        
+        return 'userList';
     }
 
-    function view_userInsert(&$obj, &$view) {
+    function view_userInsert(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
         $obj['form'] = isset($obj['form']) ? $obj['form'] : '';
+        
+        return 'userInsert';
     }
 
-    function action_check(&$obj, &$view) {
+    function action_check(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        $users = file_get_contents("php://input");
+        $users = $params['rawData'];
         $lines = explode("\n", $users);
         if (!$this->crowd->AnalyzeFirstLine($lines, $analyzedColumns, $errors)) {
-            $obj['errors'] = array();
             foreach($errors as $error) {
-                $obj['errors'][] = $this->translator->GetTranslation($error);
+                $this->webSite->AddMessage('warning', $error);
             }
-            $view = 'ajax';
             return;
         }
         $analyse = $this->crowd->AnalyzeLines($lines, $analyzedColumns['columns']);
         $obj['usersAnalysed'] = array('analyzedColumns' => $analyzedColumns, 'lines' => $analyse);
-        $view = 'ajax';
     }
 
-    function action_update(&$obj, &$view) {
+    function action_update(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'home'));
@@ -197,29 +198,27 @@ class ControllerUser {
             }
             $obj['lines'] = $lines;
         } else {
-            $obj['errors'][] = 'Nothing to upload';
+            $this->webSite->AddMessage('warning', ':Nothing_to_upload');
         }
-        $view = 'ajax';
     }
 
-    function view_lostPassword(&$obj, &$view) {
+    function view_lostPassword(&$obj, $params) {
         //nothing to do
     }
     
-    function action_retreivePassword(&$obj, &$view) {
+    function action_retreivePassword(&$obj, $params) {
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         if (!$this->crowd->TryGetFromEmail($email, $user)) {
             $this->webSite->AddMessage('warning', ':THIS_USER_DOES_NOT_EXIST');
-            $view = 'lostPassword';
-            return;
+            return 'lostPassword';
         }
         if ($this->mailer->TrySendSimpleMail($email, 'SiteWebPasswordRecovery', 'HTML COntent', 'Text Content')) {
             $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
             $this->journal->LogEvent('user', 'retreivePassword', $email);
-            $view = 'login';
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
         } else {
             $this->webSite->AddMessage('warning', array(':CANT_SEND_EMAIL', $email));
-            $view = 'login';
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
         }
     }
 }
