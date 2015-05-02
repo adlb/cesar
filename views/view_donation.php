@@ -1,4 +1,4 @@
-<div>
 <?php
-    displayPartial('site', 'article', $obj);
-?>    
+    displayPartial('site', 'fixedArticle', array('titleKey' => 'Donation'));
+?>
+

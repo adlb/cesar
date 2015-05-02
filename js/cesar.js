@@ -141,6 +141,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 		}
 		$scope.users = newText.join("\n");
 		localStorage.setItem("users", $scope.users);
+        //Fix me. reindexation is needed, upload does not work after remove-up-to-date
 	};
 	
 	loadUsers = function (userIndexes) {

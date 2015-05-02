@@ -29,21 +29,13 @@ var getScope = function(id, f) {
 <body>
 <div class="container" ng-app="cesarApp" ng-cloak>
 
-<br/>Header
-<?php displayPartial('site', 'menu', $obj); ?>
-<?php renderPartial('messages', $obj['messages']); ?>
-<?php renderPartial($obj['innerView'], $obj); ?>
-<br/>Footer
-<br />
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample">
-  Debug information
-</button>
-<div class="collapse" id="collapseExample">
-  <div class="well">
-    <?php var_dump($obj); ?>
-  </div>
-</div>
-
+    <br/>Header
+    <?php displayPartial('site', 'menu', null); ?>
+    <?php renderPartial('messages', $obj['messages']); ?>
+    <?php renderPartial($obj['innerView'], $obj); ?>
+    <br />
+    <?php displayPartial('site', 'footer', $obj); ?>
+    <br />
 </div>
 </body>
 <script src="js/bootstrap.min.js"></script>

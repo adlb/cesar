@@ -1,6 +1,6 @@
 <?php
 
-class ControllerUser {
+class ControllerDonation {
 
     var $container = 'container';
     var $authentication;
@@ -20,6 +20,6 @@ class ControllerUser {
     }
     
     function view_donation(&$obj, &$view) {
-        
+        return 'donation';
     }
 }

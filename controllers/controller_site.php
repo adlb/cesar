@@ -44,11 +44,6 @@ class ControllerSite {
         return 'menu';
     }
 
-    function view_subMenu(&$obj, $params) {
-        //nothing to do here. $obj is already filled by view_menu.
-        return 'subMenu';
-    }
-
     function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => 1, 'status' => 'show'));
 		$alertsActives = array();
@@ -122,6 +117,16 @@ class ControllerSite {
             return 'noArticle';
         else
             return 'article';
+    }
+    
+    function view_footer(&$obj, $params) {
+        $obj['links'] = array();
+        $legal = $this->articleDal->GetFixedArticle('Legal');
+        $obj['links'][] = array(
+            'display' => $this->translator->GetTranslation($legal['titleKey']),
+            'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $legal['id']))
+        );
+        return 'footer';
     }
     
     function view_fixedArticle(&$obj, $params) {

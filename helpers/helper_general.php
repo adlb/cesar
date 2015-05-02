@@ -51,6 +51,7 @@ class WebSite {
         
         $this->obj['title'] = $this->services['config']->current['Title'];
         $this->obj['analytics'] = $this->services['config']->current['Analytics'];
+        $this->obj['language'] = $this->services['translator']->language;
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
         $_SESSION['messages'] = null;
     }
@@ -106,16 +107,15 @@ function Render($container, $view, &$obj) {
     renderPartial($container, $obj);
 }
 
-function displayPartial($controller, $view, &$obj) {
+function displayPartial($controller, $view, $params) {
     global $webSite;
-
     $controllerInstance = $webSite->controllerFactory->GetController($controller);
     $viewFunction = 'view_'.$view;
-    $controllerInstance->$viewFunction($obj, $view);
+    $view = $controllerInstance->$viewFunction($obj, $params);
     renderPartial($view, $obj);
 }
 
-function renderPartial($view, &$obj) {
+function renderPartial($view, $obj) {
     include('views/view_'.$view.'.php');
 }
 

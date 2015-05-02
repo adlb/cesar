@@ -13,7 +13,7 @@
       <ul class="nav navbar-nav">
       <?php } ?>
         <?php foreach($obj['menu'] as $menu) { ?>
-                <?php displayPartial('site', 'subMenu', $menu); ?>
+                <?php renderPartial('subMenu', $menu); ?>
         <?php } ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
