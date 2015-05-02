@@ -120,8 +120,9 @@ class ControllerSite {
     }
     
     function view_footer(&$obj, $params) {
+        $isAdmin = $this->authentication->CheckRole('Administrator');
         $obj['links'] = array();
-        $legal = $this->articleDal->GetFixedArticle('Legal');
+        $legal = $this->articleDal->GetFixedArticle('Legal', $isAdmin);
         $obj['links'][] = array(
             'display' => $this->translator->GetTranslation($legal['titleKey']),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $legal['id']))
@@ -130,9 +131,10 @@ class ControllerSite {
     }
     
     function view_fixedArticle(&$obj, $params) {
+        $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
-        $article = $this->articleDal->GetFixedArticle($titleKey);
-        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
+        $article = $this->articleDal->GetFixedArticle($titleKey, $isAdmin);
+        $article = $this->enrich_Article($article, $isAdmin);
         $obj['article'] = $article;
         return 'article';
     }
