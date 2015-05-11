@@ -19,7 +19,7 @@ class Mailer {
         $mail->SMTPAuth = true;                                     // Enable SMTP authentication
         $mail->Username = $this->config->current['SMTPUser'];       // SMTP username
         $mail->Password = $this->config->current['SMTPPassword'];   // SMTP password
-        $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+        //$mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                          // TCP port to connect to
 
         $mail->From = $this->config->current['ContactEmail'];
@@ -33,6 +33,12 @@ class Mailer {
         $mail->Body    = $contentHtml;
         $mail->AltBody = $content;
 
+        $mail->SMTPDebug = 1;
+        echo '<pre>';
+        $mail->send();
+        
+        echo ($mail->ErrorInfo).'</pre>';
+        die();
         return $mail->send();
     }
 }

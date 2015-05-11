@@ -17,9 +17,8 @@ if (isset($_GET['forceMaintenance']) ||
     ($webSite->services['config']->current['Maintenance'] && 
     !$webSite->services['authentication']->CheckRole('Administrator') && 
     $controller!='user' && $view != 'login')) {
-    $message = $webSite->services['config']->current['MaintenanceMessage'];
-    include('maintenance.php');
-    die();
+    $controller = 'maintenance';
+    $view = 'maintenance';
 }
 
 $controllerInstance = $webSite->controllerFactory->GetController($controller);

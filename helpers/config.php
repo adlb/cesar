@@ -31,11 +31,9 @@ class Config {
             'SMTPUser' => isset($old['SMTPUser']) ? $old['SMTPUser'] : '',
             'SMTPPassword' => isset($old['SMTPPassword']) ? $old['SMTPPassword'] : '',
             'Maintenance' => isset($old['Maintenance']) && $old['Maintenance'] ? true : false,
-            'MaintenanceMessage' => isset($old['MaintenanceMessage']) ? $old['MaintenanceMessage'] : '',
+            'MaintenanceRedirection' => isset($old['MaintenanceRedirection']) ? $old['MaintenanceRedirection'] : '',
             'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
             'ActiveLanguages' => isset($old['ActiveLanguages']) && is_array($old['ActiveLanguages']) ? $old['ActiveLanguages'] : array('fr'),
-            'IdLegal' => isset($old['IdLegal']) ? $old['IdLegal'] : '',
-            'IdHelp' => isset($old['IdHelp']) ? $old['IdHelp'] : '',
             'Home' => isset($old['Home']) ? $old['Home'] : 0
         );
 
@@ -78,11 +76,9 @@ class Config {
             'SMTPUser' => $data['SMTPUser'],
             'SMTPPassword' => $data['SMTPPassword'],
             'Maintenance' => isset($data['Maintenance']) ? $data['Maintenance'] : false,
-            'MaintenanceMessage' => $data['MaintenanceMessage'],
+            'MaintenanceRedirection' => $data['MaintenanceRedirection'],
             'Languages' => array_map('trim', explode(';', $data['Languages'])),
             'ActiveLanguages' => array_map('trim', explode(';', $data['ActiveLanguages'])),
-            'IdLegal' => $data['IdLegal'],
-            'IdHelp' => $data['IdHelp'],
             'Home' => $this->current['Home']
         );
 

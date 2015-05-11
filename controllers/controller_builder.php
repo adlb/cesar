@@ -211,7 +211,7 @@ class ControllerBuilder extends controllerSite{
         return 'editArticle';
     }
 
-    function view_config(&$obj, &$view) {
+    function view_config(&$obj, $params) {
         if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
             $conf = $this->config->current;
             $conf['Languages'] = join(';', $conf['Languages']);
@@ -221,6 +221,7 @@ class ControllerBuilder extends controllerSite{
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
+        return 'config';
     }
 
     function view_help(&$obj, &$view) {
@@ -274,6 +275,30 @@ class ControllerBuilder extends controllerSite{
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
+    }
+    
+    function action_reCreateTables(&$obj) {
+        if (!$this->authentication->CheckRole('Administrator'))
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+
+        $this->articleDal->DropTable();
+        $this->articleDal->CreateTable();
+        $this->textDal->DropTable();
+        $this->textDal->CreateTable();
+        $this->mediaDal->DropTable();
+        $this->mediaDal->CreateTable();
+        $this->userDal->DropTable();
+        $this->userDal->CreateTable();
+
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+    }
+
+    function action_deleteConfig(&$obj) {
+        if (!$this->authentication->CheckRole('Administrator'))
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        
+        $this->config->deleteConfig();
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
     }
 }
 ?>

@@ -1,6 +1,6 @@
 <ul>
-<li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'reCreateTables')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
-<li><a href="<?php echo url(array('controller' => 'maintenance', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
+<li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'reCreateTables')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
+<li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
 </ul>          
 
 <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveConfig'))?>">
@@ -141,31 +141,12 @@
   </div>
 </div>
 
-<!-- Textarea -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="MaintenanceMessage">Text For Maintenance</label>
-  <div class="col-md-4">
-    <textarea class="form-control" id="MaintenanceMessage" name="MaintenanceMessage"><?php disp($obj['config'], 'MaintenanceMessage'); ?></textarea>
-  </div>
-</div>
-
-<legend>Liens Spécifiques</legend>
-
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="IdLegal">Id article mentions légales</label>
-  <div class="col-md-5">
-  <input id="IdLegal" name="IdLegal" placeholder="Id Article For Legal" class="form-control input-md" type="text" value="<?php echo $obj['config']['IdLegal']; ?>">
-  <span class="help-block">Id de l'article pour les mentions légales</span>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="IdHelp">Id article aide syntax</label>
-  <div class="col-md-5">
-  <input id="IdLegal" name="IdHelp" placeholder="Id article aide syntax" class="form-control input-md" type="text" value="<?php echo $obj['config']['IdHelp']; ?>">
-  <span class="help-block">Id de l'article pour les aides de syntax</span>
+  <label class="col-md-4 control-label" for="MaintenanceRedirection">Redirection</label>
+  <div class="col-md-6">
+  <input id="MaintenanceRedirection" name="MaintenanceRedirection" placeholder="http://defaultpage" class="form-control input-md" type="text" value="<?php echo $obj['config']['MaintenanceRedirection']; ?>">
+  <span class="help-block">To be used if maintenance is a redirection or leave blank and fill the corresponding acticle</span>
   </div>
 </div>
 

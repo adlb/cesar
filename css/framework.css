@@ -1,9 +1,9 @@
-.navbar-default .navbar-nav > li > a.cx_adminonly  {
-  color: #FFE4C4;
+.navbar-default .navbar-nav > li > a.cx_adminonly {
+  color: #22E4C4;
 }
 
-.dropdown-menu > li > a.cx_adminonly  {
-  color: #FFE4C4;
+li > a.cx_adminonly  {
+  color: #22E4C4;
 }
 
 div.cx_article .cx_bold {
@@ -28,4 +28,5 @@ div.cx_article .cx_monospace {
 
 div.cx_article img {
     float: right;
+    width: 100px;
 }
