@@ -78,7 +78,7 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
 cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 	$scope.users=localStorage.getItem("users");
 	$scope.filterRadio = '';
-	$scope.errors=[];
+	$scope.messages=[];
     $scope.usersAnalysed=false;
 	
 	$scope.init = function(checkUrl, sendUpdateUrl) {
@@ -88,7 +88,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 	
 	$scope.checkDatas = function() {
 		localStorage.setItem("users", $scope.users);
-		$scope.errors.splice(0,$scope.errors.length);
+		$scope.messages.splice(0,$scope.messages.length);
 		$.ajax({
 			url : $scope.checkUrl,
 			type: "POST",
@@ -101,10 +101,10 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
 						localStorage.setItem("usersAnalysed", data.usersAnalysed);
 						$scope.usersAnalysed = data.usersAnalysed;
 					}
-					if (data.errors) {
-						data.errors.forEach(function (error) {
+					if (data.messages) {
+						data.messages.forEach(function (message) {
 							//Fixme error will be raised when mutiple same error.
-							$scope.errors.push(error);
+							$scope.messages.push(message);
 						});
 					}
 				});

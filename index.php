@@ -25,7 +25,8 @@ $controllerInstance = $webSite->controllerFactory->GetController($controller);
 
 if ($action != '') {
     $actionFunction = 'action_'.$action;
-    $params = $_POST;
+    //Fixme
+    $params = array_merge($_POST, $_GET);
     $params['rawData'] = file_get_contents("php://input");
     $view = $controllerInstance->$actionFunction($webSite->obj, $params);
 } else {

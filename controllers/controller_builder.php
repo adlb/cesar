@@ -33,7 +33,7 @@ class ControllerBuilder extends controllerSite{
 
     function action_deleteArticle(&$obj, $params) {
         $this->CheckRights('Administrator', $obj);
-        if (isset($_GET['id']) && $this->articleDal->TryGet($params['id'], $article)) {
+        if (isset($params['id']) && $this->articleDal->TryGet($params['id'], $article)) {
             $children = $this->articleDal->GetWhere(array('father' => $article['id']));
             if (count($children) > 0) {
                 $this->webSite->AddMessage('warning', ':CANT_DELETE_ARTICLE_WITH_SONS');
@@ -44,8 +44,10 @@ class ControllerBuilder extends controllerSite{
             $this->textDal->DeleteWhere(array('key' => $article['content']));
             $this->articleDal->DeleteWhere(array('id' => $article['id']));
             $this->webSite->AddMessage('success', ':ARTICLE_DELETED');
-            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        } else {
+            $this->webSite->AddMessage('warning', array(':ARTICLE_NOT_FOUND_WITH_ID_{0}', $params['id']));
         }
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
     }
 
     private function GetMenuFathers($id) {
