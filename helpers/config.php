@@ -103,9 +103,6 @@ class Config {
         }
         return false;
     }
-
-	function Log($level, $text) {
-	}
 }
 
 ?>

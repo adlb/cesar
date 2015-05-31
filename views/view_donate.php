@@ -4,7 +4,7 @@
     
 ?>
 <?php t(':name') ?> : <?php echo $obj['user']['firstName'] . ' ' . $obj['user']['lastName'] ?><br/>
-<?php t(':address') ?> : <?php echo $obj['user']['addressLine1'] . ' - ' . $obj['user']['addressLine2'] . ' - ' . $obj['user']['postalCode'] . ' ' . $obj['user']['postalCode'] . ' - ' . $obj['user']['country'] ?><br/>
+<?php t(':address') ?> : <?php echo $obj['user']['addressLine1'] . ' - ' . $obj['user']['addressLine2'] . ' - ' . $obj['user']['postalCode'] . ' ' . $obj['user']['city'] . ' - ' . $obj['user']['country'] ?><br/>
 
 <a class="btn btn-default" href="<?php echo url(array(
     'controller' => 'user', 

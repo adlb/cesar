@@ -271,7 +271,7 @@ class ControllerBuilder extends controllerSite{
             } else {
                 $this->webSite->AddMessage('warning', ':CANT_SAVE_CONFIG');
                 $view = 'config';
-                $this->view_config($obj, $view);
+                $this->view_config($obj, array());
                 return $view;
             }
         } else {

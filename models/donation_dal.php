@@ -30,6 +30,7 @@ class DonationDal extends Dal {
             //* received
             //* validated
             //* archived
+            //* deleted
     );
     
     var $keyName = 'id';

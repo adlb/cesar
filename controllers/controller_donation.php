@@ -35,6 +35,54 @@ class ControllerDonation {
         }
     }
     
+    function action_saveDonation(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        if (!$this->donationDal->TrySave($params)) {
+            $this->webSite->AddMessage('warning', ':CANT_SAVE');
+            $obj['form'] = $params;
+            return 'editDonation';
+        }
+        
+        $this->webSite->AddMessage('success', ':SAVED');
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donationList'));
+    }
+    
+    function view_edit(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
+            $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donationList'));
+        }
+        
+        $obj['form'] = $donation;
+        
+        return 'editDonation';
+    }
+    
+    function view_donationList(&$obj, $param) {
+        $donations = $this->donationDal->GetWhere(array());
+        if (isset($param['all']) && $param['all'] == '1') {
+            $obj['donations'] = $donations;
+        } else {
+            $obj['donations'] = array();
+            foreach($donations as $donation) {
+                if ($donation['status'] != 'archived' && $donation['status'] != 'deleted') {
+                    $obj['donations'][] = $donation;
+                }
+            }
+        }
+        
+        return 'donationList';
+    }
+    
     function action_donate(&$obj, $param) {
         $donation = $param;
         $donation['userid'] = $this->authentication->currentUser['id'];
