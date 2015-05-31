@@ -219,8 +219,8 @@ class ControllerDonation {
         
             // loop through the response from the server and append to variable
             $rep = "";
-            while(!feof($fp)) { 
-               $rep .= fgets($fp, 1024); 
+            while($rep != 'VERIFIED' && $rep != 'INVALID' && !feof($fp)) { 
+               $rep = fgets($fp, 1024);
             } 
             fclose($fp); // close connection
         }
