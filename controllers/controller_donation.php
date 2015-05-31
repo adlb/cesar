@@ -1,5 +1,8 @@
 <?php
 
+define('SSL_P_URL', 'https://www.paypal.com/cgi-bin/webscr');
+define('SSL_SAND_URL','https://www.sandbox.paypal.com/cgi-bin/webscr');
+
 class ControllerDonation {
 
     var $container = 'container';
@@ -107,51 +110,27 @@ class ControllerDonation {
         // Send an empty HTTP 200 OK response to acknowledge receipt of the notification 
         header('HTTP/1.1 200 OK'); 
         
-        // Build the required acknowledgement message out of the notification just received
-        $req = 'cmd=_notify-validate';               // Add 'cmd=_notify-validate' to beginning of the acknowledgement
+        if ($this->validate_ipn()) {
+            // Possible processing steps for a payment include the following:
 
-        foreach ($_POST as $key => $value) {         // Loop through the notification NV pairs
-            $value = urlencode(stripslashes($value));  // Encode these values
-            $req  .= "&$key=$value";                   // Add the NV pairs to the acknowledgement
-        }
-        
-        // Set up the acknowledgement request headers
-        $header  = "POST /cgi-bin/webscr HTTP/1.1\r\n";                    // HTTP POST request
-        $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-
-        // Open a socket for the acknowledgement request
-        $fp = fsockopen('tls://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
-
-        // Send the HTTP POST request back to PayPal for validation
-        fputs($fp, $header . $req);
-        
-        while (!feof($fp)) {                     // While not EOF
-            $res = fgets($fp, 1024);               // Get the acknowledgement response
-        
-            if (strcmp ($res, "VERIFIED") == 0) {  // Response contains VERIFIED - process notification
-                // Possible processing steps for a payment include the following:
-
-                // Check that the payment_status is Completed
-                // Check that txn_id has not been previously processed
-                // Check that receiver_email is your Primary PayPal email
-                // Check that payment_amount/payment_currency are correct
-                // Process payment
+            // Check that the payment_status is Completed
+            // Check that txn_id has not been previously processed
+            // Check that receiver_email is your Primary PayPal email
+            // Check that payment_amount/payment_currency are correct
+            // Process payment
+            $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-OK.txt';
+            while (file_exists($filename)) {
                 $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-OK.txt';
-                while (file_exists($filename)) {
-                    $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-OK.txt';
-                }
-                file_put_contents($filename, serialize($_POST));
-            } else if (strcmp ($res, "INVALID") == 0) {
-                $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
-                while (file_exists($filename)) {
-                    $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
-                }
-                file_put_contents($filename, serialize($_POST));
             }
+            file_put_contents($filename, serialize($_POST));
+        } else {
+            $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
+            while (file_exists($filename)) {
+                $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
+            }
+            file_put_contents($filename, serialize($_POST));
         }
-
-        fclose($fp);  // Close the file
+        die();
     }
     
     private function GetDonationForChange($params) {
@@ -182,4 +161,75 @@ class ControllerDonation {
             return floatval($str); // take some last chances with floatval
         }
     }
+    
+    private function validate_ipn() {
+        
+        /*$hostname = gethostbyaddr ( $_SERVER ['REMOTE_ADDR'] );
+        if (! preg_match ( '/paypal\.com$/', $hostname )) {
+            //$this->ipn_status = 'Validation post isn\'t from PayPal';
+            //$this->log_ipn_results ( false );
+            return false;
+        }*/
+        
+        /*if (isset($this->paypal_mail) && strtolower ( $_POST['receiver_email'] ) != strtolower(trim( $this->paypal_mail ))) {
+            $this->ipn_status = "Receiver Email Not Match";
+            $this->log_ipn_results ( false );
+            return false;
+        }*/
+        
+        /*if (isset($this->txn_id)&& in_array($_POST['txn_id'],$this->txn_id)) {
+            $this->ipn_status = "txn_id have a duplicate";
+            $this->log_ipn_results ( false );
+            return false;
+        }*/
+
+        // parse the paypal URL
+        $paypal_url = (isset($_POST['test_ipn']) && $_POST['test_ipn'] == 1) ? SSL_SAND_URL : SSL_P_URL;
+        $url_parsed = parse_url($paypal_url);        
+        
+        // generate the post string from the _POST vars aswell as load the
+        // _POST vars into an arry so we can play with them from the calling
+        // script.
+        $post_string = '';    
+        foreach ($_POST as $field=>$value) { 
+            $post_string .= $field.'='.urlencode(stripslashes($value)).'&'; 
+        }
+        $post_string.="cmd=_notify-validate"; // append ipn command
+        
+        // open the connection to paypal
+        if (isset($_POST['test_ipn']) )
+            $fp = fsockopen ( 'ssl://www.sandbox.paypal.com', "443", $err_num, $err_str, 60 );
+        else
+            $fp = fsockopen ( 'ssl://www.paypal.com', "443", $err_num, $err_str, 60 );
+ 
+        if(!$fp) {
+            // could not open the connection.  If loggin is on, the error message
+            // will be in the log.
+            //$this->ipn_status = "fsockopen error no. $err_num: $err_str";
+            //$this->log_ipn_results(false);       
+            return false;
+        } else { 
+            // Post the data back to paypal
+            fputs($fp, "POST $url_parsed[path] HTTP/1.1\r\n"); 
+            fputs($fp, "Host: $url_parsed[host]\r\n"); 
+            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n"); 
+            fputs($fp, "Content-length: ".strlen($post_string)."\r\n"); 
+            fputs($fp, "Connection: close\r\n\r\n"); 
+            fputs($fp, $post_string . "\r\n\r\n"); 
+        
+            // loop through the response from the server and append to variable
+            $rep = "";
+            while(!feof($fp)) { 
+               $rep .= fgets($fp, 1024); 
+            } 
+            fclose($fp); // close connection
+        }
+        
+        // Invalid IPN transaction.  Check the $ipn_status and log for details.
+        if ("VERIFIED" == $rep) {
+            return true;
+        } else {
+            return false;
+        }
+    } 
 }

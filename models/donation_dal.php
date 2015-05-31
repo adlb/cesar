@@ -19,7 +19,7 @@ class DonationDal extends Dal {
         'city' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         'country' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         'phone' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
-        'externalCheckId' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
+        'externalCheckId' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         
         'dateInit' => array('create' => 'datetime', 'bind' => PDO::PARAM_STR),
         'dateValidation' => array('create' => 'datetime', 'bind' => PDO::PARAM_STR),
