@@ -42,6 +42,7 @@
 </style>
 
       <form class="form-signin" method="POST" action="?controller=user&action=login" enctype="x-www-form-urlencoded">
+        <input type="hidden" name="callback" value="<?php disp($obj, 'callback') ?>">
         <h2 class="form-signin-heading"><?php t(':PLEASE_SIGN_IN')?></h2>
         <label for="inputEmail" class="sr-only"><?php t(':EMAIL_ADDRESS')?></label>
         <input type="email" name="email" class="form-control" placeholder="<?php t(':EMAIL_ADDRESS')?>" required autofocus value="<?php disp($obj, 'email') ?>">

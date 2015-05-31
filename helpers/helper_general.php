@@ -17,6 +17,7 @@ require('models/text_dal.php');
 require('models/textShort_dal.php');
 require('models/media_dal.php');
 require('models/event_dal.php');
+require('models/donation_dal.php');
 
 class WebSite {
     var $obj;
@@ -35,6 +36,7 @@ class WebSite {
         $this->services['textShortDal'] =   new TextShortDal    ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['mediaDal'] =       new MediaDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['eventDal'] =       new EventDal        ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
+        $this->services['donationDal'] =    new DonationDal     ($this->services['config']->dbh, $this->services['config']->current['DBPrefix']);
         $this->services['translator'] =     new Translator      ($this->services['config'], $this->services['textDal'], $language, $this->services['authentication']->CheckRole(array('Administrator', 'Translator')));
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
         $this->services['formatter'] =      new Transformer     ($this->services['gallery'], $this->services['articleDal'], $this->services['translator']);
@@ -70,7 +72,10 @@ class WebSite {
     
     function RedirectTo($param) {
         $_SESSION['messages'] = $this->obj['messages'];
-        header('Location: '.url($param));
+        if (is_array($param))
+            header('Location: '.url($param));
+        else
+            header('Location: '.$param);
         die();
     }
 }
@@ -88,11 +93,15 @@ function disp($obj, $key) {
         return;
 }
 
-function url($param) {
+function url($param, $full = false) {
     foreach($param as $k => $v){
         $queryString[] = $k.'='.urlencode($v);
     }
-    return '?'.join('&', $queryString);
+    $url = '?'.join('&', $queryString);
+    
+    if ($full)
+        return $_SERVER['PHP_SELF'].$url;
+    return $url;
 }
 
 function redirectTo($param, $messages) {

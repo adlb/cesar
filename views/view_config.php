@@ -126,6 +126,23 @@
   </div>
 </div>
 
+
+<legend>Configuration PayPal</legend>
+
+<!-- Multiple Checkboxes -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="PaypalButtonId">Hosted Button Id</label>
+  <div class="col-md-4">
+  <div class="checkbox">
+    <label for="PaypalButtonId">
+      <input name="PaypalButtonId" id="PaypalButtonId" type="text" value="<?php echo $obj['config']['PaypalButtonId']; ?>">
+      <span class="help-block">Get this id on PayPal web site</span>
+    </label>
+    </div>
+  </div>
+</div>
+
+
 <legend>Configuration Page de maintenance</legend>
 
 <!-- Multiple Checkboxes -->

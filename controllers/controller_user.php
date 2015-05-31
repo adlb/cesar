@@ -47,17 +47,24 @@ class ControllerUser {
     }
 
     function action_login(&$obj, $params){
+        if (isset($params['callback'])) {
+            $redirect = $params['callback'];
+        } else {
+            $redirect = url(array('controller' => 'site'));
+        }
+    
         $email = isset($params['email']) ? $params['email'] : "";
         $password = isset($params['password']) ? $params['password'] : "";
 
         if (!$this->crowd->TryLogin($email, $password, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['email'] = $email;
+            $obj['callback'] = $redirect;
             return 'login';
         }
         
         $this->journal->LogEvent('user', 'login', $this->authentication->currentUser);
-        $this->webSite->RedirectTo(array('controller' => 'site'));
+        $this->webSite->RedirectTo($redirect);
     }
 
     function action_delete(&$obj, $params) {
@@ -83,8 +90,16 @@ class ControllerUser {
     }
 
     function view_login(&$obj, $params) {
+        if (isset($params['callback'])) {
+            $redirect = $params['callback'];
+        } else {
+            $redirect = url(array('controller' => 'user', 'view' => 'profil'));
+        }
+    
         if ($this->authentication->CheckRole('Logged'))
-            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
+            $this->webSite->RedirectTo($redirect);
+        
+        $obj['callback'] = $redirect;
         return 'login';
     }
 

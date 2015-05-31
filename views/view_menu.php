@@ -15,6 +15,7 @@
         <?php foreach($obj['menu'] as $menu) { ?>
                 <?php renderPartial('subMenu', $menu); ?>
         <?php } ?>
+        <li><a href="?controller=donation&view=donate"><?php t(':DONATE') ?></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <?php if ($obj['user']) { ?>
