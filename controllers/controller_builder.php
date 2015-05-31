@@ -263,15 +263,16 @@ class ControllerBuilder extends controllerSite{
         die('Nothing Else To Do');
     }
 
-    function action_saveConfig(&$obj, &$view) {
+    function action_saveConfig(&$obj, $params) {
         if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
-            if ($this->config->TrySave($_POST)) {
+            if ($this->config->TrySave($params)) {
                 $this->webSite->AddMessage('success', ':CONFIG_SAVED');
                 $this->webSite->RedirectTo(array('controller' => 'site'));
             } else {
                 $this->webSite->AddMessage('warning', ':CANT_SAVE_CONFIG');
                 $view = 'config';
                 $this->view_config($obj, $view);
+                return $view;
             }
         } else {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');

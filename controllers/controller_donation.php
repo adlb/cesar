@@ -111,24 +111,31 @@ class ControllerDonation {
         header('HTTP/1.1 200 OK'); 
         
         if ($this->validate_ipn()) {
-            // Possible processing steps for a payment include the following:
-
-            // Check that the payment_status is Completed
-            // Check that txn_id has not been previously processed
-            // Check that receiver_email is your Primary PayPal email
-            // Check that payment_amount/payment_currency are correct
-            // Process payment
-            $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-OK.txt';
-            while (file_exists($filename)) {
-                $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-OK.txt';
+            if (!isset($params['txn_id']) || $params['txn_id'].'' == '') {
+                $this->journale->Log('notice', 'paypal notif does not have txn_id field');
+                $externalCheckId = '';
+            } else {
+                $externalCheckId = $params['txn_id'];
+                $donations = $this->donationDal->GetWhere(array('externalCheckId' => $externalCheckId));
+                if (count($donations) > 0) {
+                    $this->journale->Log('notice', 'paypal notif received twice txn_id={0}', array($externalCheckId));
+                    die();
+                }
             }
-            file_put_contents($filename, serialize($_POST));
-        } else {
-            $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
-            while (file_exists($filename)) {
-                $filename = 'ipn-'.substr(md5(uniqid(mt_rand(), true)), 0, 5).'-NOK.txt';
+            
+            if (!isset($params['custom']) || 
+                $params['custom'].'' == '' ||
+                !$this->donationDal->TryGet($params['custom'], $donation)) {
+                $donation = array();
             }
-            file_put_contents($filename, serialize($_POST));
+            
+            $donation['externalCheckId'] = $eternalCheckId;
+            
+            if (!$this->donationDal->TrySave($donation)) {
+                $this->journal->Log('severe', 'can\t save paypal transaction, payload={0}', array(serialize($_POST)));
+            } else {
+                $this->journal->LogEvent('donation', 'donate-notif', $_POST); 
+            }
         }
         die();
     }
@@ -163,26 +170,14 @@ class ControllerDonation {
     }
     
     private function validate_ipn() {
+        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $this->journale->Log('system', 'enter validate_ipn with hostname={0}', array($hostname));
         
-        /*$hostname = gethostbyaddr ( $_SERVER ['REMOTE_ADDR'] );
         if (! preg_match ( '/paypal\.com$/', $hostname )) {
-            //$this->ipn_status = 'Validation post isn\'t from PayPal';
-            //$this->log_ipn_results ( false );
+            $this->journale->Log('notice', 'invalid hostname for paypal hostname={0}', array($hostname));
             return false;
-        }*/
+        }
         
-        /*if (isset($this->paypal_mail) && strtolower ( $_POST['receiver_email'] ) != strtolower(trim( $this->paypal_mail ))) {
-            $this->ipn_status = "Receiver Email Not Match";
-            $this->log_ipn_results ( false );
-            return false;
-        }*/
-        
-        /*if (isset($this->txn_id)&& in_array($_POST['txn_id'],$this->txn_id)) {
-            $this->ipn_status = "txn_id have a duplicate";
-            $this->log_ipn_results ( false );
-            return false;
-        }*/
-
         // parse the paypal URL
         $paypal_url = (isset($_POST['test_ipn']) && $_POST['test_ipn'] == 1) ? SSL_SAND_URL : SSL_P_URL;
         $url_parsed = parse_url($paypal_url);        
@@ -190,23 +185,23 @@ class ControllerDonation {
         // generate the post string from the _POST vars aswell as load the
         // _POST vars into an arry so we can play with them from the calling
         // script.
-        $post_string = '';    
+        $post_string = 'cmd=_notify-validate&';    
         foreach ($_POST as $field=>$value) { 
             $post_string .= $field.'='.urlencode(stripslashes($value)).'&'; 
         }
-        $post_string.="cmd=_notify-validate"; // append ipn command
+        
+        file_put_contents('log.txt', $post_string, FILE_APPEND);
+        file_put_contents('log.txt', $_SERVER ['REMOTE_ADDR'], FILE_APPEND);
         
         // open the connection to paypal
-        if (isset($_POST['test_ipn']) )
-            $fp = fsockopen ( 'ssl://www.sandbox.paypal.com', "443", $err_num, $err_str, 60 );
+        if (isset($_POST['test_ipn']) && $_POST['test_ipn'] == 1)
+            $url = 'ssl://www.sandbox.paypal.com';
         else
-            $fp = fsockopen ( 'ssl://www.paypal.com', "443", $err_num, $err_str, 60 );
+            $url = 'ssl://www.paypal.com';
  
+        $fp = fsockopen ($url, "443", $err_num, $err_str, 60 );
         if(!$fp) {
-            // could not open the connection.  If loggin is on, the error message
-            // will be in the log.
-            //$this->ipn_status = "fsockopen error no. $err_num: $err_str";
-            //$this->log_ipn_results(false);       
+            $this->journale->Log('notice', 'can\'t connect to {0} for validation. Error:{1} ({2})', array($url, $err_num, $err_str));
             return false;
         } else { 
             // Post the data back to paypal
@@ -219,16 +214,19 @@ class ControllerDonation {
         
             // loop through the response from the server and append to variable
             $rep = "";
-            while($rep != 'VERIFIED' && $rep != 'INVALID' && !feof($fp)) { 
+            while(substr($rep, 0, 8) != 'VERIFIED' && substr($rep, 0, 7) != 'INVALID' && !feof($fp)) { 
                $rep = fgets($fp, 1024);
+               file_put_contents('log.txt', $rep, FILE_APPEND);
             } 
             fclose($fp); // close connection
         }
         
         // Invalid IPN transaction.  Check the $ipn_status and log for details.
-        if ("VERIFIED" == $rep) {
+        if (substr($rep, 0, 8) == 'VERIFIED') {
+            $this->journale->Log('system', 'paypal validation ok');
             return true;
         } else {
+            $this->journale->Log('notice', 'paypal validation nok ({0})', array(serialize($_POST)));
             return false;
         }
     } 
