@@ -2,6 +2,7 @@
 @session_start();
 
 include('helpers/helper_general.php');
+mb_internal_encoding("UTF-8");
 
 $webSite = new WebSite('config.json');
 

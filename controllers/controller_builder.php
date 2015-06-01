@@ -161,6 +161,7 @@ class ControllerBuilder extends controllerSite{
         $a['titleKey'] = isset($article['titleKey']) ? $article['titleKey'] : '';
         $a['textKey'] = isset($article['textKey']) ? $article['textKey'] : '';
         $a['date'] = isset($article['date']) ? date('Y-m-d', strtotime(str_replace('/', '-', $article['date']))) : date('Y-m-d');
+        $a['date'] = $a['date'] == "-0001-11-30" ? date('Y-m-d') : $a['date'];
         if (!isset($article['show'])) {
             $a['show'] = (isset($article['status']) && $article['status'] == 'show') ? 1 : 0;
         } else {
@@ -176,7 +177,8 @@ class ControllerBuilder extends controllerSite{
         $a['needLogin'] = isset($article['needLogin']) ? $article['needLogin'] : 0;
         $a['alert'] = isset($article['alert']) ? $article['alert'] : 0;
         $a['datealert'] = isset($article['datealert']) ? date('Y-m-d', strtotime(str_replace('/', '-', $article['datealert']))) : date('Y-m-d', strtotime("+2 week"));
-
+        $a['datealert'] = $a['datealert'] == "-0001-11-30" ? date('Y-m-d') : $a['datealert'];
+        
         if (!isset($article['textTrad'])) {
             if (isset($article['textKey'])) {
                 $a['textTrad'] = $this->translator->GetTranslation($article['textKey']);

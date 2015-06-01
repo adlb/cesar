@@ -46,16 +46,16 @@ class ControllerSite {
 
     function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => 1, 'status' => 'show'));
-		$alertsActives = array();
-		foreach($alerts as $alert) {
-			if (strtotime($alert['datealert']) < strtotime(date('Y-m-d'))) {
-				$alert['alert'] = 0;
-				$this->articleDal->TrySave($alert);
-			} else {
-				$alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'));
-			}
-		}
-		$obj['alerts'] = $alertsActives;
+        $alertsActives = array();
+        foreach($alerts as $alert) {
+            if (strtotime($alert['datealert']) < strtotime(date('Y-m-d'))) {
+                $alert['alert'] = 0;
+                $this->articleDal->TrySave($alert);
+            } else {
+                $alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'));
+            }
+        }
+        $obj['alerts'] = $alertsActives;
         return 'alerts';
     }
 

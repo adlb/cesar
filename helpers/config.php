@@ -49,6 +49,7 @@ class Config {
                 $this->current['DBPassword'],
                 $opt
             );
+            $this->dbh->exec("SET CHARACTER SET utf8");
         } catch (Exception $e) {
             $this->dbh = null;
         }

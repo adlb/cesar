@@ -1,5 +1,5 @@
 
-<form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveArticle'))?>">
+<form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveArticle'))?>" accept-charset="UTF-8">
 <fieldset ng-init="type='<?php echo $obj['form']['type']?>'" ng-cloak>
 
 <input type="hidden" id="id" name="id" value="<?php echo $obj['form']['id'] ?>">
