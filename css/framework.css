@@ -7,26 +7,35 @@ li > a.cx_adminonly  {
 }
 
 div.cx_article .cx_bold {
-	font-weight:bold;
+    font-weight:bold;
 }
 
 div.cx_article .cx_linethrough {
-	text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 div.cx_article .cx_italic {
-	font-style: italic;
+    font-style: italic;
 }
 
 div.cx_article .cx_underline {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 div.cx_article .cx_monospace {
-	font-family:Courier New, Courier, monospace;
+    font-family:Courier New, Courier, monospace;
 }
 
-div.cx_article img {
+div.cx_article img.cx_right {
     float: right;
-    width: 100px;
+}
+
+div.cx_article img.cx_left {
+    float: left;
+}
+
+div.cx_article img.cx_center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

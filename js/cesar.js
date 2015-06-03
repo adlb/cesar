@@ -4,11 +4,16 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
   $scope.medias = null;
   $scope.deleteUrl = '';
   $scope.uploadUrl = '';
+  $scope.sizes = null;
+  $scope.selectedSize = null;
+  $scope.custom = 0;
   
-  $scope.init = function(medias, deleteUrl, uploadUrl) {
+  $scope.init = function(medias, deleteUrl, uploadUrl, sizes) {
     $scope.medias = medias;
     $scope.deleteUrl= deleteUrl;
     $scope.uploadUrl= uploadUrl;
+    $scope.sizes = sizes;
+    $scope.selectedSize = sizes[0];
   };
   
   $scope.errors=[];
@@ -44,6 +49,8 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
         for (var i in $scope.files) {
             fd.append("files[]", $scope.files[i]);
         }
+        fd.append("width", $scope.custom ? $scope.customWidth : $scope.selectedSize[0]);
+        fd.append("height", $scope.custom ? $scope.customHeight : $scope.selectedSize[1]);
 
         $scope.errors.splice(0,$scope.errors.length);
         $.ajax({

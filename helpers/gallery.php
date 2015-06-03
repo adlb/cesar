@@ -4,8 +4,12 @@ class Gallery {
     var $mediaDal;
 
     var $fileType = array('jpg' => 'png', 'jpeg' => 'png', 'pdf' => 'pdf', 'png' => 'png', 'gif' => 'png');
-    var $width = 400;
-    var $height = 300;
+    public $sizes = array(
+        array(400, 300),
+        array(300, 400),
+        array(500, 100),
+        array(100, 500)
+    );
     var $thWidth = 120;
     var $thHeight = 90;
     var $targetPath = "medias/";
@@ -30,7 +34,7 @@ class Gallery {
         return true;
     }
     
-    function TrySaveAsNew($file, &$error, &$media) {
+    function TrySaveAsNew($file, $width, $height, &$error, &$media) {
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $baseName = pathinfo($file['name'], PATHINFO_BASENAME);
 
@@ -56,7 +60,7 @@ class Gallery {
         if ($newExtension == 'pdf' && !$this->TrySavePDF($file, $newBaseName, $newExtension, $media, $error))
             return false;
 
-        if ($newExtension != 'pdf' && !$this->TrySaveImage($file, $newBaseName, $newExtension, $media, $error))
+        if ($newExtension != 'pdf' && !$this->TrySaveImage($file, $width, $height, $newBaseName, $newExtension, $media, $error))
             return false;
 
         if (!$this->mediaDal->TrySave($media)) {
@@ -92,7 +96,7 @@ class Gallery {
         return true;
     }
 
-    private function TrySaveImage($file, $newBaseName, $newExtension, &$media, &$error) {
+    private function TrySaveImage($file, $width, $height, $newBaseName, $newExtension, &$media, &$error) {
         $target = $this->targetPath.$newBaseName.'.'.$newExtension;
         $targetTh = $this->targetPath.$newBaseName.'_th.'.$newExtension;
 
@@ -112,11 +116,13 @@ class Gallery {
                 return false;
         }
 
-        $this->ResizeAndCopy($source, $target, $this->width, $this->height);
+        $this->ResizeAndCopy($source, $target, $width, $height);
         $this->ResizeAndCopy($source, $targetTh, $this->thWidth, $this->thHeight);
 
         $media = array(
             'name' => $file['name'],
+            'width' => $width,
+            'height' => $height,
             'file' => $target,
             'thumb' => $targetTh
         );

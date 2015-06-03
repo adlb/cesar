@@ -352,8 +352,10 @@ class Transformer {
                     $split = explode('|', $item['content'][0]['content']);
                     if (count($split) == 1) {
                         $string .= $this->CreateLinkTo($split[0], '');
-                    } elseif (count($split) > 1) {
+                    } elseif (count($split) == 2) {
                         $string .= $this->CreateLinkTo($split[0], $split[1]);
+                    } elseif (count($split) == 3) {
+                        $string .= $this->CreateLinkTo($split[0], $split[1], $split[2]);
                     } else {
                         $string .= "???";
                     }
@@ -362,8 +364,10 @@ class Transformer {
                     $split = explode('|', $item['content'][0]['content']);
                     if (count($split) == 1) {
                         $string .= $this->CreateLinkTo('', '@'.$split[0]);
-                    } elseif (count($split) > 1) {
-                        $string .= $this->CreateLinkTo($split[1], '@'.$split[0]);
+                    } elseif (count($split) == 2) {
+                        $string .= $this->CreateLinkTo('', '@'.$split[0], $split[1]);
+                    } elseif (count($split) > 2) {
+                        $string .= $this->CreateLinkTo($split[2], '@'.$split[0], $split[1]);
                     } else {
                         $string .= "???";
                     }
@@ -395,9 +399,12 @@ class Transformer {
         return $string;
     }
     
-    private function CreateLinkTo($link, $display) {
+    private function CreateLinkTo($link, $display, $pos='right') {
         if (substr($display,0,1) == '@' && $this->gallery->TryGet(substr($display, 1), $media)) {
-            $display = '<img src="'.$media['file'].'">';
+            $class = $pos == 'right' ? 'cx_right' : (
+                        $pos == 'left' ? 'cx_left' :
+                        'cx_center');
+            $display = '<img class="'.$class.'" src="'.$media['file'].'">';
         } else {
             $display = htmlentities($display);
         }

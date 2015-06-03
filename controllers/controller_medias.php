@@ -12,9 +12,15 @@ class ControllerMedias {
 
     function action_upload(&$obj, $params) {
         $output = array();
+        if (isset($params['width']) && isset($params['height'])) {
+            $width = $params['width'];
+            $height = $params['height'];
+        } else {
+            $output['errors'][] = "Bad width and height";
+        }
         if (isset($_FILES['files'])) {
             foreach($this->diverse_array($_FILES['files']) as $file) {
-                if (!$this->gallery->TrySaveAsNew($file, $error, $media)) {
+                if (!$this->gallery->TrySaveAsNew($file, $width, $height, $error, $media)) {
                     $output['errors'][] = $error;
                 } else {
                     $output['medias'][] = $media;
@@ -42,6 +48,7 @@ class ControllerMedias {
 
     function view_medias(&$obj, $params) {
         $obj['medias'] = $this->gallery->GetAll();
+        $obj['sizes'] = $this->gallery->sizes;
         return 'medias';
     }
 
