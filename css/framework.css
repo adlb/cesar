@@ -6,6 +6,10 @@ li > a.cx_adminonly  {
   color: #22E4C4;
 }
 
+div.cx_article > p {
+    text-align:justify;
+}
+
 div.cx_article .cx_bold {
     font-weight:bold;
 }
