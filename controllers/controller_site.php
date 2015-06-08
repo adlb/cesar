@@ -120,12 +120,16 @@ class ControllerSite {
     }
     
     function view_footer(&$obj, $params) {
-        $isAdmin = $this->authentication->CheckRole('Administrator');
         $obj['links'] = array();
-        $legal = $this->articleDal->GetFixedArticle('Legal', $isAdmin);
+        $legal = $this->articleDal->GetFixedArticle('Legal', true);
+        $contact = $this->articleDal->GetFixedArticle('Contact', true);
         $obj['links'][] = array(
             'display' => $this->translator->GetTranslation($legal['titleKey']),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $legal['id']))
+        );
+        $obj['links'][] = array(
+            'display' => $this->translator->GetTranslation($contact['titleKey']),
+            'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $contact['id']))
         );
         return 'footer';
     }
