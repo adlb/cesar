@@ -259,6 +259,7 @@ class LexerParser {
             new LineDecorator('head2', 'h2. ', $this->textDecoratorMinimalSet),
             new LineDecorator('head3', 'h3. ', $this->textDecoratorMinimalSet),
             new LineDecorator('head4', 'h4. ', $this->textDecoratorMinimalSet),
+            new LineDecorator('center', 'c. ', $this->textDecoratorMinimalSet),
             new LineDecorator('separator', '----', $this->textDecoratorMinimalSet),
             new ArrayLineDecorator('table', '|', $this->textDecoratorMinimalSet),
             new QuoteLineDecorator('quote', 'q. ', $this->textDecoratorFullSet),
@@ -323,6 +324,9 @@ class Transformer {
                     break;
                 case 'head4' :
                     $string .= '<H4>'.$this->Encode($item['content']).'</H4>';
+                    break;
+                case 'center' :
+                    $string .= '<CENTER>'.$this->Encode($item['content']).'</CENTER>';
                     break;
                 case 'html' :
                     $string .= $item['content'][0]['content'];
