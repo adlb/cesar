@@ -7,6 +7,7 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
   $scope.sizes = null;
   $scope.selectedSize = null;
   $scope.custom = 0;
+  $scope.selectedMedia = null;
   
   $scope.init = function(medias, deleteUrl, uploadUrl, sizes) {
     $scope.medias = medias;
@@ -79,7 +80,10 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
             }
         });
     };
-
+    
+    $scope.selectMedia = function(media){
+        $scope.selectedMedia = media;
+    }
 }]);
 
 cesarApp.controller('usersCtrl', ['$scope', function($scope) {
