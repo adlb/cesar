@@ -27,15 +27,20 @@ var getScope = function(id, f) {
 
 </head>
 <body>
-<div class="container" ng-app="cesarApp" ng-cloak>
+<div id="wrap">
+    <div class="container" ng-app="cesarApp" ng-cloak>
 
-    <br/>Header
-    <?php displayPartial('site', 'menu', null); ?>
-    <?php renderPartial('messages', $obj['messages']); ?>
-    <?php renderPartial($obj['innerView'], $obj); ?>
-    <br />
-    <?php displayPartial('site', 'footer', $obj); ?>
-    <br />
+        <br/>Header
+        <?php displayPartial('site', 'menu', null); ?>
+        <?php renderPartial('messages', $obj['messages']); ?>
+        <?php renderPartial($obj['innerView'], $obj); ?>
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container">
+        <?php displayPartial('site', 'footer', $obj); ?>
+    </div>
 </div>
 </body>
 <script src="js/bootstrap.min.js"></script>

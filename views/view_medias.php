@@ -79,7 +79,7 @@
     </div>
     
     <div class="row" ng-hide="displayAsList" style="display:table">
-        <div ng-repeat="media in medias | filter:search | orderBy:predicate:reverse" class="col-lg-2" style="display:table-cell">
+        <div ng-repeat="media in medias | filter:search | orderBy:predicate:reverse" class="col-lg-3" style="display:table-cell">
             {{ media.name }} [{{ media.id }}]<br/>
             <a ng-href="{{ media.file }}" ><img ng-src="{{ media.thumb }}" style="display:inline-block;"/></a><br/>
             {{ media.width }} x {{ media.height }}
