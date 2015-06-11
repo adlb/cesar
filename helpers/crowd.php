@@ -52,9 +52,9 @@ class Crowd {
             return false;
         }
 
-        $user['id'] = $userToCreate['id'];
+        $user = $userToCreate;
         if (!$this->authentication->currentUser)
-            $this->authentication->SetUser($userToCreate);
+            $this->authentication->SetUser($user);
         return true;
     }
 

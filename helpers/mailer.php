@@ -6,11 +6,11 @@ require ('helpers/PHPMailer/class.smtp.php');
 class Mailer {
 
     var $config;
-    
+
     public function __construct($config) {
         $this->config = $config;
     }
-    
+
     public function TrySendSimpleMail($to, $subject, $contentHtml, $content) {
         $mail = new PHPMailer();
         
@@ -19,13 +19,13 @@ class Mailer {
         $mail->SMTPAuth = true;                                     // Enable SMTP authentication
         $mail->Username = $this->config->current['SMTPUser'];       // SMTP username
         $mail->Password = $this->config->current['SMTPPassword'];   // SMTP password
-        //$mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+        $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                          // TCP port to connect to
 
-        $mail->From = $this->config->current['ContactEmail'];
-        $mail->FromName = $this->config->current['ContactEmail'];
+        $mail->From = $this->config->current['Contact'];
+        $mail->FromName = $this->config->current['Contact'];
         $mail->addAddress($to);     // Add a recipient
-        $mail->addReplyTo($this->config->current['ContactEmail']);
+        $mail->addReplyTo($this->config->current['Contact']);
         
         $mail->isHTML(true);                                  // Set email format to HTML
 
@@ -34,11 +34,7 @@ class Mailer {
         $mail->AltBody = $content;
 
         $mail->SMTPDebug = 1;
-        echo '<pre>';
-        $mail->send();
         
-        echo ($mail->ErrorInfo).'</pre>';
-        die();
         return $mail->send();
     }
 }

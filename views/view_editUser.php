@@ -1,4 +1,5 @@
 <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'user', 'action' => 'saveUser'))?>" enctype="x-www-form-urlencoded">
+<input type="hidden" name="callback" value="<?php disp($obj, 'callback') ?>">
 <fieldset>
 
 <!-- Form Name -->

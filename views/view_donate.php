@@ -1,8 +1,7 @@
 ﻿<?php
-
     displayPartial('site', 'fixedArticle', array('titleKey' => 'CheckAdressBeforeDonate'));
-    
 ?>
+
 <?php t(':name') ?> : <?php echo $obj['user']['firstName'] . ' ' . $obj['user']['lastName'] ?><br/>
 <?php t(':address') ?> : <?php echo $obj['user']['addressLine1'] . ' - ' . $obj['user']['addressLine2'] . ' - ' . $obj['user']['postalCode'] . ' ' . $obj['user']['city'] . ' - ' . $obj['user']['country'] ?><br/>
 

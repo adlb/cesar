@@ -14,6 +14,8 @@ $controller = (isset($_GET['controller'])) ? $_GET['controller'] : $defaultContr
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $defaultView;
 $action = (isset($_GET['action'])) ? $_GET['action'] : '';
 
+$view = ($view == 'fixedArticle') ? $defaultView : $view;
+
 if (isset($_GET['forceMaintenance']) ||
     ($webSite->services['config']->current['Maintenance'] && 
     !$webSite->services['authentication']->CheckRole('Administrator') && 

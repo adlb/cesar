@@ -29,8 +29,6 @@ var getScope = function(id, f) {
 <body>
 <div id="wrap">
     <div class="container" ng-app="cesarApp" ng-cloak>
-
-        <br/>Header
         <?php displayPartial('site', 'menu', null); ?>
         <?php renderPartial('messages', $obj['messages']); ?>
         <?php renderPartial($obj['innerView'], $obj); ?>

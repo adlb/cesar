@@ -137,7 +137,7 @@ class ControllerSite {
     function view_fixedArticle(&$obj, $params) {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
-        $article = $this->articleDal->GetFixedArticle($titleKey, $isAdmin);
+        $article = $this->articleDal->GetFixedArticle($titleKey, true);
         $article = $this->enrich_Article($article, $isAdmin);
         $obj['article'] = $article;
         return 'article';

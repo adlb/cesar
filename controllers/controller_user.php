@@ -32,6 +32,12 @@ class ControllerUser {
     }
 
     function action_saveUser(&$obj, $params) {
+        if (isset($params['callback'])) {
+            $redirect = $params['callback'];
+        } else {
+            $redirect = url(array('controller' => 'site'));
+        }
+    
         if (!$this->authentication->CheckRole('Administrator') && $params['id'] != $this->authentication->currentUser['id']) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
@@ -39,11 +45,12 @@ class ControllerUser {
         if (!$this->crowd->TryUpdateUser($params, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['form'] = $params;
+            $obj['callback'] = $redirect;
             return 'editUser';
         }
 
         $this->journal->LogEvent('user', 'updateUser', $this->authentication->currentUser);
-        $this->webSite->RedirectTo(array('controller' => 'site'));
+        $this->webSite->RedirectTo($redirect);
     }
 
     function action_login(&$obj, $params){
@@ -156,6 +163,7 @@ class ControllerUser {
         if (!isset($obj['form']))
             $obj['form'] = array();
         
+        $obj['callback'] = isset($params['callback']) ? $params['callback'] : '';
         return 'editUser';
     }
 
@@ -219,6 +227,7 @@ class ControllerUser {
 
     function view_lostPassword(&$obj, $params) {
         //nothing to do
+        return 'lostPassword';
     }
     
     function action_retreivePassword(&$obj, $params) {
