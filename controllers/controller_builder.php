@@ -74,10 +74,17 @@ class ControllerBuilder extends controllerSite{
     function action_saveArticle(&$obj, $params) {
         $this->CheckRights('Administrator', $obj);
         
+        if (isset($params['callback'])) {
+            $redirect = $params['callback'];
+        } else {
+            $redirect = array(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        }
+        
         $obj['menuFathers'] = $this->GetMenuFathers($params['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($params['id']);
         $article = $this->PrepareArticleForEditing($params);
         $obj['form'] = $article;
+        $obj['callback'] = $redirect;
         
         if (!isset($params['language']) || $params['language'] == '') {
             $this->webSite->AddMessage('warning', ':BAD_LANGUAGE');
@@ -138,7 +145,7 @@ class ControllerBuilder extends controllerSite{
             $this->config->Set('Home', $article['id']);
 
         $this->webSite->AddMessage('success', ':ARTICLE_SAVED');
-        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        $this->webSite->RedirectTo($redirect);
     }
 
     private function PrepareArticleForEditing($article) {
@@ -202,9 +209,9 @@ class ControllerBuilder extends controllerSite{
         return $a;
     }
     
-    function view_editArticle(&$obj, &$view) {
+    function view_editArticle(&$obj, &$params) {
         $this->CheckRights('Administrator', $obj);
-        if (!(isset($_GET['id']) && $this->articleDal->TryGet($_GET['id'], $article))) {
+        if (!(isset($params['id']) && $this->articleDal->TryGet($params['id'], $article))) {
             $article = array();
         }
         
@@ -212,6 +219,8 @@ class ControllerBuilder extends controllerSite{
         $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($obj['form']['id']);
         
+        $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+
         return 'editArticle';
     }
 

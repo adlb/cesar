@@ -2,8 +2,12 @@
 <div ng-init="
     articles=<?php echo htmlspecialchars(json_encode($obj['articles'], JSON_NUMERIC_CHECK));?>;
     languages=<?php echo htmlspecialchars(json_encode($obj['languages']));?>;
-    prefixUrl='<?php echo htmlspecialchars(url(array('controller' => 'translationManager', 'view' => 'editArticleTrad')));?>';
-    prefixUrlArticle='<?php echo htmlspecialchars(url(array('controller' => 'builder', 'view' => 'editArticle')));?>';
+    prefixUrl='<?php echo htmlspecialchars(url(array('controller' => 'translationManager', 'view' => 'editArticleTrad', 'callback' => 
+        url(array('controller' => 'translationManager', 'view' => 'translationList'))
+    )));?>';
+    prefixUrlArticle='<?php echo htmlspecialchars(url(array('controller' => 'builder', 'view' => 'editArticle', 'callback' => 
+        url(array('controller' => 'translationManager', 'view' => 'translationList'))
+    )));?>';
     predicate='id';
 ">
 <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
@@ -14,6 +18,7 @@
       <thead>
         <tr>
           <th ng-click="predicate=='id' ? reverse = !reverse : predicate='id';">ArticleId</th>
+          <th ng-click="predicate=='status' ? reverse = !reverse : predicate='status';">Status</th>
           <th ng-click="predicate=='titleTrad' ? reverse = !reverse : predicate='titleTrad';">ArticleTitle</th>
           <th ng-click="predicate=='type' ? reverse = !reverse : predicate='type';">ArticleType</th>
           <th ng-repeat="language in languages"
@@ -24,6 +29,7 @@
       <tbody>
         <tr ng-repeat="article in articles | filter:search | orderBy:predicate:reverse">
           <th class="clickableCell" scope="row" href="{{ prefixUrl }}&id={{ article.id }}">{{ article.id }}</th>
+          <th class="clickableCell" scope="row" href="{{ prefixUrl }}&id={{ article.id }}">{{ article.status }}</th>
           <td><a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">{{ article.titleTrad }}</a>
               <span ng-hide="article.link">{{ article.titleTrad }}</span></td>
           <td>{{ article.type }}</span></td>
@@ -33,6 +39,4 @@
         </tr>
       </tbody>
 </table>
-
-<script>
-</script>
+</div>

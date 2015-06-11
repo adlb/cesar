@@ -6,6 +6,7 @@
 <input type="hidden" id="language" name="language" value="<?php echo $obj['language'] ?>" />
 <input type="hidden" id="titleKey" name="titleKey" value="<?php echo $obj['form']['titleKey'] ?>" />
 <input type="hidden" id="textKey" name="textKey" value="<?php echo $obj['form']['textKey'] ?>" />
+<input type="hidden" id="callback" name="callback" value="<?php echo $obj['callback'] ?>" />
 
 <!-- Form Name -->
 <legend>Create new element</legend>
