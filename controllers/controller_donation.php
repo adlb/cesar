@@ -160,13 +160,13 @@ class ControllerDonation {
         
         if ($this->validate_ipn()) {
             if (!isset($params['txn_id']) || $params['txn_id'].'' == '') {
-                $this->journale->Log('notice', 'paypal notif does not have txn_id field');
+                $this->journal->Log('notice', 'paypal notif does not have txn_id field');
                 $externalCheckId = '';
             } else {
                 $externalCheckId = $params['txn_id'];
                 $donations = $this->donationDal->GetWhere(array('externalCheckId' => $externalCheckId));
                 if (count($donations) > 0) {
-                    $this->journale->Log('notice', 'paypal notif received twice txn_id={0}', array($externalCheckId));
+                    $this->journal->Log('notice', 'paypal notif received twice txn_id={0}', array($externalCheckId));
                     die();
                 }
             }
@@ -219,10 +219,10 @@ class ControllerDonation {
     
     private function validate_ipn() {
         $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        $this->journale->Log('system', 'enter validate_ipn with hostname={0}', array($hostname));
+        $this->journal->Log('system', 'enter validate_ipn with hostname={0}', array($hostname));
         
         if (! preg_match ( '/paypal\.com$/', $hostname )) {
-            $this->journale->Log('notice', 'invalid hostname for paypal hostname={0}', array($hostname));
+            $this->journal->Log('notice', 'invalid hostname for paypal hostname={0}', array($hostname));
             return false;
         }
         
@@ -249,7 +249,7 @@ class ControllerDonation {
  
         $fp = fsockopen ($url, "443", $err_num, $err_str, 60 );
         if(!$fp) {
-            $this->journale->Log('notice', 'can\'t connect to {0} for validation. Error:{1} ({2})', array($url, $err_num, $err_str));
+            $this->journal->Log('notice', 'can\'t connect to {0} for validation. Error:{1} ({2})', array($url, $err_num, $err_str));
             return false;
         } else { 
             // Post the data back to paypal
@@ -271,10 +271,10 @@ class ControllerDonation {
         
         // Invalid IPN transaction.  Check the $ipn_status and log for details.
         if (substr($rep, 0, 8) == 'VERIFIED') {
-            $this->journale->Log('system', 'paypal validation ok');
+            $this->journal->Log('system', 'paypal validation ok');
             return true;
         } else {
-            $this->journale->Log('notice', 'paypal validation nok ({0})', array(serialize($_POST)));
+            $this->journal->Log('notice', 'paypal validation nok ({0})', array(serialize($_POST)));
             return false;
         }
     } 

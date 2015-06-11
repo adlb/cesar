@@ -43,7 +43,7 @@ class Journal {
         
         if (($levelId = array_search($level, $this->level)) && $levelId >= $this->levelToLog) {
             $file = 'log/'.date('Y-m-d').'-'.$level.'.log';
-            file_put_contents($file, $string, FILE_APPEND);
+            file_put_contents($file, $string.PHP_EOL, FILE_APPEND);
         }
     }
 }
