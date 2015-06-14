@@ -1,6 +1,7 @@
 <?php
 @session_start();
 
+error_reporting(E_ERROR | E_PARSE);
 include('helpers/helper_general.php');
 mb_internal_encoding("UTF-8");
 

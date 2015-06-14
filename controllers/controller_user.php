@@ -31,7 +31,7 @@ class ControllerUser {
     }
 
     function action_saveUser(&$obj, $params) {
-        if (isset($params['callback'])) {
+        if (isset($params['callback']) && $params['callback'] != '') {
             $redirect = $params['callback'];
         } else {
             $redirect = url(array('controller' => 'site'));
@@ -65,6 +65,7 @@ class ControllerUser {
         if (!$this->crowd->TryLogin($email, $password, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['email'] = $email;
+            $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));
             $obj['callback'] = $redirect;
             return 'login';
         }
@@ -243,7 +244,7 @@ class ControllerUser {
             $this->webSite->AddMessage('warning', ':THIS_USER_DOES_NOT_EXIST');
             return 'lostPassword';
         }
-        if ($this->mailer->TrySendSimpleMail($email, 'SiteWebPasswordRecovery', 'HTML COntent', 'Text Content')) {
+        if ($this->mailer->TrySendForgotPasswordMail($email)) {
             $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
             $this->journal->LogEvent('user', 'retreivePassword', $email);
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
@@ -251,6 +252,54 @@ class ControllerUser {
             $this->webSite->AddMessage('warning', array(':CANT_SEND_EMAIL', $email));
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
         }
+    }
+    
+    function view_resetPassword(&$obj, $params) {
+        if (!isset($params['email'])) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        if (!isset($params['key'])) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        if (!$this->crowd->CheckKey($params['email'], $params['key'], $user)) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        $obj['email'] = $params['email'];
+        $obj['key'] = $params['key'];
+        return 'resetPassword';
+    }
+    
+    function action_resetPassword(&$obj, $params) {
+        if (!isset($params['email'])) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        if (!isset($params['key'])) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        if (!$this->crowd->CheckKey($params['email'], $params['key'], $user)) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        $obj['email'] = $params['email'];
+        $obj['key'] = $params['key'];
+        
+        if (!isset($params['password1'])) {
+            $this->webSite->AddMessage('warning', ':NO_PASSWORD1');
+        } elseif (!isset($params['password2'])) {
+            $this->webSite->AddMessage('warning', ':NO_PASSWORD2');
+        } elseif ($params['password1'] != $params['password2']) {
+            $this->webSite->AddMessage('warning', ':PASSWORD_ARE_NOT_THE_SAME');
+        } elseif ($this->crowd->TryUpdateUserPassword($user, $params['password1'])) {
+            $this->webSite->AddMessage('success', ':PASSWORD_RESETED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        return 'resetPassword';
     }
 }
 

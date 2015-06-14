@@ -275,6 +275,9 @@ class ControllerBuilder extends controllerSite{
     }
 
     function action_saveConfig(&$obj, $params) {
+        if ($params['todo'] == 'cancel') {
+            $this->webSite->RedirectTo(array('controller' => 'site'));    
+        }
         if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
             if ($this->config->TrySave($params)) {
                 $this->webSite->AddMessage('success', ':CONFIG_SAVED');

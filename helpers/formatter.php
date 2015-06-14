@@ -301,6 +301,11 @@ class Transformer {
         return $this->Encode($decoded);
     }
 
+    function ToText($string) {
+        $decoded = $this->lexerParser->lex($string);
+        return $this->EncodeText($decoded);
+    }
+
     function Encode($decoded) {
         $string = '';
         foreach($decoded as $item) {
@@ -403,6 +408,105 @@ class Transformer {
         return $string;
     }
     
+    function EncodeText($decoded) {
+        $string = '';
+        foreach($decoded as $item) {
+            if (!isset($item['type']))
+                die("can't find type in array. (".json_encode($item).")");
+            switch ($item['type']) {
+                case 'text' :
+                    $string .= $item['content'];
+                    break;
+                case 'paragraph' :
+                    $string .= $this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'head1' :
+                    $string .= PHP_EOL.$this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'head2' :
+                    $string .= PHP_EOL."  ".$this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'head3' :
+                    $string .= PHP_EOL."    ".$this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'head4' :
+                    $string .= PHP_EOL."      ".$this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'center' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'html' :
+                    $string .= ''; //$item['content'][0]['content'];
+                    break;
+                case 'strong' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'delete' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'italic' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'underline' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'monospaced' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'list' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'listItem' :
+                    $string.= '* '.$this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'link' :
+                    $split = explode('|', $item['content'][0]['content']);
+                    if (count($split) == 1) {
+                        $string .= $this->CreateLinkToTxt($split[0], '');
+                    } elseif (count($split) == 2) {
+                        $string .= $this->CreateLinkToTxt($split[0], $split[1]);
+                    } elseif (count($split) == 3) {
+                        $string .= $this->CreateLinkToTxt($split[0], $split[1], $split[2]);
+                    } else {
+                        $string .= "???";
+                    }
+                    break;
+                case 'image' :
+                    $split = explode('|', $item['content'][0]['content']);
+                    if (count($split) == 1) {
+                        $string .= $this->CreateLinkToTxt('', '@'.$split[0]);
+                    } elseif (count($split) == 2) {
+                        $string .= $this->CreateLinkToTxt('', '@'.$split[0], $split[1]);
+                    } elseif (count($split) > 2) {
+                        $string .= $this->CreateLinkToTxt($split[2], '@'.$split[0], $split[1]);
+                    } else {
+                        $string .= "???";
+                    }
+                    break;
+                case 'separator' :
+                    $string.= '-------------------------------'.PHP_EOL;
+                    break;
+                case 'preformatted' :
+                    $string.= $this->EncodeText($item['content']);
+                    break;
+                case 'table' :
+                    $string.= $this->EncodeText($item['content']);
+                    break;
+                case 'head' :
+                case 'row' :
+                    $string.= $this->EncodeText($item['content']).PHP_EOL;
+                    break;
+                case 'cellhead' :
+                    $string.= $this->EncodeText($item['content']).' | ';
+                    break;
+                case 'cellrow' :
+                    $string.= $this->EncodeText($item['content']).' | ';
+                    break;
+            }
+        }
+        return $string;
+    }
+    
     private function CreateLinkTo($link, $display, $pos='right') {
         if (substr($display,0,1) == '@' && $this->gallery->TryGet(substr($display, 1), $media)) {
             $class = $pos == 'right' ? 'cx_right' : (
@@ -434,6 +538,39 @@ class Transformer {
             return $display;
         }
         return '<a href="'.$link.'">'.$display.'</a>';
+    }
+    
+    private function CreateLinkToTxt($link, $display, $pos='right') {
+        if (substr($display,0,1) == '@' && $this->gallery->TryGet(substr($display, 1), $media)) {
+            $display = $media['file'];
+        } else {
+            $display = $display;
+        }
+        
+        if ($link == 'home') {
+            $display = 'home';
+            $link = url(array('controller' => 'site', 'view' => 'home'));
+        } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
+            if ($display == '') {
+                $display = $this->translator->GetTranslation($article['titleKey']);
+            }
+            $link = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        } elseif (substr($link, 0, 1) == '@' && $this->gallery->TryGet(substr($link, 1), $media)) {
+            if ($display == '') {
+                $display = $media['name'];
+            }
+            $link = $media['file'];
+        } elseif ($link != '') {
+            if ($display == '') {
+                $display = $link;
+            }
+        } else {
+            return $display;
+        }
+        if ($link != $display) {
+            return $display.' ('.$link.')';
+        }
+        return $link;
     }
 }
 

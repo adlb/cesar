@@ -171,8 +171,8 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="cancel"></label>
   <div class="col-md-8">
-    <button id="cancel" name="cancel" class="btn btn-default">Cancel</button>
-    <button id="Update" name="Update" class="btn btn-primary">Update</button>
+    <button id="cancel" name="todo" class="btn btn-default" value="cancel">Cancel</button>
+    <button id="update" name="todo" class="btn btn-primary" value="update">Update</button>
   </div>
 </div>
 

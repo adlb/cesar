@@ -24,6 +24,28 @@ class Crowd {
         return $nb;
     }
     
+    function TryGetKey($email, &$key) {
+        if (!$this->TryGetFromEmail($email, $user)) {
+            return false;
+        }
+        $key = md5($this->salt.$user['email'].$user['times'].$user['id']);
+        return true;
+    }
+    
+    function CheckKey($email, $key, &$user) {
+        if (!$this->TryGetFromEmail($email, $user)) {
+            return false;
+        }
+        $key = (md5($this->salt.$user['email'].$user['times'].$user['id']));
+        return ($key = md5($this->salt.$user['email'].$user['times'].$user['id']));
+    }
+    
+    function TryUpdateUserPassword($user, $passwordHashed) {
+        $user['passwordHashed'] = $passwordHashed;
+        $user['times'] = 1000;
+        return $this->userDal->TrySave($user);
+    }
+    
     function TryRegister(&$user, &$error) {
         if (!isset($user['password1']) || !isset($user['password2']) ||
             trim($user['password1']) == '' || trim($user['password2']) == '') {
@@ -71,7 +93,7 @@ class Crowd {
     }
 
     function TryUpdateUser($user, &$error) {
-        if (!$this->userDal->TryGet($user['id'], $userOld)) {
+        if (!isset($user['id']) || !$this->userDal->TryGet($user['id'], $userOld)) {
             $error = ':USER_DOEAS_NOT_EXISTS';
             return false;
         }
@@ -111,18 +133,30 @@ class Crowd {
             $error = ':UNKOWN_LOGIN';
             return false;
         }
+        
+        $user = $users[0];
 
         if (strlen($password) < 5) {
             $error = ':WRONG_PASSWORD';
             return false;
         }
 
-        if ($users[0]['passwordHashed'] != md5($password.$this->salt)) {
+        $pw = $password;
+        for($i = $user['times']-1; $i<1000; $i++)
+            $pw = md5($pw);
+        
+        if ($user['passwordHashed'] != $pw) {
             $error = ':WRONG_PASSWORD';
             return false;
         }
 
-        if (!$this->userDal->TryGet($users[0]['id'], $user)) {
+        if (!$this->userDal->TryGet($user['id'], $user)) {
+            $error = ':INTERNAL_ERROR';
+            return false;
+        }
+
+        $user['times'] = $user['times']-1;
+        if (!$this->userDal->TrySave($user)) {
             $error = ':INTERNAL_ERROR';
             return false;
         }
@@ -255,6 +289,8 @@ class Crowd {
 
         return 'NEW';
     }
+    
+    
 }
 
 ?>

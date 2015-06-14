@@ -52,16 +52,20 @@ class ControllerSite {
                 $alert['alert'] = 0;
                 $this->articleDal->TrySave($alert);
             } else {
-                $alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'));
+                $alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'), true);
             }
         }
         $obj['alerts'] = $alertsActives;
         return 'alerts';
     }
 
-    protected function enrich_Article($article, $isAdmin) {
+    protected function enrich_Article($article, $isAdmin, $html) {
         $article['rawContent'] = $this->translator->GetTranslation($article['textKey']);
-        $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
+        if ($html)
+            $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
+        else
+            $article['textContent'] = $this->formatter->ToText($article['rawContent']);
+        
         $conditionForSubArticles = array('father' => $article['id']);
         if (!$isAdmin) {
             $conditionForSubArticles['status'] = 'show';
@@ -74,7 +78,7 @@ class ControllerSite {
         $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 6);
         $article['subArticles'] = array();
         foreach($subArticles as $subArticle)
-            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin);
+            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin, $html);
         return $article;
     }
     
@@ -93,7 +97,7 @@ class ControllerSite {
             return false;
         }
         
-        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'));
+        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'), true);
         
         $obj['article'] = $article;
         return true;
@@ -138,9 +142,18 @@ class ControllerSite {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
         $article = $this->articleDal->GetFixedArticle($titleKey, true);
-        $article = $this->enrich_Article($article, $isAdmin);
+        $article = $this->enrich_Article($article, $isAdmin, true);
         $obj['article'] = $article;
         return 'article';
+    }
+    
+    function view_fixedArticleText(&$obj, $params) {
+        $isAdmin = $this->authentication->CheckRole('Administrator');
+        $titleKey = $params['titleKey'];
+        $article = $this->articleDal->GetFixedArticle($titleKey, true);
+        $article = $this->enrich_Article($article, $isAdmin, false);
+        $obj['article'] = $article;
+        return 'articleText';
     }
 }
 

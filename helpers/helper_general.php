@@ -23,6 +23,7 @@ class WebSite {
     var $obj;
     var $services;
     var $controllerFactory;
+    var $urlPrefix;
     
     function __construct($configFile) {
         $this->services['config'] = new Config($configFile);
@@ -41,10 +42,10 @@ class WebSite {
         $this->services['gallery'] =        new Gallery         ($this->services['mediaDal']);
         $this->services['formatter'] =      new Transformer     ($this->services['gallery'], $this->services['articleDal'], $this->services['translator']);
         $this->services['crowd'] =          new Crowd           ($this->services['config']->current['SecretLine'], $this->services['userDal'], $this->services['userShortDal'], $this->services['authentication']);
-        $this->services['mailer'] =         new Mailer          ($this->services['config']);
         $this->services['journal'] =        new Journal         ($this->services['eventDal'], $this->services['authentication']);
+        $this->services['mailer'] =         new Mailer          ($this->services['config'], $this->services['crowd'], $this->services['translator'], $this->services['journal'], $this);
         $this->controllerFactory =          new ControllerFactory($this->services);
-
+        
         if (!isset($_GET['language'])) {
             $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
             header('Location: '.$this->services['translator']->language.'/');
@@ -56,6 +57,11 @@ class WebSite {
         $this->obj['language'] = $this->services['translator']->language;
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
         $_SESSION['messages'] = null;
+        
+        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $parse = parse_url($url);
+        $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
     }
 
     function AddMessage($level, $text) {

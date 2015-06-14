@@ -72,11 +72,6 @@
         <label for="passwordnothashed" class="sr-only">Password</label>
         <input id="passwordnothashed" type="password" name="passwordnothashed" class="form-control" placeholder="Password" required />
         <input id="password" type="hidden" name="password" />
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
         <input class="btn btn-primary" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':SIGN_IN') ?>" />
 
         <div class="checkbox">
