@@ -59,9 +59,10 @@ class WebSite {
         $_SESSION['messages'] = null;
         
         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '//';
         $parse = parse_url($url);
         $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
+        die ($this->urlPrefix);
     }
 
     function AddMessage($level, $text) {
