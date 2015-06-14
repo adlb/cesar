@@ -37,6 +37,8 @@ class Mailer {
         
         return $mail->send();
     }
+    
+    
 }
 
 ?>

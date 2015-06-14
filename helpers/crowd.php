@@ -13,6 +13,17 @@ class Crowd {
         $this->authentication = $authentication;
     }
 
+    function GetTimes($email) {
+        $res = $this->userDal->GetWhere(array('email' => $email));
+        $nb = 0;
+        if (count($res) == 0) {
+            $nb = rand(10, 1000);
+        } else {
+            $nb = $res[0]['times'] - 1;
+        }
+        return $nb;
+    }
+    
     function TryRegister(&$user, &$error) {
         if (!isset($user['password1']) || !isset($user['password2']) ||
             trim($user['password1']) == '' || trim($user['password2']) == '') {
@@ -44,6 +55,7 @@ class Crowd {
         $userToCreate = array(
             'email' => $user['email'],
             'passwordHashed' => md5($user['password1'].$this->salt),
+            'times' => 1000,
             'role' => $role
         );
 

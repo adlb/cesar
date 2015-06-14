@@ -24,8 +24,7 @@ class ControllerUser {
         if (!$this->crowd->TryRegister($params, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['form']['email'] = $params['email'];
-            $view = 'register';
-            return;
+            return 'register';
         }
         $this->journal->LogEvent('user', 'register', $this->authentication->currentUser);
         $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $this->authentication->currentUser['id']));
@@ -73,6 +72,13 @@ class ControllerUser {
         $this->journal->LogEvent('user', 'login', $this->authentication->currentUser);
         $this->webSite->RedirectTo($redirect);
     }
+    
+    function view_nbTimes(&$obj, $params) {
+        if (!isset($params['email']))
+            $obj['nb'] = $this->crowd->GetTimes(''); 
+        else
+            $obj['nb'] = $this->crowd->GetTimes($params['email']);
+    }
 
     function action_delete(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
@@ -106,6 +112,7 @@ class ControllerUser {
         if ($this->authentication->CheckRole('Logged'))
             $this->webSite->RedirectTo($redirect);
         
+        $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));
         $obj['callback'] = $redirect;
         return 'login';
     }

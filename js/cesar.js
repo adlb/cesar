@@ -281,6 +281,29 @@ cesarApp.controller('donationsListCtrl', ['$scope', function($scope) {
   };
 }]);
 
+cesarApp.controller('loginFormCtrl', ['$scope', function($scope) {
+  $scope.init = function(getTimesUrl) {
+    $scope.getTimesUrl = getTimesUrl;
+  };
+  
+  $scope.deleteDonation = function(id) {
+    $.post($scope.getTimesUrl, {'email': email}, function(data) {
+        $scope.$apply(function($scope) {
+            if (data.status == 'ok') {
+                for(var i = 0; i < $scope.users.length; i++) {
+                    var obj = $scope.users[i];
+
+                    if(obj.id == id) {
+                        $scope.users.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+        });
+    });
+  };
+}]);
+
 cesarApp.directive('ngConfirmClick', [
   function() {
     return {

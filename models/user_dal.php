@@ -9,6 +9,7 @@ class UserDal extends Dal {
         'email' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR, 'key' => true),
 
         'passwordHashed' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
+        'times' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
 
         'firstName' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         'lastName' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
