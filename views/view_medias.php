@@ -48,10 +48,10 @@
                 </form>
             </div>
         </div>
-        <div class="col-lg-4" xxng-show="selectedMedia">
-            {{ selectedMedia.name }} [{{ selectedMedia.id }}]<br/>
+        <div class="col-lg-4" ng-show="selectedMedia">
+            <p>{{ selectedMedia.name }}</p>
             <a ng-href="{{ selectedMedia.file }}" ><img ng-src="{{ selectedMedia.thumb }}" style="display:inline-block;"/></a><br/>
-            {{ selectedMedia.width }} x {{ selectedMedia.height }}
+            <p>id:{{ selectedMedia.id }} - size:{{ selectedMedia.width }}x{{ selectedMedia.height }}</p>
             <a href="#" ng-click="deleteMedia(selectedMedia.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
         </div>
     </div>
@@ -78,16 +78,23 @@
         </div>
     </div>
     
-    <div class="row" ng-hide="displayAsList" style="display:table">
-        <div ng-repeat="media in medias | filter:search | orderBy:predicate:reverse" class="col-lg-3" style="display:table-cell">
-            {{ media.name }} [{{ media.id }}]<br/>
-            <a ng-href="{{ media.file }}" ><img ng-src="{{ media.thumb }}" style="display:inline-block;"/></a><br/>
-            {{ media.width }} x {{ media.height }}
-            <a href="#" ng-click="selectMedia(media);"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
-            <a href="#" ng-click="deleteMedia(media.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+    <div class="row" ng-hide="displayAsList">
+        <div class="col-sm-3 col-md-2" ng-repeat="media in medias | filter:search | orderBy:predicate:reverse">
+            <div class="thumbnail">
+                <a ng-href="{{ media.file }}" >
+                    <img ng-src="{{ media.thumb }}" ng-alt="{{ media.file }}" />
+                </a>
+                <div class="caption">
+                    <p><small>{{ media.name }}</small><p/>
+                    <p>id:{{ media.id }} - size:{{ media.width }}x{{ media.height }}</p>
+                    <p>
+                        <a href="#" ng-click="selectMedia(media);"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
+                        <a href="#" ng-click="deleteMedia(media.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-
     <div class="row" ng-show="displayAsList">
         <table st-table="rowCollection" class="table table-striped">
             <thead>
@@ -100,13 +107,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="media in medias | filter:search | orderBy:predicate:reverse">
-                <td>{{media.id}}</td>
-                <td><a ng-href="{{ media.file }}">{{media.name}}</a></td>
-                <td>{{media.width}}</td>
-                <td>{{media.height}}</td>
+            <tr ng-repeat="media in medias | filter:search | orderBy:predicate:reverse" >
+                <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.id}}</td>
+                <td class="clickableCell" scope="row" ng-click="selectMedia(media);"><a ng-href="{{ media.file }}">{{media.name}}</a></td>
+                <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.width}}</td>
+                <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.height}}</td>
                 <td>
-                    <a href="#" ng-click="selectMedia(media);"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></a>
                     <a href="#" ng-click="deleteMedia(media.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                 </td>
             </tr>

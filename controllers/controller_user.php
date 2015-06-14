@@ -9,7 +9,8 @@ class ControllerUser {
     var $mailer;
     var $journal;
     var $webSite;
-
+    var $donationDal;
+    
     function ControllerUser($services) {
         global $webSite;
         $this->webSite = $webSite;
@@ -18,6 +19,7 @@ class ControllerUser {
         $this->mailer = $services['mailer'];
         $this->translator = $services['translator'];
         $this->journal = $services['journal'];
+        $this->donationDal = $services['donationDal'];
     }
 
     function action_register(&$obj, $params) {
@@ -146,6 +148,8 @@ class ControllerUser {
         }
         
         $obj['user'] = $user;
+        
+        $obj['user']['donations'] = $this->donationDal->GetWhere(array('userid' => $id), array('dateInit' => false));
         return 'profil';
     }
     

@@ -316,7 +316,7 @@ class Transformer {
                     $string .= htmlentities($item['content'], 0, "UTF-8");
                     break;
                 case 'paragraph' :
-                    $string .= '<P>'.$this->Encode($item['content']).'</P>';
+                    $string .= '<P class="text-justify">'.$this->Encode($item['content']).'</P>';
                     break;
                 case 'head1' :
                     $string .= '<H1>'.$this->Encode($item['content']).'</H1>';
@@ -337,16 +337,16 @@ class Transformer {
                     $string .= $item['content'][0]['content'];
                     break;
                 case 'strong' :
-                    $string .= '<span class="cx_bold">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<strong>'.$this->Encode($item['content']).'</strong>';
                     break;
                 case 'delete' :
-                    $string .= '<span class="cx_linethrough">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<s>'.$this->Encode($item['content']).'</s>';
                     break;
                 case 'italic' :
-                    $string .= '<span class="cx_italic">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<em>'.$this->Encode($item['content']).'</em>';
                     break;
                 case 'underline' :
-                    $string .= '<span class="cx_underline">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<u>'.$this->Encode($item['content']).'</u>';
                     break;
                 case 'monospaced' :
                     $string .= '<span class="cx_monospace">'.$this->Encode($item['content']).'</span>';
@@ -390,9 +390,6 @@ class Transformer {
                 case 'table' :
                     $string.= '<table>'.$this->Encode($item['content']).'</table>';
                     break;
-                case 'table' :
-                    $string.= '<table>'.$this->Encode($item['content']).'</table>';
-                    break;
                 case 'head' :
                 case 'row' :
                     $string.= '<tr>'.$this->Encode($item['content']).'</tr>';
@@ -402,6 +399,9 @@ class Transformer {
                     break;
                 case 'cellrow' :
                     $string.= '<td>'.$this->Encode($item['content']).'</td>';
+                    break;
+                case 'quote' :
+                    $string.= '<blockquote>'.$this->Encode($item['content']).'</blockquote>';
                     break;
             }
         }
@@ -502,6 +502,10 @@ class Transformer {
                 case 'cellrow' :
                     $string.= $this->EncodeText($item['content']).' | ';
                     break;
+                case 'quote' :
+                    $string.= $this->EncodeText($item['content']).' | ';
+                    break;
+            
             }
         }
         return $string;
