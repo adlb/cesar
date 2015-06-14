@@ -83,7 +83,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="DBPassword">DB Password</label>
   <div class="col-md-5">
-    <input id="DBPassword" name="DBPassword" placeholder="password" class="form-control input-md" type="password" autocomplete="off">
+    <input id="DBPassword" name="DBPassword" placeholder="password" class="form-control input-md" type="text" autocomplete="off" value="<?php disp($obj['config'], 'DBPassword'); ?>">
 
   </div>
 </div>
@@ -105,6 +105,18 @@
   <div class="col-md-6">
   <input id="SMTPHosts" name="SMTPHosts" placeholder="host;secondary_host" class="form-control input-md" type="text" value="<?php echo $obj['config']['SMTPHosts']; ?>">
   <span class="help-block">Host and secondary host separated with ';'</span>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="SMTPAuth">Authenticate</label>
+  <div class="col-md-4">
+  <div class="checkbox">
+    <label for="SMTPAuth">
+      <input name="SMTPAuth" id="SMTPAuth" value="true" type="checkbox" <?php echo $obj['config']['SMTPAuth'] ? 'CHECKED' : ''; ?>>
+      Active authentification
+    </label>
+    </div>
   </div>
 </div>
 

@@ -22,13 +22,14 @@ class Mailer {
     public function TrySendSimpleMail($to, $subject, $contentHtml, $content) {
         $mail = new PHPMailer();
         
+        $mail->SMTPDebug = 0;
         $mail->isSMTP();                                            // Set mailer to use SMTP
         $mail->Host = $this->config->current['SMTPHosts'];          // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                                     // Enable SMTP authentication
+        $mail->SMTPAuth = $this->config->current['SMTPAuth'];       // Enable SMTP authentication
         $mail->Username = $this->config->current['SMTPUser'];       // SMTP username
         $mail->Password = $this->config->current['SMTPPassword'];   // SMTP password
-        $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                          // TCP port to connect to
+        //$mail->SMTPSecure = '';                                   // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 25;                                           // TCP port to connect to
         $mail->CharSet = "UTF-8";
 
         $mail->From = $this->config->current['Contact'];
