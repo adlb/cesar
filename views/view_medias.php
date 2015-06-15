@@ -29,7 +29,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row" ng-hide="custom" >
+                    <div class="form-group row" ng-show="custom" >
                         <label for="width" class="col-lg-3 control-label">SizeCustom</label>
                         <div class="col-lg-2">
                             <input type="text" name="width" ng-model="customWidth" />

@@ -3,7 +3,7 @@
 class Gallery {
     var $mediaDal;
 
-    var $fileType = array('jpg' => 'png', 'jpeg' => 'png', 'pdf' => 'pdf', 'png' => 'png', 'gif' => 'png');
+    var $fileType = array('jpg' => 'jpg', 'jpeg' => 'jpg', 'pdf' => 'pdf', 'png' => 'jpg', 'gif' => 'jpg');
     public $sizes = array(
         array(400, 300),
         array(300, 400),
@@ -36,7 +36,7 @@ class Gallery {
     
     function TrySaveAsNew($file, $width, $height, &$error, &$media) {
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $baseName = pathinfo($file['name'], PATHINFO_BASENAME);
+        $baseName = pathinfo($file['name'], PATHINFO_FILENAME);
 
         //Check that type is authorized
         if (!in_array($extension, array_keys($this->fileType))) {
@@ -150,7 +150,7 @@ class Gallery {
             $width * $ratio,                        //int $src_w
             $height * $ratio                        //int $src_h
         );
-
+        
         imagejpeg($destination, $filename);
     }
 
