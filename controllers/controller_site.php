@@ -116,7 +116,6 @@ class ControllerSite {
         if ($id == $this->config->current['Home']) {
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        
         if (!$this->TryViewArticleInternal($obj, $id))
             return 'noArticle';
         else
@@ -125,6 +124,7 @@ class ControllerSite {
     
     function view_footer(&$obj, $params) {
         $obj['links'] = array();
+        $obj['contact'] = $this->config->current['Contact'];
         $legal = $this->articleDal->GetFixedArticle('Legal', true);
         $contact = $this->articleDal->GetFixedArticle('Contact', true);
         $obj['links'][] = array(
@@ -135,6 +135,9 @@ class ControllerSite {
             'display' => $this->translator->GetTranslation($contact['titleKey']),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $contact['id']))
         );
+
+        $obj['url'] = $this->webSite->currentLink;
+        $obj['title'] = $this->config->current['Title'];
         return 'footer';
     }
     

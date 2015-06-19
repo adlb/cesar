@@ -10,6 +10,7 @@ class ArticleDal extends Dal {
         'titleKey' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR, 'key' => true),
         'date' => array('create' => 'date', 'bind' => PDO::PARAM_STR),
         'textKey' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
+        'imageId' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
         'rank' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
         'alert' => array('create' => 'boolean', 'bind' => PDO::PARAM_BOOL),
         'needLogin' => array('create' => 'boolean', 'bind' => PDO::PARAM_BOOL),

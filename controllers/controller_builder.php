@@ -6,6 +6,7 @@ class ControllerBuilder extends controllerSite{
 
     var $container = 'container';
     var $articleDal;
+    var $gallery;
     var $textDal;
     var $translator;
     var $config;
@@ -21,6 +22,7 @@ class ControllerBuilder extends controllerSite{
         $this->translator = $webSite->services['translator'];
         $this->config = $webSite->services['config'];
         $this->formatter = $webSite->services['formatter'];
+        $this->gallery = $webSite->services['gallery'];
         $this->authentication = $webSite->services['authentication'];
     }
 
@@ -77,11 +79,12 @@ class ControllerBuilder extends controllerSite{
         if (isset($params['callback'])) {
             $redirect = $params['callback'];
         } else {
-            $redirect = array(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+            $redirect = "";
         }
         
         $obj['menuFathers'] = $this->GetMenuFathers($params['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($params['id']);
+        $obj['images'] = $this->gallery->GetStandardSizedImages();
         $article = $this->PrepareArticleForEditing($params);
         $obj['form'] = $article;
         $obj['callback'] = $redirect;
@@ -145,6 +148,10 @@ class ControllerBuilder extends controllerSite{
             $this->config->Set('Home', $article['id']);
 
         $this->webSite->AddMessage('success', ':ARTICLE_SAVED');
+        
+        if ($redirect == "")
+            $redirect = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        
         $this->webSite->RedirectTo($redirect);
     }
 
@@ -169,6 +176,7 @@ class ControllerBuilder extends controllerSite{
         $a['textKey'] = isset($article['textKey']) ? $article['textKey'] : '';
         $a['date'] = isset($article['date']) ? date('Y-m-d', strtotime(str_replace('/', '-', $article['date']))) : date('Y-m-d');
         $a['date'] = $a['date'] == "-0001-11-30" ? date('Y-m-d') : $a['date'];
+        $a['imageId'] = isset($article['imageId']) && $this->gallery->TryGet(intval($article['imageId']), $image) ? $article['imageId'] : "";
         if (!isset($article['show'])) {
             $a['show'] = (isset($article['status']) && $article['status'] == 'show') ? 1 : 0;
         } else {
@@ -212,12 +220,13 @@ class ControllerBuilder extends controllerSite{
     function view_editArticle(&$obj, &$params) {
         $this->CheckRights('Administrator', $obj);
         if (!(isset($params['id']) && $this->articleDal->TryGet($params['id'], $article))) {
-            $article = array();
+            $article = array('id' => '');
         }
         
         $obj['form'] = $this->PrepareArticleForEditing($article);
         $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($obj['form']['id']);
+        $obj['images'] = $this->gallery->GetStandardSizedImages();
         
         $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
 
@@ -240,7 +249,6 @@ class ControllerBuilder extends controllerSite{
     function view_help(&$obj, &$view) {
         $article['id'] = -1;
         $article['rank'] = 1000;
-        $article['status'] = 'show';
         $article['father'] = 0;
         $article['title'] = 'Aide';
         $article['date'] = '';

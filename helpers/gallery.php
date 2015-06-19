@@ -4,9 +4,10 @@ class Gallery {
     var $mediaDal;
 
     var $fileType = array('jpg' => 'jpg', 'jpeg' => 'jpg', 'pdf' => 'pdf', 'png' => 'jpg', 'gif' => 'jpg');
+    public $standardSize = array(480, 300);
     public $sizes = array(
-        array(400, 300),
-        array(300, 400),
+        array(480, 300),
+        array(300, 480),
         array(500, 100),
         array(100, 500)
     );
@@ -22,6 +23,10 @@ class Gallery {
         return $this->mediaDal->GetWhere(array());
     }
 
+    function GetStandardSizedImages() {
+        return $this->mediaDal->GetWhere(array('width' => $this->standardSize[0], 'height' => $this->standardSize[1]), array('name'=>true));
+    }
+    
     function TryGet($nameOrId, &$image) {
         if ($this->mediaDal->TryGet($nameOrId, $image))
             return true;
@@ -114,6 +119,7 @@ class Gallery {
             default:
                 $error = "Format not supported";
                 return false;
+            echo $source;
         }
 
         $this->ResizeAndCopy($source, $target, $width, $height);
@@ -139,19 +145,20 @@ class Gallery {
         $ratio = min($w / $width, $h / $height);
 
         imagecopyresized(
-            $destination,                             //resource $dst_image
+            $destination,                              //resource $dst_image
             $source,                                   //resource $src_image
-            0,                                           //int $dst_x
-            0,                                        //int $dst_y
-            ($w - $width * $ratio) / 2,             //int $src_x
-            ($h - $height * $ratio) / 2,            //int $src_y
-            $width,                                 //int $dst_w
+            0,                                         //int $dst_x
+            0,                                         //int $dst_y
+            ($w - $width * $ratio) / 2,                //int $src_x
+            ($h - $height * $ratio) / 2,               //int $src_y
+            $width,                                    //int $dst_w
             $height,                                   //int $dst_h
-            $width * $ratio,                        //int $src_w
-            $height * $ratio                        //int $src_h
+            $width * $ratio,                           //int $src_w
+            $height * $ratio                           //int $src_h
         );
         
         imagejpeg($destination, $filename);
+        imagedestroy($destination);
     }
 
     private function CreateNewFileName($baseName, $extension) {

@@ -25,6 +25,10 @@
             </thead>
             <tbody>
                 <tr>
+                    <th scope="row"><?php t(':EMAIL') ?></th>
+                    <td><?php echo $obj['user']['email'] ?></td>
+                </tr>
+                <tr>
                     <th scope="row"><?php t(':FIRSTNAME') ?></th>
                     <td><?php echo $obj['user']['firstName'] ?></td>
                 </tr>

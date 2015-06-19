@@ -2,23 +2,23 @@
 <script language="javascript">
 <!--
   function doChallengeResponse() {
-    pwnh1 = $("#passwordnothashed1").val();
-    pwnh2 = $("#passwordnothashed2").val();
+    pwnh1 = document.getElementById("passwordnothashed1").value;
+    pwnh2 = document.getElementById("passwordnothashed2").value;
     if (pwnh1 == pwnh2)
     { 
-        str1 = $("#email").val()+"*"+$("#passwordnothashed1").val();
+        str1 = document.getElementById("email").value+"*"+document.getElementById("passwordnothashed1").value;
         for(var i=0; i<1000; i++)
         {
             str1 = MD5(str1);
         }
-        $("#password1").val(str1);
-        $("#password2").val(str1);
+        document.getElementById("password1").value = str1;
+        document.getElementById("password2").value = str1;
     } else {
-        $("#password1").val("mismatch");
-        $("#password2").val("");
+        document.getElementById("password1").value = "mismatch";
+        document.getElementById("password2").value = "";
     }
-    $("#passwordnothashed1").val("");
-    $("#passwordnothashed2").val("");
+    document.getElementById("passwordnothashed1").value = "";
+    document.getElementById("passwordnothashed2").value = "";
   }
 // -->
 </script>

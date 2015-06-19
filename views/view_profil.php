@@ -63,8 +63,9 @@
     </div>
     <br/>
     <br/>
-    <legend><?php t(':PREVIOUS_DONATIONS') ?></legend>
-    <div id="donationsCtrlDiv" class="row" ng-controller="donationsListCtrl">
+    <div id="donationsCtrlDiv" class="row" ng-controller="donationsListCtrl" ng-show="count(donations)">
+    <div id="donationsCtrlDiv" class="row" ng-controller="donationsListCtrl" ng-show="count(donations)">
+        <legend><?php t(':PREVIOUS_DONATIONS') ?></legend>
         <div class="col-md-12">
             <table st-table="rowCollection" class="table table-striped">
                 <thead>

@@ -24,6 +24,7 @@ class WebSite {
     var $services;
     var $controllerFactory;
     var $urlPrefix;
+    var $currentLink;
     
     function __construct($configFile) {
         $this->services['config'] = new Config($configFile);
@@ -56,12 +57,15 @@ class WebSite {
         $this->obj['analytics'] = $this->services['config']->current['Analytics'];
         $this->obj['language'] = $this->services['translator']->language;
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
+        $this->obj['contact'] = $this->services['config']->current['Contact'];
         $_SESSION['messages'] = null;
         
         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $parse = parse_url($url);
         $scheme = isset($parse['scheme']) ? $parse['scheme'] . '://' : '//';
         $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
+        
+        $this->currentLink = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
     }
 
     function AddMessage($level, $text) {

@@ -1,7 +1,7 @@
                 <!-- TOPBAR -->
-				<div class="topbar">
+                <div class="topbar">
                     <ul class="list-inline top-nav">
-						<?php if (count($obj['languages'])>1) { ?>
+                        <?php if (count($obj['languages'])>1) { ?>
                         <li class="dropdown">
                             <a class="dropdown-toggle <?php echo $obj['status'] == 'hide' ? 'cx_adminonly' : '' ?>" data-toggle="dropdown" role="button">
                                 <img src="templates/Repute/theme/assets/img/flags/<?php echo $obj['language'] ;?>.png" alt="<?php echo $obj['language'] ;?>">
@@ -21,7 +21,7 @@
                         <?php } ?>
                         <?php if ($obj['user']) { ?>
                         <li class="dropdown">
-                            <a class="dropdown-toggle <?php echo $obj['status'] == 'hide' ? 'cx_adminonly' : '' ?>" data-toggle="dropdown" role="button">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button">
                                 <?php disp($obj['user'], 'email') ?>
                                 <span class="caret"></span>
                             </a>
@@ -37,7 +37,7 @@
                         <?php } ?>
                         <?php if ($obj['user']['role'] == 'Administrator') { ?>
                         <li class="dropdown">
-                            <a class="dropdown-toggle <?php echo $obj['status'] == 'hide' ? 'cx_adminonly' : '' ?>" data-toggle="dropdown" role="button">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button">
                                 <?php t(':ADMINISTRATION') ?>
                                 <span class="caret"></span>
                             </a>

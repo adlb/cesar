@@ -257,6 +257,20 @@ cesarApp.controller('usersListCtrl', ['$scope', function($scope) {
   };
 }]);
 
+cesarApp.controller('articleCtrl', ['$scope', function($scope) {
+  $scope.image = null;
+  
+  $scope.init = function(type, images, imageId) {
+    $scope.type = type;
+    $scope.images = images;
+    for(i = 0; i< images.length;i++) {
+        if (images[i].id+"" == imageId+"") {
+            $scope.image = images[i];
+        }
+    }
+  };
+}]);
+
 cesarApp.controller('donationsListCtrl', ['$scope', function($scope) {
   $scope.init = function(donations, deleteUrl) {
     $scope.donations = donations;
