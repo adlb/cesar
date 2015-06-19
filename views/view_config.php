@@ -13,7 +13,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Title">Title</label>
   <div class="col-md-5">
-  <input id="Title" name="Title" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" autocomplete="off">
+  <input id="Title" name="Title" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" />
   </div>
 </div>
 
@@ -21,7 +21,15 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Contact">Contact Email</label>
   <div class="col-md-5">
-  <input id="Contact" name="Contact" placeholder="email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" autocomplete="off">
+  <input id="Contact" name="Contact" placeholder="email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" />
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="TemplateName">Template Name</label>
+  <div class="col-md-5">
+  <input id="TemplateName" name="TemplateName" placeholder="template" class="form-control input-md" type="text" value="<?php echo $obj['config']['TemplateName']; ?>" />
   </div>
 </div>
 

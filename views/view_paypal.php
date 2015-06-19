@@ -2,6 +2,8 @@
     displayPartial('site', 'fixedArticle', array('titleKey' => 'ThanksForPaypal'));
 ?>
 
+<section>
+    <div class="container">
 <?php t(':RESUME_OF_PAIEMENT') ?>
 <?php var_dump($obj['donation']) ?>
 
@@ -25,3 +27,5 @@
     <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus s?ris?!">
     <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
 </form>
+    </div>
+</section>

@@ -135,7 +135,7 @@
 <!-- Button (Double) -->
 <div class="form-group">
   <div class="col-md-2 pull-right">
-    <a class="btn btn-default" href="?controller=site">Cancel</a>
+    <a class="btn btn-default" href="<?php disp($obj, 'callback') ?>">Cancel</a>
     <button id="button2id" name="button2id" class="btn btn-primary">Validate</button>
   </div>
 </div>

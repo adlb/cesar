@@ -21,6 +21,7 @@ class Config {
         $this->current = array(
             'Title' => isset($old['Title']) ? $old['Title'] : '',
             'Contact' => isset($old['Contact']) ? $old['Contact'] : '',
+            'TemplateName' => isset($old['TemplateName']) ? $old['TemplateName'] : '',
             'SecretLine' => isset($old['SecretLine']) ? $old['SecretLine'] : '',
             'Analytics' => isset($old['Analytics']) ? $old['Analytics'] : '',
             'DBConnectionString' => isset($old['DBConnectionString']) ? $old['DBConnectionString'] : '',
@@ -69,6 +70,7 @@ class Config {
         $new = array(
             'Title' => $data['Title'],
             'Contact' => $data['Contact'],
+            'TemplateName' => $data['TemplateName'],
             'SecretLine' => $data['SecretLine'],
             'Analytics' => $data['Analytics'],
             'DBConnectionString' => $data['DBConnectionString'],

@@ -148,7 +148,12 @@ function displayPartial($controller, $view, $params) {
 }
 
 function renderPartial($view, $obj) {
-    include('views/view_'.$view.'.php');
+    global $webSite;
+    $template = $webSite->services['config']->current['TemplateName'];
+    if (file_exists('templates/'.$template.'/view_'.$view.'.php'))
+        include('templates/'.$template.'/view_'.$view.'.php');
+    else
+        include('views/view_'.$view.'.php');
 }
 
 ?>
