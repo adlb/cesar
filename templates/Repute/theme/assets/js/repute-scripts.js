@@ -225,7 +225,9 @@ $(document).ready( function() {
 	/*-------------------------------*/
 
 	if($('.btn-popover').length > 0) {
-		$('.btn-popover').popover();
+		$('.btn-popover').popover({
+            trigger: 'hover'
+        });
 	}
 
 	if($('.demo-popover').length > 0) {

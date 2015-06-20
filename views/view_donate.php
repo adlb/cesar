@@ -2,20 +2,69 @@
     displayPartial('site', 'fixedArticle', array('titleKey' => 'CheckAdressBeforeDonate'));
 ?>
 
-<?php t(':name') ?> : <?php echo $obj['user']['firstName'] . ' ' . $obj['user']['lastName'] ?><br/>
-<?php t(':address') ?> : <?php echo $obj['user']['addressLine1'] . ' - ' . $obj['user']['addressLine2'] . ' - ' . $obj['user']['postalCode'] . ' ' . $obj['user']['city'] . ' - ' . $obj['user']['country'] ?><br/>
-
-<a class="btn btn-default" href="<?php echo url(array(
-    'controller' => 'user', 
-    'view' => 'editUser', 
-    'id' => $obj['user']['id'], 
-    'callback' => url(array(
-            'controller' => 'donation', 
-            'view' => 'donate'
-            ))
-    ))?>" role="button"><?php t(":MODIFY_USER_INFO") ?></a><br/><br/>
-
-
+    <div class="container">
+        <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><?php t(':MY_PROFIL') ?></th>
+                    <th>
+                        <a class="pull-right" href="<?php echo url(array(
+                            'controller' => 'user', 
+                            'view' => 'editUser', 
+                            'id' => $obj['user']['id'], 
+                            'callback' => url(array(
+                                    'controller' => 'donation', 
+                                    'view' => 'donate'
+                                    ))
+                            ))?>" role="button">
+                           <i class="fa fa-edit"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"><?php t(':EMAIL') ?></th>
+                    <td><?php echo $obj['user']['email'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':FIRSTNAME') ?></th>
+                    <td><?php echo $obj['user']['firstName'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':LASTNAME') ?></th>
+                    <td><?php echo $obj['user']['lastName'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':ADDRESSLINE1') ?></th>
+                    <td><?php echo $obj['user']['addressLine1'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':ADDRESSLINE2') ?></th>
+                    <td><?php echo $obj['user']['addressLine2'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':POSTALCODE') ?></th>
+                    <td><?php echo $obj['user']['postalCode'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':CITY') ?></th>
+                    <td><?php echo $obj['user']['city'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':COUNTRY') ?></th>
+                    <td><?php echo $obj['user']['country'] ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php t(':PHONE') ?></th>
+                    <td><?php echo $obj['user']['phone'] ?></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        </div>
+    
 
 <form method="post" class="form-horizontal" action="<?php echo url(array('controller' => 'donation', 'action' => 'donate')) ?>" >
 <input type="hidden" name="userid" value="<?php echo $obj['user']['id'] ?>" />
@@ -82,3 +131,4 @@
 
 </fieldset>
 </form>
+</div>
