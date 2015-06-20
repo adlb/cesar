@@ -74,7 +74,7 @@
                     </div>
 
                     <!-- Select Image -->
-                    <div class="" ng-show="type == 'article'">
+                    <div class="" ng-show="type == 'article' || type == 'news'">
                       <label class="col-md-5 control-label" for="imageId">Image</label>
                       <div class="col-md-7">
                         <select id="imageId" name="imageId" class="form-control" 

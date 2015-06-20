@@ -1,81 +1,81 @@
 <script language="javascript" src="js/md5.js"></script>
 <script language="javascript">
 <!--
-  function doChallengeResponse(getTimesUrl) {
-    $.ajax({
-      type: 'GET',
-      url: getTimesUrl,
-      data: 'email=' + $("#email").val(),
-      datatype: 'json',
-      success: function(result) {
-                str1 = $("#email").val()+"*"+$("#passwordnothashed").val();
+    function emailUpdated(getTimesUrl) {
+        var email = document.getElementById("email").value;
+        $.ajax({
+            type: "GET",
+            url: getTimesUrl,
+            data: "email=" + email,
+            datatype: "json",
+            success: function(result) {
+                document.getElementById("nbTimes").value = result.nb;
+            
+                if (result.nb == 1000) {
+                    document.getElementById("Register").style.display="";
+                    document.getElementById("RegisterLabel").style.display="";
+                    document.getElementById("Login").style.display="none";
+                } else {
+                    document.getElementById("Register").style.display="none";
+                    document.getElementById("RegisterLabel").style.display="none";
+                    document.getElementById("Login").style.display="";
+                }
+            }
+        });
+    }
+    
+    function doChallengeResponse(getTimesUrl) {
+        var email = document.getElementById("email").value;
+        $.ajax({
+            type: "GET",
+            url: getTimesUrl,
+            data: "email=" + email,
+            datatype: "json",
+            success: function(result) {
+                str1 = email+"*"+document.getElementById("passwordnothashed").value;
+                
+                if (document.getElementById("passwordnothashed2").type=="text") {
+                    if (document.getElementById("passwordnothashed2").value != document.getElementById("passwordnothashed").value)
+                        return;
+                }
+                
                 for(var i=0; i<result.nb; i++)
                 {
                     str1 = MD5(str1);
                 }
+                
                 $("#password").val(str1);
                 $("#passwordnothashed").val("");
+                $("#passwordnothashed2").val("");
+                
                 $("#loginForm").submit();
-           }
-      });
-  }
+            }
+        });
+    }
 // -->
 </script>
-<style>
-        body {
-  #padding-top: 40px;
-  #padding-bottom: 40px;
-  #background-color: #eee;
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-</style>
-
-      <form id="loginForm" class="form-signin" method="POST" action="?controller=user&action=login" enctype="x-www-form-urlencoded">
-        <input type="hidden" name="callback" value="<?php disp($obj, 'callback') ?>">
-        <h2 class="form-signin-heading"><?php t(':PLEASE_SIGN_IN')?></h2>
-        <label for="inputEmail" class="sr-only"><?php t(':EMAIL_ADDRESS')?></label>
-        <input id="email" type="email" name="email" class="form-control" placeholder="<?php t(':EMAIL_ADDRESS')?>" required autofocus value="<?php disp($obj, 'email') ?>" />
-        <label for="passwordnothashed" class="sr-only">Password</label>
-        <input id="passwordnothashed" type="password" name="passwordnothashed" class="form-control" placeholder="Password" required />
-        <input id="password" type="hidden" name="password" />
-        <input class="btn btn-primary" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':SIGN_IN') ?>" />
-
-        <div class="checkbox">
-          <a href="?controller=user&view=register"><?php t(':CREATE_ACCOUNT') ?></a><br />
-          <a href="?controller=user&view=lostPassword"><?php t(':LOST_PASSWORD') ?></a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <form id="loginForm" class="form-signin" method="POST" action="?controller=user&action=login" enctype="x-www-form-urlencoded" style="margin:50px;0px;">
+                    
+                    <input type="hidden" name="callback" value="<?php disp($obj, 'callback') ?>" />
+                    <input type="hidden" id="nbTimes" />
+                    <h2 class="form-signin-heading"><?php t(':PLEASE_SIGN_IN')?></h2>
+                    <input id="email" onchange="emailUpdated('<?php echo $obj['GetTimesUrl'] ?>')" type="email" name="email" class="form-control" placeholder="<?php t(':EMAIL_ADDRESS')?>" required autofocus value="<?php disp($obj, 'email') ?>" />
+                    <label id="RegisterLabel" style="display: none;"><small><?php t(':EMAIL_UNKOWN_CREATE_AN_ACCOUNT') ?></small></label>
+                    <input type="password" id="passwordnothashed" type="password2" name="passwordnothashed" class="form-control" placeholder="Password" required />
+                    <input id="password" type="hidden" name="password" />
+                    <div id="Register" style="display: none;">
+                        <input type="password" id="passwordnothashed2" type="password2" name="passwordnothashed2" class="form-control" placeholder="Re-type password" required />
+                        <input class="btn btn-primary pull-right" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':REGISTER') ?>" />
+                    </div>
+                    <div id="Login">
+                        <input class="btn btn-primary text-right" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':LOGIN') ?>" />
+                    </div>
+                    <small><a href="?controller=user&view=lostPassword"><?php t(':LOST_PASSWORD') ?></a></small>   
+                </form>
+            </div>
         </div>
-      </form>
+    </div>
+    

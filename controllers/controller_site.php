@@ -8,6 +8,7 @@ class ControllerSite {
     var $config;
     var $translator;
     var $formatter;
+    var $gallery;
     var $webSite;
 
     function ControllerSite($services) {
@@ -16,6 +17,7 @@ class ControllerSite {
         $this->authentication = $services['authentication'];
         $this->articleDal = $services['articleDal'];
         $this->config = $services['config'];
+        $this->gallery = $services['gallery'];
         $this->translator = $services['translator'];
         $this->formatter = $services['formatter'];
     }
@@ -75,8 +77,16 @@ class ControllerSite {
             $article['links'][] = array('type' => 'edit', 'url' => url(array('controller' => 'builder', 'view' => 'editArticle', 'id' => $article['id'])));
             $article['links'][] = array('type' => 'delete', 'url' => url(array('controller' => 'builder', 'action' => 'deleteArticle', 'id' => $article['id'])));
         }
-        $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 6);
+        $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 7);
         $article['subArticles'] = array();
+        
+        if ($this->gallery->TryGet($article['imageId'], $image)) {
+            $article['image'] = $image['file'];
+        } else {
+            $article['image'] = '';
+        }
+        $article['url'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        $article['permalink'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), true);
         foreach($subArticles as $subArticle)
             $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin, $html);
         return $article;

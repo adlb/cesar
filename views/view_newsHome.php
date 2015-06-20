@@ -1,15 +1,9 @@
-<ol class="breadcrumb">
-    <li class="active">
-        <a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['id'])) ?>">
-            <?php t($obj['titleKey'])?>
-        </a>
-    </li>
-    
-    <?php foreach($obj['links'] as $link) { ?>
-        <a href="<?php echo $link['url'] ?>" class="pull-right">&nbsp;&nbsp;<?php echo $link['type'] ?></a>
-    <?php } ?>
-</ol>
-
-<div class="ox_article">
-    <?php echo $obj['htmlContent']; ?>
+<div class="col-md-6 col-sm-6">
+    <div class="news-item margin-bottom-30px clearfix">
+        <a href="<?php echo $obj['url']?>"><img ng-src="<?php echo $obj['image']?>" class="img-responsive pull-left" alt="News Thumbnail"></a>
+        <div class="right">
+            <h3 class="news-title"><a href="<?php echo $obj['url']?>"><?php t($obj['titleKey']) ?></a></h3>
+            <p><?php echo $obj['htmlContent']?></p>
+        </div>
+    </div>
 </div>

@@ -64,7 +64,7 @@ class ControllerUser {
         $email = isset($params['email']) ? $params['email'] : "";
         $password = isset($params['password']) ? $params['password'] : "";
 
-        if (!$this->crowd->TryLogin($email, $password, $error)) {
+        if (!$this->crowd->TryLoginOrCreate($email, $password, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['email'] = $email;
             $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));

@@ -17,7 +17,7 @@ class Crowd {
         $res = $this->userDal->GetWhere(array('email' => $email));
         $nb = 0;
         if (count($res) == 0) {
-            $nb = rand(10, 1000);
+            $nb = 1000;
         } else {
             $nb = $res[0]['times'] - 1;
         }
@@ -41,29 +41,18 @@ class Crowd {
     }
     
     function TryUpdateUserPassword($user, $passwordHashed) {
-        $user['passwordHashed'] = $passwordHashed;
+        $user['passwordHashed'] = md5($passwordHashed.$this->salt);
         $user['times'] = 1000;
         return $this->userDal->TrySave($user);
     }
     
-    function TryRegister(&$user, &$error) {
-        if (!isset($user['password1']) || !isset($user['password2']) ||
-            trim($user['password1']) == '' || trim($user['password2']) == '') {
+    function TryRegister($email, $password, &$error) {
+        if (!isset($password) || trim($password) == '') {
             $error = ':PASSWORD_EMPTY';
             return false;
         }
 
-        if ($user['password2'] != $user['password1']) {
-            $error = ':PASSWORDS_DONT_MATCH';
-            return false;
-        }
-
-        if (strlen($user['password2']) <= 5) {
-            $error = ':PASSWORDS_TOO_SHORT';
-            return false;
-        }
-        
-        if (count($this->userDal->GetWhere(array('email' => $_POST['email']))) > 0) {
+        if (count($this->userDal->GetWhere(array('email' => $email))) > 0) {
             $error = ':USER_EXISTS';
             return false;
         }
@@ -75,8 +64,8 @@ class Crowd {
         }
 
         $userToCreate = array(
-            'email' => $user['email'],
-            'passwordHashed' => md5($user['password1'].$this->salt),
+            'email' => $email,
+            'passwordHashed' => md5($password.$this->salt),
             'times' => 1000,
             'role' => $role
         );
@@ -126,18 +115,17 @@ class Crowd {
         return true;
     }
 
-    function TryLogin($email, $password, &$error) {
+    function TryLoginOrCreate($email, $password, &$error) {
         $users = $this->userShortDal->GetWhere(array('email' => $email));
         
         if (count($users) == 0) {
-            $error = ':UNKOWN_LOGIN';
-            return false;
+            return $this->TryRegister($email, $password, $error);
         }
         
         $user = $users[0];
 
         if (strlen($password) < 5) {
-            $error = ':WRONG_PASSWORD';
+            $error = ':WRONG_PASSWORD1';
             return false;
         }
 
@@ -145,8 +133,10 @@ class Crowd {
         for($i = $user['times']-1; $i<1000; $i++)
             $pw = md5($pw);
         
+        $pw = md5($pw.$this->salt);
+        
         if ($user['passwordHashed'] != $pw) {
-            $error = ':WRONG_PASSWORD';
+            $error = ':WRONG_PASSWORD2';
             return false;
         }
 
