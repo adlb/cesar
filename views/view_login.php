@@ -62,7 +62,7 @@
                     <input type="hidden" name="callback" value="<?php disp($obj, 'callback') ?>" />
                     <input type="hidden" id="nbTimes" />
                     <h2 class="form-signin-heading"><?php t(':PLEASE_SIGN_IN')?></h2>
-                    <input id="email" onchange="emailUpdated('<?php echo $obj['GetTimesUrl'] ?>')" type="email" name="email" class="form-control" placeholder="<?php t(':EMAIL_ADDRESS')?>" required autofocus value="<?php disp($obj, 'email') ?>" />
+                    <input id="email" onchange="emailUpdated('<?php echo $obj['GetTimesUrl'] ?>')" type="email" name="email" class="form-control" placeholder="<?php t(':PLACEHOLDER_EMAIL')?>" required autofocus value="<?php disp($obj, 'email') ?>" />
                     <label id="RegisterLabel" style="display: none;"><small><?php t(':EMAIL_UNKOWN_CREATE_AN_ACCOUNT') ?></small></label>
                     <input type="password" id="passwordnothashed" type="password2" name="passwordnothashed" class="form-control" placeholder="Password" required />
                     <input id="password" type="hidden" name="password" />

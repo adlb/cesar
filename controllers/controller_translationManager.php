@@ -85,7 +85,7 @@ class ControllerTranslationManager {
         $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle, true, 'pureText');
         $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText, false, 'decoratedText');
         
-        redirectTo(array('controller' => 'translationManager', 'view' => 'translationList'));
+        $this->webSite->RedirectTo(url(array('controller' => 'translationManager', 'view' => 'translationList')));
     }
 
     function view_translationList(&$obj, $params) {
