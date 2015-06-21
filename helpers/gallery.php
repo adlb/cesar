@@ -11,8 +11,8 @@ class Gallery {
         array(500, 100),
         array(100, 500)
     );
-    var $thWidth = 120;
-    var $thHeight = 90;
+    var $thWidth = 160;
+    var $thHeight = 100;
     var $targetPath = "medias/";
 
     function Gallery($mediaDal) {

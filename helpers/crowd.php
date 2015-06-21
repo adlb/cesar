@@ -57,7 +57,8 @@ class Crowd {
                 'email' => $email,
                 'passwordHashed' => '',
                 'times' => 1001,
-                'role' => 'NewsLetter'
+                'role' => 'NewsLetter',
+                'origin' => 'NewsLetter'
             );
             if (!$this->userShortDal->TrySave($userToCreate)) {
                 $error = ':CANT_CREATE_USER';
@@ -291,6 +292,10 @@ class Crowd {
             return 'UP_TO_DATE';
         }
 
+        $potentialResult['times'] = 1001;
+        $potentialResult['role'] = 'newsLetter';
+        $potentialResult['origin'] = 'ExternalEntry';
+        
         return 'NEW';
     }
     

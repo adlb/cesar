@@ -37,7 +37,8 @@ class UserDal extends Dal {
         // origin
         //  * Register
         //  * Payment
-        //  * External entry
+        //  * External
+        //  * NewsLetter
     );
     var $keyName = 'id';
     var $tableSuffix = 'users';

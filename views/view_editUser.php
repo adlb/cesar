@@ -125,7 +125,7 @@
                       <label class="col-md-4 control-label" for="origin"><?php t(':USER_ORIGIN')?></label>
                       <div class="col-md-6">
                         <select id="origin" name="origin" class="form-control">
-                          <?php foreach(array('Register', 'Payment', 'External') as $v) { ?>
+                          <?php foreach(array('Register', 'Payment', 'External', 'NewsLetter') as $v) { ?>
                           <option value="<?php echo $v ?>" <?php echo $obj['form']['origin'] == $v ? 'SELECTED' : ''; ?>><?php t(':EMAILSTATUS_'.$v) ?></option>
                           <?php } ?>
                         </select>
