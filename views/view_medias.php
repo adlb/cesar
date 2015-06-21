@@ -11,7 +11,7 @@
 
     <div class="page-header">
         <div class="container">
-            <h1 class="page-title pull-left"> <?php t(':MODIFY_DONATION') ?> </h1>
+            <h1 class="page-title pull-left"> <?php t(':MEDIA_MANAGEMENT') ?> </h1>
         </div>
     </div>
 

@@ -50,6 +50,19 @@
                                 <li><a href="<?php echo url(array('controller' => 'medias', 'view' => 'medias')) ?>"><?php t(':MEDIA_MANAGEMENT')?></a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                                <?php t(':HELP') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'globalSetup')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'userManagement')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'donationManagement')) ?>"><?php t(':DONATION_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'articleManagement')) ?>"><?php t(':ARTICLE_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'mediaManagement')) ?>"><?php t(':MEDIA_MANAGEMENT')?></a></li>
+                            </ul>
+                        </li>
                         <?php } ?>
 					</ul>
 				</div>

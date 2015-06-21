@@ -29,16 +29,6 @@ class ControllerUser {
         $this->webSite->RedirectTo(array('controller' => 'site'));
     }
     
-    function action_register(&$obj, $params) {
-        if (!$this->crowd->TryRegister($params, $error)) {
-            $this->webSite->AddMessage('warning', $error);
-            $obj['form']['email'] = $params['email'];
-            return 'register';
-        }
-        $this->journal->LogEvent('user', 'register', $this->authentication->currentUser);
-        $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'editUser', 'id' => $this->authentication->currentUser['id']));
-    }
-
     function action_saveUser(&$obj, $params) {
         if (isset($params['callback']) && $params['callback'] != '') {
             $redirect = $params['callback'];

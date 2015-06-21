@@ -132,6 +132,11 @@ class Crowd {
     }
 
     function TryLoginOrCreate($email, $password, &$error) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $error = 'EMAIL_INVALID';
+            return 'false';
+        }
+        
         $users = $this->userShortDal->GetWhere(array('email' => $email));
         
         if (count($users) == 0) {
