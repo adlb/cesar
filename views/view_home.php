@@ -68,45 +68,7 @@
         </div>
     </section>
     
-    <!-- LATEST NEWS -->
-    <section>
-        <div class="container">
-            <h2 class="section-heading"><?php t(':LATEST NEWS') ?></h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="news-item news-featured">
-                        <?php $first = $obj['article']['subArticles'][0]; ?>
-                        <a href="<?php echo $first['url'] ?>">
-                            <img ng-src="<?php echo $first['image'] ?>" class="img-responsive" alt="News Thumbnail">
-                        </a>
-                        <h3 class="news-title"><a href="<?php echo $first['url'] ?>"><?php t($first['titleKey']) ?></a></h3>
-                        <article class="cx_article">
-                            <?php echo $first['htmlContent']; ?>
-                        </article>
-                        <div class="news-meta">
-                            <span class="news-datetime"><?php echo $first['date'] ?></span>
-                            <span class="news-comment-count pull-right">
-                                <ul class="list-inline">
-                                <?php foreach($first['links'] as $link) { ?>
-                                    <li>
-                                        <a href="<?php echo $link['url'] ?>"><?php echo $link['type'] ?></a>
-                                    </li>
-                                <?php } ?>
-                                </ul>
-                            </span>	
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <?php foreach($obj['article']['subArticles'] as $subArticle)
-                            renderPartial('newsHome', $subArticle);
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php displayPartial('site', 'latestNews', array()) ?>
     
     <!-- CALL-TO-ACTION -->
     <section class="call-to-action">

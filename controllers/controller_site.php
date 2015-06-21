@@ -92,6 +92,16 @@ class ControllerSite {
         return $article;
     }
     
+    public function view_latestNews(&$obj, $params) {
+        $news = $this->articleDal->GetWhere(array('type' => array('article', 'news'), 'status' => 'show'), array('date' => false));
+        $obj['latestNews'] = array();
+        for ($i = 0; $i< min(7, count($news)); $i++) {
+            array_push($obj['latestNews'], $this->enrich_Article($news[$i], false, false));
+        }
+        
+        return 'latestNews';
+    }
+    
     private function TryViewArticleInternal(&$obj, $id) {
         if (!$this->articleDal->TryGet($id, $article))
             return false;
