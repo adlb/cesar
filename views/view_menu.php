@@ -52,14 +52,6 @@
                         </li>
                         <?php } ?>
 					</ul>
-					<div class="searchbox">
-						<div class="input-group input-group-sm">
-							<input type="text" class="form-control" placeholder="search ...">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-							</span>
-						</div>
-					</div>
 				</div>
 				<!-- END TOPBAR -->
 				
