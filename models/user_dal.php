@@ -26,6 +26,7 @@ class UserDal extends Dal {
         // * Administrator
         // * Translator
         // * Visitor
+        // * NewsLetter
 
         'emailStatus' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
         // can be

@@ -4597,6 +4597,7 @@ ul.social-icons li a i {
   -webkit-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   background: #414143;
+  color: #fff;
   outline: none;
 }
 .newsletter-form .input-group-lg > .form-control:focus {

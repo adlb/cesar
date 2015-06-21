@@ -54,8 +54,16 @@
                     <td>{{user.lastName}}</td>
                     <td>{{user.role}}</td>
                     <td>
-                        <a href="<?php echo url(array('controller' => 'user', 'view' => 'editUser')) ?>&id={{user.id}}">edit</a>
-                        <a href="#" ng-click="deleteUser(user.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a href="<?php echo url(array('controller' => 'user', 
+                                                      'view' => 'profil',
+                                                      )) ?>&id={{user.id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a href="<?php echo url(array('controller' => 'user', 
+                                                      'view' => 'editUser',
+                                                      'callback' => url(array(
+                                                        'controller' => 'user',
+                                                        'view' => 'userList'
+                                                      )))) ?>&id={{user.id}}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                        <a href="#" ng-click="deleteUser(user.id);"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     </td>
                 </tr>
                 </tbody>

@@ -43,11 +43,11 @@
                         <div class="newsletter">
                             <h3 class="footer-heading">NEWSLETTER</h3>
                             <p><?php t(':SUBSCRIBE_TO_OUR_NEWSLETTER') ?></p>
-                            <form class="newsletter-form" method="POST">
+                            <form class="newsletter-form" method="POST" action="<?php echo url(array('controller' => 'user', 'action' => 'registerNewsLetter')) ?>">
                                 <div class="input-group input-group-lg">
                                     <input type="email" class="form-control" name="email" placeholder="youremail@domain.com">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-spinner fa-spin"></i><span>SUBSCRIBE</span></button>
+                                        <button class="btn btn-primary" type="submit"><i class="fa fa-spinner fa-spin"></i><span>SUBSCRIBE</span></button>
                                     </span>
                                 </div>
                                 <div class="alert"></div>

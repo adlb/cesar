@@ -46,19 +46,35 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2 text-right">
-        </div>
-        <div class="col-md-5 text-left">
-            <a class="btn btn-default" href="<?php echo url(array(
-                'controller' => 'user', 
-                'view' => 'editUser', 
-                'id' => $obj['user']['id'], 
-                'callback' => url(array(
+        <div class="col-md-12 text-left">
+            <ul class="list-inline pull-right">
+                <li>
+                    <a class="btn btn-default" href="<?php echo url(array(
                         'controller' => 'user', 
-                        'view' => 'profil',
-                        'id' => $obj['user']['id']
-                        ))
-                ))?>" role="button"><?php t(":MODIFY_USER_INFO") ?></a><br/><br/>
+                        'view' => 'editUser', 
+                        'id' => $obj['user']['id'], 
+                        'callback' => url(array(
+                                'controller' => 'user', 
+                                'view' => 'profil',
+                                'id' => $obj['user']['id']
+                                ))
+                        ))?>" role="button"><?php t(":MODIFY_USER_INFO") ?></a>
+                </li>
+                <li>
+                    <a class="btn btn-default" href="<?php echo url(array(
+                        'controller' => 'user', 
+                        'view' => 'resetPassword', 
+                        'id' => $obj['user']['id'], 
+                        'key' => $obj['user']['key'],
+                        'email' => $obj['user']['email'],
+                        'callback' => url(array(
+                                'controller' => 'user', 
+                                'view' => 'profil',
+                                'id' => $obj['user']['id']
+                                ))
+                        ))?>" role="button"><?php t(":MODIFY_USER_PASSWORD") ?></a>
+                </li>
+            </ul>
         </div>
     </div>
     <br/>

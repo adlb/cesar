@@ -47,9 +47,23 @@ class Crowd {
     }
     
     function TryRegister($email, $password, &$error) {
+        $users = $this->userDal->GetWhere(array('email' => $email));
+        
         if (!isset($password) || trim($password) == '') {
-            $error = ':PASSWORD_EMPTY';
-            return false;
+            if (count($users) != 0) {
+                return true;
+            }
+            $userToCreate = array(
+                'email' => $email,
+                'passwordHashed' => '',
+                'times' => 1001,
+                'role' => 'NewsLetter'
+            );
+            if (!$this->userShortDal->TrySave($userToCreate)) {
+                $error = ':CANT_CREATE_USER';
+                return false;
+            }
+            return true;
         }
 
         if (count($this->userDal->GetWhere(array('email' => $email))) > 0) {
@@ -78,6 +92,7 @@ class Crowd {
         $user = $userToCreate;
         if (!$this->authentication->currentUser)
             $this->authentication->SetUser($user);
+
         return true;
     }
 
@@ -135,13 +150,12 @@ class Crowd {
         
         $pw = md5($pw.$this->salt);
         
+        if ($user['role'] == 'NewsLetter') {
+            $user['passwordHashed'] = $pw;
+        }
+        
         if ($user['passwordHashed'] != $pw) {
             $error = ':WRONG_PASSWORD2';
-            return false;
-        }
-
-        if (!$this->userDal->TryGet($user['id'], $user)) {
-            $error = ':INTERNAL_ERROR';
             return false;
         }
 

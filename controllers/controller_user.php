@@ -22,6 +22,13 @@ class ControllerUser {
         $this->donationDal = $services['donationDal'];
     }
 
+    function action_registerNewsLetter(&$obj, $params) {
+        if (!$this->crowd->TryRegister($params['email'], '', $error)) {
+            $this->webSite->AddMessage('warning', $error);
+        }
+        $this->webSite->RedirectTo(array('controller' => 'site'));
+    }
+    
     function action_register(&$obj, $params) {
         if (!$this->crowd->TryRegister($params, $error)) {
             $this->webSite->AddMessage('warning', $error);
@@ -150,6 +157,9 @@ class ControllerUser {
         $obj['user'] = $user;
         
         $obj['user']['donations'] = $this->donationDal->GetWhere(array('userid' => $id), array('dateInit' => false));
+        if ($this->crowd->TryGetKey($obj['user']['email'], $key)) {
+            $obj['user']['key'] = $key;
+        }
         return 'profil';
     }
     
