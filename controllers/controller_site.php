@@ -167,7 +167,10 @@ class ControllerSite {
         $article = $this->articleDal->GetFixedArticle($titleKey, true);
         $article = $this->enrich_Article($article, $isAdmin, true);
         $obj['article'] = $article;
-        return 'article';
+        if (isset($params['raw']) && $params['raw'] == true)
+            return 'articleRaw';
+        else
+            return 'article';
     }
     
     function view_fixedArticleText(&$obj, $params) {

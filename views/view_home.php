@@ -70,6 +70,10 @@
     
     <?php displayPartial('site', 'latestNews', array()) ?>
     
+    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Numbers', 'raw' => true)); ?>
+
+    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Testimonials', 'raw' => true)); ?>
+
     <!-- CALL-TO-ACTION -->
     <section class="call-to-action">
         <div class="container">

@@ -316,7 +316,12 @@ class Transformer {
                     $string .= htmlentities($item['content'], 0, "UTF-8");
                     break;
                 case 'paragraph' :
-                    $string .= '<P class="text-justify">'.$this->Encode($item['content']).'</P>';
+                    if (count($item['content'])>0 && 
+                        isset($item['content'][0]['type']) && 
+                        in_array($item['content'][0]['type'], array_map(array('Transformer', 'GetKeys'), $this->lexerParser->textDecoratorMinimalSet)))
+                        $string .= '<P class="text-justify">'.$this->Encode($item['content']).'</P>';
+                    else
+                        $string .= $this->Encode($item['content']);
                     break;
                 case 'head1' :
                     $string .= '<H1>'.$this->Encode($item['content']).'</H1>';
@@ -575,6 +580,10 @@ class Transformer {
             return $display.' ('.$link.')';
         }
         return $link;
+    }
+    
+    private function GetKeys($a) {
+        return $a->type;
     }
 }
 

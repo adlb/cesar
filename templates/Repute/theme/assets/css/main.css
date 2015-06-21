@@ -4456,10 +4456,12 @@ div[class*="col-"] > .form-group {
 
 .testimonial-with-bg {
   padding: 120px 0;
-  background-image: url('../img/testimonial-bg.png?1424866387');
+  background-image: url('../img/paralax-background.jpg?1424866387');
   background-attachment: fixed;
   background-position: center center;
+  -webkit-filter: blur(5px);
   color: #fff;
+  margin-bottom: 0;
 }
 .testimonial-with-bg .testimonial-body p {
   color: #fff;

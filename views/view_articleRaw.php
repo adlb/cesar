@@ -1,0 +1,1 @@
+<?php echo $obj['article']['htmlContent']; ?>
