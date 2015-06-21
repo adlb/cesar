@@ -20,11 +20,11 @@
 		<div class="page-content">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-3 pull-left">
-                        <img class="img-responsive" ng-src="<?php echo $obj['article']['image'] ?>" />
-                    </div>
-                    <div class="col-md-9">
-						<!-- BLOG SINGLE -->
+					<div class="col-md-9">
+						<div class="col-md-6 pull-left">
+                            <img class="img-responsive" ng-src="<?php echo $obj['article']['image'] ?>" />
+                        </div>
+                        <!-- BLOG SINGLE -->
 						<div class="blog single full-thumbnail">
 
                         <article class="cx_article">
