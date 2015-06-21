@@ -1,32 +1,24 @@
     <!-- HERO UNIT -->
-    <section class="hero-unit-slider">
-        <div id="carousel-hero" class="slick-carousel">
+    <section class="hero-unit-animated">
+        <div id="carousel-hero-animated" class="carousel">
+            <!-- Slide Wrapper -->
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img src="templates/Repute/theme/assets/img/sliders/slider1-h500.png" alt="Slider Image">
-                    <div class="carousel-caption">
-                        <h2 class="hero-heading">CLEAN &amp; ELEGANT DESIGN</h2>
-                        <p class="lead">Giving valuable reputation and credibility to your business</p>
-                        <a href="#" class="btn btn-lg hero-button">LEARN MORE</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="templates/Repute/theme/assets/img/sliders/slider2-h500.png" alt="Slider Image">
-                    <div class="carousel-caption">
-                        <h2 class="hero-heading">ULTRA RESPONSIVE</h2>
-                        <p class="lead">Leave it to the theme, it knows how to deal with screen sizes</p>
-                        <a href="#about" class="btn btn-lg hero-button">LEARN MORE</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="templates/Repute/theme/assets/img/sliders/slider3-h500.png" alt="Slider Image">
-                    <div class="carousel-caption">
-                        <h2 class="hero-heading">EASY TO CUSTOMIZE</h2>
-                        <p class="lead">Readable code, well documented and FREE support</p>
-                        <a href="#about" class="btn btn-lg hero-button">LEARN MORE</a>
+                    <div class="container">
+                        <div class="hero-left pull-left">
+                            <div class="hero-text">
+                                <h2 class="hero-heading animated fadeIn animation-delay-5"><?php t(':MAIN_TITLE') ?></h2>
+                                <p class="lead animated fadeIn animation-delay-7"><?php t(':SUB_TITLE') ?></p>
+                            </div>
+                            <a href="<?php echo url(array('controller'=>'donation', 'view'=>'donate')) ?>" class="btn btn-info btn-lg hero-button animated fadeIn animation-delay-12"><?php t(':DONATE') ?></a>
+                        </div>
+                        <div class="hero-right pull-right">
+                            <img src="templates/Repute/theme/assets/img/hero-unit-obj.png" class="animated fadeInRight animation-delay-9" alt="Repute Business Theme">
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- End Slide Wrapper -->
         </div>
     </section>
     <!-- END HERO UNIT -->

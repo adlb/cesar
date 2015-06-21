@@ -318,7 +318,8 @@ class Transformer {
                 case 'paragraph' :
                     if (count($item['content'])>0 && 
                         isset($item['content'][0]['type']) && 
-                        in_array($item['content'][0]['type'], array_map(array('Transformer', 'GetKeys'), $this->lexerParser->textDecoratorMinimalSet)))
+                        ($item['content'][0]['type'] == 'text' ||
+                        in_array($item['content'][0]['type'], array_map(array('Transformer', 'GetKeys'), $this->lexerParser->textDecoratorMinimalSet))))
                         $string .= '<P class="text-justify">'.$this->Encode($item['content']).'</P>';
                     else
                         $string .= $this->Encode($item['content']);

@@ -6357,3 +6357,26 @@ ul.nav-categories > li > a:hover {
     width: 100%;
   }
 }
+
+/* Added feature while not existing in bootstrap */
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/* Trad */
+#tradTo, #tradFrom {
+    margin: 0;
+    height: 100%;
+    padding: 9px;
+    font-size: 1em;
+    font-weight: 400;
+    font-size-adjust: none;
+    font-family: Menlo,​Monaco,​Consolas,​"Courier New",​monospace;
+    white-space: pre-wrap;
+}
+#tradMargin {
+    height: 10px;
+}
