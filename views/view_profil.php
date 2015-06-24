@@ -1,5 +1,8 @@
 ﻿<script>
-    getScope('donationsCtrlDiv', function(scope) {
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'donationsCtrlDiv', 
+        f: function(scope) {
         scope.init(
             <?php echo json_encode($obj['user']['donations']);?>,
             ''

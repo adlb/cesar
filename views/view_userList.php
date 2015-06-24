@@ -1,5 +1,8 @@
 <script>
-    getScope('usersCtrlDiv', function(scope) {
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'usersCtrlDiv',
+        f: function(scope) {
         scope.init(
             <?php echo json_encode($obj['users']);?>,
             '<?php echo url(array('controller' => 'user', 'action' => 'delete'));?>'

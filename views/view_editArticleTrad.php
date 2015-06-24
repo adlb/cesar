@@ -1,5 +1,8 @@
 <script>
-    getScope('editTextTradCtrlDiv', function(scope) {
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'editTextTradCtrlDiv',
+        f: function(scope) {
         scope.init(
             '<?php echo $obj['titleKey'];?>',
             '<?php echo $obj['textKey'];?>',

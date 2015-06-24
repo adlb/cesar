@@ -1,10 +1,14 @@
 <script>
-    getScope('articleCtrl', function(scope) {
-        scope.init(
-                <?php echo json_encode($obj['form']['type']);?>,
-                <?php echo json_encode($obj['images']);?>,
-                <?php echo json_encode($obj['form']['imageId']);?>
-            );
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'articleCtrl', 
+        f: function(scope) {
+            scope.init(
+                    <?php echo json_encode($obj['form']['type']);?>,
+                    <?php echo json_encode($obj['images']);?>,
+                    <?php echo json_encode($obj['form']['imageId']);?>
+                );
+        }
     });
 </script>
 

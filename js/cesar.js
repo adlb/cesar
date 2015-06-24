@@ -334,6 +334,28 @@ cesarApp.directive('ngConfirmClick', [
   }
 ]);
 
+//Load Data
+if (!window.cesar_q || window.cesar_q instanceof Array) {
+  // Store old queue
+  var oldQueue = window.cesar_q || [];
+
+  // Create new queue
+  window.cesar_q = (function () {
+    var Push = function () {
+      for (var i = 0; i < arguments.length; ++i) {
+        var scope = angular.element(document.getElementById(arguments[i].id)).scope();
+        scope.$apply(arguments[i].f(scope))
+      }
+    };
+    return {
+      push: Push
+    };
+  })();
+
+  // Merge queues
+  $(function() { window.cesar_q.push.apply(window.cesar_q, oldQueue) });
+}
+
 //Not angular functions
 jQuery(function($) {
     var panelList = $('.draggableMenuItem');

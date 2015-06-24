@@ -1,5 +1,8 @@
 <script>
-    getScope('mediaCtrlDiv', function(scope) {
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'mediaCtrlDiv',
+        f: function(scope) {
         scope.init(
                 <?php echo json_encode($obj['medias']);?>,
                 '<?php echo url(array('controller' => 'medias', 'action' => 'delete'));?>',

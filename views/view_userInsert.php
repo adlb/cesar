@@ -1,5 +1,8 @@
 <script>
-    getScope('usersCtrlDiv', function(scope) {
+    var cesar_q = cesar_q || [];
+    cesar_q.push({
+        id: 'usersCtrlDiv', 
+        f: function(scope) {
         scope.init(
             '<?php echo url(array('controller' => 'user', 'action' => 'check'));?>',
             '<?php echo url(array('controller' => 'user', 'action' => 'update'));?>'

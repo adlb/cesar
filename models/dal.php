@@ -112,26 +112,22 @@ class Dal {
         $sqlConditions = $this->AddSQLConditions($conditions, $sql);
         $sqlOrderBy = $this->AddSQLOrderBy($orderBy, $sql);
         
-        try {
-            $statement = $this->db->prepare($sql);
-            foreach($conditions as $k => $v) {
-                if (is_array($v)) {
-                    for($i = 0; $i < count($v); $i++) {
-                        $statement->bindValue(':'.$k.'_'.$i, $v[$i], $this->fields[$k]['bind']);
-                    }
-                } else {
-                    $statement->bindValue(':'.$k, $v, $this->fields[$k]['bind']);
+        $statement = $this->db->prepare($sql);
+        foreach($conditions as $k => $v) {
+            if (is_array($v)) {
+                for($i = 0; $i < count($v); $i++) {
+                    $statement->bindValue(':'.$k.'_'.$i, $v[$i], $this->fields[$k]['bind']);
                 }
+            } else {
+                $statement->bindValue(':'.$k, $v, $this->fields[$k]['bind']);
             }
-            $statement->execute();
-            $results = array();
-            while ($result = $statement->fetch(PDO::FETCH_ASSOC)){
-                $results[] = $result;
-            }
-            return $results;
-        } catch (PDOException $e) {
-            return array();
         }
+        $statement->execute();
+        $results = array();
+        while ($result = $statement->fetch(PDO::FETCH_ASSOC)){
+            $results[] = $result;
+        }
+        return $results;
     }
 
     function TrySave(&$value) { //return key
