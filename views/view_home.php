@@ -60,6 +60,8 @@
         </div>
     </section>
     
+    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_BoxedContent', 'raw' => true)) ?>
+    
     <?php displayPartial('site', 'latestNews', array()) ?>
     
     <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Numbers', 'raw' => true)); ?>
