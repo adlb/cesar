@@ -15,12 +15,12 @@ $controller = (isset($_GET['controller'])) ? $_GET['controller'] : $defaultContr
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : $defaultView;
 $action = (isset($_GET['action'])) ? $_GET['action'] : '';
 
+//small check to avoid automatic creation of article from outside.
 $view = ($view == 'fixedArticle') ? $defaultView : $view;
 
-if (isset($_GET['forceMaintenance']) ||
-    ($webSite->services['config']->current['Maintenance'] && 
+if ($webSite->services['config']->current['Maintenance'] && 
     !$webSite->services['authentication']->CheckRole('Administrator') && 
-    $controller!='user' && $view != 'login')) {
+    $controller ='user') {
     $controller = 'maintenance';
     $view = 'maintenance';
 }

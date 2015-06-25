@@ -3,37 +3,37 @@
     cesar_q.push({
         id: 'editTextTradCtrlDiv',
         f: function(scope) {
-        scope.init(
-            '<?php echo $obj['titleKey'];?>',
-            '<?php echo $obj['textKey'];?>',
-            <?php echo json_encode($obj['languageFrom']);?>,
-            <?php echo json_encode($obj['languageTo']);?>,
-            <?php echo json_encode($obj['languages']);?>,
-            <?php echo json_encode($obj['titles']);?>,
-            <?php echo json_encode($obj['texts']);?>,
-            '<?php echo url(array('controller' => 'translationManager', 'action' => 'saveText'));?>',
-            '<?php echo url(array('controller' => 'translationManager', 'action' => 'editArticleTrad'));?>'
-        );
+            scope.init(
+                '<?php echo $obj['titleKey'];?>',
+                '<?php echo $obj['textKey'];?>',
+                <?php echo json_encode($obj['languageFrom']);?>,
+                <?php echo json_encode($obj['languageTo']);?>,
+                <?php echo json_encode($obj['languages']);?>,
+                <?php echo json_encode($obj['titles']);?>,
+                <?php echo json_encode($obj['texts']);?>,
+                '<?php echo url(array('controller' => 'translationManager', 'action' => 'saveText'));?>',
+                '<?php echo url(array('controller' => 'translationManager', 'action' => 'editArticleTrad'));?>'
+            );
+        }
     });
 </script>
-
 <section>
         <!-- BREADCRUMBS -->
-		<div class="page-header">
-			<div class="container">
+        <div class="page-header">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-title"> <?php t(':traduction') ?> </h1>
                     </div>
                 </div>
-			</div>
-		</div>
-		<!-- END BREADCRUMBS -->
+            </div>
+        </div>
+        <!-- END BREADCRUMBS -->
 
         <!-- PAGE CONTENT -->
-		<div class="page-content" id="editTextTradCtrlDiv" ng-controller="editTextTradCtrl">
-			<div class="container">
-				<form class="form-horizontal" method="POST" action="{{ actionSave }}">
+        <div class="page-content" id="editTextTradCtrlDiv" ng-controller="editTextTradCtrl">
+            <div class="container">
+                <form class="form-horizontal" method="POST" action="{{ actionSave }}">
                 <input type="hidden" id="titleKey" name="titleKey" value="{{ titleKey }}" />
                 <input type="hidden" id="textKey" name="textKey" value="{{ textKey }}" />
                 <input type="hidden" id="lg" name="lg" value="{{ languageTo }}" />

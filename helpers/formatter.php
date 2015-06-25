@@ -31,6 +31,11 @@ class TextDecorator {
             substr($currentJob, -1, 1) != ' ')
             return false;
         
+        if (
+            !substr($string, $pos + strlen($this->identifierIn), 1) &&
+            substr($string, $pos + strlen($this->identifierIn), 1) != " ")
+            return false;
+        
         if (substr($string, $pos, strlen($this->identifierIn)) != $this->identifierIn)
             return false;
         
@@ -247,8 +252,8 @@ class LexerParser {
             new TextDecorator('delete', '-', '-', true, true, false, true, false),
             new TextDecorator('underline', '+', '+', true, true, false, true, false),
             new TextDecorator('monospaced', '$', '$', true, true, false, true, false),
-            new TextDecorator('image', '!', '!', false, false, false, false, false),
-            new TextDecorator('link', '[', ']', false, false, false, false, false),
+            new TextDecorator('image', '!', '!', true, false, false, false, false),
+            new TextDecorator('link', '[', ']', true, false, false, false, false),
         );
         $this->textDecoratorFullSet = array_merge($this->textDecoratorMinimalSet, array(
             new TextDecorator('html', '{html}', '{/html}', false, false, true, false, false),
@@ -528,7 +533,8 @@ class Transformer {
         }
         
         if ($link == 'home') {
-            $display = 'home';
+            if ($display == '')
+                $display = $link;
             $link = url(array('controller' => 'site', 'view' => 'home'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
             if ($display == '') {
@@ -558,7 +564,8 @@ class Transformer {
         }
         
         if ($link == 'home') {
-            $display = 'home';
+            if ($display == '')
+                $display = $link;
             $link = url(array('controller' => 'site', 'view' => 'home'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
             if ($display == '') {

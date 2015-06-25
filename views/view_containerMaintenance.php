@@ -31,17 +31,9 @@
 <body>
 	<!-- WRAPPER -->
 	<div class="wrapper" ng-app="cesarApp">
-		<!-- NAVBAR -->
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-				<?php displayPartial('site', 'menu', null); ?>
-			</div>
-		</nav>
-		<!-- END NAVBAR -->
-
 		<?php renderPartial('messages', $obj['messages']); ?>
     
-        <?php renderPartial($obj['innerView'], $obj); ?>
+        <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Maintenance_Page')); ?>
         
         <?php displayPartial('site', 'footer', $obj); ?>
     </div>

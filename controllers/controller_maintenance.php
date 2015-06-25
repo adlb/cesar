@@ -10,7 +10,7 @@ class ControllerMaintenance {
         global $webSite;
         $this->webSite = $webSite;
         $this->config = $services['config'];
-        $this->container = 'maintenance_container';
+        $this->container = 'containerMaintenance';
     }
     
     function view_maintenance(&$obj, $params) {
