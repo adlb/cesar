@@ -20,7 +20,7 @@ $view = ($view == 'fixedArticle') ? $defaultView : $view;
 
 if ($webSite->services['config']->current['Maintenance'] && 
     !$webSite->services['authentication']->CheckRole('Administrator') && 
-    $controller ='user') {
+    $controller != 'user') {
     $controller = 'maintenance';
     $view = 'maintenance';
 }
