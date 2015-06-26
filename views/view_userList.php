@@ -7,7 +7,7 @@
             <?php echo json_encode($obj['users']);?>,
             '<?php echo url(array('controller' => 'user', 'action' => 'delete'));?>'
         );
-    });
+    }});
 </script>
 
     <div class="page-header">
