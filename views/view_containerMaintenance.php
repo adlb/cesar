@@ -35,6 +35,16 @@
     
         <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Maintenance_Page')); ?>
         
+        <div class="page-content">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-offset-5 col-md-2">
+                        <a class="btn btn-primary" href="<?php echo url(array('controller' => 'user', 'view' => 'login')) ?>" type="button"><?php t(':LOGIN') ?></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <?php displayPartial('site', 'footer', $obj); ?>
     </div>
 	<!-- END WRAPPER --><!-- JAVASCRIPTS -->

@@ -106,7 +106,7 @@ class ControllerUser {
         if (isset($params['callback'])) {
             $redirect = $params['callback'];
         } else {
-            $redirect = url(array('controller' => 'user', 'view' => 'profil'));
+            $redirect = url(array('controller' => 'site'));
         }
     
         if ($this->authentication->CheckRole('Logged'))
