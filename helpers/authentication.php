@@ -5,6 +5,16 @@ class Authentication {
     var $currentUser;
     var $roles;
 
+    function __construct() {
+        if(session_id() == "")
+            session_start();
+        if (isset($_SESSION['user'])) {
+            $this->SetUser($_SESSION['user']);
+        } else {
+            $this->Logout();
+        }
+    }
+    
     function SetUser($user) {
         $_SESSION['user'] = $user;
         $user['passwordHashed'] = null;
@@ -31,16 +41,6 @@ class Authentication {
             return false;
         }
         return in_array($role, $this->roles);
-    }
-
-    function Authentication () {
-        if(session_id() == "")
-            session_start();
-        if (isset($_SESSION['user'])) {
-            $this->SetUser($_SESSION['user']);
-        } else {
-            $this->Logout();
-        }
     }
 }
 

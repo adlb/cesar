@@ -6,7 +6,7 @@ class Crowd {
     var $userShortDal;
     var $authentication;
 
-    function Crowd($salt, $userDal, $userShortDal, $authentication) {
+    function __construct($salt, $userDal, $userShortDal, $authentication) {
         $this->salt = $salt;
         $this->userDal = $userDal;
         $this->userShortDal = $userShortDal;
@@ -90,7 +90,11 @@ class Crowd {
             return false;
         }
 
-        $user = $userToCreate;
+        if (!$this->userDal->TryGet($user['id'], $user)) {
+            $error = ':CANT_CREATE_USER';
+            return false;
+        }
+        
         if (!$this->authentication->currentUser)
             $this->authentication->SetUser($user);
 
@@ -171,6 +175,11 @@ class Crowd {
             return false;
         }
 
+        if (!$this->userDal->TryGet($user['id'], $user)) {
+            $error = ':CANT_LOAD_USER';
+            return false;
+        }
+        
         $this->authentication->SetUser($user);
         return true;
     }

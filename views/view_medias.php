@@ -4,7 +4,7 @@
         id: 'mediaCtrlDiv',
         f: function(scope) {
         scope.init(
-                <?php echo json_encode($obj['medias']);?>,
+                <?php echo json_encode($obj['medias'],JSON_NUMERIC_CHECK);?>,
                 '<?php echo url(array('controller' => 'medias', 'action' => 'delete'));?>',
                 '<?php echo url(array('controller' => 'medias', 'action' => 'upload'));?>',
                 <?php echo json_encode($obj['sizes']);?>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            
+            {{ displayAsList }}
             <div class="row">
                 <div class="col-lg-8">
                     <div class="form-group row">
@@ -81,14 +81,14 @@
                         </div>
                         <label for="displayAsList" class="col-lg-3 control-label"><?php t(':DISPLAY_AS_LIST')?></label>
                         <div class="col-lg-1">
-                            <input type="checkbox" name="list" ng-model="displayAsList" />
+                            <input type="checkbox" name="list" ng-model="displayAsList" ng-change="saveDisplayAsList()" ng-checked="displayAsList"/>
                         </div> 
                     </div>
                 </div>
             </div>
             
             <div class="row" ng-hide="displayAsList">
-                <div class="col-sm-3 col-md-2" ng-repeat="media in mediasFiltered = medias | filter:search | orderBy:predicate:reverse track by media.id">
+                <div class="col-sm-3 col-md-2" ng-repeat="media in mediasFiltered = (medias | filter:search | orderBy:predicate:reverse) track by media.id">
                     <div class="thumbnail galleryThumb">
                         <a ng-href="{{ media.file }}" >
                             <img class="img-responsive" ng-src="{{ media.thumb }}" ng-alt="{{ media.file }}" />
@@ -116,10 +116,10 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="media in mediasFiltered" >
-                        <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.id}}</td>
-                        <td class="clickableCell" scope="row" ng-click="selectMedia(media);"><a ng-href="{{ media.file }}">{{media.name}}</a></td>
-                        <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.width}}</td>
-                        <td class="clickableCell" scope="row" ng-click="selectMedia(media);">{{media.height}}</td>
+                        <td scope="row" ng-click="selectMedia(media);">{{media.id}}</td>
+                        <td><a ng-href="{{ media.file }}">{{media.name}}</a></td>
+                        <td scope="row" ng-click="selectMedia(media);">{{media.width}}</td>
+                        <td scope="row" ng-click="selectMedia(media);">{{media.height}}</td>
                         <td>
                             <a href="#" ng-click="deleteMedia(media.id);"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>

@@ -8,6 +8,7 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
   $scope.selectedSize = null;
   $scope.custom = 0;
   $scope.selectedMedia = null;
+  $scope.displayAsList = localStorage.getItem("mediaCtrl.displayAsList") || false;
   
   $scope.init = function(medias, deleteUrl, uploadUrl, sizes) {
     $scope.medias = medias;
@@ -84,6 +85,10 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
     $scope.selectMedia = function(media){
         $scope.selectedMedia = media;
     }
+           
+    $scope.saveDisplayAsList = function() { 
+        localStorage.setItem("mediaCtrl.displayAsList", $scope.displayAsList); 
+    };
 }]);
 
 cesarApp.controller('usersCtrl', ['$scope', function($scope) {

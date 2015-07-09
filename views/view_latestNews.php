@@ -13,7 +13,7 @@
                         </a>
                         <h3 class="news-title"><a href="<?php echo $first['url'] ?>"><?php t($first['titleKey']) ?></a></h3>
                         <p style="overflow:hidden;text-overflow:ellipsis;height:45pt">
-                            <?php echo $first['textContent']; ?>
+                            <?php echo str_replace(PHP_EOL, '<br />', $first['textContent']); ?>
                         </p>
                         <div class="news-meta">
                             <span class="news-datetime"><?php echo $first['date'] ?></span>

@@ -34,21 +34,20 @@
                                 <?php echo $obj['article']['htmlContent']; ?>
                             </article>
                         </div>
-                    </div>
-                </div>
-                <?php if (count($obj['article']['subArticles'])>0) { ?>
-                <hr />
-                <div class="row">
-                    <div class="col-md-9">
+                        <?php if (count($obj['article']['subArticles'])>0) { ?>
+                        <hr/>
                         <div class="blog medium-thumbnail margin-bottom-30px">
                             <?php foreach($obj['article']['subArticles'] as $article)
                                 renderPartial('news', $article);
                             ?>
                             <hr />
                         </div>
+                        <?php } ?>
                     </div>
+                    <div class="col-md-3">
+                        <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Article_RightColumn', 'raw' => true)) ?>
+					</div>
                 </div>
-                <?php } ?>
             </div>
         </div>
     </section>

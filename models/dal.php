@@ -4,8 +4,7 @@ class Dal {
 
     var $db;
     var $tableName;
-    var $cache = array();
-
+    
     function __construct($db, $prefix) {
         if ($db == null)
             return;
@@ -15,11 +14,6 @@ class Dal {
     }
     
     function TryGet($key, &$value){
-        if (isset($this->cache[$key])){
-            $value = $this->cache[$key]['value'];
-            return $this->cache[$key]['exists'];
-        }
-
         if ($this->db == null)
             return false;
 
@@ -32,17 +26,14 @@ class Dal {
             $statement->bindParam (':key', $key, PDO::PARAM_STR);
             $statement->execute ();
         } catch (PDOException $e) {
-            $this->cache[$key] = array('value' => null, 'exists' => false);
             return false;
         }
         if ($result = $statement->fetch(PDO::FETCH_ASSOC)){
             $value = array();
             foreach($this->fields as $k => $v)
                 $value[$k] = $result[$k];
-            $this->cache[$key] = array('value' => $value, 'exists' => true);
             return true;
         } else {
-            $this->cache[$key] = array('value' => null, 'exists' => false);
             return false;
         }
     }
@@ -157,14 +148,12 @@ class Dal {
             $statement->execute ();
         } catch (PDOException $e) {
             var_dump($e);
-            $this->cache[$value[$this->keyName]] = array('value' => null, 'exists' => false);
             return false;
         }
         if (!isset($value[$this->keyName]) || trim($value[$this->keyName]) == '') {
             $value[$this->keyName] = $this->db->lastInsertId();
         }
         
-        $this->cache[$value[$this->keyName]] = array('value' => $value, 'exists' => true);
         return $value[$this->keyName];
     }
 
