@@ -47,7 +47,7 @@ class ControllerSite {
     }
 
     function view_alerts(&$obj, $params) {
-        $alerts = $this->articleDal->GetWhere(array('alert' => 1, 'status' => 'show'));
+        $alerts = $this->articleDal->GetWhere(array('alert' => true, 'status' => 'show'));
         $alertsActives = array();
         foreach($alerts as $alert) {
             if (strtotime($alert['datealert']) < strtotime(date('Y-m-d'))) {
@@ -88,7 +88,7 @@ class ControllerSite {
         $article['url'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
         $article['permalink'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), true);
         foreach($subArticles as $subArticle)
-            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin, $html);
+            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin, false);
         return $article;
     }
     

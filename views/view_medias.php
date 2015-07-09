@@ -9,7 +9,7 @@
                 '<?php echo url(array('controller' => 'medias', 'action' => 'upload'));?>',
                 <?php echo json_encode($obj['sizes']);?>
             );
-    });
+    }});
 </script>
 
     <div class="page-header">

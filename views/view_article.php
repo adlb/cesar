@@ -30,20 +30,25 @@
                         <?php } ?>
                         <!-- BLOG SINGLE -->
 						<div class="blog single full-thumbnail">
-
-                        <article class="cx_article">
-                            <?php echo $obj['article']['htmlContent']; ?>
-                        </article>
-
-                        
+                            <article>
+                                <?php echo $obj['article']['htmlContent']; ?>
+                            </article>
                         </div>
                     </div>
                 </div>
+                <?php if (count($obj['article']['subArticles'])>0) { ?>
+                <hr />
                 <div class="row">
-                    <?php foreach($obj['article']['subArticles'] as $article)
-                        renderPartial('news', $article);
-                    ?>
+                    <div class="col-md-9">
+                        <div class="blog medium-thumbnail margin-bottom-30px">
+                            <?php foreach($obj['article']['subArticles'] as $article)
+                                renderPartial('news', $article);
+                            ?>
+                            <hr />
+                        </div>
+                    </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </section>

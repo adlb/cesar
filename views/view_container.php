@@ -10,6 +10,7 @@
 	<link href="templates/Repute/theme/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="templates/Repute/theme/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="templates/Repute/theme/assets/css/main.css" rel="stylesheet" type="text/css">
+	<link href="css/framework.css" rel="stylesheet" type="text/css">
 
 	<!-- IE 9 Fallback-->
 	<!--[if IE 9]>
@@ -52,6 +53,7 @@
 	<script src="templates/Repute/theme/assets/js/plugins/stellar/jquery.stellar.min.js"></script>
 	<script src="templates/Repute/theme/assets/js/plugins/jquery-easypiechart/jquery.easypiechart.min.js"></script>
 	<script src="templates/Repute/theme/assets/js/plugins/autohidingnavbar/jquery.bootstrap-autohidingnavbar.min.js"></script>
+    <script src="templates/Repute/theme/assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<script src="templates/Repute/theme/assets/js/repute-scripts.js"></script>
     <script src="js/uicustom/jquery-ui.min.js"></script>
     <script src="js/angular.min.js"></script>

@@ -378,6 +378,14 @@ jQuery(document).ready(function($) {
       $(".clickableCell").click(function() {
             window.document.location = $(this).attr("href");
       });
+
+      var dpt1 = $('#date').datepicker({
+			format: 'dd/mm/yyyy'
+		}).on('changeDate', function(e) { dpt1.datepicker('hide'); });
+
+      var dpt2 = $('#datealert').datepicker({
+			format: 'dd/mm/yyyy'
+		}).on('changeDate', function(e) { dpt2.datepicker('hide'); });
 });
 
 $(function() {

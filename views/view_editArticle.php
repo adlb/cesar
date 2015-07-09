@@ -11,7 +11,6 @@
         }
     });
 </script>
-
     <div class="page-header">
         <div class="container">
             <h1 class="page-title pull-left"> <?php t(':CREATE_NEW_CONTENT') ?> </h1>
@@ -19,7 +18,7 @@
     </div>
     
     <div class="page-container">
-        <div class="container" id="articleCtrl" ng-controller="articleCtrl">
+        <div class="container" id="articleCtrl" ng-controller="articleCtrl"  ng-cloak>
             <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveArticle'))?>" accept-charset="UTF-8">
                 <div class="row">
                     <div class="col-md-5 pull-right">
@@ -82,7 +81,7 @@
                       <label class="col-md-5 control-label" for="imageId">Image</label>
                       <div class="col-md-7">
                         <select id="imageId" name="imageId" class="form-control" 
-                        ng-options="item as item.name for item in images track by item.id" ng-model="image">
+                            ng-options="item as (item.id + ' - ' + item.name) for item in images track by item.id" ng-model="image">
                         </select>
                         <span class="help-block">Please link an image 480x300</span>
                       </div>
@@ -93,7 +92,7 @@
                       <label class="col-md-5 control-label" for="date">Date</label>
                       <div class="col-md-7">
                         <div class='input-group date' id='datetimepicker'>
-                            <input id="date" name="date" placeholder="placeholder" type='text' class="form-control" />
+                            <input id="date" name="date" placeholder="placeholder" type='text' class="form-control" value="<?php echo $obj['form']['date'] ?>" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -148,7 +147,7 @@
                       <label class="col-md-5 control-label" for="date">DateAlert</label>
                       <div class="col-md-7">
                         <div class='input-group date' id='datetimepickerAlert'>
-                            <input id="datealert" name="datealert" placeholder="placeholder" type='text' class="form-control" />
+                            <input id="datealert" name="datealert" placeholder="placeholder" type='text' class="form-control" value="<?php echo $obj['form']['datealert'] ?>" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -189,17 +188,3 @@
             </form>
         </div>
     </div>
-<script>
-$(function () {
-	$('#datetimepicker').datetimepicker({
-		locale: '<?php echo $obj['language'] ?>',
-		format: 'DD/MM/YYYY',
-		defaultDate: "<?php echo $obj['form']['date'] ?>"
-	});
-	$('#datetimepickerAlert').datetimepicker({
-		locale: '<?php echo $obj['language'] ?>',
-		format: 'DD/MM/YYYY',
-		defaultDate: "<?php echo $obj['form']['datealert'] ?>"
-	});
-});
-</script>

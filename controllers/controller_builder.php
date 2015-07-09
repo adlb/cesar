@@ -139,6 +139,7 @@ class ControllerBuilder extends controllerSite{
         $article['status'] = $article['show'] == 1 ? "show" : "hide";
 
         $isHome = ($article['home'] == 1); 
+        
         if (!$this->articleDal->TrySave($article)) {
             $this->webSite->AddMessage('warning', ':CANT_SAVE_Article');
             return 'editArticle';
@@ -227,6 +228,7 @@ class ControllerBuilder extends controllerSite{
         $obj['menuFathers'] = $this->GetMenuFathers($obj['form']['id']);
         $obj['newsFathers'] = $this->GetNewsFathers($obj['form']['id']);
         $obj['images'] = $this->gallery->GetStandardSizedImages();
+        array_unshift($obj['images'], array('id' => 0, 'name' => $this->translator->GetTranslation(':NO_PICTURE')));
         
         $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
 

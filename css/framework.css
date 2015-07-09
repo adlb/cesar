@@ -6,20 +6,21 @@ li > a.cx_adminonly  {
   color: #CFCFCF;
 }
 
-div.cx_article .cx_monospace {
+article .cx_monospace {
     font-family:Courier New, Courier, monospace;
 }
 
-div.cx_article img.cx_right {
+article img.cx_right {
     float: right;
+    margin: 0 0 3px 10px;
 }
 
-div.cx_article img.cx_left {
+article img.cx_left {
     float: left;
+    margin: 0 10px 3px 0;
 }
 
-div.cx_article img.cx_center {
+article img.cx_center {
     display: inline;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 3px 10px;
 }

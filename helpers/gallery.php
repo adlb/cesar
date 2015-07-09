@@ -8,8 +8,8 @@ class Gallery {
     public $sizes = array(
         array(480, 300),
         array(300, 480),
-        array(500, 100),
-        array(100, 500)
+        array(256, 160),
+        array(160, 256)
     );
     var $thWidth = 160;
     var $thHeight = 100;
