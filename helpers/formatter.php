@@ -399,7 +399,7 @@ class Transformer {
                     $string.= '<pre>'.htmlentities($this->Encode($item['content'])).'</pre>';
                     break;
                 case 'table' :
-                    $string.= '<table>'.$this->Encode($item['content']).'</table>';
+                    $string.= '<table class="table">'.$this->Encode($item['content']).'</table>';
                     break;
                 case 'head' :
                 case 'row' :
