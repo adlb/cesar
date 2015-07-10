@@ -107,6 +107,18 @@ class Crowd {
             return false;
         }
 
+        if ($this->authentication->CheckRole('Administrator')) {
+            $role = $user['role'];
+        } else {
+            $role = $userOld['role'];
+        }
+        
+        if ($userOld['role'] == 'Administrator' && $role != 'Administrator' && $this->authentication->currentUser['id'] == $user['id']) {
+            $error = ':CANT_REMOVE_ADMIN_RIGHTS_TO_YOURSELF';
+            return false;
+        }
+        
+        
         $userToUpdate = array(
             'id' => $user['id'],
             'email' => $user['email'],
@@ -119,7 +131,7 @@ class Crowd {
             'city' => $user['city'],
             'country' => $user['country'],
             'phone' => $user['phone'],
-            'role' => $userOld['role'],
+            'role' => $role,
             'emailStatus' => $user['email'] == $userOld['email'] ? $userOld['emailStatus'] : 'NotValidYet',
             'origin' => $userOld['origin']
         );

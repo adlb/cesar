@@ -89,7 +89,7 @@
                       <label class="col-md-4 control-label" for="role"><?php t(':ROLE')?></label>
                       <div class="col-md-6">
                         <select id="role" name="role" class="form-control">
-                          <?php foreach(array('Administrator', 'Translator', 'Visitor') as $v) { ?>
+                          <?php foreach(array('Administrator', 'Translator', 'Visitor', 'NewsLetter') as $v) { ?>
                           <option value="<?php echo $v ?>" <?php echo $obj['form']['role'] == $v ? 'SELECTED' : ''; ?>><?php t(':ROLE_'.$v) ?></option>
                           <?php } ?>
                         </select>

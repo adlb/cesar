@@ -36,10 +36,13 @@ class ControllerUser {
             $redirect = url(array('controller' => 'site'));
         }
     
+        $obj['isAdministrator'] = $this->authentication->CheckRole('Administrator');
+
         if (!$this->authentication->CheckRole('Administrator') && $params['id'] != $this->authentication->currentUser['id']) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
+        
         if (!$this->crowd->TryUpdateUser($params, $error)) {
             $this->webSite->AddMessage('warning', $error);
             $obj['form'] = $params;
