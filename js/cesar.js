@@ -7,9 +7,12 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
   $scope.sizes = null;
   $scope.selectedSize = null;
   $scope.custom = 0;
-  $scope.selectedMedia = null;
-  $scope.displayAsList = localStorage.getItem("mediaCtrl.displayAsList") || false;
-  
+  $scope.selectedMedia = JSON.parse(localStorage.getItem("mediaCtrl.selectedMedia")) || 'undefined';
+  $scope.displayAsList = $scope.$eval(localStorage.getItem("mediaCtrl.displayAsList")) || false;
+  $scope.search = localStorage.getItem("mediaCtrl.search") || '';
+  $scope.predicate = localStorage.getItem("mediaCtrl.predicate", $scope.predicate) || '';
+  $scope.reverse = $scope.$eval(localStorage.getItem("mediaCtrl.reverse", $scope.reverse)) || false;
+        
   $scope.init = function(medias, deleteUrl, uploadUrl, sizes) {
     $scope.medias = medias;
     $scope.deleteUrl= deleteUrl;
@@ -84,10 +87,15 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
     
     $scope.selectMedia = function(media){
         $scope.selectedMedia = media;
+        $scope.saveLocal();                     
     }
            
-    $scope.saveDisplayAsList = function() { 
-        localStorage.setItem("mediaCtrl.displayAsList", $scope.displayAsList); 
+    $scope.saveLocal = function() { 
+        localStorage.setItem("mediaCtrl.displayAsList", $scope.displayAsList);
+        localStorage.setItem("mediaCtrl.selectedMedia", JSON.stringify($scope.selectedMedia));
+        localStorage.setItem("mediaCtrl.search", $scope.search);
+        localStorage.setItem("mediaCtrl.predicate", $scope.predicate);
+        localStorage.setItem("mediaCtrl.reverse", $scope.reverse);
     };
 }]);
 
@@ -414,3 +422,7 @@ $(function() {
               });
         });
       });
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
