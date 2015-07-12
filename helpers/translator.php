@@ -3,6 +3,7 @@
 class Translator {
     var $textDal;
     var $groupedCache;
+    var $cache;
     var $language;
     var $defaultLanguage;
     var $defaultGroupKey = 'GENERAL';
@@ -11,6 +12,7 @@ class Translator {
     function __construct($config, $textDal, $language, $isAdmin) {
         $this->textDal = $textDal;
         $this->groupedCache = array();
+        $this->cache = array();
         $this->defaultLanguage = $config->current['Languages'][0];
         
         //can be override with values
@@ -38,20 +40,21 @@ class Translator {
 
         $this->fetchGroup($this->defaultGroupKey);
         $this->fetchGroup('');
+        //var_dump($this);
     }
 
     function fetchGroup($groupKey) {
         if ($groupKey == '') {
             $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->language));
             foreach($lines as $line) {
-                $goupedCache[$line['key']] = $line['text'];
+                $this->cache[$line['key']] = $line['text'];
             }
 
             if ($this->defaultLanguage != $this->language) {
                 $lines = $this->textDal->GetWhere(array('prefetch' => true, 'language' => $this->defaultLanguage));
                 foreach($lines as $line) {
-                    if (!isset($this->goupedCache[$line['key']]))
-                        $this->goupedCache[$line['key']] = $line['text'];
+                    if (!isset($this->cache[$line['key']]))
+                        $this->cache[$line['key']] = $line['text'];
                 }
             }
         } else {
@@ -133,6 +136,14 @@ class Translator {
     }
     
     function DirectUpdate($language, $key, $value, $prefetch, $usage) {
+        if (substr($key, 0, 5) == 'file:') {
+            $split = explode(':', $key);
+            if (count($split) == 2 && $split[0] == 'file' && file_exists('fixedArticles/'.$split[1].'.txt')) {
+                file_put_contents('fixedArticles/'.$split[1].'.txt', $value);
+            }
+            return $key;
+        }
+        
         if ($value == '') {
             $this->textDal->DeleteWhere(array('key' => $key));
             return '';
@@ -169,6 +180,10 @@ class Translator {
         if ($key == '')
             return;
 
+        if (substr($key, 0, 5) == 'file:') {
+            return;
+        }
+        
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
         
         if (count($oldTexts) == 0) {
@@ -235,6 +250,9 @@ class Translator {
             return htmlspecialchars($this->GetGroupedTranslation($group, substr($key, 1)));
         }
         
+        if (isset($this->cache[$key]))
+            return $this->cache[$key];
+
         $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
         if (count($lines) == 0) {
             $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
