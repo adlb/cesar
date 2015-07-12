@@ -248,21 +248,7 @@ class ControllerBuilder extends controllerSite{
         return 'config';
     }
 
-    function view_help(&$obj, &$view) {
-        $article['id'] = -1;
-        $article['rank'] = 1000;
-        $article['father'] = 0;
-        $article['title'] = 'Aide';
-        $article['date'] = '';
-        $article['text'] = '';
-        $article['status'] = 'hide';
-        $article['rawContent'] = $this->translator->GetTranslation($article['text']);
-        $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
-        $obj['article'] = $article;
-        $view = 'article';
-    }
-
-    function action_format(&$obj, &$view) {
+    function action_format(&$obj, &$params) {
         $this->CheckRights(array('Administrator', 'Translator'), $obj);
         $rawData = file_get_contents("php://input");
         $obj['formattedText'] = $this->formatter->ToHtml($rawData);

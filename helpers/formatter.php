@@ -32,8 +32,9 @@ class TextDecorator {
             return false;
         
         if (
-            !substr($string, $pos + strlen($this->identifierIn), 1) &&
-            substr($string, $pos + strlen($this->identifierIn), 1) != " ")
+            !substr($string, $pos + strlen($this->identifierIn), 1) ||
+            substr($string, $pos + strlen($this->identifierIn), 1) == " " ||
+            substr($string, $pos + strlen($this->identifierIn), strlen($this->identifierIn)) == $this->identifierIn)
             return false;
         
         if (substr($string, $pos, strlen($this->identifierIn)) != $this->identifierIn)

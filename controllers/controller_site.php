@@ -184,6 +184,20 @@ class ControllerSite {
         $obj['article'] = $article;
         return 'articleText';
     }
+    
+    function view_help(&$obj, &$params) {
+        if (isset($params['titleKey']) && in_array($params['titleKey'], 
+            array(  'globalSetup', 
+                    'userManagement', 
+                    'donationManagement', 
+                    'articleManagement', 
+                    'mediaManagement'))) {
+            $params['titleKey'] = 'Help_'.$params['titleKey'];
+            return $this->view_fixedArticle($obj, $params);
+        } else {
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+    }
 }
 
 ?>

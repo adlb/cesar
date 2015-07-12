@@ -226,6 +226,10 @@ class Translator {
         if ($key == '')
             return $key;
         $split = explode(':', $key);
+        if (count($split) == 2 && $split[0] == 'file' && file_exists('fixedArticles/'.$split[1].'.txt')) {
+            return file_get_contents('fixedArticles/'.$split[1].'.txt');
+        }
+        
         if (count($split) == 2) {
             $group = $split[0] == '' ? $this->defaultGroupKey : $split[0];
             return htmlspecialchars($this->GetGroupedTranslation($group, substr($key, 1)));

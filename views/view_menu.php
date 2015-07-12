@@ -56,11 +56,11 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'globalSetup')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
-                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'userManagement')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
-                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'donationManagement')) ?>"><?php t(':DONATION_MANAGEMENT')?></a></li>
-                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'articleManagement')) ?>"><?php t(':ARTICLE_MANAGEMENT')?></a></li>
-                                <li><a href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'page' => 'mediaManagement')) ?>"><?php t(':MEDIA_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'globalSetup')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'userManagement')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'donationManagement')) ?>"><?php t(':DONATION_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'articleManagement')) ?>"><?php t(':ARTICLE_MANAGEMENT')?></a></li>
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'mediaManagement')) ?>"><?php t(':MEDIA_MANAGEMENT')?></a></li>
                             </ul>
                         </li>
                         <?php } ?>
