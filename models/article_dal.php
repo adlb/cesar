@@ -60,7 +60,7 @@ class ArticleDal extends Dal {
             'father' => $menu['id'],
             'titleKey' => $titleKey,
             'date' => '0000-00-00',
-            'textKey' => 'file:'.$titleKey,
+            'textKey' => $titleKey,
             'imageId' => '',
             'rank' => 1,
             'alert' => false,

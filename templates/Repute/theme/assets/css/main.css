@@ -6381,3 +6381,14 @@ ul.nav-categories > li > a:hover {
 #tradMargin {
     height: 10px;
 }
+
+.btn-money {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.btn-money p {
+    font-family: "Roboto Condensed",sans-serif;
+    margin-top: 5px;
+    font-size: 24px;
+}

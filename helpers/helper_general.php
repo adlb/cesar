@@ -121,11 +121,7 @@ function disp($obj, $key) {
 }
 
 function url($param, $full = false) {
-    foreach($param as $k => $v){
-        $queryString[] = $k.'='.urlencode($v);
-    }
-    $url = '?'.join('&', $queryString);
-    
+    $url = '?'.http_build_query($param, '', '&');
     if ($full)
         return $_SERVER['PHP_SELF'].$url;
     return $url;

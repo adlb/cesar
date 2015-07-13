@@ -101,8 +101,14 @@ class ControllerUser {
     }
 
     function action_logout(&$obj, $params){
+        if (isset($params['callback'])) {
+            $redirect = $params['callback'];
+        } else {
+            $redirect = url(array('controller' => 'site'));
+        }
+        
         $this->authentication->logout();
-        $this->webSite->RedirectTo(array('controller' => 'site'));
+        $this->webSite->RedirectTo($redirect);
     }
 
     function view_login(&$obj, $params) {

@@ -192,7 +192,7 @@ class ControllerSite {
                     'donationManagement', 
                     'articleManagement', 
                     'mediaManagement'))) {
-            $params['titleKey'] = 'Help_'.$params['titleKey'];
+            $params['titleKey'] = 'file:Help_'.$params['titleKey'];
             return $this->view_fixedArticle($obj, $params);
         } else {
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));

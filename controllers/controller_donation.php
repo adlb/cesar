@@ -13,7 +13,8 @@ class ControllerDonation {
     var $webSite;
     var $config;
     var $donationDal;
-
+    var $crowd;
+    
     function __construct($services) {
         global $webSite;
         $this->webSite = $webSite;
@@ -24,16 +25,119 @@ class ControllerDonation {
         $this->config = $services['config'];
         $this->translator->fetchGroup('DONATION');
         $this->donationDal = $services['donationDal'];
+        $this->crowd = $services['crowd'];
     }
     
     function view_donate(&$obj, $param) {
-        if ($this->authentication->currentUser == null) {
-            return 'needLogin';
-        } else {
-            $obj['user'] = $this->authentication->currentUser;
-            return 'donate';
-        }
+        $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
+        return 'donate';
     }
+    
+    function action_donate(&$obj, $param) {
+        $donation['amount'] = isset($param['amount']) ? $this->Getfloat($param['amount']) : 0;
+        $donation['type'] = isset($param['type']) ? $param['type'] : '';
+        $_SESSION['currentDonation'] = $donation;
+        if ($donation['amount'] < 1) {
+            $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
+            return $this->view_donate($obj, array());
+        }
+        if (!in_array($donation['type'], array('vir', 'cb', 'chq'))) {
+            $this->webSite->AddMessage('warning', ':DONATION_TYPE_IS_UNKNOWN');
+            return $this->view_donate($obj, array());
+        }
+        
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckname'));
+    }
+    
+    function view_donateCheckname(&$obj, $param) {
+        if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+        if ($this->authentication->currentUser != null) {
+            $obj['user'] = $this->authentication->currentUser;
+        }
+        $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
+        return 'donateCheckname';
+    }
+    
+    function action_confirm(&$obj, $param) {
+        if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+        $donation = $_SESSION['currentDonation'];
+        if ($this->authentication->currentUser != null) {
+            $user = $this->authentication->currentUser;
+            $donation['userid'] = $user['id'];
+            $donation['email'] = $user['email'];
+            $donation['firstName'] = $user['firstName'];
+            $donation['lastName'] = $user['lastName'];
+            $donation['addressLine1'] = $user['addressLine1'];
+            $donation['addressLine2'] = $user['addressLine2'];
+            $donation['postalCode'] = $user['postalCode'];
+            $donation['city'] = $user['city'];
+            $donation['country'] = $user['country'];
+            $donation['phone'] = $user['phone'];
+        } else {
+            $donation['userid'] = null;
+            $donation['email'] = $param['email'];
+            $donation['firstName'] = $param['firstName'];
+            $donation['lastName'] = $param['lastName'];
+            $donation['addressLine1'] = $param['addressLine1'];
+            $donation['addressLine2'] = $param['addressLine2'];
+            $donation['postalCode'] = $param['postalCode'];
+            $donation['city'] = $param['city'];
+            $donation['country'] = $param['country'];
+            $donation['phone'] = $param['phone'];
+        }
+        $donation['externalCheckId'] = '';
+        $donation['dateInit'] = date('Y-m-d');
+        $donation['dateValidation'] = null;
+        $donation['status'] = 'promess';
+        
+        $_SESSION['currentDonation'] = $donation;
+        
+        if (!$this->donationDal->TrySave($donation)) {
+            // No redirection, we want to finalise the donation in any case
+            //$this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
+            //return $this->view_donate($obj, array());
+        }
+        
+        $_SESSION['currentDonation'] = null;
+        unset($_SESSION['currentDonation']);
+        
+        //Mailer ! fixme.
+        
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id']));
+    }
+    
+    function view_donateFinalize(&$obj, $param) {
+        if (!isset($param['id']) || !$this->donationDal->tryGet($param['id'], $donation)) {
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+        }
+        
+        $obj['donation'] = $donation;
+        return 'donateFinalize';
+    }
+    
+    function action_donate_old(&$obj, $param) {
+        $donation = $param;
+        $donation['userid'] = $this->authentication->currentUser['id'];
+        $donation['dateInit'] = date('Y-m-d');
+        $donation['status'] = 'promess';
+        unset($donation['id']);
+        unset($donation['dateValidation']);
+        unset($donation['rawData']);
+        $donation['amount'] = $this->Getfloat($donation['amount']);
+        if ($donation['amount'] < 1) {
+            $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
+            return $this->view_donate($obj, array());
+        }
+        
+        if (in_array($donation['type'], array('vir', 'cb', 'chq')) && $this->donationDal->TrySave($donation)) {
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donation', 'id' => $donation['id']));
+        }
+        $this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+    }
+    
     
     function action_saveDonation(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
@@ -83,26 +187,6 @@ class ControllerDonation {
         return 'donationList';
     }
     
-    function action_donate(&$obj, $param) {
-        $donation = $param;
-        $donation['userid'] = $this->authentication->currentUser['id'];
-        $donation['dateInit'] = date('Y-m-d');
-        $donation['status'] = 'promess';
-        unset($donation['id']);
-        unset($donation['dateValidation']);
-        unset($donation['rawData']);
-        $donation['amount'] = $this->Getfloat($donation['amount']);
-        if ($donation['amount'] < 1) {
-            $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
-            return $this->view_donate($obj, array());
-        }
-        
-        if (in_array($donation['type'], array('vir', 'cb', 'chq')) && $this->donationDal->TrySave($donation)) {
-            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donation', 'id' => $donation['id']));
-        }
-        $this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-    }
     
     function view_donation(&$obj, $params) {
         if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
@@ -154,40 +238,6 @@ class ControllerDonation {
         die();
     }
     
-    public function action_notify(&$obj, $params) {
-        // Send an empty HTTP 200 OK response to acknowledge receipt of the notification 
-        header('HTTP/1.1 200 OK'); 
-        
-        if ($this->validate_ipn()) {
-            if (!isset($params['txn_id']) || $params['txn_id'].'' == '') {
-                $this->journal->Log('notice', 'paypal notif does not have txn_id field');
-                $externalCheckId = '';
-            } else {
-                $externalCheckId = $params['txn_id'];
-                $donations = $this->donationDal->GetWhere(array('externalCheckId' => $externalCheckId));
-                if (count($donations) > 0) {
-                    $this->journal->Log('notice', 'paypal notif received twice txn_id={0}', array($externalCheckId));
-                    die();
-                }
-            }
-            
-            if (!isset($params['custom']) || 
-                $params['custom'].'' == '' ||
-                !$this->donationDal->TryGet($params['custom'], $donation)) {
-                $donation = array();
-            }
-            
-            $donation['externalCheckId'] = $eternalCheckId;
-            
-            if (!$this->donationDal->TrySave($donation)) {
-                $this->journal->Log('severe', 'can\t save paypal transaction, payload={0}', array(serialize($_POST)));
-            } else {
-                $this->journal->LogEvent('donation', 'donate-notif', $_POST); 
-            }
-        }
-        die();
-    }
-    
     private function GetDonationForChange($params) {
         if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
             $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
@@ -216,66 +266,4 @@ class ControllerDonation {
             return floatval($str); // take some last chances with floatval
         }
     }
-    
-    private function validate_ipn() {
-        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        $this->journal->Log('system', 'enter validate_ipn with hostname={0}', array($hostname));
-        
-        if (! preg_match ( '/paypal\.com$/', $hostname )) {
-            $this->journal->Log('notice', 'invalid hostname for paypal hostname={0}', array($hostname));
-            return false;
-        }
-        
-        // parse the paypal URL
-        $paypal_url = (isset($_POST['test_ipn']) && $_POST['test_ipn'] == 1) ? SSL_SAND_URL : SSL_P_URL;
-        $url_parsed = parse_url($paypal_url);        
-        
-        // generate the post string from the _POST vars aswell as load the
-        // _POST vars into an arry so we can play with them from the calling
-        // script.
-        $post_string = 'cmd=_notify-validate&';    
-        foreach ($_POST as $field=>$value) { 
-            $post_string .= $field.'='.urlencode(stripslashes($value)).'&'; 
-        }
-        
-        file_put_contents('log.txt', $post_string, FILE_APPEND);
-        file_put_contents('log.txt', $_SERVER ['REMOTE_ADDR'], FILE_APPEND);
-        
-        // open the connection to paypal
-        if (isset($_POST['test_ipn']) && $_POST['test_ipn'] == 1)
-            $url = 'ssl://www.sandbox.paypal.com';
-        else
-            $url = 'ssl://www.paypal.com';
- 
-        $fp = fsockopen ($url, "443", $err_num, $err_str, 60 );
-        if(!$fp) {
-            $this->journal->Log('notice', 'can\'t connect to {0} for validation. Error:{1} ({2})', array($url, $err_num, $err_str));
-            return false;
-        } else { 
-            // Post the data back to paypal
-            fputs($fp, "POST $url_parsed[path] HTTP/1.1\r\n"); 
-            fputs($fp, "Host: $url_parsed[host]\r\n"); 
-            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n"); 
-            fputs($fp, "Content-length: ".strlen($post_string)."\r\n"); 
-            fputs($fp, "Connection: close\r\n\r\n"); 
-            fputs($fp, $post_string . "\r\n\r\n"); 
-        
-            // loop through the response from the server and append to variable
-            $rep = "";
-            while(substr($rep, 0, 8) != 'VERIFIED' && substr($rep, 0, 7) != 'INVALID' && !feof($fp)) { 
-               $rep = fgets($fp, 1024);
-               file_put_contents('log.txt', $rep, FILE_APPEND);
-            } 
-            fclose($fp); // close connection
-        }
-        
-        // Invalid IPN transaction.  Check the $ipn_status and log for details.
-        if (substr($rep, 0, 8) == 'VERIFIED') {
-            $this->journal->Log('system', 'paypal validation ok');
-            return true;
-        } else {
-            $this->journal->Log('notice', 'paypal validation nok ({0})', array(serialize($_POST)));
-            return false;
-        }
-    } 
 }

@@ -14,17 +14,17 @@
                     
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="firstName">Prenom</label>
+                      <label class="col-md-4 control-label" for="lastName"><?php t(':LASTNAME') ?></label>
                       <div class="col-md-4">
-                      <input id="firstName" name="firstName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'firstName') ?>">
+                      <input id="lastName" name="lastName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'lastName') ?>">
                       </div>
                     </div>
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="lastName">Nom</label>
+                      <label class="col-md-4 control-label" for="firstName"><?php t(':FIRSTNAME') ?></label>
                       <div class="col-md-4">
-                      <input id="lastName" name="lastName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'lastName') ?>">
+                      <input id="firstName" name="firstName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'firstName') ?>">
                       </div>
                     </div>
 
@@ -65,7 +65,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="country"><?php t(':country')?></label>
+                      <label class="col-md-4 control-label" for="country"><?php t(':COUNTRY')?></label>
                       <div class="col-md-6">
                       <input id="country" name="country" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'country') ?>">
                       </div>
@@ -73,7 +73,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="phone"><?php t(':phone')?></label>
+                      <label class="col-md-4 control-label" for="phone"><?php t(':PHONE')?></label>
                       <div class="col-md-6">
                       <input id="phone" name="phone" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'phone') ?>">
                       </div>
