@@ -314,6 +314,25 @@ class ControllerUser {
         }
         return 'resetPassword';
     }
+    
+    function view_export(&$obj, $param) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'userList'));
+        }
+        
+        $users = $this->crowd->GetAll();
+        foreach($users as &$user) {
+            $user['passwordHashed'] = null;
+            unset($user['passwordHashed']);
+            $user['times'] = null;
+            unset($user['times']);
+        }
+        
+        $obj['fileName'] = "users";
+        $obj['fileContent'] = $users;
+        return null;
+    }
 }
 
 ?>

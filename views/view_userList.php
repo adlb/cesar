@@ -33,7 +33,7 @@
                         </li>
                         <li>
                             <a class="btn-popover" 
-                                href="<?php echo url(array('controller' => 'user', 'view' => 'export')) ?>" 
+                                href="<?php echo url(array('controller' => 'user', 'view' => 'export', 'respType' => 'xls')) ?>" 
                                 data-container="body" data-toggle="popover" data-placement="top"
                                 data-content="Export excel file."
                             ><span class="glyphicon glyphicon-download-alt"></span></a>
