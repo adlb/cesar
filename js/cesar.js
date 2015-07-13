@@ -99,10 +99,9 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
     };
 }]);
 
-cesarApp.controller('usersCtrl', ['$scope', function($scope) {
+cesarApp.controller('usersCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
     $scope.users=localStorage.getItem("users");
     $scope.filterRadio = '';
-    $scope.messages=[];
     $scope.usersAnalysed=false;
     
     $scope.init = function(checkUrl, sendUpdateUrl) {
@@ -112,7 +111,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
     
     $scope.checkDatas = function() {
         localStorage.setItem("users", $scope.users);
-        $scope.messages.splice(0,$scope.messages.length);
+        $rootScope.$broadcast("clearMessages");
         $.ajax({
             url : $scope.checkUrl,
             type: "POST",
@@ -126,10 +125,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
                         $scope.usersAnalysed = data.usersAnalysed;
                     }
                     if (data.messages) {
-                        data.messages.forEach(function (message) {
-                            //Fixme error will be raised when mutiple same error.
-                            $scope.messages.push(message);
-                        });
+                        $rootScope.$broadcast("newMessages", data.messages);
                     }
                 });
             },
@@ -169,6 +165,7 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
     };
     
     loadUsers = function (userIndexes) {
+        $rootScope.$broadcast("clearMessages");
         var toBeSend = [];
         
         for(var i=0;i<userIndexes.length;i++) {
@@ -203,11 +200,8 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
                             $scope.usersAnalysed.lines[index].status = data.lines[i].status;
                         }
                     }
-                    if (data.errors) {
-                        data.errors.forEach(function (error) {
-                            //Fixme error will be raised when mutiple same error.
-                            $scope.errors.push(error);
-                        });
+                    if (data.messages) {
+                        $rootScope.$broadcast("newMessages", data.messages);
                     }
                 });
             },
@@ -219,7 +213,6 @@ cesarApp.controller('usersCtrl', ['$scope', function($scope) {
             }
         });
     };
-
 }]);
 
 cesarApp.controller('editTextTradCtrl', ['$scope', function($scope) {
@@ -284,28 +277,94 @@ cesarApp.controller('articleCtrl', ['$scope', function($scope) {
   };
 }]);
 
-cesarApp.controller('donationsListCtrl', ['$scope', function($scope) {
-  $scope.init = function(donations, deleteUrl) {
-    $scope.donations = donations;
-    $scope.deleteUrl = deleteUrl;
-  };
+cesarApp.controller('donationsListCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
   
-  $scope.deleteDonation = function(id) {
-    $.post($scope.deleteUrl, {'id': id}, function(data) {
-        $scope.$apply(function($scope) {
-            if (data.status == 'ok') {
-                for(var i = 0; i < $scope.users.length; i++) {
-                    var obj = $scope.users[i];
+    $scope.search = localStorage.getItem("donationCtrl.search") || '';
+    $scope.predicate = localStorage.getItem("donationCtrl.predicate", $scope.predicate) || '';
+    $scope.reverse = $scope.$eval(localStorage.getItem("donationCtrl.reverse", $scope.reverse)) || false;
 
-                    if(obj.id == id) {
-                        $scope.users.splice(i, 1);
-                        i--;
+    $scope.init = function(donations, deleteUrl, validateUrl, archiveUrl) {
+        $scope.donations = donations;
+        $scope.deleteUrl = deleteUrl;
+        $scope.validateUrl = validateUrl;
+        $scope.archiveUrl = archiveUrl;
+    };
+
+    $scope.deleteDonation = function(id) {
+        $rootScope.$broadcast("clearMessages");
+        $.post($scope.deleteUrl, {'id': id}, function(data) {
+            $scope.$apply(function($scope) {
+                if (data.messages) {
+                    $rootScope.$broadcast("newMessages", data.messages);
+                }
+                if (data.status == 'ok') {
+                    for(var i = 0; i < $scope.donations.length; i++) {
+                        var obj = $scope.donations[i];
+
+                        if(obj.id == id) {
+                            $scope.donations.splice(i, 1);
+                            i--;
+                        }
                     }
                 }
-            }
+            });
         });
-    });
-  };
+    };
+    
+    $scope.validateDonation = function(id) {
+        $rootScope.$broadcast("clearMessages");
+        $.post($scope.validateUrl, {'id': id}, function(data) {
+            $scope.$apply(function($scope) {
+                if (data.messages) {
+                    $rootScope.$broadcast("newMessages", data.messages);
+                }
+                if (data.status == 'ok') {
+                    for(var i = 0; i < $scope.donations.length; i++) {
+                        var obj = $scope.donations[i];
+
+                        if(obj.id == id) {
+                            $scope.donations[i].status = 'validated';
+                        }
+                    }
+                }
+            });
+        });
+    };
+    
+    $scope.archiveDonation = function(id) {
+        $rootScope.$broadcast("clearMessages");
+        $.post($scope.archiveUrl, {'id': id}, function(data) {
+            $scope.$apply(function($scope) {
+                if (data.messages) {
+                    $rootScope.$broadcast("newMessages", data.messages);
+                }
+                if (data.status == 'ok') {
+                    for(var i = 0; i < $scope.donations.length; i++) {
+                        var obj = $scope.donations[i];
+
+                        if(obj.id == id) {
+                            $scope.donations[i].status = 'archived';
+                        }
+                    }
+                }
+            });
+        });
+    };
+    
+    $scope.saveLocal = function() { 
+        localStorage.setItem("donationCtrl.displayAsList", $scope.displayAsList);
+        localStorage.setItem("donationCtrl.selectedMedia", JSON.stringify($scope.selectedMedia));
+        localStorage.setItem("donationCtrl.search", $scope.search);
+        localStorage.setItem("donationCtrl.predicate", $scope.predicate);
+        localStorage.setItem("donationCtrl.reverse", $scope.reverse);
+    };
+    
+    $scope.exportData = function () {
+        var blob = new Blob([document.getElementById('exportable').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "Donations.xls");
+    };
 }]);
 
 cesarApp.controller('loginFormCtrl', ['$scope', function($scope) {
@@ -331,8 +390,30 @@ cesarApp.controller('loginFormCtrl', ['$scope', function($scope) {
   };
 }]);
 
-cesarApp.directive('ngConfirmClick', [
-  function() {
+cesarApp.controller('messagesCtrl', ['$scope', function($scope) {
+  $scope.messages = [];
+  $scope.index = 0;
+  
+  $scope.push = function(newMessages) {
+    for (var i = 0; i < newMessages.length; ++i) {
+        newMessages[i].id = $scope.index++;
+        $scope.messages.push(newMessages[i]);
+    }  
+  };
+  
+  $scope.remove = function(message) {
+    $scope.messages.splice($scope.messages.indexOf(message), 1);
+  }
+  
+  $scope.$on("newMessages", function (event, args) {
+    $scope.push(args);
+  });
+  $scope.$on("clearMessages", function (event, args) {
+    $scope.messages.splice(0, $scope.messages.length);
+  });
+}]);
+
+cesarApp.directive('ngConfirmClick', [function() {
     return {
       priority: 1,
       link: function(scope, element, attr) {
@@ -426,3 +507,19 @@ $(function() {
 $(function () {
   $('[data-toggle="popover"]').popover()
 })
+
+cesarApp.directive('bsPopover', function() {
+    return function(scope, element, attrs) {
+        element.find("a[data-toggle=popover]").popover();
+    };
+});
+
+cesarApp.directive("deferredCloak", function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {       
+            attrs.$set("deferredCloak", undefined);
+            element.removeClass("deferred-cloak");
+        }
+    };
+});

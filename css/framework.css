@@ -24,3 +24,7 @@ article img.cx_center {
     display: inline;
     margin: 3px 10px;
 }
+
+[deferred-cloak], [data-deferred-cloak], [x-deferred-cloak], .deferred-cloak {
+    display: none;
+}

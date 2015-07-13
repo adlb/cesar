@@ -6,7 +6,7 @@
         scope.init(
             '<?php echo url(array('controller' => 'user', 'action' => 'check'));?>',
             '<?php echo url(array('controller' => 'user', 'action' => 'update'));?>'
-        );
+        );}
     });
 </script>
 
@@ -16,8 +16,6 @@
     
     <div class="page-container" id="usersCtrlDiv" ng-controller="usersCtrl">
         <div class="container">
-            <?php renderPartial('errorsAngular', $obj); ?>
-
             <form class="form-horizontal" method="POST" action="#">
               <fieldset>
                 <div ng-show="usersAnalysed">

@@ -47,6 +47,9 @@ class Crowd {
     }
     
     function TryRegister($email, $password, &$error) {
+        if (filter_var($email_a, FILTER_VALIDATE_EMAIL))
+            return false;
+
         $users = $this->userDal->GetWhere(array('email' => $email));
         
         if (!isset($password) || trim($password) == '') {

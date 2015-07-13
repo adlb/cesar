@@ -32,10 +32,17 @@
                             </div>
                             <div class="form-group row">
                                 <label for="size" class="col-lg-3 control-label">Size</label>
-                                <div class="col-lg-5">
-                                    <input id="sizeType" value="1" type="checkbox" ng-model="custom" />
+                                <div class="col-lg-3">
                                     <select id="size" name="size" ng-hide="custom" ng-model="selectedSize" ng-options="size[0] + 'x' + size[1] for size in sizes">
                                     </select>
+                                </div>
+                                <div class="col-lg-2 text-right">
+                                    <label for="sizeType" class="control-label">
+                                        <?php t(':CUSTOM') ?>
+                                    </label>
+                                </div>
+                                <div class="col-lg-1">
+                                    <input id="sizeType" value="1" type="checkbox" ng-model="custom" />
                                 </div>
                             </div>
                             <div class="form-group row" ng-show="custom" >
@@ -57,17 +64,17 @@
                         </form>
                     </div>
                     <div class="form-group row">
-                        <label for="search" class="col-lg-3 control-label"><?php t(':SEARCH')?></label>
+                        <label for="search" class="col-lg-2 control-label"><?php t(':SEARCH')?></label>
                         <div class="col-lg-3">
                             <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" ng-change="saveLocal()" />
                         </div>
-                        <label for="displayAsList" class="col-lg-3 control-label"><?php t(':DISPLAY_AS_LIST')?></label>
+                        <label for="displayAsList" class="col-lg-3 control-label text-right"><?php t(':DISPLAY_AS_LIST')?></label>
                         <div class="col-lg-1">
                             <input type="checkbox" name="list" 
                                     ng-change="saveLocal()" 
                                     ng-model="displayAsList"
                                     ng-checked="displayAsList" />
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4" ng-show="selectedMedia">

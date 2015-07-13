@@ -76,7 +76,12 @@ class ControllerDonation {
             $donation['country'] = $user['country'];
             $donation['phone'] = $user['phone'];
         } else {
-            $donation['userid'] = null;
+            $this->crowd->TryRegister($param['email'], '', $error);
+            if ($this->crowd->TryGetFromEmail($donation['email'], $user)) {
+                $donation['userid'] = $user['id'];
+            } else {
+                $donation['userid'] = null;
+            }
             $donation['email'] = $param['email'];
             $donation['firstName'] = $param['firstName'];
             $donation['lastName'] = $param['lastName'];
@@ -95,9 +100,8 @@ class ControllerDonation {
         $_SESSION['currentDonation'] = $donation;
         
         if (!$this->donationDal->TrySave($donation)) {
-            // No redirection, we want to finalise the donation in any case
-            //$this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
-            //return $this->view_donate($obj, array());
+            $this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
+            return $this->view_donate($obj, array());
         }
         
         $_SESSION['currentDonation'] = null;
@@ -117,42 +121,24 @@ class ControllerDonation {
         return 'donateFinalize';
     }
     
-    function action_donate_old(&$obj, $param) {
-        $donation = $param;
-        $donation['userid'] = $this->authentication->currentUser['id'];
-        $donation['dateInit'] = date('Y-m-d');
-        $donation['status'] = 'promess';
-        unset($donation['id']);
-        unset($donation['dateValidation']);
-        unset($donation['rawData']);
-        $donation['amount'] = $this->Getfloat($donation['amount']);
-        if ($donation['amount'] < 1) {
-            $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
-            return $this->view_donate($obj, array());
-        }
-        
-        if (in_array($donation['type'], array('vir', 'cb', 'chq')) && $this->donationDal->TrySave($donation)) {
-            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donation', 'id' => $donation['id']));
-        }
-        $this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-    }
-    
-    
     function action_saveDonation(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
         
+        $redirect = isset($param['callback']) ? $param['callback'] : url(array('controller' => 'donation', 'view' => 'donationList'));
+        
         if (!$this->donationDal->TrySave($params)) {
             $this->webSite->AddMessage('warning', ':CANT_SAVE');
             $obj['form'] = $params;
+            $obj['callback'] = $redirect;
             return 'editDonation';
         }
         
+        
         $this->webSite->AddMessage('success', ':SAVED');
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donationList'));
+        $this->webSite->RedirectTo($redirect);
     }
     
     function view_edit(&$obj, $params) {
@@ -166,23 +152,29 @@ class ControllerDonation {
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donationList'));
         }
         
+        $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'donation', 'view' => 'donationList'));
         $obj['form'] = $donation;
         
         return 'editDonation';
     }
     
-    function view_donationList(&$obj, $param) {
-        $donations = $this->donationDal->GetWhere(array());
-        if (isset($param['all']) && $param['all'] == '1') {
-            $obj['donations'] = $donations;
-        } else {
-            $obj['donations'] = array();
-            foreach($donations as $donation) {
-                if ($donation['status'] != 'archived' && $donation['status'] != 'deleted') {
-                    $obj['donations'][] = $donation;
-                }
-            }
+    function view_donationList(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
+        
+        $isFiltered = isset($params['isFiltered']) ? $params['isFiltered'] : true;
+        
+        if ($isFiltered) {
+            $obj['isFiltered'] = true;
+            $donations = $this->donationDal->GetWhere(array('status' => array('promess', 'received', 'validated')));
+        } else {
+            $obj['isFiltered'] = false;
+            $donations = $this->donationDal->GetWhere(array());
+        }
+        $obj['donations'] = $donations;
+        $obj['callback'] = url(array('controller' => 'donation', 'view' => 'donationList', 'isFiltered' => $isFiltered));
         
         return 'donationList';
     }
@@ -236,6 +228,100 @@ class ControllerDonation {
         
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
         die();
+    }
+    
+    function action_delete(&$obj, $params) {
+        if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
+            $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+            die();
+        }
+        if ($this->authentication->currentUser == null || 
+            ($donation['userid'] != $this->authentication->currentUser['id'] &&
+            !$this->authentication->CheckRole('Administrator'))) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+            die();
+        }
+        
+        $donation['status'] = 'deleted';
+        if ($this->donationDal->TrySave($donation)) {
+            $obj['status'] = 'ok';
+        } else {
+            $obj['status'] = 'nok';
+        }
+        return;
+    }
+    
+        
+    function action_validate(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $obj['status'] = 'nok';
+            return;
+        }
+        
+        if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
+            $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
+            $obj['status'] = 'nok';
+            return;
+        }
+        
+        $donation['status'] = 'validated';
+        if ($this->donationDal->TrySave($donation)) {
+            $obj['status'] = 'ok';
+        } else {
+            $obj['status'] = 'nok';
+        }
+        return;
+    }
+    
+    function action_archive(&$obj, $params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $obj['status'] = 'nok';
+            return;
+        }
+        
+        if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
+            $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
+            $obj['status'] = 'nok';
+            return;
+        }
+        
+        if ($donation['status'] != 'validated') {
+            $this->webSite->AddMessage('warning', ':YOU_CAN_ONLY_ARCHIVE_VALIDATED_DONATION');
+            $obj['status'] = 'nok';
+            return;
+        }
+        
+        $donation['status'] = 'archived';
+        if ($this->donationDal->TrySave($donation)) {
+            $obj['status'] = 'ok';
+        } else {
+            $obj['status'] = 'nok';
+        }
+        return;
+    }
+    
+    function view_export(&$obj, $param) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        $isFiltered = isset($params['isFiltered']) ? $params['isFiltered'] : true;
+        
+        if ($isFiltered) {
+            $obj['isFiltered'] = true;
+            $donations = $this->donationDal->GetWhere(array('status' => array('promess', 'received', 'validated')));
+        } else {
+            $obj['isFiltered'] = false;
+            $donations = $this->donationDal->GetWhere(array());
+        }
+        $obj['fileName'] = "donations";
+        $obj['fileContent'] = $donations;
+        return null;
     }
     
     private function GetDonationForChange($params) {

@@ -75,8 +75,8 @@ class WebSite {
         
         $this->obj['messages'][] = array(
             'level' => $level,
-            'strongText' => $levels[$level],
-            'text' => $text
+            'strongText' => $this->services['translator']->GetTranslation($levels[$level]),
+            'text' => $this->services['translator']->GetTranslation($text)
         );
     }
     
