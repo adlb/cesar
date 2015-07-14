@@ -25,13 +25,13 @@
                     <div class="well">
                         <form enctype="multipart/form-data" type="POST" ng-submit="uploadMedia();">
                             <div class="form-group row">
-                                <label for="files" class="col-lg-3 control-label">File</label>
+                                <label for="files" class="col-lg-3 control-label"><?php t(':FILE') ?></label>
                                 <div class="col-lg-5">
                                     <input id="mediaFiles" type="file" name="mediaFiles[]" multiple="true" onchange="angular.element(this).scope().setFiles(this)" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="size" class="col-lg-3 control-label">Size</label>
+                                <label for="size" class="col-lg-3 control-label"><?php t(':SIZE') ?></label>
                                 <div class="col-lg-3">
                                     <select id="size" name="size" ng-hide="custom" ng-model="selectedSize" ng-options="size[0] + 'x' + size[1] for size in sizes">
                                     </select>
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="form-group row" ng-show="custom" >
-                                <label for="width" class="col-lg-3 control-label">SizeCustom</label>
+                                <label for="width" class="col-lg-3 control-label"><?php t(':SIZE_CUSTOM') ?></label>
                                 <div class="col-lg-2">
                                     <input type="text" name="width" ng-model="customWidth" />
                                 </div> 
@@ -56,9 +56,8 @@
                                 </div>
                             </div>
                             <div class="form-group row" >
-                                <label for="button" class="col-lg-3 control-label"></label>
-                                <div class="col-lg-2">
-                                    <button class="btn btn-default" type="submit">Upload</button>
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-default" type="submit"><?php t(':UPLOAD') ?></button>
                                 </div>
                             </div>
                         </form>
@@ -115,7 +114,7 @@
                         </a>
                         <div class="caption">
                             <p style="overflow:hidden;text-overflow:ellipsis;height:18px"><small>{{ media.name }}</small></p>
-                            <p>id:{{ media.id }} - size:{{ media.width }}x{{ media.height }}</p>
+                            <p>id:{{ media.id }} - <?php t(':SIZE') ?>:{{ media.width }}x{{ media.height }}</p>
                                 <button class="btn btn-default" ng-click="selectMedia(media);"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></button>
                                 <button class="btn btn-default"
                                     ng-real-click="deleteMedia(media.id);" 
@@ -134,7 +133,7 @@
                             <th ng-click="predicate=='id' ? reverse = !reverse : predicate='id'; saveLocal();"><?php t(':ID') ?></th>
                             <th ng-click="predicate=='name' ? reverse = !reverse : predicate='name'; saveLocal();"><?php t(':NAME') ?></th>
                             <th ng-click="predicate=='width' ? reverse = !reverse : predicate='width'; saveLocal();"><?php t(':WIDTH') ?></th>
-                            <th ng-click="predicate=='height' ? reverse = !reverse : predicate='height' saveLocal();;"><?php t(':HEIGHT') ?></th>
+                            <th ng-click="predicate=='height' ? reverse = !reverse : predicate='height'; saveLocal();"><?php t(':HEIGHT') ?></th>
                             <th><?php t(':ACTIONS') ?></th>
                         </tr>
                         </thead>

@@ -1,0 +1,14 @@
+
+h1. Ecrire un nouvel Article
+
+h2. Préalable
+Seuls les _administrateurs_ du site peuvent écrire un article donc il faut au préalable être loggué sur le site. Pour ce faire, munissez-vous de votre 'login' (email) et de votre 'mot de passe' et cliquez sur 'se connecter' en haut à droite du site.
+
+h2. Préparation des images
+Pour ecrire un nouvel article assurez-vous d'abord de télécharger les images dont vous aurez besoin sur le site via la gestion des medias. Vous pouvez choisir la taille des images que vous téléchargez. Il faut une image de 480x300 pour illustrer votre article. Ce sera l'image principale de votre article.
+Ensuite, Vous pouvez intégrer autant d'images que vous souhaitez. Il est préférable d'utiliser une taille standard, par exemple 256x160 pour les images contenues à l'interieur des articles.
+
+
+q. Une fois que les images sont téléchargées sur le site, veuillez noter les id des images que vous souhaitez utiliser dans votre article.
+
+

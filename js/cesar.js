@@ -1,10 +1,10 @@
 var cesarApp = angular.module('cesarApp',['ui.bootstrap']);
 
 cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
-  $scope.medias = null;
+  $scope.medias = [];
   $scope.deleteUrl = '';
   $scope.uploadUrl = '';
-  $scope.sizes = null;
+  $scope.sizes = [];
   $scope.selectedSize = null;
   $scope.custom = 0;
   $scope.selectedMedia = JSON.parse(localStorage.getItem("mediaCtrl.selectedMedia")) || 'undefined';
@@ -483,26 +483,26 @@ jQuery(document).ready(function($) {
 });
 
 $(function() {
-        $('#actionShow').click(function() {
-          if ( $('#textTrad').css('display') == 'none' ) {
-                $('#textHTML').css('display','none');
-                $('#textTrad').css('display','inline');
-          } else
-              $.ajax({
-                type: 'POST',
-                url: '?controller=builder&action=format',
-                data: $('#textTrad').val(),
-                timeout: 3000,
-                success: function(data) {
-                  $('#textTrad').css("display","none");
-                  $('#textHTML').html(data.formattedText);
-                  $('#textHTML').css("display","inline");
-                  },
-                error: function() {
-                  alert('La requête n\'a pas abouti'); }
-              });
-        });
-      });
+    $('#actionShow').click(function() {
+      if ( $('#textInput').css('display') == 'none' ) {
+            $('#textShow').css('display','none');
+            $('#textInput').css('display','inline');
+      } else
+          $.ajax({
+            type: 'POST',
+            url: '?controller=builder&action=format',
+            data: $('#textTrad').val(),
+            timeout: 3000,
+            success: function(data) {
+              $('#textInput').css("display","none");
+              $('#textHTML').html(data.formattedText);
+              $('#textShow').css("display","inline");
+              },
+            error: function() {
+              alert('La requête n\'a pas abouti'); }
+          });
+    });
+  });
 
 $(function () {
   $('[data-toggle="popover"]').popover()

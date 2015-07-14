@@ -110,7 +110,7 @@ if (get_magic_quotes_gpc()) {
 //shortcut for translation
 function t($key) {
     global $webSite;
-    echo $webSite->services['translator']->GetTranslation($key);
+    echo htmlspecialchars($webSite->services['translator']->GetTranslation($key));
 }
 
 function disp($obj, $key) {
@@ -125,13 +125,6 @@ function url($param, $full = false) {
     if ($full)
         return $_SERVER['PHP_SELF'].$url;
     return $url;
-}
-
-function redirectTo($param, $messages) {
-    $_SESSION['messages'] = $messages;
-
-    header('Location: '.url($param));
-    die();
 }
 
 function Render($container, $view, &$obj) {

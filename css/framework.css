@@ -25,6 +25,10 @@ article img.cx_center {
     margin: 3px 10px;
 }
 
+article p {
+    margin: 0;
+}
+
 [deferred-cloak], [data-deferred-cloak], [x-deferred-cloak], .deferred-cloak {
     display: none;
 }

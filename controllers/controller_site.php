@@ -62,6 +62,17 @@ class ControllerSite {
     }
 
     protected function enrich_Article($article, $isAdmin, $html) {
+        $article['rawTitle'] = $this->translator->GetTranslation($article['titleKey']);
+        if ($html) {
+            $article['htmlTitle'] = htmlentities($article['rawTitle']);
+
+            //small hack to have a way to avoid empty content 
+            if ($article['htmlTitle'] == ' ')
+                $article['htmlTitle'] = '&nbsp;';
+        } else {
+            $article['textTitle'] = $article['rawTitle'];
+        }
+        
         $article['rawContent'] = $this->translator->GetTranslation($article['textKey']);
         if ($html)
             $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);

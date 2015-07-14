@@ -70,10 +70,11 @@
                         <input type="password" id="passwordnothashed2" type="password2" name="passwordnothashed2" class="form-control" placeholder="<?php t(':PLACEHOLDER_PASSWORD2')?>" required />
                         <input class="btn btn-primary pull-right" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':REGISTER') ?>" />
                     </div>
-                    <div id="Login">
+                    <div id="Login" class="text-right">
                         <input class="btn btn-primary text-right" onClick="doChallengeResponse('<?php echo $obj['GetTimesUrl'] ?>'); return false;" type="submit" name="submitbtn" value="<?php t(':LOGIN') ?>" />
+                        <br/>
+                        <small><a href="?controller=user&view=lostPassword"><?php t(':LOST_PASSWORD') ?></a></small>   
                     </div>
-                    <small><a href="?controller=user&view=lostPassword"><?php t(':LOST_PASSWORD') ?></a></small>   
                 </form>
             </div>
         </div>

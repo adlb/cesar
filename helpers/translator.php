@@ -37,7 +37,6 @@ class Translator {
             }
         }
         
-
         $this->fetchGroup($this->defaultGroupKey);
         $this->fetchGroup('');
         //var_dump($this);
@@ -60,11 +59,24 @@ class Translator {
         } else {
             if (!isset($this->groupedCache[$groupKey]))
                 $this->groupedCache[$groupKey] = array();
+            
+            if (file_exists('fixedArticles/'.$groupKey.'.'.$this->language.'.txt')) {
+                $handle = fopen('fixedArticles/'.$groupKey.'.'.$this->language.'.txt', "r");
+                if ($handle) {
+                    while (($line = fgets($handle)) !== false) {
+                        $split = explode('|', $line);
+                        if (count($split) >= 2)
+                            $this->groupedCache[$groupKey][$split[0]] = $split[1];
+                    }
+                    fclose($handle);
+                }
+            }
             $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
             if (count($lines) == 1) {
                 foreach(explode("\n", $lines[0]['text']) as $line) {
                     $split = explode('|', $line);
-                    if (count($split) >= 2)
+                    // FIXME : hack to override first file.
+                    if (count($split) >= 2 && !isset($this->groupedCache[$groupKey]))
                         $this->groupedCache[$groupKey][$split[0]] = $split[1];
                 }
             }
@@ -138,7 +150,7 @@ class Translator {
     function DirectUpdate($language, $key, $value, $prefetch, $usage) {
         if (substr($key, 0, 5) == 'file:') {
             $split = explode(':', $key);
-            if (count($split) == 2 && $split[0] == 'file' && file_exists('fixedArticles/'.$split[1].'.txt')) {
+            if (count($split) == 2 && $split[0] == 'file') {
                 file_put_contents('fixedArticles/'.$split[1].'.txt', $value);
             }
             return $key;
@@ -241,8 +253,12 @@ class Translator {
         if ($key == '')
             return $key;
         $split = explode(':', $key);
-        if (count($split) == 2 && $split[0] == 'file' && file_exists('fixedArticles/'.$split[1].'.txt')) {
-            return file_get_contents('fixedArticles/'.$split[1].'.txt');
+        if (count($split) == 2 && $split[0] == 'file') {
+            if (file_exists('fixedArticles/'.$split[1].'.txt')) {
+                return file_get_contents('fixedArticles/'.$split[1].'.txt');
+            } else {
+                return " ";
+            }
         }
         
         if (count($split) == 2) {

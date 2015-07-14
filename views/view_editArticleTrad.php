@@ -23,7 +23,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-title"> <?php t(':traduction') ?> </h1>
+                        <h1 class="page-title"> <?php t(':TRANSLATION') ?> </h1>
                     </div>
                 </div>
             </div>

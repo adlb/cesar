@@ -28,8 +28,8 @@ class ControllerBuilder extends controllerSite{
 
     private function CheckRights($role, $obj) {
         if (!$this->authentication->CheckRole($role)) {
-            $this->config->SetError('warning', ':NOT_ALLOWED');
-            redirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
     }
 
@@ -311,7 +311,7 @@ class ControllerBuilder extends controllerSite{
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         
         $this->config->deleteConfig();
-        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'), $obj['errors']);
+        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
     }
 }
 ?>

@@ -17,7 +17,7 @@
             <?php foreach($obj['sons'] as $son) { ?>
                 <li id="row_<?php echo $son['id'] ?>">
                     <a href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $son['id']))?>" <?php echo $son['status'] == 'hide' ? 'class="cx_adminonly"' : '' ?>>
-                        <?php t($son['titleKey'])?>
+                        <?php t($son['titleKey']) ?>
                     </a>
                 </li>
             <?php } ?>

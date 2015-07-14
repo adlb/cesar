@@ -1,0 +1,38 @@
+LANG_GB|Anglais
+LANG_FR|Français
+LANG_ES|Español
+MY_PROFIL|Mon profil
+LOGOUT|Se déconnecter
+ADMINISTRATION|Administration
+ADD_ARTICLE|Ecrire un article
+GLOBAL_SETUP|Configuration générale
+USER_MANAGEMENT|Gestion des utilisateurs
+DONATION_MANAGEMENT|Gestion des donations
+ARTICLE_MANAGEMENT|Gestion des Articles
+MEDIA_MANAGEMENT|Gestion des Médias
+HELP|Aide
+DONATE|DONATE
+MAIN_TITLE|MAIN_TITLE
+SUB_TITLE|SUB_TITLE
+LATEST NEWS|LATEST NEWS
+AQUESTION|Une Question ?
+ABOUT_US|A propos de nous
+USEFUL_LINKS|USEFUL_LINKS
+SUBSCRIBE_TO_OUR_NEWSLETTER|SUBSCRIBE_TO_OUR_NEWSLETTER
+GROUPED_KEY_GENERAL|Titres et boutons
+MODIFY_ARTICLES|Modifier article
+LIST_ARTICLES|Liste des articles
+SEARCH|recherche
+TRANSLATION|Traduction
+LOGIN|Se connecter
+RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
+ENTER_EMAIL_USED_TO_REGISTER|Entrez l'adresse e-mail utilisée pour s'enregistrer
+PLACEHOLDER_EMAIL|votre.nom@domain.fr
+SEND|Envoyer
+CANCEL|Annuler
+PLACEHOLDER_PASSWORD|Mot de passe
+PLACEHOLDER_PASSWORD2|Resaisissez votre mot de passe
+LOST_PASSWORD|J'ai oublié mon mot de passe
+PLEASE_SIGN_IN|Connexion
+EMAIL_UNKOWN_CREATE_AN_ACCOUNT|email inconnu - créez un compte
+REGISTER|s'enregistrer

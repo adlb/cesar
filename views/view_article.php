@@ -5,7 +5,7 @@
 			<div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-title"> <?php t($obj['article']['titleKey']) ?> </h1>
+                        <h1 class="page-title"> <?php echo $obj['article']['htmlTitle'] ?> </h1>
                         <ol class="breadcrumb">
                             <?php foreach($obj['article']['links'] as $link) { ?>
                             <li>

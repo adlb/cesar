@@ -31,7 +31,7 @@
         <!-- BREADCRUMBS -->
         <div class="page-header">
 			<div class="container">
-				<h1 class="page-title pull-left"> <?php t($obj['article']['titleKey']) ?> </h1>
+				<h1 class="page-title pull-left"> <?php t($obj['article']['htmlTitle']) ?> </h1>
 				<ol class="breadcrumb">
 					<?php foreach($obj['article']['links'] as $link) { ?>
                     <li>

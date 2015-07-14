@@ -1,32 +1,26 @@
-    <div class="page-header">
-        <div class="container">
-            <h1 class="page-title pull-left"> <?php t(':MODIFY_ARTICLES') ?> </h1>
-        </div>
-    </div>
-
+    <br/>
+    <br/>
     <div class="page-container" id="usersCtrlDiv" ng-controller="usersListCtrl">
         <div class="container">
-
             <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'user', 'action' => 'retreivePassword')) ?>">
                 <fieldset>
                     <!-- Form Name -->
-                    <legend>Retreive your password</legend>
+                    <legend><?php t(':RESET_YOUR_PASSWORD')?></legend>
 
                     <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">email</label>  
+                        <label class="col-md-4 control-label" for="email"><?php t(':EMAIL') ?></label>  
                         <div class="col-md-6">
                             <input id="email" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL')?>" class="form-control input-md" required="" type="text">
-                            <span class="help-block">Enter email used to register</span>  
+                            <span class="help-block"><?php t(':ENTER_EMAIL_USED_TO_REGISTER') ?></span>  
                         </div>
                     </div>
 
                     <!-- Button (Double) -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="sendId"></label>
-                        <div class="col-md-8">
-                            <button id="sendId" name="sendId" class="btn btn-primary">Send</button>
-                            <button id="cancelId" name="cancelId" class="btn btn-default">Cancel</button>
+                        <div class="col-md-10 text-right">
+                            <button id="sendId" name="sendId" class="btn btn-primary"><?php t(':SEND') ?></button>
+                            <a href="javascript:history.back()" class="btn btn-default"><?php t(':CANCEL') ?></a>
                         </div>
                     </div>
                 </fieldset>
