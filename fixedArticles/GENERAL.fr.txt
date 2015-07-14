@@ -65,3 +65,19 @@ SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
 A_QUESTION|Une question ?
 SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
 SUBSCRIBE|S'inscrire
+SOME_LINKS|Quelques liens
+AMOUNT|Montant
+AMOUNT_HELP|Veuillez saisir le montant que vous souhaitez donner. Minimum 1 €.
+TYPE_PAYMENT|Moyen de paiement
+TYPE_PAYMENT_cb|Carte-Bleue
+TYPE_PAYMENT_vir|Virement
+TYPE_PAYMENT_chq|Chèque
+DONATION|Votre don
+DONATOR|Information du donnateur
+VIA_CB_PARTNER|via Hello-Asso
+DONATION_CONFIRM|Confirmer votre don
+MODIFY|Modifier
+UPDATE_USER_INFO|Corriger
+OTHER_USER|Changer d'utilisateur
+DONATION_RESUME|Résumé
+FINALIZE_YOUR_DONATION|Comment finaliser votre donation ?

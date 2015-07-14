@@ -50,7 +50,7 @@
                                 <div class="input-group input-group-lg">
                                     <input type="email" class="form-control" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL') ?>">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="submit"><i class="fa fa-spinner fa-spin"></i><span><?php t(':SUBSCRIBE')?></span></button>
+                                        <button class="btn btn-primary" type="submit"><span><?php t(':SUBSCRIBE')?></span></button>
                                     </span>
                                 </div>
                                 <div class="alert"></div>

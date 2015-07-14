@@ -10,23 +10,20 @@
 </p>
 <p></p>
 <p>
-    <?php t(':PHONE') ?>: <?php echo $obj['phone'] ?>
+    <i class="fa fa-phone"></i>&nbsp;&nbsp;<?php echo $obj['phone'] ?>
 </p>
 <p>
-    <?php t(':MAIL') ?>: <?php echo $obj['email'] ?>
+    <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;<?php echo $obj['email'] ?>
 </p>
+<div class="text-right">
 <a href="<?php echo url(array('controller' => 'user', 'view' => 'editUser', 'id' => $obj['id'], 'callback' =>
     url(array('controller' => 'donation', 'view' => 'donatecheckname'))
 )) ?>" class="btn btn-default">
-    <?php t(':UPDATE_USER_INFO') ?>
+    <?php t(':UPDATE_USER_INFO') ?> <i class="fa fa-pencil"></i>
 </a>
 <a href="<?php echo url(array('controller' => 'user', 'action' => 'logout', 'callback' =>
     url(array('controller' => 'donation', 'view' => 'donatecheckname'))
 )) ?>" class="btn btn-default">
-    <?php t(':OTHER_USER') ?>
+    <?php t(':OTHER_USER') ?> <i class="fa fa-refresh"></i>
 </a>
-<div class="text-right">
-    <a href="<?php echo url(array('controller' => 'donation', 'action' => 'confirm')) ?>" class="btn btn-primary">
-        <?php t(':CONFIRM') ?> <i class="fa fa-arrow-circle-right"></i>
-    </a>
 </div>

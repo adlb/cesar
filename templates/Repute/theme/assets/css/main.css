@@ -3949,7 +3949,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active,
 .btn-primary .open > .dropdown-toggle.btn-primary {
-  background-color: #3c6699;
+  background-color: #264626;
   border-color: #355987;
 }
 
@@ -4623,7 +4623,7 @@ ul.social-icons li a i {
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
-  background-color: #406da4;
+  background-color: #132a13;
   font-size: 14px;
   padding: 10px;
   min-width: 93px;
@@ -6406,12 +6406,17 @@ ul.nav-categories > li > a:hover {
 .btn-money {
     margin-bottom: 10px;
     width: 100%;
+    background-color: #132a13;
 }
 
 .btn-money p {
     font-family: "Roboto Condensed",sans-serif;
     margin-top: 5px;
     font-size: 24px;
+}
+
+.btn-primary {
+    background-color: #123a13;
 }
 
 @media print {

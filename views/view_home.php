@@ -75,8 +75,24 @@
     <!-- END BOXED CONTENT -->
     <?php displayPartial('site', 'latestNews', array()) ?>
     
-    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Numbers', 'raw' => true)); ?>
-
+    <!-- NUMBERS -->
+    <section class="full-width-section no-margin">
+        <div class="container">
+            <div class="row">
+                <?php for($i=0;$i<4;$i++) { ?>
+                
+                <div class="col-sm-3 col-xs-6">
+                    <div class="number-info horizontal text-white-color">
+                        <i class="fa fa-<?php t("HOME:NUMBERS_${i}_ICON") ?> pull-left"></i>
+                        <p><?php t("HOME:NUMBERS_${i}_NUMBER") ?> <span><?php t("HOME:NUMBERS_${i}_TEXT") ?></span></p>
+                    </div>
+                </div>
+                
+                <?php } ?>
+            </div>
+        </div>
+    </section>
+    <!-- END NUMBERS -->
     <!-- TESTIMONIAL -->
     <section class="testimonial-with-bg parallax">
         <div class="container">

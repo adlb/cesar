@@ -36,7 +36,7 @@ class Journal {
     function Log($level, $string, $params = array()) {
         Global $controller, $action, $view;
         
-        for($i = 0 ; $i < count($param); $i++) {
+        for($i = 0 ; $i < count($params); $i++) {
             $string = str_replace('{'.$i.'}', $params[$i], $string);
         }
         $string = date('c').';'.$controller.';'.$view.';'.$action.';'.$string;

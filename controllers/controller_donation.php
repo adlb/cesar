@@ -28,9 +28,11 @@ class ControllerDonation {
         $this->crowd = $services['crowd'];
     }
     
-    function view_donate(&$obj, $param) {
+    function view_donate(&$obj, $params) {
         $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
-        return 'donate';
+        $obj['embeddedArticle'] = 'donate';
+        $params['titleKey'] = 'Donate';
+        return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     
     function action_donate(&$obj, $param) {
@@ -56,7 +58,10 @@ class ControllerDonation {
             $obj['user'] = $this->authentication->currentUser;
         }
         $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
-        return 'donateCheckname';
+        $obj['embeddedArticle'] = 'donateCheckname';
+        $params['titleKey'] = 'DonateCheckName';
+        
+        return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     
     function action_confirm(&$obj, $param) {
@@ -109,7 +114,6 @@ class ControllerDonation {
         
         if (!$this->mailer->TrySendDonationConfirmationMail($donation)) {
             $this->webSite->AddMessage('warning', ':IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL');
-            return $this->view_donate($obj, array());
         }
         
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id']));
@@ -117,11 +121,14 @@ class ControllerDonation {
     
     function view_donateFinalize(&$obj, $param) {
         if (!isset($param['id']) || !$this->donationDal->tryGet($param['id'], $donation)) {
+            $this->webSite->AddMessage('warning', ':DONATION_DOES_NOT_EXIST');
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
         }
         
         $obj['donation'] = $donation;
-        return 'donateFinalize';
+        $obj['embeddedArticle'] = 'donateFinalize';
+        $params['titleKey'] = 'DonateThanksForDonation';
+        return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     
     function action_saveDonation(&$obj, $params) {

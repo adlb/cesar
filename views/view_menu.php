@@ -89,10 +89,5 @@
                         <?php foreach($obj['menu'] as $menu) { ?>
                             <?php renderPartial('subMenu', $menu); ?>
                         <?php } ?>
-                    
-                    
-                        <li>
-                            <a href="?controller=donation&view=donate"><?php t(':DONATE') ?></a>
-                        </li>
                     </ul>
                 </div>

@@ -44,10 +44,15 @@
                             <hr />
                         </div>
                         <?php } ?>
+                        
+                        <?php
+                            if (isset($obj['embeddedArticle'])) {
+                                renderPartial($obj['embeddedArticle'], $obj);
+                            }
+                        ?>
                     </div>
-                    <div class="col-md-3">
-                        <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Article_RightColumn', 'raw' => true)) ?>
-					</div>
+                    
+                    <?php displayPartial('site', 'articleRightColumn', array()) ?>
                 </div>
             </div>
         </div>

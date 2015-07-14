@@ -210,6 +210,19 @@ class ControllerSite {
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
     }
+    
+    function view_articleRightColumn(&$obj, &$params) {
+        $linksSource = $this->articleDal->GetWhere(array('type'=>array('article', 'news'), 'status' => 'show'), array('date'=>false));
+        $links = array();
+        foreach($linksSource as $item) {
+            $links[] = array(
+                'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $item['id'])),
+                'display' => $this->translator->GetTranslation($item['titleKey'])
+            );
+        }
+        $obj['links'] = array_slice($links, 0, 8);
+        return 'articleRightColumn';
+    }
 }
 
 ?>
