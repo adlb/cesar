@@ -29,13 +29,13 @@
                 </caption>
                 <thead>
                     <tr>
-                      <th ng-click="predicate=='id' ? reverse = !reverse : predicate='id';">ArticleId</th>
-                      <th ng-click="predicate=='status' ? reverse = !reverse : predicate='status';">Status</th>
-                      <th ng-click="predicate=='titleTrad' ? reverse = !reverse : predicate='titleTrad';">ArticleTitle</th>
-                      <th ng-click="predicate=='type' ? reverse = !reverse : predicate='type';">ArticleType</th>
+                      <th ng-click="predicate=='id' ? reverse = !reverse : predicate='id';"><?php t(':ARTICLE_ID') ?></th>
+                      <th ng-click="predicate=='status' ? reverse = !reverse : predicate='status';"><?php t(':STATUS') ?></th>
+                      <th ng-click="predicate=='titleTrad' ? reverse = !reverse : predicate='titleTrad';"><?php t(':TITLE') ?></th>
+                      <th ng-click="predicate=='type' ? reverse = !reverse : predicate='type';"><?php t(':ARTICLE_TYPE') ?></th>
                       <th ng-repeat="language in languages"
                           ng-click="$parent.predicate=='StatusPerLanguage.' + language.name ? $parent.reverse = !$parent.reverse : $parent.predicate='StatusPerLanguage.' + language.name;"
-                      >{{ language.name }} {{ language.active ? '(active)' : '' }}</th>
+                      >{{ language.name }} {{ language.active ? '(<?php t(':ACTIVE') ?>)' : '' }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                           <span ng-hide="article.link">{{ article.titleTrad }}</span></td>
                       <td>{{ article.type }}</span></td>
                       <td class="clickableCell" ng-repeat="language in languages" href="{{ prefixUrl }}&titleKey={{ article.titleKey }}&textKey={{ article.textKey }}&lg={{ language.name }}">
-                        {{ article.StatusPerLanguage[language.name] || 'Error' }}
+                        {{ article.StatusPerLanguage[language.name] || '<?php t(':ERROR') ?>' }}
                       </td>
                     </tr>
                 </tbody>

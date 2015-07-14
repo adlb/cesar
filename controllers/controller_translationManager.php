@@ -3,8 +3,9 @@
 class TextManager {
     var $textsDico;
     var $languages;
+    var $translator;
     
-    function __construct($textShortDal, $languages) {
+    function __construct($textShortDal, $languages, $translator) {
         $this->languages = $languages;
         $texts = $textShortDal->GetWhere(array());
         foreach($texts as $text) {
@@ -12,6 +13,7 @@ class TextManager {
                 $this->textsDico[$text['key']] = array();
             $this->textsDico[$text['key']][$text['language']] = $text['textStatus'];
         }
+        $this->translator = $translator;
     }
     
     private function GetKeyStatus($key, $language) {
@@ -42,7 +44,7 @@ class TextManager {
     function GetStatusPerLanguage($key1, $key2) {
         $result = array();
         foreach($this->languages as $language) {
-            $result[$language['name']] = $this->GetStatus($key1, $key2, $language['name']);
+            $result[$language['name']] = $this->translator->GetTranslation(':TRANSLATION_'.strtoupper($this->GetStatus($key1, $key2, $language['name'])));
         }
         return $result;
     }
@@ -90,7 +92,7 @@ class ControllerTranslationManager {
 
     function view_translationList(&$obj, $params) {
         $languages = $this->translator->languages;
-        $textManager = new TextManager($this->textShortDal, $languages);
+        $textManager = new TextManager($this->textShortDal, $languages, $this->translator);
         
         $articles = $this->articleDal->GetWhere(array(), array('id' => true));
         foreach($articles as &$article) {

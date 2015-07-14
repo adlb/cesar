@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email">email</label>  
                         <div class="col-md-6">
-                            <input id="email" name="email" placeholder="email" class="form-control input-md" required="" type="text">
+                            <input id="email" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL')?>" class="form-control input-md" required="" type="text">
                             <span class="help-block">Enter email used to register</span>  
                         </div>
                     </div>
