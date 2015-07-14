@@ -6,10 +6,6 @@ li > a.cx_adminonly  {
   color: #CFCFCF;
 }
 
-article .cx_monospace {
-    font-family:Courier New, Courier, monospace;
-}
-
 article img.cx_right {
     float: right;
     margin: 0 0 3px 10px;

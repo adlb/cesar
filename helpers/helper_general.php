@@ -65,7 +65,7 @@ class WebSite {
         $scheme = isset($parse['scheme']) ? $parse['scheme'] . '://' : '//';
         $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
         
-        $this->currentLink = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+        $this->currentLink = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 
     function AddMessage($level, $text) {

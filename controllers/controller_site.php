@@ -202,7 +202,8 @@ class ControllerSite {
                     'userManagement', 
                     'donationManagement', 
                     'articleManagement', 
-                    'mediaManagement'))) {
+                    'mediaManagement',
+                    'articleWriting'))) {
             $params['titleKey'] = 'file:Help_'.$params['titleKey'];
             return $this->view_fixedArticle($obj, $params);
         } else {

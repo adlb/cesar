@@ -17,6 +17,11 @@ body {
   color: #4a4a4a;
   line-height: 1.6;
 }
+
+article {
+  font-size: 16px;
+}
+
 body.layout-boxed {
   background-image: url('../img/gray_jean.png?1353438653');
   background-repeat: repeat;
@@ -75,7 +80,7 @@ hr {
   padding-bottom: 30px;
 }
 .wrapper > footer .logo {
-  width: 100px;
+  width: 114px;
   margin-bottom: 15px;
 }
 @media screen and (max-width: 768px) {
@@ -86,7 +91,7 @@ hr {
 
 .full-width-section {
   padding: 100px 0;
-  background-color: #406da4;
+  background-color: #132a13;
 }
 
 .layout-boxed .wrapper {
@@ -270,6 +275,7 @@ hr {
   font-size: 16px;
   line-height: 2;
   color: #eaeaea;
+  text-transform: uppercase;
 }
 
 .footer-nav > li {
@@ -3511,8 +3517,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 .navbar-brand.navbar-logo-bigger > img {
   position: relative;
-  top: 13px;
-  width: 110px;
+  top: 5px;
+  width: 220px;
 }
 
 .navbar-toggle {
@@ -3748,44 +3754,44 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /* HERO UNIT 
 /* Types: slider with animated object, default slider
 /* ----------------------------------------------------- */
-.hero-unit-animated {
+.hero-unit {
   padding: 100px 0;
   color: #fff;
-  background-image: url('../img/hero-unit-bg.png?1420789489');
+  background-image: url('../img/slideshow_01.jpg?1420789489');
   background-repeat: no-repeat;
   background-position: center -75px;
 }
-.hero-unit-animated .hero-heading {
+.hero-unit .hero-heading {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 42px;
   font-weight: 300;
   color: #fff;
 }
-.hero-unit-animated .lead {
+.hero-unit .lead {
   font-size: 24px;
 }
-.hero-unit-animated .hero-button {
+.hero-unit .hero-button {
   padding: 10px 40px;
   margin-top: 24px;
   background-color: #406da4;
   border: none;
 }
-.hero-unit-animated .hero-button:hover, .hero-unit-animated .hero-button:focus {
+.hero-unit .hero-button:hover, .hero-unit .hero-button:focus {
   background-color: #3c6699;
 }
 @media screen and (max-width: 1200px) {
-  .hero-unit-animated .hero-left {
+  .hero-unit .hero-left {
     max-width: 100%;
     float: none !important;
     text-align: center;
   }
-  .hero-unit-animated .hero-heading {
+  .hero-unit .hero-heading {
     font-size: 36px;
   }
-  .hero-unit-animated .lead {
+  .hero-unit .lead {
     font-size: 18px;
   }
-  .hero-unit-animated .hero-right {
+  .hero-unit .hero-right {
     display: none;
   }
 }
@@ -4315,7 +4321,11 @@ div[class*="col-"] > .form-group {
 }
 
 /* boxed content */
+.boxed-content-section {
+    background-color: #ebebeb;
+}
 .boxed-content {
+  margin-top: 35px;
   text-align: center;
   margin-bottom: 35px;
 }
@@ -4326,6 +4336,7 @@ div[class*="col-"] > .form-group {
 .boxed-content .boxed-content-title {
   font-size: 22px;
   font-weight: 700;
+  text-transform: uppercase;
 }
 .boxed-content.left-aligned {
   text-align: left;
@@ -4347,7 +4358,7 @@ div[class*="col-"] > .form-group {
   padding: 10px;
   width: 60px;
   height: 60px;
-  background: #406da4;
+  background: #132a13;
   color: #fff;
   text-align: center;
   line-height: 40px;
@@ -5540,8 +5551,18 @@ ul.sidebar-nav ul.submenu li:first-child a {
 .blog .entry-header {
   margin-bottom: 20px;
 }
-.blog h2 {
-  font-size: 22px;
+.blog h1{
+  
+}
+.blog h2{
+  border-bottom: 1px solid;
+}
+.blog h3{
+  font-weight: bolder;
+}
+.blog h4{
+  font-weight: bolder;
+  font-variant: small-caps;
 }
 .blog .meta-line {
   color: #adadad;
@@ -6391,4 +6412,13 @@ ul.nav-categories > li > a:hover {
     font-family: "Roboto Condensed",sans-serif;
     margin-top: 5px;
     font-size: 24px;
+}
+
+@media print {
+    .container {
+        width:100%;
+    }
+    article {
+      font-size: 13px;
+    }
 }

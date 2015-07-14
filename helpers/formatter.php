@@ -185,25 +185,6 @@ class QuoteLineDecorator extends LineDecorator {
     }
 }
 
-class PreformatedLineDecorator extends LineDecorator {
-
-    function __construct($type, $identifier, $textDecorators){
-        parent::__construct($type, $identifier, $textDecorators);
-    }
-    
-    function ReadLineOrLines(&$string, &$pos, $level = 0) {
-        $pos += strlen($this->identifier);
-        $quote = array();
-    
-        $decorator = new TextDecorator('paragraph', 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
-        $quote[] = $decorator->Read($string, $pos, $this->textDecorators);
-        while (parent::StartHere($string, $pos, $level)) {
-            $quote[] = $decorator->Read($string, $pos, $this->textDecorators);
-        }
-        return array('type' => $this->type, 'content' => $quote);
-    }
-}
-
 class BulletLineDecorator extends LineDecorator {
     var $decorator;
     
@@ -249,12 +230,13 @@ class LexerParser {
     function __construct() {
         $this->textDecoratorMinimalSet = array(
             new TextDecorator('strong', '*', '*', true, true, false, true, false),
-            new TextDecorator('italic', '_', '_', true, true, false, true, false),
+            new TextDecorator('italic', '+', '+', true, true, false, true, false),
             new TextDecorator('delete', '-', '-', true, true, false, true, false),
-            new TextDecorator('underline', '+', '+', true, true, false, true, false),
+            new TextDecorator('underline', '_', '_', true, true, false, true, false),
             new TextDecorator('monospaced', '$', '$', true, true, false, true, false),
             new TextDecorator('image', '!', '!', true, false, false, false, false),
             new TextDecorator('link', '[', ']', true, false, false, false, false),
+            new TextDecorator('icon', '¤', '¤', true, false, false, false, false),
         );
         $this->textDecoratorFullSet = array_merge($this->textDecoratorMinimalSet, array(
             new TextDecorator('html', '{html}', '{/html}', false, false, true, false, false),
@@ -265,7 +247,7 @@ class LexerParser {
             new LineDecorator('head2', 'h2. ', $this->textDecoratorMinimalSet),
             new LineDecorator('head3', 'h3. ', $this->textDecoratorMinimalSet),
             new LineDecorator('head4', 'h4. ', $this->textDecoratorMinimalSet),
-            new LineDecorator('center', 'c. ', $this->textDecoratorMinimalSet),
+            new LineDecorator('center', 'c. ', $this->textDecoratorFullSet),
             new LineDecorator('separator', '----', $this->textDecoratorMinimalSet),
             new ArrayLineDecorator('table', '|', $this->textDecoratorMinimalSet),
             new QuoteLineDecorator('quote', 'q. ', $this->textDecoratorFullSet),
@@ -362,7 +344,10 @@ class Transformer {
                     $string .= '<u>'.$this->Encode($item['content']).'</u>';
                     break;
                 case 'monospaced' :
-                    $string .= '<span class="cx_monospace">'.$this->Encode($item['content']).'</span>';
+                    $string .= '<tt>'.$this->Encode($item['content']).'</tt>';
+                    break;
+                case 'icon' :
+                    $string .= '<i class="fa fa-'.$item['content'][0]['content'].'"></i>';
                     break;
                 case 'list' :
                     $string .= '<ul>'.$this->Encode($item['content']).'</ul>';
@@ -395,10 +380,10 @@ class Transformer {
                     }
                     break;
                 case 'separator' :
-                    $string.= '<hr />';
+                    $string.= '<hr style="clear:both;"/>';
                     break;
                 case 'preformatted' :
-                    $string.= '<pre>'.htmlentities($this->Encode($item['content'])).'</pre>';
+                    $string.= '<pre>'.htmlentities($item['content'][0]['content']).'</pre>';
                     break;
                 case 'table' :
                     $string.= '<table class="table">'.$this->Encode($item['content']).'</table>';
@@ -538,6 +523,10 @@ class Transformer {
             if ($display == '')
                 $display = $link;
             $link = url(array('controller' => 'site', 'view' => 'home'));
+        } elseif ($link == 'donate') {
+            if ($display == '')
+                $display = $link;
+            $link = url(array('controller' => 'donation', 'view' => 'donate'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
             if ($display == '') {
                 $display = $this->translator->GetTranslation($article['titleKey']);
@@ -569,6 +558,10 @@ class Transformer {
             if ($display == '')
                 $display = $link;
             $link = url(array('controller' => 'site', 'view' => 'home'));
+        } elseif ($link == 'donate') {
+            if ($display == '')
+                $display = $link;
+            $link = url(array('controller' => 'donation', 'view' => 'donate'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
             if ($display == '') {
                 $display = $this->translator->GetTranslation($article['titleKey']);

@@ -1,0 +1,179 @@
+h1. Ecrire un nouvel Article
+
+h2. Préalable
+Seuls les +administrateurs+ du site peuvent écrire un article donc il faut au préalable être loggué sur le site. Pour ce faire, munissez-vous de votre 'login' (email) et de votre 'mot de passe' et cliquez sur 'se connecter' en haut à droite du site.
+
+h2. Préparation des images
+Pour ecrire un nouvel article assurez-vous d'abord de télécharger les images dont vous aurez besoin sur le site via la gestion des medias. Vous pouvez choisir la taille des images que vous téléchargez. Il faut une image de 480x300 pour illustrer votre article. Ce sera l'image principale de votre article.
+Ensuite, Vous pouvez intégrer autant d'images que vous souhaitez. Il est préférable d'utiliser une taille standard, par exemple 256x160 pour les images contenues à l'interieur des articles.
+
+
+q. Une fois que les images sont téléchargées sur le site, veuillez noter les id des images que vous souhaitez utiliser dans votre article.
+
+h2. Rédaction de l'article
+Rendez-vous dans Administration/Ecrire un article.
+Tout d'abord, veuillez selectionner le type d'article que vous souhaitez écrire :
+* *Entrée de Menu* : pour afficher une nouvelle entrée de menu dans la barre de menu du site.
+* *Article* : pour écrire un menu standard
+* *Nouvelle* : pour écrire une information comme un flash
+
+h3. Entrée de menu
+Pour une entrée de menu, il suffit de saisir le titre (qui s'affichera dans la barre de menu en haut du site).
+Vous pouvez aussi cocher 'Rendre public' pour que votre menu apparaisse sur le site pour tout le monde. Sinon, il n'apparaitra que pour vous.
+
+h3. Article
+Pour un article classique, il faut saisir :
+* Le menu parent : menu auquel sera rattaché l'article. Il est possible de mettre un article directement sur la barre de menu en selectionnant [Menu principal].
+* Un titre : qui apparaitra dans les menus du haut de l'écran.
+* Une image : qui sera l'image principale pour illustrer votre article. Cette image doit faire 480x300 pixels pour respecter la mise en page du site. Vous pouvez choisir de ne pas associer d'image à votre article. Dans ce cas, selectionnez 0-Pas d'images.
+* La date de l'article : cette date n'est pas vraiment utilisée pour les articles. Par défaut, c'est la date du jour.
+* 'Rendre public' : en conservant cette case décochée, vous pourrez écrire un brouillon avant de publier vraiment l'article.
+* 'Page d'accueil' : *Attention \!* en cliquant sur cette case, vous remplaceé la page d'accueil par le contenu de cet article.
+* 'Identification nécessaire' : Permet de rendre la page accessible uniquement aux personnes qui sont enregistrées sur le site.
+
+h3 Nouvelle
+La saisie d'une nouvelle est similaire à la saisie d'un article sauf que : 
+* Le menu parent est remplacé par *l'article parent* car les nouvelles sont rattachées à un articles.
+* 'Alerte en page d'accueil' permet de faire s'afficher l'article sur la page d'accueil jusqu'à la date qui sera selectionnée en dessous.
+* 'Date de fin d'alerte' : une fois cette date dépassée, l'article ne sera plus considéré en alerte et disparaitra de la page d'accueil.
+
+h2. Saisie de l'article et décoration du text
+
+L'icone ¤question¤ permet d'afficher cette aide dans un nouvel onglet.
+L'icone ¤eye¤ permet d'afficher une prévisualisation de votre article.
+
+q. Vous pouvez maintenant saisire votre article. La saisie ne se fait qu'en mode texte. Vous ajouterez des décorateurs au texte pour permettre de q. faire la mise en page. Voici les décorateurs possibles.
+
+h3. Titres et lignes
+A utiliser en début de ligne suivi d'un espace.
+* 'h1. ' : Titre de plus haut niveau
+* 'h2. ' : Titre 2
+* 'h3. ' : Titre 3
+* 'h4. ' : Titre 4
+* 'c. ' : Place le contenu en milieu de ligne
+* 'q. ' : Met en avant le texte.
+* '* ' : Va démarrer une liste.
+* '** ' : Va continuer la liste avec un décalage d'un niveau.
+
+h4. Exemples
+{html}<div class="well">{/html}
+h1. h1. Titre 1
+h2. h2. Titre 2
+h3. h3. Titre 3
+h4. h4. Titre 4
+c. c. Affiche au centre
+q. q. Met du text en avant
+* \* démarrage d'une liste de points
+* \* on continue la liste
+** \*\* la liste peu avoir des sous-niveaux
+*** \*\*\* environ autant qu'on le veut.
+**** \*\*\*\* mais au delà de trois, je pense que ça ne sert à rien.
+{html}</div>{/html}
+
+h3. Interieur du texte
+A utiliser dans le texte
+* \*un mot\* va afficher le mot en *gras*.
+* \_un mot\_ va afficher le mot en _souligné_.
+* \-un mot\- va afficher le mot en -barré-.
+* \+un mot\+ va afficher le mot en +italic+.
+* \$un mot\$ va afficher le mot en $monospaced$.
+
+h3. Décoration spéciales
+Voici quelques particularités
+* Si vous démarrez une ligne par \-\-\-\-, vous obtiendrez une ligne de séparation
+
+h4. Exemples
+{html}<div class="well">{/html}
+Un peu de texte suivi par \-\-\-\-
+----
+Et encore suivi d'un peu de texte.
+{html}</div>{/html}
+
+q. Remarque : Vous pouvez utiliser \-\-\-\- pour faire un retour à la ligne complet après avoir intégré une photo. 
+
+h2. Images
+Vous pouvez ajouter des images et des liens à vos articles.
+
+h4. Syntaxe pour les images
+Pour ajouter une image :
+* \!nom.jpg\! : va ajouter l'image qui s'appelle nom.jpg.
+* \!17\! : va ajouter l'image avec l'id 17.
+
+Pour placer l'image, vous pouvez utiliser la syntaxe suivante :
+* \!17|intext\! : affiche l'image au milieu du texte
+* \!17|left\! : affiche l'image à gauche
+* \!17|right\! : affiche l'image à droite
+
+Vous pouvez aussi ajouter un lien avec votre image.
+* \!17|right|lien\! : va ajouter un lien à votre image quand on clique dessus.
+La syntaxe des liens est décrite plus loin.
+
+h4. Exemples
+{html}<div class="well">{/html}
+{html}<img src="img/exemple.jpg" class="cx_right">{/html}*'\!17|right\!'* Voici un exemple avec du texte qui affiche l'image n°17 sur la droite. Le texte s'adapte au tour de l'image avec une mise en forme normale.
+----
+{html}<img src="img/exemple.jpg" class="cx_left">{/html}*'\!17|left\!'* Voici un autre exemple avec du texte qui affiche l'image n°17 sur la gauche cette fois-ci. Le texte s'adapte toujours au tour de l'image avec une mise en forme normale.
+----
+c. en utilisant *'c. \!17|intext\!'* on peut afficher l'image au mileu comme ça :
+c. {html}<img src="img/exemple.jpg">{/html}
+{html}</div>{/html}
+
+h2. Liens
+h4. Syntaxe pour les liens
+Pour vos liens, vous pouvez utiliser une des syntaxes suivantes :
+* \[14\] : lien vers l'article n° 14.
+* \[mot-clé\] : lien vers une page prédéfinie en fonction du mot-clé :
+** home redirige vers la page d'accueil
+** donate redirige vers la page de donation
+* \[http://www.google.com\] : redirige vers le lien qui est donné
+* \[@17\] : redirige vers l'image n°17.
+
+Par défaut, le texte qui est affiché est soit le titre de l'article, soit le nom de l'image soit l'adresse du lien. Si vous souhaitez afficher autre chose, vous pouvez utiliser la syntaxe suivante :
+* \[lien|affichage\] : dans cet exemple le texte afficher est 'affichage'.
+Vous pouvez aussi afficher une image au lieu d'un text :
+* \[lien|@17\] : va afficher l'image 17.
+
+h4. Exemples
+{html}<div class="well">{/html}
+'\[http://www.google.com\]' affiche un lien vers google : [http://www.google.com]
+'\[http://www.google.com|Google\]' affiche un lien vers google : [http://www.google.com|Google]
+'\[home\]' affiche un lien vers la page d'accueil : [home]
+'\[donate\]' affiche un lien vers la page de don : [donate]
+'\[home|Page d'accueil\]' affiche un lien vers la page d'accueil : [home|Page d'accueil]
+'\[donate|Faire une donation\]' affiche un lien vers la page de don : [donate|Faire une donation]
+{html}</div>{/html}
+
+h2. Tableaux
+h4. Exemples
+Un exemple vaut mieux qu'un long discours.
+{html}<div class="well">{/html}
+\|Nom |Code Iso |Superficie |Devise |Nombre d'habitants |
+\|France |FRA |640 679 km² |Euro € |66 616 416 |
+\|Grande-Bretagne |GBR |243 610 km² |Pound sterling £ |64 511 000 |
+\|Espagne |ESP |505 990 km² |Euro €|46 464 053 |
+\|Liban |LBN |10 452 km² |Lebanese pound |4 467 000 |
+
+Va s'afficher :
+
+|Nom |Code Iso |superficie |devise |Nombre d'habitants |
+|France |FRA |640 679 km² |Euro € |66 616 416 |
+|Grande-Bretagne |GBR |243 610 km² |Pound sterling £ |64 511 000 |
+|Espagne |ESP |505 990 km² |Euro €|46 464 053 |
+|Liban |LBN |10 452 km² |Lebanese pound |4 467 000 |
+{html}</div>{/html}
+
+Veuillez noter qu'il ne faut pas d'espace après les caractères de séparation.
+
+h2. Pour les utilisateurs avancés
+* Il est possible d'intégrer directement de l'html dans le modèle grace au balises suivantes : /{html/} ... /{/html/}
+* Et qu'il est possible d'afficher un long texte préformaté avec les balises suivantes : /{pre/} ... /{/pre/}
+* Il est possible d'utiliser les icones de font-awesome avec \¤thumbs-up\¤ va afficher ¤thumbs-up¤
+** Toutes les icones sont disponible sur le site de [http://fortawesome.github.io/Font-Awesome/icons/|Font-Awesome]
+
+h4. Exemple
+{html}<div class="well">{/html}
+\{html\}<strong>Un mot</strong>\{/html\} va s'afficher {html}<strong>Un mot</strong>{/html}
+\{pre\}<strong>Un mot</strong>\{/pre\} va s'afficher {pre}<strong>Un mot</strong>{/pre}
+{html}</div>{/html}
+
+

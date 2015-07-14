@@ -37,9 +37,7 @@ class Translator {
             }
         }
         
-        $this->fetchGroup($this->defaultGroupKey);
         $this->fetchGroup('');
-        //var_dump($this);
     }
 
     function fetchGroup($groupKey) {
@@ -263,7 +261,7 @@ class Translator {
         
         if (count($split) == 2) {
             $group = $split[0] == '' ? $this->defaultGroupKey : $split[0];
-            return htmlspecialchars($this->GetGroupedTranslation($group, substr($key, 1)));
+            return htmlspecialchars($this->GetGroupedTranslation($group, $split[1]));
         }
         
         if (isset($this->cache[$key]))
@@ -305,7 +303,7 @@ class Translator {
 
     private function GetGroupedTranslation($groupedKey, $key) {
         if (!isset($this->groupedCache[$groupedKey]))
-            $this->groupedCache[$groupedKey] = array();
+            $this->fetchGroup($groupedKey);
         
         if (isset($this->groupedCache[$groupedKey][$key]))
             return $this->groupedCache[$groupedKey][$key];

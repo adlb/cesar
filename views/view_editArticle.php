@@ -34,9 +34,9 @@
                               <label class="col-md-5 control-label" for="type"><?php t(':ARTICLE_TYPE') ?></label>
                               <div class="col-md-7">
                                 <select id="type" name="type" class="form-control" ng-model="type">
-                                  <option value="menu"    ><?php t(':TYPE_MENU') ?></option>
-                                  <option value="article" ><?php t(':TYPE_ARTICLE') ?></option>
-                                  <option value="news"    ><?php t(':TYPE_NEWS') ?></option>
+                                  <option value="menu"    ><?php t(':ARTICLE_MENU') ?></option>
+                                  <option value="article" ><?php t(':ARTICLE_ARTICLE') ?></option>
+                                  <option value="news"    ><?php t(':ARTICLE_NEWS') ?></option>
                                 </select>
                               </div>
                             </div>
@@ -118,7 +118,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="" ng-show="type == 'menu' || type == 'article'">
+                            <div class="" ng-show="type == 'article'">
                               <label class="col-md-5 control-label" for="needLogin"><?php t(':NEED_LOGIN') ?></label>
                               <div class="col-md-7">
                                 <div class="checkbox">
@@ -162,11 +162,11 @@
                     <div class="col-md-12">
                         <div class="btn-toolbar" role="toolbar">
                             <div class="btn-group pull-right">
-                                <a type="button" class="btn btn-default" aria-label="Left Align"target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help'))?>">
-                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                <a type="button" class="btn btn-default" aria-label="Left Align"target="_blank" href="<?php echo url(array('controller' => 'builder', 'view' => 'help', 'titleKey' => 'articleManagement'))?>">
+                                    <i class="fa fa-question" aria-hidden="true"></i>
                                 </a>
                                 <a id="actionShow" href="#" type="button" class="btn btn-default" aria-label="Center Align">
-                                    <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>

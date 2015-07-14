@@ -22,10 +22,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400italic,700,400,300' rel='stylesheet' type='text/css'>
 
 	<!-- FAVICONS -->
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="templates/Repute/theme/assets/ico/repute144x144.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="templates/Repute/theme/assets/ico/repute114x114.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="templates/Repute/theme/assets/ico/repute72x72.png">
-	<link rel="apple-touch-icon-precomposed" href="templates/Repute/theme/assets/ico/repute57x57.png">
 	<link rel="shortcut icon" href="templates/Repute/theme/assets/ico/favicon.png">
 </head>
 

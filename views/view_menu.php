@@ -1,5 +1,8 @@
                 <!-- TOPBAR -->
                 <div class="topbar">
+                    <a href="<?php echo url(array('controller' => 'site', 'view' => 'home')) ?>" class="navbar-brand navbar-logo navbar-logo-bigger pull-left">
+						<img src="templates/Repute/theme/assets/img/logo.png" alt="<?php disp($obj,'title'); ?>">
+					</a>
                     <ul class="list-inline top-nav">
                         <?php if (count($obj['languages'])>1) { ?>
                         <li class="dropdown">
@@ -56,6 +59,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'articleWriting')) ?>"><?php t(':ARTICLE_WRITE')?></a></li>
                                 <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'globalSetup')) ?>"><?php t(':GLOBAL_SETUP')?></a></li>
                                 <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'userManagement')) ?>"><?php t(':USER_MANAGEMENT')?></a></li>
                                 <li><a href="<?php echo url(array('controller' => 'site', 'view' => 'help', 'titleKey' => 'donationManagement')) ?>"><?php t(':DONATION_MANAGEMENT')?></a></li>
@@ -73,9 +77,6 @@
 						<span class="sr-only">Toggle Navigation</span>
 						<i class="fa fa-bars"></i>
 					</button>
-					<a href="<?php echo url(array('controller' => 'site', 'view' => 'home')) ?>" class="navbar-brand navbar-logo navbar-logo-bigger">
-						<img src="templates/Repute/theme/assets/img/logo/repute-logo-nav.png" alt="<?php disp($obj,'title'); ?>">
-					</a>
 				</div>
 
 				<!-- MAIN NAVIGATION -->

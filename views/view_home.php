@@ -1,37 +1,30 @@
     <!-- HERO UNIT -->
-    <section class="hero-unit-animated">
-        <div id="carousel-hero-animated" class="carousel">
-            <!-- Slide Wrapper -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <div class="container">
-                        <div class="hero-left pull-left">
-                            <div class="hero-text">
-                                <h2 class="hero-heading animated fadeIn animation-delay-5"><?php t(':MAIN_TITLE') ?></h2>
-                                <p class="lead animated fadeIn animation-delay-7"><?php t(':SUB_TITLE') ?></p>
-                            </div>
-                            <a href="<?php echo url(array('controller'=>'donation', 'view'=>'donate')) ?>" class="btn btn-info btn-lg hero-button animated fadeIn animation-delay-12"><?php t(':DONATE') ?></a>
-                        </div>
-                        <div class="hero-right pull-right">
-                            <img src="templates/Repute/theme/assets/img/hero-unit-obj.png" class="animated fadeInRight animation-delay-9" alt="Repute Business Theme">
-                        </div>
+    <section class="hero-unit">
+        <div id="carousel-hero">
+            <div class="container">
+                <div class="hero-left pull-left">
+                    <div class="hero-text">
+                        <h2 class="hero-heading"><?php t('HOME:MAIN_TITLE') ?></h2>
+                        <p class="lead"><?php t('HOME:SUB_TITLE') ?></p>
                     </div>
                 </div>
+                <div class="hero-right pull-right">
+                    <a href="<?php echo url(array('controller' => 'donation', 'view' => 'donate'))?>">
+                        <img src="templates/Repute/theme/assets/img/donate.jpg" class="animated fadeInRight animation-delay-9" alt="Repute Business Theme">
+                    </a>
+                </div>
             </div>
-            <!-- End Slide Wrapper -->
         </div>
     </section>
     <!-- END HERO UNIT -->
 
-    <section>
-        <?php displayPartial('site', 'alerts', $obj) ?>
-    </section>
+    <?php displayPartial('site', 'alerts', $obj) ?>
     
     <section>
         <!-- BREADCRUMBS -->
         <div class="page-header">
 			<div class="container">
-				<h1 class="page-title pull-left"> <?php t($obj['article']['htmlTitle']) ?> </h1>
+				<h1 class="page-title pull-left"> <?php echo $obj['article']['htmlTitle'] ?> </h1>
 				<ol class="breadcrumb">
 					<?php foreach($obj['article']['links'] as $link) { ?>
                     <li>
@@ -60,23 +53,53 @@
         </div>
     </section>
     
-    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_BoxedContent', 'raw' => true)) ?>
-    
+    <!-- BOXED CONTENT -->
+    <section class="boxed-content-section">
+        <div class="container">
+            <div class="row">
+                <?php for($i=0;$i<4;$i++) { ?>
+                
+                <div class="col-md-6">
+                    <div class="boxed-content left-aligned left-boxed-icon">
+                        <i class="fa fa-<?php t("HOME:BOXES_${i}_ICON") ?>"></i>
+                        <h2 class="boxed-content-title"><?php t("HOME:BOXES_${i}_TITLE") ?></h2>
+                        <p><?php t("HOME:BOXES_${i}_CONTENT") ?></p>
+                    </div>
+                </div>
+                
+                <?php } ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- END BOXED CONTENT -->
     <?php displayPartial('site', 'latestNews', array()) ?>
     
     <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Numbers', 'raw' => true)); ?>
 
-    <?php displayPartial('site', 'fixedArticle', array('titleKey' => 'Home_Testimonials', 'raw' => true)); ?>
-
+    <!-- TESTIMONIAL -->
+    <section class="testimonial-with-bg parallax">
+        <div class="container">
+            <section class="testimonial">
+                <div class="testimonial-body">
+                    <p>"<?php t('HOME:TESTIMONIAL_PHRASE') ?>"</p>
+                    <div class="testimonial-author">
+                        <span><span class="author-name"><?php t('HOME:TESTIMONIAL_AUTHOR') ?></span> <em><?php t('HOME:TESTIMONIAL_QUALITY') ?></em></span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+    <!-- END TESTIMONIAL -->
+        
     <!-- CALL-TO-ACTION -->
     <section class="call-to-action">
         <div class="container">
             <div class="pull-left">
-                <h2 class="section-heading"><?php t(':AQUESTION') ?></h2>
+                <h2 class="section-heading"><?php t(':A_QUESTION') ?></h2>
             </div>
             <div class="pull-right">
-                <span><?php t(array(':SEND_A_MAIL_AT_{0}_OR', $obj['contact'])) ?></span>&nbsp;&nbsp;
-                <a href="#" class="btn btn-lg btn-primary">CONTACT US</a>
+                <span><?php t(array(':SEND_A_MAIL_AT_{0}', $obj['contact'])) ?></span>
             </div>
         </div>
     </section>

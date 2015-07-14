@@ -36,3 +36,32 @@ LOST_PASSWORD|J'ai oublié mon mot de passe
 PLEASE_SIGN_IN|Connexion
 EMAIL_UNKOWN_CREATE_AN_ACCOUNT|email inconnu - créez un compte
 REGISTER|s'enregistrer
+ARTICLE_TYPE|Type d'article
+ARTICLE_MENU|Entrée de menu
+ARTICLE_ARTICLE|Article
+ARTICLE_NEWS|Nouvelle
+TITLE|Titre
+PLACEHOLDER_TITLE|le titre
+SHOW|Rendre public
+ARTICLE_PARENT_MENU|Menu parent
+TOP_LEVEL_MENU|[Menu Principal]
+ARTICLE_IMAGE|Image principale de l'article
+ARTICLE_PLEASE_LINK_IMAGE_480x300|Veuillez selectionner une image de 480x300 pixels
+ARTICLE_DATE|Date de l'article
+HOME|Page d'accueil
+NEED_LOGIN|Indentification nécessaire
+NO_PICTURE|Pas d'
+SAVE|Enregistrer
+ARTICLE_PARENT_NEWS|Article parent
+ALERT|Alerte en page d'accueil
+ARTICLE_DATEALERT|Date de fin d'alerte
+ARTICLE_WRITE|Ecrire un article
+USEFUL_LINKS|Liens Utiles
+NEWSLETTER|Newsletter
+GET_CONNECTED|Restez connecté
+GET_CONNECTED_BASE_LINE|Vous avez aimé cet article ? Alors partagez-le avec vos amis en cliquant sur les boutons ci-dessous :
+EMAIL|email
+SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
+A_QUESTION|Une question ?
+SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
+SUBSCRIBE|S'inscrire

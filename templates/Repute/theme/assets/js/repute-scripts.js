@@ -14,23 +14,7 @@ $(document).ready( function() {
 		});
 	}
 
-
-	/*----------------------------/
-	/* HERO UNIT
-	/*---------------------------*/
-
-	if($('#carousel-hero-animated').length > 0) {
-			$('#carousel-hero-animated').carousel({
-				interval: 4000
-			})
-			.on( 'slide.bs.carousel', function(slide) {
-			$(this).find('.item .hero-right img').removeClass('bounceOutRight');
-			$(this).find('.item.active .hero-right img').addClass('bounceOutRight');
-		});
-	}
-
-
-	/*----------------------------/
+    /*----------------------------/
 	/* NAVBAR
 	/*---------------------------*/
 
@@ -52,43 +36,11 @@ $(document).ready( function() {
 	/*---------------------------*/
 
 	if($('.slick-carousel').length > 0) {
-		$('.recent-works.slick-carousel .container').slick({
-			dots: true,
-			slidesToShow: 3,
-			cssEase: 'ease-in',
-			prevArrow: '<button type="button" data-role="none" class="btn slick-prev">Previous</button>',
-			nextArrow: '<button type="button" data-role="none" class="btn slick-next">Next</button>',
-			responsive: [
-				{
-					breakpoint: 993,
-					settings: {
-						slidesToShow: 2
-					}
-				},
-				{
-					breakpoint: 481,
-					settings: {
-						slidesToShow: 1
-					}
-				}
-			]
-		});
-
 		$('.testimonial').slick({
 			speed: 500,
 			fade: true,
 			prevArrow: '<button type="button" data-role="none" class="btn slick-prev">Previous</button>',
 			nextArrow: '<button type="button" data-role="none" class="btn slick-next">Next</button>',
-		});
-
-		$('#carousel-hero .carousel-inner').slick({
-			speed: 800,
-			dots: true,
-			fade: true,
-			autoplay: true,
-			autoplaySpeed: 2500,
-			prevArrow: '<button type="button" data-role="none" class="carousel-control left slick-prev">Previous</button>',
-			nextArrow: '<button type="button" data-role="none" class="carousel-control right slick-next">Next</button>',
 		});
 	}
 	
@@ -101,46 +53,7 @@ $(document).ready( function() {
 		$('.parallax').stellar();
 	}
 
-
-	/*----------------------------/
-	/* PORTFOLIO ISOTOPE INIT
-	/*---------------------------*/
-
-	if($('.portfolio-isotope').length > 0) {
-		$container = $('.portfolio-isotope');
-
-		var $isoObj = $container.isotope({
-			itemSelector: '.portfolio-item',
-			layoutMode: 'fitRows'
-		});
-
-		$container.parent().height($container.height());
-
-		$('.portfolio-item-filters a').click( function(e) {
-			e.preventDefault();
-
-			var selector = $(this).attr('data-filter');
-			$container.isotope({
-				filter: selector
-			});
-
-			$container.parent().height($container.height());
-
-			$('.portfolio-item-filters a').removeClass('active');
-			$(this).addClass('active');
-		});
-	}
-
-	if($('.media-carousel').length > 0) {
-		$('.media-carousel').slick({
-			dots: true,
-			prevArrow: '<button type="button" data-role="none" class="btn slick-prev">Previous</button>',
-			nextArrow: '<button type="button" data-role="none" class="btn slick-next">Next</button>'
-		});
-	}
-
-
-	/*----------------------------/
+    /*----------------------------/
 	/* BLOG
 	/*---------------------------*/
 
