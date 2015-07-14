@@ -32,6 +32,7 @@ class UserDal extends Dal {
         // can be
         //  * Valid
         //  * NotValidYet
+        //  * OptOut
 
         'origin' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR)
         // origin

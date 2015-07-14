@@ -72,7 +72,7 @@
                     <div class="" ng-show="type == 'menu' || type == 'article' || type == 'news'">
                       <label class="col-md-5 control-label" for="titleTrad">Title</label>
                       <div class="col-md-7">
-                      <input id="title" name="titleTrad" placeholder="placeholder" class="form-control input-md" type="text" value="<?php echo $obj['form']['titleTrad'] ?>">
+                      <input id="title" name="titleTrad" placeholder="<?php t(':PLACEHOLDER_TITLE') ?>" class="form-control input-md" type="text" value="<?php echo $obj['form']['titleTrad'] ?>">
                       </div>
                     </div>
 
@@ -92,7 +92,7 @@
                       <label class="col-md-5 control-label" for="date">Date</label>
                       <div class="col-md-7">
                         <div class='input-group date' id='datetimepicker'>
-                            <input id="date" name="date" placeholder="placeholder" type='text' class="form-control" value="<?php echo $obj['form']['date'] ?>" />
+                            <input id="date" name="date" placeholder="<?php t(':PLACEHOLDER_DATE')?>" type='text' class="form-control" value="<?php echo $obj['form']['date'] ?>" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -147,7 +147,7 @@
                       <label class="col-md-5 control-label" for="date">DateAlert</label>
                       <div class="col-md-7">
                         <div class='input-group date' id='datetimepickerAlert'>
-                            <input id="datealert" name="datealert" placeholder="placeholder" type='text' class="form-control" value="<?php echo $obj['form']['datealert'] ?>" />
+                            <input id="datealert" name="datealert" placeholder="<?php t(':PLACEHOLDER_DATEALERT')?>" type='text' class="form-control" value="<?php echo $obj['form']['datealert'] ?>" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>

@@ -45,7 +45,7 @@
                             <p><?php t(':SUBSCRIBE_TO_OUR_NEWSLETTER') ?></p>
                             <form class="newsletter-form" method="POST" action="<?php echo url(array('controller' => 'user', 'action' => 'registerNewsLetter')) ?>">
                                 <div class="input-group input-group-lg">
-                                    <input type="email" class="form-control" name="email" placeholder="youremail@domain.com">
+                                    <input type="email" class="form-control" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL') ?>">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit"><i class="fa fa-spinner fa-spin"></i><span>SUBSCRIBE</span></button>
                                     </span>

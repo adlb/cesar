@@ -16,7 +16,7 @@
                         <?php echo $alert['htmlContent'] ?>
                         <br/>
                         <p class="read-more">
-                            <a href="<?php echo $alert['url'] ?>" class="btn btn-primary"> [READ_MORE] <i class="fa fa-long-arrow-right"></i></a>
+                            <a href="<?php echo $alert['url'] ?>" class="btn btn-primary"> [<?php t(':READ_MORE') ?>] <i class="fa fa-long-arrow-right"></i></a>
                         </p>
                       </div>
                     </div>

@@ -11,7 +11,7 @@
                     <div class="col-md-5 col-sm-12">
                         <div class="input-group">
                             <span class="input-group-addon">€</span>
-                            <input id="amount" name="amount" class="form-control" placeholder="montant" required="" type="text" value="<?php echo $obj['currentDonation']['amount'] ?>">
+                            <input id="amount" name="amount" class="form-control" placeholder="<?php t(':PLACEHOLDER_AMOUNT') ?> required="" type="text" value="<?php echo $obj['currentDonation']['amount'] ?>">
                         </div>
                         <p class="help-block"><?php t(':AMOUNT_HELP') ?></p>
                     </div>

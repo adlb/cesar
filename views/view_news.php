@@ -12,7 +12,7 @@
                                         <figure class="featured-image">
                                             <a href="<?php echo $obj['url']; ?>">
                                                 <div class="post-date-info clearfix">
-                                                    <span class="post-month"><?php t(':MONTH_SHORT_'.date("M", time($obj['date']))) ?></span>
+                                                    <span class="post-month"><?php t(':MONTH_SHORT_'.strtoupper(date("M", time($obj['date'])))) ?></span>
                                                     <span class="post-date"><?php echo date('j', time($obj['date'])) ?></span>
                                                     <span class="post-year"><?php echo date('Y', time($obj['date'])) ?></span>
                                                 </div>

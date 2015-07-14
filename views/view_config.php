@@ -13,7 +13,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Title">Title</label>
   <div class="col-md-5">
-  <input id="Title" name="Title" placeholder="user" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" />
+  <input id="Title" name="Title" placeholder="Title" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" />
   </div>
 </div>
 
@@ -21,7 +21,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Contact">Contact Email</label>
   <div class="col-md-5">
-  <input id="Contact" name="Contact" placeholder="email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" />
+  <input id="Contact" name="Contact" placeholder="Email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" />
   </div>
 </div>
 

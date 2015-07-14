@@ -54,7 +54,13 @@ class Crowd {
         
         if (!isset($password) || trim($password) == '') {
             if (count($users) != 0) {
-                return true;
+                if ($users[0]['emailStatus'] == 'OptOut') {
+                    $users[0]['emailStatus'] == 'Validated';
+                    $this->userDal->TrySave($users[0]);
+                    return true;
+                }
+                $error = ":YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER";
+                return false;
             }
             $userToCreate = array(
                 'email' => $email,
@@ -70,7 +76,7 @@ class Crowd {
             return true;
         }
 
-        if (count($this->userDal->GetWhere(array('email' => $email))) > 0) {
+        if (count($users) > 0) {
             $error = ':USER_EXISTS';
             return false;
         }

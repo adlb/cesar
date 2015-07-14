@@ -21,10 +21,10 @@
                 <div ng-show="usersAnalysed">
                     <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
                     <div class="btn-group">
-                      <label class="btn btn-default" ng-model="filterRadio" btn-radio=""> All </label>
-                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'EMAIL'}"> All errors </label>
-                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'NEW'}"> New </label>
-                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'UPDATE'}"> Update </label>
+                      <label class="btn btn-default" ng-model="filterRadio" btn-radio=""> <?php t(':ALL') ?> </label>
+                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'EMAIL'}"> <?php t(':ALL_ERRORS') ?> </label>
+                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'NEW'}"> <?php t(':NEW') ?> </label>
+                      <label class="btn btn-default" ng-model="filterRadio" btn-radio="{status:'UPDATE'}"> <?php t(':UPDATE') ?> </label>
                     </div>
                     {{ filterRadio }}
                     <table st-table="rowCollection" class="table table-striped">
@@ -54,9 +54,9 @@
                     </table>
                     <div class="form-group">
                       <div class="col-md-4 pull-right">
-                        <a class="btn btn-default" ng-click="usersAnalysed=false">Back</a>
-                        <button id="buttonRemove" type="button" class="btn btn-primary" ng-click="removeUpToDate()">Remove Up to date</button>
-                        <button id="buttonInsert" type="button" class="btn btn-primary" ng-real-click="uploadAll()" ng-confirm-click="<?php t(':ARE_YOU_SURE') ?>">Update All</button>
+                        <a class="btn btn-default" ng-click="usersAnalysed=false"><?php t(':BACK') ?></a>
+                        <button id="buttonRemove" type="button" class="btn btn-primary" ng-click="removeUpToDate()"><?php t(':REMOVE_UP_TO_DATE') ?></button>
+                        <button id="buttonInsert" type="button" class="btn btn-primary" ng-real-click="uploadAll()" ng-confirm-click="<?php t(':ARE_YOU_SURE') ?>"><?php t(':UPDATE_ALL') ?></button>
                       </div>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                     <!-- Button -->
                     <div class="form-group">
                         <div class="col-md-2 pull-right">
-                            <a class="btn btn-default" href="<?php echo url(array('controller' => 'site', 'view' => '')) ?>">Cancel</a>
-                            <button id="buttonCheck" type="button" class="btn btn-primary" ng-click="checkDatas();">Validate</button>
+                            <a class="btn btn-default" href="<?php echo url(array('controller' => 'site', 'view' => '')) ?>"><?php t(':CANCEL') ?></a>
+                            <button id="buttonCheck" type="button" class="btn btn-primary" ng-click="checkDatas();"><?php t(':NEXT') ?></button>
                         </div>
                     </div>
                 </div>

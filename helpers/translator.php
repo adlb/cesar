@@ -311,6 +311,7 @@ class Translator {
         } else {
             $new = $dbLines[0];
         }
+        sort($lines);
         $new['text'] = join("\n", $lines);
         $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);

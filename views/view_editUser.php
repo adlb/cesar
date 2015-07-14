@@ -16,7 +16,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="lastName"><?php t(':LASTNAME') ?></label>
                       <div class="col-md-4">
-                      <input id="lastName" name="lastName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'lastName') ?>">
+                      <input id="lastName" name="lastName" placeholder="<?php t(':PLACEHOLDER_LASTNAME') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'lastName') ?>">
                       </div>
                     </div>
 
@@ -24,7 +24,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="firstName"><?php t(':FIRSTNAME') ?></label>
                       <div class="col-md-4">
-                      <input id="firstName" name="firstName" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'firstName') ?>">
+                      <input id="firstName" name="firstName" placeholder="<?php t(':PLACEHOLDER_FIRSTNAME') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'firstName') ?>">
                       </div>
                     </div>
 
@@ -35,7 +35,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="addressLine1"><?php t(':ADDRESS_LINE_1')?></label>
                       <div class="col-md-6">
-                      <input id="addressLine1" name="addressLine1" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
+                      <input id="addressLine1" name="addressLine1" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_1') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
                       </div>
                     </div>
 
@@ -43,7 +43,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="addressLine2"><?php t(':ADDRESS_LINE_2')?></label>
                       <div class="col-md-6">
-                      <input id="addressLine2" name="addressLine2" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
+                      <input id="addressLine2" name="addressLine2" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_2') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
                       </div>
                     </div>
 
@@ -51,7 +51,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="postalCode"><?php t(':POSTAL_CODE')?></label>
                       <div class="col-md-6">
-                      <input id="postalCode" name="postalCode" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
+                      <input id="postalCode" name="postalCode" placeholder="<?php t(':PLACEHOLDER_POSTAL_CODE') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
                       </div>
                     </div>
 
@@ -59,7 +59,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="city"><?php t(':CITY')?></label>
                       <div class="col-md-6">
-                      <input id="city" name="city" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'city') ?>">
+                      <input id="city" name="city" placeholder="<?php t(':PLACEHOLDER_CITY') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'city') ?>">
                       </div>
                     </div>
 
@@ -67,7 +67,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="country"><?php t(':COUNTRY')?></label>
                       <div class="col-md-6">
-                      <input id="country" name="country" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'country') ?>">
+                      <input id="country" name="country" placeholder="<?php t(':PLACEHOLDER_COUNTRY') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'country') ?>">
                       </div>
                     </div>
 
@@ -75,7 +75,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="phone"><?php t(':PHONE')?></label>
                       <div class="col-md-6">
-                      <input id="phone" name="phone" placeholder="placeholder" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'phone') ?>">
+                      <input id="phone" name="phone" placeholder="<?php t(':PLACEHOLDER_PHONE') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'phone') ?>">
                       </div>
                     </div>
 
@@ -101,7 +101,7 @@
                       <label class="col-md-4 control-label" for="emailStatus"><?php t(':EMAIL_STATUS')?></label>
                       <div class="col-md-6">
                         <select id="emailStatus" name="emailStatus" class="form-control">
-                          <?php foreach(array('Valid', 'NotValidYet') as $v) { ?>
+                          <?php foreach(array('Valid', 'NotValidYet', 'OptOut') as $v) { ?>
                           <option value="<?php echo $v ?>" <?php echo $obj['form']['emailStatus'] == $v ? 'SELECTED' : ''; ?>><?php t(':EMAILSTATUS_'.$v) ?></option>
                           <?php } ?>
                         </select>
@@ -114,7 +114,7 @@
                       <div class="col-md-6">
                         <select id="origin" name="origin" class="form-control">
                           <?php foreach(array('Register', 'Payment', 'External', 'NewsLetter') as $v) { ?>
-                          <option value="<?php echo $v ?>" <?php echo $obj['form']['origin'] == $v ? 'SELECTED' : ''; ?>><?php t(':EMAILSTATUS_'.$v) ?></option>
+                          <option value="<?php echo $v ?>" <?php echo $obj['form']['origin'] == $v ? 'SELECTED' : ''; ?>><?php t(':USERORIGIN_'.$v) ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -125,8 +125,8 @@
                     <!-- Button (Double) -->
                     <div class="form-group">
                       <div class="col-md-2 pull-right">
-                        <a class="btn btn-default" href="<?php disp($obj, 'callback') ?>">Cancel</a>
-                        <button id="button2id" name="button2id" class="btn btn-primary">Validate</button>
+                        <a class="btn btn-default" href="<?php disp($obj, 'callback') ?>"><?php t(':CANCEL') ?></a>
+                        <button id="button2id" name="button2id" class="btn btn-primary"><?php t(':SAVE') ?></button>
                       </div>
                     </div>
                     </fieldset>

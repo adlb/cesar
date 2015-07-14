@@ -25,7 +25,31 @@ class ControllerUser {
     function action_registerNewsLetter(&$obj, $params) {
         if (!$this->crowd->TryRegister($params['email'], '', $error)) {
             $this->webSite->AddMessage('warning', $error);
+        } else {
+            if ($this->mailer->TrySendNewsLetterSubscriptionMail($params['email'])) {
+                $this->webSite->AddMessage('success', ':YOU_HAVE_SUBSCRIBE_TO_NEWS_LETTER');
+            }
         }
+        $this->webSite->RedirectTo(array('controller' => 'site'));
+    }
+    
+    function action_unsubscribe(&$obj, $params) {
+        if (!isset($params['email'])) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        if (!isset($params['key']) || !$this->crowd->CheckKey($params['email'], $params['key'], $user)) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        $user['emailStatus'] = 'OptOut';
+        if (!$this->TryUpdateUser($user, $error)) {
+            $this->webSite->AddMessage('warning', $error);
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+        
+        $this->webSite->AddMessage('success', ':YOU_HAVE_BEEN_UNSUBSCRIBED_FROM_NEWSLETTER');
         $this->webSite->RedirectTo(array('controller' => 'site'));
     }
     
@@ -272,11 +296,7 @@ class ControllerUser {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
-        if (!isset($params['key'])) {
-            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
-            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
-        }
-        if (!$this->crowd->CheckKey($params['email'], $params['key'], $user)) {
+        if (!isset($params['key']) || !$this->crowd->CheckKey($params['email'], $params['key'], $user)) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }

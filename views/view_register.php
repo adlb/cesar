@@ -39,7 +39,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordnothashed1"><?php t(':PASSWORD1')?></label>
   <div class="col-md-3">
-    <input id="passwordnothashed1" name="passwordnothashed1" placeholder="<?php t(':PLACEHOLDER_PASSWORD1')?>" class="form-control input-md" type="password" autocomplete="off">
+    <input id="passwordnothashed1" name="passwordnothashed1" placeholder="<?php t(':PLACEHOLDER_PASSWORD')?>" class="form-control input-md" type="password" autocomplete="off">
     <input id="password1" type="hidden" name="password1" />
   </div>
 </div>

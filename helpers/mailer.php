@@ -51,12 +51,9 @@ class Mailer {
         return true;
     }
     
-    public function TrySendForgotPasswordMail($email) {
-        if (!$this->crowd->TryGetFromEmail($email, $user))
-            return false;
-        
+    private function TrySendTemplatedEmail($email, $articleKey, $macros) {
         $obj = array();
-        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj,  array('titleKey' => 'MailForgotPassword'));
+        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj,  array('titleKey' => $articleKey));
         
         ob_start();
         Render('mailContainer', $view, $obj);
@@ -64,7 +61,7 @@ class Mailer {
         ob_end_clean();
         
         $obj = array();
-        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticleText($obj,  array('titleKey' => 'MailForgotPassword'));
+        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticleText($obj,  array('titleKey' => $articleKey));
         ob_start();
         Render('mailContainerText', $view, $obj);
         $mailtext=ob_get_contents();
@@ -72,15 +69,51 @@ class Mailer {
         
         $mailhtml = str_replace('@@useremail@@', $email, $mailhtml);
         $mailtext = str_replace('@@useremail@@', $email, $mailtext);
+                
+        foreach($macros as $k => $v) {
+            $mailhtml = str_replace('@@'.$k.'@@', $v, $mailhtml);
+            $mailtext = str_replace('@@'.$k.'@@', $v, $mailtext);
+        }
         
+        return $this->TrySendSimpleMail($email, $this->translator->GetTranslation('titleKey'), $mailhtml, $mailtext);
+    }
+    
+    public function TrySendForgotPasswordMail($email) {
         if (!$this->crowd->TryGetKey($email, $key))
             return false;
 
-        $link = $this->webSite->urlPrefix.url(array('controller' => 'user', 'view' => 'resetPassword', 'email' => $email, 'key' => $key));
-        $mailhtml = str_replace('@@initpasswordlink@@', $link, $mailhtml);
-        $mailtext = str_replace('@@initpasswordlink@@', $link, $mailtext);
+        $macros = array(
+            'initpasswordlink' => $this->webSite->urlPrefix.url(array('controller' => 'user', 'view' => 'resetPassword', 'email' => $email, 'key' => $key))
+        );
         
-        return $this->TrySendSimpleMail($email, $this->translator->GetTranslation('MailForgotPassword'), $mailhtml, $mailtext);
+        return $this->TrySendTemplatedEmail($email, 'Mail_ForgotPassword', $macros);
+    }
+    
+    public function TrySendNewsLetterSubscriptionMail($email) {
+        if (!$this->crowd->TryGetKey($email, $key))
+            return false;
+
+        $macros = array(
+            'newsletterunsubscribelink' => $this->webSite->urlPrefix.url(array('controller' => 'user', 'action' => 'unsubscribe', 'email' => $email, 'key' => $key))
+        );
+        
+        return $this->TrySendTemplatedEmail($email, 'Mail_NewsLetterSubscription', $macros);
+    }
+    
+    public function TrySendDonationConfirmationMail($donation) {
+        $macros = $donation;
+        $macros['amount'] = number_format($macros['amount'], 2);
+        
+        switch($donation['type']) {
+            case 'cb' :
+                return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_CB', $macros);
+            case 'vir' :
+                return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_VIR', $macros);
+            case 'chq' :
+                return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_CHQ', $macros);
+        }
+        
+        return false;
     }
 }
 

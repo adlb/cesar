@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-	<title>Home | <?php echo $obj['title'] ?></title>
+	<title><?php echo $obj['title'] ?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Responsive Multipurpose Bootstrap Theme">

@@ -77,7 +77,7 @@ class ControllerDonation {
             $donation['phone'] = $user['phone'];
         } else {
             $this->crowd->TryRegister($param['email'], '', $error);
-            if ($this->crowd->TryGetFromEmail($donation['email'], $user)) {
+            if ($this->crowd->TryGetFromEmail($param['email'], $user)) {
                 $donation['userid'] = $user['id'];
             } else {
                 $donation['userid'] = null;
@@ -107,7 +107,10 @@ class ControllerDonation {
         $_SESSION['currentDonation'] = null;
         unset($_SESSION['currentDonation']);
         
-        //Mailer ! fixme.
+        if (!$this->mailer->TrySendDonationConfirmationMail($donation)) {
+            $this->webSite->AddMessage('warning', ':IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL');
+            return $this->view_donate($obj, array());
+        }
         
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id']));
     }
