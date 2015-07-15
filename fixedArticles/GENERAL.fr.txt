@@ -51,7 +51,7 @@ ARTICLE_PLEASE_LINK_IMAGE_480x300|Veuillez selectionner une image de 480x300 pix
 ARTICLE_DATE|Date de l'article
 HOME|Page d'accueil
 NEED_LOGIN|Indentification nécessaire
-NO_PICTURE|Pas d'
+NO_PICTURE|Pas d'image
 SAVE|Enregistrer
 ARTICLE_PARENT_NEWS|Article parent
 ALERT|Alerte en page d'accueil
