@@ -22,7 +22,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400italic,700,400,300' rel='stylesheet' type='text/css'>
 
 	<!-- FAVICONS -->
-	<link rel="shortcut icon" href="templates/Repute/theme/assets/ico/favicon.png">
+	<link rel="shortcut icon" href="templates/Repute/theme/assets/ico/favicon.png?v=2">
 </head>
 
 <body>
