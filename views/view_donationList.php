@@ -14,7 +14,7 @@
 
     <div class="page-header">
         <div class="container">
-            <h1 class="page-title pull-left"> <?php t(':MODIFY_DONATION') ?> </h1>
+            <h1 class="page-title pull-left"> <?php t(':DONATION_MANAGEMENT') ?> </h1>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
         <div class="container" id="exportable">
             <table class="table table-hover table-bordered table-condensed table-striped">
                 <caption>
-                    <?php t(':LIST_USERS') ?>
+                    <?php t(':DONATIONS_LIST') ?>
                     <ul class="list-inline pull-right">
                         <li>
                             <?php if ($obj['isFiltered']) { ?>

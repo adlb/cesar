@@ -28,3 +28,8 @@ article p {
 [deferred-cloak], [data-deferred-cloak], [x-deferred-cloak], .deferred-cloak {
     display: none;
 }
+
+.clickableCell:hover {
+    cursor: hand; 
+    cursor: pointer;
+}

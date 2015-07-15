@@ -62,6 +62,7 @@ class Translator {
                 $handle = fopen('fixedArticles/'.$groupKey.'.'.$this->language.'.txt', "r");
                 if ($handle) {
                     while (($line = fgets($handle)) !== false) {
+                        $line = trim($line);
                         $split = explode('|', $line);
                         if (count($split) >= 2)
                             $this->groupedCache[$groupKey][$split[0]] = $split[1];
@@ -69,15 +70,15 @@ class Translator {
                     fclose($handle);
                 }
             }
-            $lines = $this->textDal->GetWhere(array('key' => $this->defaultGroupKey, 'language' => $this->language));
+            $lines = $this->textDal->GetWhere(array('key' => $groupKey, 'language' => $this->language));
             if (count($lines) == 1) {
                 foreach(explode("\n", $lines[0]['text']) as $line) {
                     $split = explode('|', $line);
-                    // FIXME : hack to override first file.
-                    if (count($split) >= 2 && !isset($this->groupedCache[$groupKey]))
+                    if (count($split) >= 2) // && !isset($this->groupedCache[$groupKey]))
                         $this->groupedCache[$groupKey][$split[0]] = $split[1];
                 }
             }
+            $this->SaveGroupedCache($groupKey);
         }
     }
     
@@ -239,6 +240,7 @@ class Translator {
                 $this->SubmitForValidation($text);
                 break;
             default:
+                return;
                 break;
         }
 
@@ -253,9 +255,12 @@ class Translator {
         $split = explode(':', $key);
         if (count($split) == 2 && $split[0] == 'file') {
             if (file_exists('fixedArticles/'.$split[1].'.txt')) {
-                return file_get_contents('fixedArticles/'.$split[1].'.txt');
+                $data = file_get_contents('fixedArticles/'.$split[1].'.txt');
+                $data = str_replace("\r\n", "\n", $data);
+                $data = str_replace("\r", "\n", $data);
+                return $data;
             } else {
-                return " ";
+                return $split[1];
             }
         }
         
@@ -310,9 +315,15 @@ class Translator {
         
         //Not in cache then add it in cache and DB
         $this->groupedCache[$groupedKey][$key] = $key;
+        $this->SaveGroupedCache($groupedKey);
+        return $this->groupedCache[$groupedKey][$key];
+    }
+    
+    private function SaveGroupedCache($groupedKey) {
         $lines = array();
         foreach($this->groupedCache[$groupedKey] as $k => $v)
             $lines[] = $k.'|'.$v;
+        
         $dbLines = $this->textDal->GetWhere(array('key' => $groupedKey, 'language' => $this->language));
         if (count($dbLines) == 0) {
             $new = array(
@@ -329,7 +340,6 @@ class Translator {
         $new['text'] = join("\n", $lines);
         $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);
-        return $this->groupedCache[$groupedKey][$key];
     }
 }
 

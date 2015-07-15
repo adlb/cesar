@@ -40,7 +40,7 @@
             
                 <div class="row">
                     <div class="col-md-6">
-                        <strong>From :</strong> <ul class="list-inline pull-right">
+                        <strong><?php t('TRANSLATION_FROM') ?> :</strong> <ul class="list-inline pull-right">
                             <li role="presentation" ng-repeat="language in languages" ng-class="{ active: (language.name == languageFrom) }">
                                 <a ng-href="#"
                                     ng-click="$parent.languageFrom = language.name;">{{ language.name }}</a>
@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <strong>Traduction to : {{ languageTo }}</strong>
+                        <strong><?php t('TRANSLATION_TO') ?> : {{ languageTo }}</strong>
                     </div>
                 </div>
                 <div class="row">
@@ -66,7 +66,7 @@
                     <div class="col-md-6">
                             <textarea id="tradTo"
                                 class="form-control" 
-                                style="font-family: monospace; white-space: pre;" 
+                                style="font-family: monospace; white-space: pre-wrap;" 
                                 id="nextText" 
                                 name="nextText" 
                                 rows="10" ng-show="textKey != ''"
@@ -79,16 +79,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-inline pull-right">
-                        <?php foreach($obj['actions'] as $action) { ?>
                             <li>
-                                <button type=submit
-                                    id="actionPushed" 
-                                    name="actionPushed" 
-                                    class="btn btn-<?php echo $action['type']?> primary pull-right" 
-                                    value="<?php echo $action['value']?>"
-                                   ><?php echo $action['name']?></button>
+                                <a class="btn btn-default" href="javascript:history.back();"><?php t(':CANCEL') ?></a>
                             </li>
-                        <?php } ?>
+                            <?php foreach($obj['actions'] as $action) { ?>
+                                <li>
+                                    <button type=submit
+                                        id="actionPushed" 
+                                        name="actionPushed" 
+                                        class="btn btn-<?php echo $action['type']?>" 
+                                        value="<?php echo $action['value']?>"
+                                       ><?php echo $action['name']?></button>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 MAIN_TITLE|Malte-Liban
-SUB_TITLE|28 ans sur le terrain aux services des libannais 
+SUB_TITLE|28 ans sur le terrain au service des libannais 
 FOOTER_TEXT_UNDER_LOGO|Le courage des Libanais est légendaire, encore faut-il leur donner la chance de vivre. Chers Amis, le Liban, et nous avec lui, voulons suivre le regard du berger qui guette l'aurore, certains que cette aurore va bientôt se lever sur un pays que tant de souffrances partagées ont fait profondément naître.
 TESTIMONIAL_PHRASE|Je ne te demande pas quelle est ta race ou ta religion, mais quelle est ta souffrance.
 TESTIMONIAL_AUTHOR|Pasteur

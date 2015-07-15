@@ -93,7 +93,9 @@
                     </ul>
                     <p>{{ selectedMedia.name }}</p>
                     <div class="text-center">
-                        <img style="height: 160px; max-width: 100%;" ng-src="{{ selectedMedia.file }}" style="display:inline-block;"/>
+                        <a ng-href="{{ selectedMedia.file }}">
+                            <img style="height: 160px; max-width: 100%;" ng-src="{{ selectedMedia.file.substr(selectedMedia.file.length - 4) == '.pdf' ? 'img/pdf.png' : selectedMedia.file }}" style="display:inline-block;"/>
+                        </a>
                         <p><strong><small>id: {{ selectedMedia.id }} - taille: {{ selectedMedia.width }}x{{ selectedMedia.height }}</small></strong></p>
                     </div>
                 </div>

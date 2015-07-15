@@ -74,11 +74,21 @@ class ControllerTranslationManager {
     }
 
     function action_saveText(&$obj, $params) {
-        $nextTitle = isset($params['nextTitle']) ? $params['nextTitle'] : '';
-        $nextText = isset($params['nextText']) ? $params['nextText'] : '';
+        $redirect = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'translationManager', 'view' => 'translationList'));
+        if (!isset($params['actionPushed']) || $params['actionPushed'] == 'cancel') {
+            $this->webSite->RedirectTo($redirect);
+        }
+    
+        $nextTitle = isset($params['nextTitle']) ? trim($params['nextTitle']) : '';
+        $nextText = isset($params['nextText']) ? trim($params['nextText']) : '';
 
         $titleKey = isset($params['titleKey']) ? $params['titleKey'] : die('ERREUR, what are you trying to do ?');
         $textKey = isset($params['textKey']) ? $params['textKey'] : die('ERREUR, what are you trying to do ?');
+        
+        if ($titleKey != '' && $nextTitle == '') {
+            $this->webSite->AddMessage('warning', ':TITLE_CANT_BE_EMPTY');
+            $this->webSite->RedirectTo($redirect);
+        }
         
         $lg = isset($params['lg']) ? $params['lg'] : die('ERREUR, what are you trying to do ?');
 
@@ -87,7 +97,7 @@ class ControllerTranslationManager {
         $this->translator->UpdateTranslation($action, $lg, $titleKey, $nextTitle, true, 'pureText');
         $this->translator->UpdateTranslation($action, $lg, $textKey, $nextText, false, 'decoratedText');
         
-        $this->webSite->RedirectTo(url(array('controller' => 'translationManager', 'view' => 'translationList')));
+        $this->webSite->RedirectTo($redirect);
     }
 
     function view_translationList(&$obj, $params) {
@@ -104,6 +114,7 @@ class ControllerTranslationManager {
         foreach($this->textDal->SelectDistinct('key', array('usage' => 'grouped')) as $groupedKey) {
             $fakeArticle = array(
                 'id' => 0,
+                'status' => 'show',
                 'type' => 'groupedTrad',
                 'titleTrad' => $this->translator->GetTranslation(':GROUPED_KEY_'.$groupedKey),
                 'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $groupedKey),
@@ -113,6 +124,15 @@ class ControllerTranslationManager {
             );
             
             array_unshift($articles, $fakeArticle);
+        }
+        
+        $map = array(
+            'menu' => $this->translator->GetTranslation(':ARTICLE_MENU'), 
+            'news' => $this->translator->GetTranslation(':ARTICLE_NEWS'), 
+            'article' => $this->translator->GetTranslation(':ARTICLE_ARTICLE'), 
+            'groupedTrad' => $this->translator->GetTranslation(':ARTICLE_GROUPEDTRAD'));
+        foreach($articles as &$article) {
+            $article['translatedType'] = $map[$article['type']]; 
         }
         
         $obj['articles'] = $articles;
@@ -128,7 +148,7 @@ class ControllerTranslationManager {
         }
         foreach($this->translator->languages as $lg) {
             if (!isset($texts[$lg['name']])) {
-                $texts[$lg['name']] = array('nextText' => '', 'language' => $lg['name']);
+                $texts[$lg['name']] = array('nextText' => $key, 'language' => $lg['name']);
             }
         }
         return $texts;
@@ -148,7 +168,6 @@ class ControllerTranslationManager {
         $obj['languages'] = $this->translator->languages;
         
         $obj['actions'] = array();
-        $obj['actions'][] = array('name' => 'Cancel', 'type' => 'default', 'value' => 'cancel');
         $obj['actions'][] = array('name' => 'Save', 'type' => 'primary', 'value' => 'save');
         $obj['actions'][] = array('name' => 'SubmitForValidation', 'type' => 'primary', 'value' => 'submitForValidation');
         if ($this->authentication->CheckRole('Administrator'))

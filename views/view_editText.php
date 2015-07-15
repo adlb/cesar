@@ -35,7 +35,7 @@
                 <ul class="nav nav-pills">
                     <li ng-repeat="language in languages" role="presentation" ng-class="{ active: selectedLanguage == language.name}"><a ng-href="{{ prefixUrl }}&lg={{ language.name }}">{{ language.name }}</a></li>
                 </ul>
-                <textarea class="form-control" style="font-family: monospace; white-space: pre;" id="text" name="nextText" rows="<?php max(count(explode("\n", $obj['text']['nextText'])),4) ?>"><?php echo htmlspecialchars($obj['text']['nextText']) ?></textarea>
+                <textarea class="form-control" style="font-family: monospace; white-space: pre;" id="text" name="nextText" rows="<?php max(count(explode("\n", $obj['text']['nextText'])),4) ?>" wrap="hard"><?php echo htmlspecialchars($obj['text']['nextText']) ?></textarea>
                 <div class="form-group">
                     <a class="btn btn-default pull-right" href="<?php echo url(array('controller' => 'translationManager', 'view' => 'translationList')) ?>">Cancel</a>&nbsp;
                     <?php if ($obj['user']['role'] == 'Administrator') { ?>

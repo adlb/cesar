@@ -12,7 +12,7 @@
 
     <div class="page-header">
         <div class="container">
-            <h1 class="page-title pull-left"> <?php t(':MODIFY_ARTICLES') ?> </h1>
+            <h1 class="page-title pull-left"> <?php t(':USER_MANAGEMENT') ?> </h1>
         </div>
     </div>
 
@@ -20,7 +20,7 @@
         <div class="container">
             <table class="table table-hover table-bordered table-condensed table-striped">
                 <caption>
-                    <?php t(':LIST_USERS') ?>
+                    <?php t(':USERS_LIST') ?>
                     <ul class="list-inline pull-right">
                         <li>
                             <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />

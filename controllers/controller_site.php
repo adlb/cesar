@@ -122,7 +122,9 @@ class ControllerSite {
         
         if ($article['needLogin'] && !$this->authentication->CheckRole(array('Administrator', 'Translator', 'Visitor'))) {
             $this->webSite->AddMessage('info', 'You have to login or create an account to access this page.');
-            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login', 'callback' =>
+                url(array('controller' => 'site', 'view' => 'article', 'id' => $id))
+            ));
         }
         
         if ($this->config->current['Home'] != $id &&
