@@ -172,6 +172,7 @@
                           <input name="Maintenance" id="Maintenance" value="true" type="checkbox" <?php echo $obj['config']['Maintenance'] ? 'CHECKED' : ''; ?>>
                           Activate
                         </label>
+                        <span class="help-block"><a href="<?php echo url(array('fm' => true))?>">Test la page de maintenance</a></span>
                         </div>
                       </div>
                     </div>
