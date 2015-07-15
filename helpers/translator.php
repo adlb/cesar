@@ -58,26 +58,27 @@ class Translator {
             if (!isset($this->groupedCache[$groupKey]))
                 $this->groupedCache[$groupKey] = array();
             
+            $lines = $this->textDal->GetWhere(array('key' => $groupKey, 'language' => $this->language));
+            if (count($lines) == 1) {
+                foreach(explode("\n", $lines[0]['text']) as $line) {
+                    $split = explode('|', $line);
+                    if (count($split) >= 2)
+                        $this->groupedCache[$groupKey][$split[0]] = $split[1];
+                }
+            }
             if (file_exists('fixedArticles/'.$groupKey.'.'.$this->language.'.txt')) {
                 $handle = fopen('fixedArticles/'.$groupKey.'.'.$this->language.'.txt', "r");
                 if ($handle) {
                     while (($line = fgets($handle)) !== false) {
                         $line = trim($line);
                         $split = explode('|', $line);
-                        if (count($split) >= 2)
+                        if (count($split) >= 2 && !isset($this->groupedCache[$groupKey]))
                             $this->groupedCache[$groupKey][$split[0]] = $split[1];
                     }
                     fclose($handle);
                 }
             }
-            $lines = $this->textDal->GetWhere(array('key' => $groupKey, 'language' => $this->language));
-            if (count($lines) == 1) {
-                foreach(explode("\n", $lines[0]['text']) as $line) {
-                    $split = explode('|', $line);
-                    if (count($split) >= 2) // && !isset($this->groupedCache[$groupKey]))
-                        $this->groupedCache[$groupKey][$split[0]] = $split[1];
-                }
-            }
+            
             $this->SaveGroupedCache($groupKey);
         }
     }
@@ -320,9 +321,15 @@ class Translator {
     }
     
     private function SaveGroupedCache($groupedKey) {
+        //echo 'savexxxxxxSave' . $groupedKey;
         $lines = array();
         foreach($this->groupedCache[$groupedKey] as $k => $v)
             $lines[] = $k.'|'.$v;
+        //echo '</div></div></div></div></div>';
+        //foreach($lines as $l) 
+        /*{
+            var_dump($l);
+        }*/
         
         $dbLines = $this->textDal->GetWhere(array('key' => $groupedKey, 'language' => $this->language));
         if (count($dbLines) == 0) {

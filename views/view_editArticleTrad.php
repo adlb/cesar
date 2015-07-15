@@ -40,7 +40,7 @@
             
                 <div class="row">
                     <div class="col-md-6">
-                        <strong><?php t('TRANSLATION_FROM') ?> :</strong> <ul class="list-inline pull-right">
+                        <strong><?php t(':TRANSLATION_FROM') ?> :</strong> <ul class="list-inline pull-right">
                             <li role="presentation" ng-repeat="language in languages" ng-class="{ active: (language.name == languageFrom) }">
                                 <a ng-href="#"
                                     ng-click="$parent.languageFrom = language.name;">{{ language.name }}</a>
@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <strong><?php t('TRANSLATION_TO') ?> : {{ languageTo }}</strong>
+                        <strong><?php t(':TRANSLATION_TO') ?> : {{ languageTo }}</strong>
                     </div>
                 </div>
                 <div class="row">
