@@ -72,7 +72,7 @@ class Translator {
                     while (($line = fgets($handle)) !== false) {
                         $line = trim($line);
                         $split = explode('|', $line);
-                        if (count($split) >= 2 && !isset($this->groupedCache[$groupKey]))
+                        if (count($split) >= 2 && !isset($this->groupedCache[$groupKey][$split[0]]))
                             $this->groupedCache[$groupKey][$split[0]] = $split[1];
                     }
                     fclose($handle);
