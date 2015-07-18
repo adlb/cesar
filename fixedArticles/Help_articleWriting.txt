@@ -164,11 +164,28 @@ Va s'afficher :
 
 Veuillez noter qu'il ne faut pas d'espace après les caractères de séparation.
 
+h2. Intégration de vidéo
+Pour intégrer une vidéo, il faut d'abord la charger dans YouTube ou un autre service de vidéo équivalent.
+Puis récupérer sur le site en question le lien qui permet de partager. Sur YouTube, on trouve ce lien dans "Partager/Integrer". Il ressemble à :
+{pre}<iframe width="560" height="315" src="https://www.youtube.com/embed/JZtAp-WnLN4" frameborder="0" allowfullscreen></iframe>{/pre}
+
+Vous pouvez ensuite intégrer ce lien dans un article en mettant le code suivant dans votre article :
+{pre}c. {html}<iframe width="560" height="315" src="https://www.youtube.com/embed/JZtAp-WnLN4" frameborder="0" allowfullscreen></iframe>{/html}{/pre}
+
+h4. Exemple
+c. {html}
+<div class="well">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/JZtAp-WnLN4" frameborder="0" allowfullscreen></iframe>
+</div>
+{/html}
+
+
 h2. Pour les utilisateurs avancés
 * Il est possible d'intégrer directement de l'html dans le modèle grace au balises suivantes : /{html/} ... /{/html/}
 * Et qu'il est possible d'afficher un long texte préformaté avec les balises suivantes : /{pre/} ... /{/pre/}
 * Il est possible d'utiliser les icones de font-awesome avec \¤thumbs-up\¤ va afficher ¤thumbs-up¤
 ** Toutes les icones sont disponible sur le site de [http://fortawesome.github.io/Font-Awesome/icons/|Font-Awesome]
+* Enfin, si vous avez besoin de faire un retour à la ligne où ce n'est normalement pas possible (comme dans un tableau) vous pouvez utiliser '\n'
 
 h4. Exemple
 {html}<div class="well">{/html}

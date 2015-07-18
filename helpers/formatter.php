@@ -91,12 +91,18 @@ class TextDecorator {
             }
             
             if (!$break) {
-                if ($this->canEscape && substr($string, $pos, 1) == '\\') {
+                if ($this->canEscape && substr($string, $pos, 2) == '\\n') {
+                    $pos++;
+                    $currentJob .= "\n";
+                    $pos++;
+                } elseif ($this->canEscape && substr($string, $pos, 1) == '\\') {
+                    $pos++;
+                    $currentJob .= substr($string, $pos, 1);
+                    $pos++;
+                } else {
+                    $currentJob .= substr($string, $pos, 1);
                     $pos++;
                 }
-                
-                $currentJob .= substr($string, $pos, 1);
-                $pos++;
             }
         }
         
@@ -301,7 +307,7 @@ class Transformer {
                 die("can't find type in array. (".json_encode($item).")");
             switch ($item['type']) {
                 case 'text' :
-                    $string .= htmlentities($item['content'], 0, "UTF-8");
+                    $string .= nl2br(htmlentities($item['content'], 0, "UTF-8"));
                     break;
                 case 'paragraph' :
                     if (count($item['content'])==0) { 

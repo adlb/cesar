@@ -178,10 +178,10 @@ class ControllerTranslationManager {
         $obj['languages'] = $this->translator->languages;
         
         $obj['actions'] = array();
-        $obj['actions'][] = array('name' => 'Save', 'type' => 'primary', 'value' => 'save');
-        $obj['actions'][] = array('name' => 'SubmitForValidation', 'type' => 'primary', 'value' => 'submitForValidation');
+        $obj['actions'][] = array('name' => ':SAVE', 'type' => 'primary', 'value' => 'save');
+        $obj['actions'][] = array('name' => ':SAVE_AND_SUBMIT', 'type' => 'primary', 'value' => 'submitForValidation');
         if ($this->authentication->CheckRole('Administrator'))
-            $obj['actions'][] = array('name' => 'Validate', 'type' => 'primary', 'value' => 'validate');
+            $obj['actions'][] = array('name' => ':VALIDATE', 'type' => 'primary', 'value' => 'validate');
             
         return 'editArticleTrad';
     }

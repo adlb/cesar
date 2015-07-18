@@ -1,0 +1,60 @@
+Paramétrage de la page d'accueil
+h2. Composition de la page d'accueil
+La page d'accueil est composée de différents modules:
+* Menu : s'affiche en haut
+* Titre principal : avec une photo en fond
+* Un article de présentation
+* Le 'contenu boite' : composé de 4 icônes et de 4 textes
+* Les dernières nouvelles : ce contenu est généré automatiquement
+* Les nombres : composé de 4 icônes et 4 nombres
+* Une citation
+* Un pied de page
+
+h2. Mode de Configuration
+h3. Article de présentation
+L'article de présentation peut être n'importe quel article du site. Il suffit de cocher la case 'Page d'accueil' dans l'édition de l'article pour choisir cet article comme article de présentation.
+
+Si vous allez dans Administration/Gestion des Articles, l'article qui est actuellement l'article de présentation se trouve facilement grace à l'icône ¤home¤ qui est placée à côté du nom de l'article.
+
+Vous pouvez éditer cet article pour le modifier (voir la rubrique Gestion des Articles ou Ecrire un Article pour plus de détail).
+h3. Autres modules
+Les reste de la page d'accueil se paramètre via le module de Gestion des Articles. Un des articles avec l'Id à 0 s'appelle "Page d'accueil". Il contient tous les éléments de la page.
+Chaque ligne de l'article est constituée d'une ligne qui ressemble à ça :
+{pre}CLE_DE_LA_VALEUR|Texte à afficher{/pre}
+Il suffit donc de remplacer le +Texte à afficher+ par le texte de que vous souhaitez afficher.
+
+h2. Détail des clés et modules
+Le tableau ci-dessous récapitule les différents module et le paramétrage correspondant
+|Nom du module      |Clés                            |Description|
+|Titre principal    |MAIN_TITLE\nSUB_TITLE           |Titre et sous-titre affichés sur le bandeau principal de la page d'accueil.|
+|Contenu boite      |BOXES_0_ICON\nBOXES_0_TITLE\nBOXES_0_CONTENT\nBOXES_1_ICON\nBOXES_1_TITLE\BOXES_1_CONTENT\nBOXES_2_ICON\nBOXES_2_TITLE\nBOXES_2_CONTENT\nBOXES_3_ICON\nBOXES_3_TITLE\nBOXES_3_CONTENT |Pour chaque boite numéroté de 0 à 3, il faut : \n- un titre\n- une icôe (cf plus bas pour le choix des icôes)\n- Un contenu (petit text descriptif).|
+|Nombres            |NUMBERS_0_ICON\nNUMBERS_0_NUMBER\nNUMBERS_0_TEXT\nNUMBERS_1_ICON\nNUMBERS_1_NUMBER\nNUMBERS_1_TEXT\nNUMBERS_2_ICON\nNUMBERS_2_NUMBER\nNUMBERS_2_TEXT\nNUMBERS_3_ICON\nNUMBERS_3_NUMBER\nNUMBERS_3_TEXT |Pour chaque nombre numéroté de 0 à 3, il faut :\n- une icôe (cf plus bas pour le choix des icôes)\n- Un nombre\n- Un texte|
+|Citation           |TESTIMONIAL_PHRASE\nTESTIMONIAL_AUTHOR\nTESTIMONIAL_QUALITY |La citation se décompose en trois : \n- PHRASE : citation elle-même\n- AUTHOR : nom de l'auteur\n- QUALITY : métier de l'auteur (pas nécessaire).
+|Pied de page (general) |FOOTER_TEXT_UNDER_LOGO |Texte s'affichant sous le logo
+|Pied de page (adresse) |FOOTER_NOM\nFOOTER_ADDRESS\nFOOTER_ADDRESS2\nFOOTER_ADDRESS_PHONE |Permet d'afficher 4 lignes d'adresse ou autre chose.
+|Pied de page (liens)   |FOOTER_LINK_0\nFOOTER_LINK_0_DISPLAY\nFOOTER_LINK_1\nFOOTER_LINK_1_DISPLAY\nFOOTER_LINK_2\nFOOTER_LINK_2_DISPLAY\nFOOTER_LINK_3\nFOOTER_LINK_3_DISPLAY |Permet d'afficher des liens dans le pied de page. (jusqu'à 4 liens numérotés de 1 à 4)\n- LINK_N : contient le lien http://...\n- LINK_N_DISPLAY : contient le text qui s'affichera pour le lien.
+
+h2. Les icônes
+Les icônes utilisées sur la page d'accueil sont les icône de [http://fortawesome.github.io/Font-Awesome/icons/|Font-Awesome], vous pouvez retrouver le nom des icônes sur le site et les utiliser pour les boites ou les nombres.
+
+h4. Quelques exemples d'icônes
+{html}
+<div class="row" style="font-size:18px;">
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-ambulance"></i> ambulance</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-h-square"></i> h-square</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heart"></i> heart</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heart-o"></i> heart-o</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heartbeat"></i> heartbeat</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-hospital-o"></i> hospital-o</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-medkit"></i> medkit</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-plus-square"></i> plus-square</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-stethoscope"></i> stethoscope</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-user-md"></i> user-md</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-wheelchair"></i> wheelchair</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-globe"></i> globe</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-users"></i> users</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-check"></i> check</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-thumbs-up"></i> thumbs-up</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-cubes"></i> cubes</div>    
+</div>
+{/html}

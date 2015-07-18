@@ -40,7 +40,8 @@
             
                 <div class="row">
                     <div class="col-md-6">
-                        <strong><?php t(':TRANSLATION_FROM') ?> :</strong> <ul class="list-inline pull-right">
+                        <strong><?php t(':TRANSLATION_FROM') ?> :</strong>
+                        <ul class="nav nav-pills pull-right">
                             <li role="presentation" ng-repeat="language in languages" ng-class="{ active: (language.name == languageFrom) }">
                                 <a ng-href="#"
                                     ng-click="$parent.languageFrom = language.name;">{{ language.name }}</a>
@@ -89,7 +90,7 @@
                                         name="actionPushed" 
                                         class="btn btn-<?php echo $action['type']?>" 
                                         value="<?php echo $action['value']?>"
-                                       ><?php echo $action['name']?></button>
+                                       ><?php t($action['name']) ?></button>
                                 </li>
                             <?php } ?>
                         </ul>

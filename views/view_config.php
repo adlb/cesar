@@ -9,7 +9,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="Title">Title</label>
+                      <label class="col-md-4 control-label" for="Title"><?php t(':TITLE') ?></label>
                       <div class="col-md-5">
                       <input id="Title" name="Title" placeholder="Title" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Title'); ?>" />
                       </div>
@@ -17,7 +17,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="Contact">Contact Email</label>
+                      <label class="col-md-4 control-label" for="Contact"><?php t(':EMAIL_CONTACT') ?></label>
                       <div class="col-md-5">
                       <input id="Contact" name="Contact" placeholder="Email" class="form-control input-md" type="text" value="<?php echo $obj['config']['Contact']; ?>" />
                       </div>
@@ -25,7 +25,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="TemplateName">Template Name</label>
+                      <label class="col-md-4 control-label" for="TemplateName"><?php t(':TEMPLATE_NAME') ?></label>
                       <div class="col-md-5">
                       <input id="TemplateName" name="TemplateName" placeholder="template" class="form-control input-md" type="text" value="<?php echo $obj['config']['TemplateName']; ?>" />
                       </div>
@@ -33,40 +33,40 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="Languages">Languages</label>
+                      <label class="col-md-4 control-label" for="Languages"><?php t(':LANGUAGES') ?></label>
                       <div class="col-md-5">
-                      <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Languages'); ?>">
-                      <span class="help-block">Languages separated with ";"</span>
+                      <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'LANGUAGES_HELP'); ?>">
+                      <span class="help-block"><?php t(':EMAIL_CONTACT') ?></span>
                       </div>
                     </div>
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="ActiveLanguages">ActiveLanguages</label>
+                      <label class="col-md-4 control-label" for="ActiveLanguages"><?php t(':LANGUAGES_ACTIVE') ?></label>
                       <div class="col-md-5">
                       <input id="ActiveLanguages" name="ActiveLanguages" placeholder="active languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'ActiveLanguages'); ?>">
-                      <span class="help-block">Languages separated with ";"</span>
+                      <span class="help-block"><?php t(':LANGUAGES_HELP') ?></span>
                       </div>
                     </div>
 
                     <!-- Text input-->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="SecretLine">SecretLine</label>
+                      <label class="col-md-4 control-label" for="SecretLine"><?php t(':SECRET_LINE') ?></label>
                       <div class="col-md-5">
                       <input id="SecretLine" name="SecretLine" placeholder="long chain to be kept secret" class="form-control input-md" type="text" value="<?php echo $obj['config']['SecretLine']; ?>">
-                      <span class="help-block">Long chain to be kept secret</span>
+                      <span class="help-block"><?php t(':SECRET_LINE_HELP') ?></span>
                       </div>
                     </div>
 
                     <!-- Textarea -->
                     <div class="form-group">
-                      <label class="col-md-4 control-label" for="Analytics">Analytics</label>
+                      <label class="col-md-4 control-label" for="Analytics"><?php t(':ANALYTICS') ?></label>
                       <div class="col-md-4">
                         <textarea class="form-control" id="Analytics" name="Analytics"><?php echo $obj['config']['Analytics']; ?></textarea>
                       </div>
                     </div>
 
-                    <legend>Configuration Base de données</legend>
+                    <legend><?php t(':GLOBAL_SETUP_DATABASE') ?></legend>
 
                     <!-- Text input-->
                     <div class="form-group">
@@ -144,23 +144,6 @@
                       </div>
                     </div>
 
-
-                    <legend>Configuration PayPal</legend>
-
-                    <!-- Multiple Checkboxes -->
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="PaypalButtonId">Hosted Button Id</label>
-                      <div class="col-md-4">
-                      <div class="checkbox">
-                        <label for="PaypalButtonId">
-                          <input name="PaypalButtonId" id="PaypalButtonId" type="text" value="<?php echo $obj['config']['PaypalButtonId']; ?>">
-                          <span class="help-block">Get this id on PayPal web site</span>
-                        </label>
-                        </div>
-                      </div>
-                    </div>
-
-
                     <legend>Configuration Page de maintenance</legend>
 
                     <!-- Multiple Checkboxes -->
@@ -170,9 +153,9 @@
                       <div class="checkbox">
                         <label for="Maintenance">
                           <input name="Maintenance" id="Maintenance" value="true" type="checkbox" <?php echo $obj['config']['Maintenance'] ? 'CHECKED' : ''; ?>>
-                          Activate
+                          <?php t(':ACTIVATE') ?>
                         </label>
-                        <span class="help-block"><a href="<?php echo url(array('fm' => true))?>">Test la page de maintenance</a></span>
+                        <span class="help-block"><a href="<?php echo url(array('fm' => true))?>"><?php t(':MAINTENANCEPAGE_LINK') ?></a></span>
                         </div>
                       </div>
                     </div>
@@ -182,7 +165,7 @@
                       <label class="col-md-4 control-label" for="MaintenanceRedirection">Redirection</label>
                       <div class="col-md-6">
                       <input id="MaintenanceRedirection" name="MaintenanceRedirection" placeholder="http://defaultpage" class="form-control input-md" type="text" value="<?php echo $obj['config']['MaintenanceRedirection']; ?>">
-                      <span class="help-block">To be used if maintenance is a redirection or leave blank and fill the corresponding acticle</span>
+                      <span class="help-block"><?php t(':MAINTENANCEPAGE_REDIRECTION_HELP') ?></span>
                       </div>
                     </div>
 
@@ -190,16 +173,16 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="cancel"></label>
                       <div class="col-md-8">
-                        <button id="cancel" name="todo" class="btn btn-default" value="cancel">Cancel</button>
-                        <button id="update" name="todo" class="btn btn-primary" value="update">Update</button>
+                        <button id="cancel" name="todo" class="btn btn-default" value="cancel"><?php t(':CANCEL') ?></button>
+                        <button id="update" name="todo" class="btn btn-primary" value="update"><?php t(':SAVE') ?></button>
                       </div>
                     </div>
 
                     
                     <legend>Maintenance</legend>
                     <ul>
-                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'reCreateTables')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
-                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'deleteConfig')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
+                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'reCreateTablesXXX')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
+                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'deleteConfigXXX')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
                     </ul>
                 </fieldset>
             </div>

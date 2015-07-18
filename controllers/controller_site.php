@@ -203,6 +203,7 @@ class ControllerSite {
     function view_help(&$obj, &$params) {
         if (isset($params['titleKey']) && in_array($params['titleKey'], 
             array(  'globalSetup', 
+                    'homePageSetup',
                     'userManagement', 
                     'donationManagement', 
                     'articleManagement', 
@@ -211,6 +212,7 @@ class ControllerSite {
             $params['titleKey'] = 'file:Help_'.$params['titleKey'];
             return $this->view_fixedArticle($obj, $params);
         } else {
+            $this->WebSite->AddMEssage('warning', ':THIS_TOPIC_DOES_NOT_EXIST');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
     }

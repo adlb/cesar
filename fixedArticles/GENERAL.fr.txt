@@ -57,7 +57,7 @@ ALERT|Alerte en page d'accueil
 ARTICLE_DATEALERT|Date de fin d'alerte
 ARTICLE_WRITE|Ecrire un article
 USEFUL_LINKS|Liens Utiles
-NEWSLETTER|Newsletter
+NEWSLETTER|News-letter
 GET_CONNECTED|Restez connecté
 GET_CONNECTED_BASE_LINE|Vous avez aimé cet article ? Alors partagez-le avec vos amis en cliquant sur les boutons ci-dessous :
 EMAIL|Email
@@ -132,3 +132,17 @@ LASTNAME|Nom
 TYPE|Type
 ACTIONS|Actions
 HOMEPAGE_SETUP|Paramétrage de la page d'accueil
+EMAIL_CONTACT|Email de contact
+TEMPLATE_NAME|Nom du modèle
+LANGUAGES|Langues
+LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'
+LANGUAGES_ACTIVE|Langues actives
+SECRET_LINE|Chaîne secrète
+SECRET_LINE_HELP|Chaîne devant être gardée secrète assurant la sécurité des utilisateurs.
+ANALYTICS|Code Google Analytics
+GLOBAL_SETUP_DATABASE|Configuration Base de données
+ACTIVATE|Activer
+MAINTENANCEPAGE_LINK|Test la page de maintenance
+MAINTENANCEPAGE_REDIRECTION_HELP|To be used if maintenance is a redirection or leave blank and fill the corresponding acticle
+SAVE_AND_SUBMIT|Sauvegarder et demander la validation
+VALIDATE|Valider
