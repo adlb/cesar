@@ -34,9 +34,9 @@
                               <label class="col-md-4 control-label" for="type"><?php t(':DONATION_TYPE') ?></label>
                               <div class="col-md-6">
                                 <select id="type" name="type" class="form-control">
-                                  <option value="cb"  <?php echo $obj['form']['type'] == 'cb' ? 'SELECTED' : '' ?>><?php t(':TYPE_CB_PAYPAL') ?></option>
-                                  <option value="vir" <?php echo $obj['form']['type'] == 'vir' ? 'SELECTED' : '' ?>><?php t(':TYPE_VIREMENT') ?></option>
-                                  <option value="chq" <?php echo $obj['form']['type'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':TYPE_CHEQUE') ?></option>
+                                  <option value="cb"  <?php echo $obj['form']['type'] == 'cb' ? 'SELECTED' : '' ?>><?php t(':TYPE_PEYMENY_cb') ?></option>
+                                  <option value="vir" <?php echo $obj['form']['type'] == 'vir' ? 'SELECTED' : '' ?>><?php t(':TYPE_PAYMENT_vir') ?></option>
+                                  <option value="chq" <?php echo $obj['form']['type'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':TYPE_PAYMENT_chq') ?></option>
                                 </select>
                               </div>
                             </div>
