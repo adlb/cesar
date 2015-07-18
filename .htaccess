@@ -1,12 +1,6 @@
 RewriteEngine on
 
-RewriteCond %{ENV:REDIRECT_STATUS} 200
-RewriteRule ^ - [L]
-
-RewriteRule ^([^/][^/])$   /?language=$1 [QSA,DPI,NE]
-RewriteRule ^([^j/][^/]|[^/][^s/])/(.*)$    $2?language=$1 [QSA,DPI,NE]
-RewriteRule ^admin$        /?controller=user&view=login [QSA,DPI,NE]
-RewriteRule ^config$       /?controller=builder&view=config [QSA,DPI,NE]
+RewriteRule ^([^j/][^/]|[^/][^s/])(/(.*)){0,1}$  $3?language=$1 [QSA]
 
 <Files .htaccess>
 Order Allow,Deny

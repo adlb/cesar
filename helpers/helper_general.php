@@ -52,16 +52,9 @@ class WebSite {
         $scheme = isset($parse['scheme']) ? $parse['scheme'] . '://' : '//';
         $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
         
-        $i = strrpos($parse['path'], '/');
-        if ($i>0 && $i<strlen($parse['path'])-1) {
-            die($parse['path']);
-            header('Location: '.substr($parse['path'],0,$i));
-            die();
-        }
-        
         if (!isset($_GET['language'])) {
             $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            header('Location: '.$this->services['translator']->language.$_SERVER[REQUEST_URI]);
+            header('Location: '.$this->services['translator']->language.'/');
             die();
         }
         
