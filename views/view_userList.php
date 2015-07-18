@@ -71,5 +71,6 @@
                 </tr>
                 </tbody>
             </table>
+            <hr />
         </div>
     </div>
