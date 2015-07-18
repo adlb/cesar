@@ -37,14 +37,17 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="article in articles | filter:search | orderBy:predicate:reverse">
-                      <th>{{ article.id }}</th>
-                      <th>{{ article.status }}</th>
-                      <td><a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">{{ article.titleTrad }}</a>
-                          <span ng-hide="article.link">{{ article.titleTrad }}</span></td>
-                      <td>{{ article.translatedType }}</span></td>
-                      <td class="clickableCell" ng-repeat="language in languages" href="{{ prefixUrl }}&titleKey={{ article.titleKey }}&textKey={{ article.textKey }}&lg={{ language.name }}">
-                        {{ article.StatusPerLanguage[language.name] || '<?php t(':ERROR') ?>' }}
-                      </td>
+                        <th>{{ article.id }}</th>
+                        <th>{{ article.status }}</th>
+                        <td><a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">
+                            <i class="fa fa-home" ng-show="{{ article.home }}"></i>
+                            <i class="fa fa-envelope" ng-show="{{ article.mail }}"></i>
+                            {{ article.titleTrad }}</a>
+                            <span ng-hide="article.link">{{ article.titleTrad }}</span></td>
+                        <td>{{ article.translatedType }}</span></td>
+                        <td class="clickableCell" ng-repeat="language in languages" href="{{ prefixUrl }}&titleKey={{ article.titleKey }}&textKey={{ article.textKey }}&lg={{ language.name }}">
+                            {{ article.StatusPerLanguage[language.name] || '<?php t(':ERROR') ?>' }}
+                        </td>
                     </tr>
                 </tbody>
             </table>

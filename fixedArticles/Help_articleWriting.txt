@@ -1,4 +1,4 @@
-h1. Ecrire un nouvel Article
+Ecrire un nouvel Article
 
 h2. Préalable
 Seuls les +administrateurs+ du site peuvent écrire un article donc il faut au préalable être loggué sur le site. Pour ce faire, munissez-vous de votre 'login' (email) et de votre 'mot de passe' et cliquez sur 'se connecter' en haut à droite du site.

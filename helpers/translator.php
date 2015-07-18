@@ -149,10 +149,6 @@ class Translator {
     
     function DirectUpdate($language, $key, $value, $prefetch, $usage) {
         if (substr($key, 0, 5) == 'file:') {
-            $split = explode(':', $key);
-            if (count($split) == 2 && $split[0] == 'file') {
-                file_put_contents('fixedArticles/'.$split[1].'.txt', $value);
-            }
             return $key;
         }
         
@@ -253,12 +249,10 @@ class Translator {
     private function InternalGetTranslation($key) {
         if ($key == '')
             return $key;
+        
         $split = explode(':', $key);
         if (count($split) == 2 && $split[0] == 'file') {
-            if (file_exists('fixedArticles/'.$split[1].'.txt')) {
-                $data = file_get_contents('fixedArticles/'.$split[1].'.txt');
-                $data = str_replace("\r\n", "\n", $data);
-                $data = str_replace("\r", "\n", $data);
+            if ($this->TryGetFromFile($split[1], $this->language, $data)) {
                 return $data;
             } else {
                 return $split[1];
@@ -276,8 +270,12 @@ class Translator {
         $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->language));
         if (count($lines) == 0) {
             $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
-            if (count($lines) == 0)
+            if (count($lines) == 0) {
+                if ($this->TryGetFromFile($key, $this->language, $data)) {
+                    return $data;
+                }
                 return '['.$key.']';
+            }
         }
         return $lines[0]['text'];
     }
@@ -321,15 +319,9 @@ class Translator {
     }
     
     private function SaveGroupedCache($groupedKey) {
-        //echo 'savexxxxxxSave' . $groupedKey;
         $lines = array();
         foreach($this->groupedCache[$groupedKey] as $k => $v)
             $lines[] = $k.'|'.$v;
-        //echo '</div></div></div></div></div>';
-        //foreach($lines as $l) 
-        /*{
-            var_dump($l);
-        }*/
         
         $dbLines = $this->textDal->GetWhere(array('key' => $groupedKey, 'language' => $this->language));
         if (count($dbLines) == 0) {
@@ -347,6 +339,48 @@ class Translator {
         $new['text'] = join("\n", $lines);
         $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);
+    }
+    
+    private function TryGetFromFile($key, $language, &$data) {
+        $keyClean;
+        
+        if (substr($key, -8) == '_content') {
+            $keyClean = substr($key, 0, -8);
+        } else {
+            $keyClean = $key;
+        }
+        $fileName = 'fixedArticles/'.$keyClean.'.'.$language.'.txt';
+                
+        if (!file_exists($fileName))
+        {
+            $fileName = 'fixedArticles/'.$keyClean.'.txt';
+            if (!file_exists($fileName))
+                return false;
+        }
+        
+        if ($keyClean == $key) {
+            $f = @fopen($fileName, 'r');
+            if ($f == null)
+                return false;
+            $data = fgets($f);
+            fclose($f);
+            return $data != '';
+        }
+        
+        $f = @fopen($fileName, 'r');
+        if ($f == null)
+            return false;
+        $head = fgets($f);
+        $result = '';
+        while (($line = fgets($f)) !== false) {
+            $result .= $line;
+        }
+        fclose($f);
+        
+        $data = $result;
+        $data = str_replace("\r\n", "\n", $data);
+        $data = str_replace("\r", "\n", $data);
+        return true;
     }
 }
 

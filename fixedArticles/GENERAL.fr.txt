@@ -11,14 +11,13 @@ DONATION_MANAGEMENT|Gestion des donations
 ARTICLE_MANAGEMENT|Gestion des Articles
 MEDIA_MANAGEMENT|Gestion des Médias
 HELP|Aide
-DONATE|DONATE
-MAIN_TITLE|MAIN_TITLE
-SUB_TITLE|SUB_TITLE
-LATEST NEWS|LATEST NEWS
+MAIN_TITLE|Titre Principale
+SUB_TITLE|Sous-Titre
+LATEST NEWS|Dernière nouvelles
 AQUESTION|Une Question ?
 ABOUT_US|A propos de nous
-USEFUL_LINKS|USEFUL_LINKS
-SUBSCRIBE_TO_OUR_NEWSLETTER|SUBSCRIBE_TO_OUR_NEWSLETTER
+USEFUL_LINKS|Liens utiles
+SUBSCRIBE_TO_OUR_NEWSLETTER|Abonnez-vous à notre news-letter
 GROUPED_KEY_GENERAL|Titres et boutons
 MODIFY_ARTICLES|Modifier article
 LIST_ARTICLES|Liste des articles
@@ -114,3 +113,6 @@ UPLOAD|Télécharger
 DISPLAY_AS_LIST|Afficher en liste
 TRANSLATION_FROM|Traduction depuis
 TRANSLATION_TO|Traduction vers
+ARTICLE_ID|Id de l'article
+STATUS|Statut
+MAKE_A_DONATION|Faire un don

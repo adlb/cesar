@@ -161,8 +161,8 @@ class ControllerSite {
     function view_footer(&$obj, $params) {
         $obj['links'] = array();
         $obj['contact'] = $this->config->current['Contact'];
-        $legal = $this->articleDal->GetFixedArticle('Legal', true);
-        $contact = $this->articleDal->GetFixedArticle('Contact', true);
+        $legal = $this->articleDal->GetFixedArticle('Legal');
+        $contact = $this->articleDal->GetFixedArticle('Contact');
         $obj['links'][] = array(
             'display' => $this->translator->GetTranslation($legal['titleKey']),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $legal['id']))
@@ -180,7 +180,7 @@ class ControllerSite {
     function view_fixedArticle(&$obj, $params) {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
-        $article = $this->articleDal->GetFixedArticle($titleKey, true);
+        $article = $this->articleDal->GetFixedArticle($titleKey);
         $article = $this->enrich_Article($article, $isAdmin, true);
         $obj['article'] = $article;
         if (isset($params['raw']) && $params['raw'] == true)
@@ -192,7 +192,7 @@ class ControllerSite {
     function view_fixedArticleText(&$obj, $params) {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
-        $article = $this->articleDal->GetFixedArticle($titleKey, true);
+        $article = $this->articleDal->GetFixedArticle($titleKey);
         $article = $this->enrich_Article($article, $isAdmin, false);
         $obj['article'] = $article;
         return 'articleText';

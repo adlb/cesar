@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Europe/London');
+ini_set("auto_detect_line_endings", true);
 
 @session_start();
 

@@ -104,11 +104,20 @@ class ControllerTranslationManager {
         $languages = $this->translator->languages;
         $textManager = new TextManager($this->textShortDal, $languages, $this->translator);
         
-        $articles = $this->articleDal->GetWhere(array(), array('id' => true));
+        $articlesDB = $this->articleDal->GetWhere(array(), array('id' => true));
+        $articles = array();
+        foreach($articlesDB as &$article) {
+            if (substr($article['titleKey'], 0, 5) == 'file:')
+                continue;
+            $articles[] = $article;
+        }
+        
         foreach($articles as &$article) {
             $article['titleTrad'] = $this->translator->GetTranslation($article['titleKey']);
             $article['StatusPerLanguage'] = $textManager->GetStatusPerLanguage($article['titleKey'], $article['textKey']);
             $article['link'] = true;
+            $article['home'] = $this->config->current['Home'] == $article['id'] ? true : false;
+            $article['mail'] = substr($article['titleKey'], 0, 5) == 'Mail_' ? true : false;
         }
         
         foreach($this->textDal->SelectDistinct('key', array('usage' => 'grouped')) as $groupedKey) {
@@ -120,7 +129,8 @@ class ControllerTranslationManager {
                 'StatusPerLanguage' => $textManager->GetStatusPerLanguage('', $groupedKey),
                 'titleKey' => '',
                 'textKey' => $groupedKey,
-                'link' => false
+                'link' => false,
+                'home' => false
             );
             
             array_unshift($articles, $fakeArticle);

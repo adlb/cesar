@@ -9,9 +9,12 @@
                     </div>
                 </div>
                 <div class="hero-right pull-right">
-                    <a href="<?php echo url(array('controller' => 'donation', 'view' => 'donate'))?>">
-                        <img src="templates/Repute/theme/assets/img/donate.jpg" class="animated fadeInRight animation-delay-9" alt="Repute Business Theme">
-                    </a>
+                    <div class="btn-donate" >
+                        <img src="templates/Repute/theme/assets/img/don_bg.jpg" />
+                        <button class="btn" onclick="location.href='<?php echo url(array('controller' => 'donation', 'view' => 'donate')) ?>';">
+                            <span><?php t(':MAKE_A_DONATION') ?> <i class="fa fa-arrow-circle-right"></i></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

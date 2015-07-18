@@ -3512,10 +3512,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 .navbar-brand > img {
   width: 100px;
 }
-.navbar-brand.navbar-logo-bigger {
-  padding: 0 0 0 10px;
+.navbar-brand.navbar-logo {
+  padding: 10px 0;
 }
-.navbar-brand.navbar-logo-bigger > img {
+.navbar-brand.navbar-logo > img {
   position: relative;
   top: 5px;
   width: 220px;
@@ -3682,11 +3682,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     top: 9px;
     font-size: 18px;
   }
-  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
+  /*.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus,
   .navbar-default .navbar-nav > .active.open > a, .navbar-default .navbar-nav > .active.open > a:hover, .navbar-default .navbar-nav > .active.open > a:focus {
     background-color: #406da4;
     color: #fff;
-  }
+  }*/
 
   .navbar-default .navbar-nav .open .dropdown-menu {
     -moz-box-shadow: none;
@@ -3792,7 +3792,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     font-size: 18px;
   }
   .hero-unit .hero-right {
-    display: none;
+    max-width: 100%;
+    float: none !important;
+    text-align: center;
   }
 }
 
@@ -6426,4 +6428,37 @@ ul.nav-categories > li > a:hover {
     article {
       font-size: 13px;
     }
+}
+
+.column-title {
+    text-align: center;
+    max-width: 100%;
+}
+
+.btn-donate {
+    position: relative;
+    text-align: right;
+    max-width:300px;
+    display: inline-block;
+}
+
+.btn-donate > img {
+    width: 100%;
+}
+
+.btn-donate > button {
+    /* match size of .container, without influencing it */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 42%;
+    padding: 0 5px;
+    font-size: 20px;
+    color: #fff;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    width: 100%;
+    text-align:right;
 }

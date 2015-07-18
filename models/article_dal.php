@@ -31,7 +31,7 @@ class ArticleDal extends Dal {
         return $this->GetWhere(array('type' => 'article'));
     }
     
-    function GetFixedArticle($titleKey, $createIfNeeded) {
+    function GetFixedArticle($titleKey) {
         $articles = $this->GetWhere(array('titleKey' => $titleKey));
         if (count($articles) > 0)
             return $articles[0];
@@ -68,8 +68,8 @@ class ArticleDal extends Dal {
             'datealert' => '',
             'status' => 'hide'
         );
-        if ($createIfNeeded)
-            $this->TrySave($article);            
+        
+        $this->TrySave($article);            
         return $article;
     }
 }
