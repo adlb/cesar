@@ -36,8 +36,8 @@ class Crowd {
         if (!$this->TryGetFromEmail($email, $user)) {
             return false;
         }
-        $key = (md5($this->salt.$user['email'].$user['times'].$user['id']));
-        return ($key = md5($this->salt.$user['email'].$user['times'].$user['id']));
+        $keyTrue = (md5($this->salt.$user['email'].$user['times'].$user['id']));
+        return ($key == $keyTrue);
     }
     
     function TryUpdateUserPassword($user, $passwordHashed) {

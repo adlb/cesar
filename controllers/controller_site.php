@@ -183,7 +183,9 @@ class ControllerSite {
         $article = $this->articleDal->GetFixedArticle($titleKey);
         $article = $this->enrich_Article($article, $isAdmin, true);
         $obj['article'] = $article;
-        if (isset($params['raw']) && $params['raw'] == true)
+        
+        $renderType = isset($params['renderType']) ? $params['renderType'] : 'normal';
+        if ($renderType == 'raw')
             return 'articleRaw';
         else
             return 'article';

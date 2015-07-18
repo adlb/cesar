@@ -26,14 +26,14 @@ TRANSLATION|Traduction
 LOGIN|Se connecter
 RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
 ENTER_EMAIL_USED_TO_REGISTER|Entrez l'adresse e-mail utilisée pour s'enregistrer
-PLACEHOLDER_EMAIL|votre.nom@domain.fr
+PLACEHOLDER_EMAIL|votrenom@domain.fr
 SEND|Envoyer
 CANCEL|Annuler
 PLACEHOLDER_PASSWORD|Mot de passe
 PLACEHOLDER_PASSWORD2|Resaisissez votre mot de passe
 LOST_PASSWORD|J'ai oublié mon mot de passe
 PLEASE_SIGN_IN|Connexion
-EMAIL_UNKOWN_CREATE_AN_ACCOUNT|email inconnu - créez un compte
+EMAIL_UNKOWN_CREATE_AN_ACCOUNT|Email inconnu - Créez un compte
 REGISTER|s'enregistrer
 ARTICLE_TYPE|Type d'article
 ARTICLE_MENU|Entrée de menu
@@ -60,7 +60,7 @@ USEFUL_LINKS|Liens Utiles
 NEWSLETTER|Newsletter
 GET_CONNECTED|Restez connecté
 GET_CONNECTED_BASE_LINE|Vous avez aimé cet article ? Alors partagez-le avec vos amis en cliquant sur les boutons ci-dessous :
-EMAIL|email
+EMAIL|Email
 SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
 A_QUESTION|Une question ?
 SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
@@ -116,3 +116,18 @@ TRANSLATION_TO|Traduction vers
 ARTICLE_ID|Id de l'article
 STATUS|Statut
 MAKE_A_DONATION|Faire un don
+AN_EMAIL_HAS_BEEN_SENT_TO_{0}|Un mail a été envoyé à {0}
+RESET_PASSWORD_FOR_{0}|Réinitialisation du mot de passe pour {0}
+PASSWORD|Mot de passe
+PASSWORD2|Retapez votre mot de passe
+PASSWORD_RESETED|Mot de Passe réinitialisé
+SUCCESS|
+WARNING|Attention !
+NOT_ALLOWED|Vous n'êtes pas autorisé à réaliser cette action.
+DISPLAY_ALL|Afficher tout
+ID|Id
+DATE|Date
+FIRSTNAME|Prénom
+LASTNAME|Nom
+TYPE|Type
+ACTIONS|Actions

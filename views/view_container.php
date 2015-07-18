@@ -39,10 +39,10 @@
 		<?php renderPartial('messages', $obj['messages']); ?>
     
         <?php renderPartial($obj['innerView'], $obj); ?>
-        
-        <?php displayPartial('site', 'footer', $obj); ?>
     </div>
-	<!-- END WRAPPER --><!-- JAVASCRIPTS -->
+	
+    <?php displayPartial('site', 'footer', $obj); ?>
+    <!-- END WRAPPER --><!-- JAVASCRIPTS -->
 	<script src="templates/Repute/theme/assets/js/jquery-2.1.1.min.js"></script>
 	<script src="templates/Repute/theme/assets/js/bootstrap.min.js"></script>
 	<script src="templates/Repute/theme/assets/js/plugins/slick/slick.min.js"></script>

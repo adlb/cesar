@@ -87,7 +87,7 @@
 				</div>
 
 				<!-- MAIN NAVIGATION -->
-                <div id="main-nav" class="navbar-collapse collapse">
+                <div id="main-nav" class="navbar-collapse collapse" style="min-height:30px;">
 					<?php if ($obj['user']['role'] == 'Administrator') { ?>
                     <ul class="nav navbar-nav navbar-right draggableMenuItem" data-moveHandler="<?php echo url(array('controller' => 'builder', 'action' => 'moveEntry')) ?>">
                     <?php } else { ?>

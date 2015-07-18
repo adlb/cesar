@@ -21,11 +21,11 @@
             <h3><?php t(':FINALIZE_YOUR_DONATION') ?></h3>
             <?php
                 if ($obj['donation']['type'] == 'vir') {
-                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeVir', 'raw' => true));
+                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeVir', 'renderType' => 'raw'));
                 } elseif ($obj['donation']['type'] == 'cb') {
-                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'raw' => true));
+                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'renderType' => 'raw'));
                 } else {
-                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'raw' => true));
+                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'renderType' => 'raw'));
                 }
             ?>
         </div>

@@ -28,8 +28,12 @@ class Mailer {
         $mail->SMTPAuth = $this->config->current['SMTPAuth'];       // Enable SMTP authentication
         $mail->Username = $this->config->current['SMTPUser'];       // SMTP username
         $mail->Password = $this->config->current['SMTPPassword'];   // SMTP password
-        //$mail->SMTPSecure = '';                                   // Enable TLS encryption, `ssl` also accepted
+        
         $mail->Port = 25;                                           // TCP port to connect to
+        if ($this->config->current['SMTPAuth']) {
+            $mail->SMTPSecure = 'tls';                                   // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;
+        }
         $mail->CharSet = "UTF-8";
 
         $mail->From = $this->config->current['Contact'];
@@ -53,7 +57,7 @@ class Mailer {
     
     private function TrySendTemplatedEmail($email, $articleKey, $macros) {
         $obj = array();
-        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj,  array('titleKey' => $articleKey));
+        $view = $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj,  array('titleKey' => $articleKey, 'renderType' => 'raw'));
         
         ob_start();
         Render('mailContainer', $view, $obj);
@@ -67,15 +71,19 @@ class Mailer {
         $mailtext=ob_get_contents();
         ob_end_clean();
         
-        $mailhtml = str_replace('@@useremail@@', $email, $mailhtml);
-        $mailtext = str_replace('@@useremail@@', $email, $mailtext);
-                
+        $object = $this->translator->GetTranslation($articleKey);
+        
+        $macros['useremail'] = $email;
+        $macros['title'] = $this->config->current['Title'];
+        $macros['contact'] = $this->config->current['Contact'];
+        
         foreach($macros as $k => $v) {
             $mailhtml = str_replace('@@'.$k.'@@', $v, $mailhtml);
             $mailtext = str_replace('@@'.$k.'@@', $v, $mailtext);
+            $object = str_replace('@@'.$k.'@@', $v, $object);
         }
         
-        return $this->TrySendSimpleMail($email, $this->translator->GetTranslation('titleKey'), $mailhtml, $mailtext);
+        return $this->TrySendSimpleMail($email, $object, $mailhtml, $mailtext);
     }
     
     public function TrySendForgotPasswordMail($email) {

@@ -60,31 +60,28 @@ hr {
 }
 
 /* wrapper */
-.wrapper {
-  background: #fff;
-}
-.wrapper > footer {
+footer {
   background-color: #49494b;
   font-weight: 300;
   color: #eaeaea;
 }
-.wrapper > footer a {
+footer a {
   color: #fff;
 }
-.wrapper > footer a:hover, .wrapper > footer a:focus {
+footer a:hover, footer a:focus {
   color: #fff;
   text-decoration: underline;
 }
-.wrapper > footer .container {
+footer .container {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-.wrapper > footer .logo {
+footer .logo {
   width: 114px;
   margin-bottom: 15px;
 }
 @media screen and (max-width: 768px) {
-  .wrapper > footer .container {
+  footer .container {
     padding: 30px 15px;
   }
 }
@@ -6461,4 +6458,20 @@ ul.nav-categories > li > a:hover {
     overflow: hidden;
     width: 100%;
     text-align:right;
+}
+
+/* Sticky Footer
+*/
+html {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    margin-bottom:400px;
+}
+.footer {
+    bottom: 0;
+    z_height: 60px;
+    position: absolute;
+    width: 100%;
 }

@@ -1,5 +1,5 @@
         <!-- FOOTER -->
-        <footer class="hidden-print">
+        <footer class="hidden-print footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
