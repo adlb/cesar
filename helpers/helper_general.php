@@ -47,9 +47,21 @@ class WebSite {
         $this->services['mailer'] =         new Mailer          ($this->services['config'], $this->services['crowd'], $this->services['translator'], $this->services['journal'], $this);
         $this->controllerFactory =          new ControllerFactory($this->services);
         
+        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $parse = parse_url($url);
+        $scheme = isset($parse['scheme']) ? $parse['scheme'] . '://' : '//';
+        $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
+        
+        $i = strrpos($parse['path'], '/');
+        if ($i>0 && $i<strlen($parse['path'])-1) {
+            die($parse['path']);
+            header('Location: '.substr($parse['path'],0,$i));
+            die();
+        }
+        
         if (!isset($_GET['language'])) {
             $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            header('Location: '.$this->services['translator']->language.'/');
+            header('Location: '.$this->services['translator']->language.$_SERVER[REQUEST_URI]);
             die();
         }
         
@@ -59,11 +71,6 @@ class WebSite {
         $this->obj['messages'] = (isset($_SESSION['messages'])) ? $_SESSION['messages'] : array();
         $this->obj['contact'] = $this->services['config']->current['Contact'];
         $_SESSION['messages'] = null;
-        
-        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $parse = parse_url($url);
-        $scheme = isset($parse['scheme']) ? $parse['scheme'] . '://' : '//';
-        $this->urlPrefix = $scheme.$parse['host'].$parse['path'];
         
         $this->currentLink = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
