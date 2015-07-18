@@ -4,7 +4,7 @@
     <section>
         <div class="container">
             <h2 class="section-heading"><?php t(':LATEST NEWS') ?></h2>
-            <div class="row" style="height:350px">
+            <div class="row">
                 <div class="col-md-4">
                     <div class="news-item news-featured">
                         <?php $first = $obj['latestNews'][0]; ?>

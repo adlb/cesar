@@ -131,3 +131,4 @@ FIRSTNAME|Prénom
 LASTNAME|Nom
 TYPE|Type
 ACTIONS|Actions
+HOMEPAGE_SETUP|Paramétrage de la page d'accueil
