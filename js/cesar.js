@@ -277,6 +277,48 @@ cesarApp.controller('articleCtrl', ['$scope', function($scope) {
   };
 }]);
 
+cesarApp.controller('articlesListCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
+  
+    $scope.search = localStorage.getItem("articlesListCtrl.search") || '';
+    $scope.predicate = localStorage.getItem("articlesListCtrl.predicate", $scope.predicate) || 'id';
+    $scope.reverse = $scope.$eval(localStorage.getItem("articlesListCtrl.reverse", $scope.reverse)) || false;
+
+    $scope.init = function(articles, languages, prefixUrl, prefixUrlArticle, deleteUrl) {
+        $scope.articles = articles;
+        $scope.languages = languages;
+        $scope.prefixUrl = prefixUrl;
+        $scope.prefixUrlArticle = prefixUrlArticle;
+        $scope.deleteUrl = deleteUrl;
+    };
+
+    $scope.deleteArticle = function(id) {
+        $rootScope.$broadcast("clearMessages");
+        $.post($scope.deleteUrl, {'id': id}, function(data) {
+            $scope.$apply(function($scope) {
+                if (data.messages) {
+                    $rootScope.$broadcast("newMessages", data.messages);
+                }
+                if (data.status == 'ok') {
+                    for(var i = 0; i < $scope.articles.length; i++) {
+                        var obj = $scope.articles[i];
+
+                        if(obj.id == id) {
+                            $scope.articles.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+            });
+        });
+    };
+    
+    $scope.saveLocal = function() { 
+        localStorage.setItem("articlesListCtrl.search", $scope.search);
+        localStorage.setItem("articlesListCtrl.predicate", $scope.predicate);
+        localStorage.setItem("articlesListCtrl.reverse", $scope.reverse);
+    };
+}]);
+
 cesarApp.controller('donationsListCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
   
     $scope.search = localStorage.getItem("donationCtrl.search") || '';
@@ -351,9 +393,28 @@ cesarApp.controller('donationsListCtrl', ['$rootScope', '$scope', function($root
         });
     };
     
+    $scope.deleteDonation = function(id) {
+        $rootScope.$broadcast("clearMessages");
+        $.post($scope.deleteUrl, {'id': id}, function(data) {
+            $scope.$apply(function($scope) {
+                if (data.messages) {
+                    $rootScope.$broadcast("newMessages", data.messages);
+                }
+                if (data.status == 'ok') {
+                    for(var i = 0; i < $scope.donations.length; i++) {
+                        var obj = $scope.donations[i];
+
+                        if(obj.id == id) {
+                            $scope.donations.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+            });
+        });
+    };
+
     $scope.saveLocal = function() { 
-        localStorage.setItem("donationCtrl.displayAsList", $scope.displayAsList);
-        localStorage.setItem("donationCtrl.selectedMedia", JSON.stringify($scope.selectedMedia));
         localStorage.setItem("donationCtrl.search", $scope.search);
         localStorage.setItem("donationCtrl.predicate", $scope.predicate);
         localStorage.setItem("donationCtrl.reverse", $scope.reverse);

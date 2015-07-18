@@ -32,10 +32,14 @@
                             <?php } ?>
                         </li>
                         <li>
+                        <li>
+                            <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
+                        </li>
+                        <li>
                             <a class="btn-popover"
                                 href="<?php echo url(array('controller' => 'donation', 'view' => 'create')) ?>"
                                 data-container="body" data-toggle="popover" data-placement="top"
-                                data-content="Create a new donation."
+                                data-content="<?php t(':CREATE_A_DONATION') ?>"
                                 >
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
@@ -44,7 +48,7 @@
                             <a class="btn-popover" 
                                 href="<?php echo url(array('controller' => 'donation', 'view' => 'export', 'isFiltered' => $obj['isFiltered'], 'respType' => 'xls')) ?>"
                                 data-container="body" data-toggle="popover" data-placement="top"
-                                data-content="Export excel file."
+                                data-content="<?php t(':EXPORT_EXCEL') ?>"
                             ><span class="glyphicon glyphicon-download-alt"></span></a>
                         </li>
                     </ul>

@@ -39,17 +39,15 @@ class ControllerBuilder extends controllerSite{
             $children = $this->articleDal->GetWhere(array('father' => $article['id']));
             if (count($children) > 0) {
                 $this->webSite->AddMessage('warning', ':CANT_DELETE_ARTICLE_WITH_SONS');
-                $obj['article'] = $this->enrich_Article($article, true);
-                return 'article';
+                return;
             }
-            $this->textDal->DeleteWhere(array('key' => $article['title']));
-            $this->textDal->DeleteWhere(array('key' => $article['content']));
+            $this->textDal->DeleteWhere(array('key' => $article['titleKey']));
+            $this->textDal->DeleteWhere(array('key' => $article['textKey']));
             $this->articleDal->DeleteWhere(array('id' => $article['id']));
             $this->webSite->AddMessage('success', ':ARTICLE_DELETED');
         } else {
             $this->webSite->AddMessage('warning', array(':ARTICLE_NOT_FOUND_WITH_ID_{0}', $params['id']));
         }
-        $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
     }
 
     private function GetMenuFathers($id) {

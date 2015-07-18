@@ -148,3 +148,8 @@ SAVE_AND_SUBMIT|Sauvegarder et demander la validation
 VALIDATE|Valider
 PREFIX_TITRE_ALERT|Information Importante ! 
 READ_MORE|Lire la suite
+EDIT|Modifier
+CANT_DELETE_ARTICLE_WITH_SONS|Impossible de supprimer un article qui a des sous-articles rattachés
+ARTICLE_DELETED|Article supprimé
+CREATE_A_DONATION|Créer un don manuellement
+EXPORT_EXCEL|Exporter vers un fichier Excel

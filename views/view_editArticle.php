@@ -188,7 +188,7 @@
                 <!-- Button (Double) -->
                 <div class="form-group">
                   <div class="col-md-12 text-right">
-                    <a class="btn btn-default" href="<?php echo url(array('controller' => 'site', 'view' => '')) ?>"><?php t(':CANCEL') ?></a>
+                    <a class="btn btn-default" href="<?php echo $obj['callback'] ?>"><?php t(':CANCEL') ?></a>
                     <button id="button2id" name="button2id" class="btn btn-primary" ng-show="type == 'menu' || type == 'article' || type == 'news'"><?php t(':SAVE') ?></button>
                   </div>
                 </div>

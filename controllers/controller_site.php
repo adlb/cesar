@@ -85,8 +85,7 @@ class ControllerSite {
         }
         $article['links'] = array();
         if ($isAdmin) {
-            $article['links'][] = array('type' => 'edit', 'url' => url(array('controller' => 'builder', 'view' => 'editArticle', 'id' => $article['id'])));
-            $article['links'][] = array('type' => 'delete', 'url' => url(array('controller' => 'builder', 'action' => 'deleteArticle', 'id' => $article['id'])));
+            $article['links'][] = array('type' => 'edit', 'name' => $this->translator->GetTranslation(':EDIT'), 'url' => url(array('controller' => 'builder', 'view' => 'editArticle', 'id' => $article['id'])));
         }
         $subArticles = array_slice($this->articleDal->GetWhere($conditionForSubArticles, array('date' => false)), 0, 7);
         $article['subArticles'] = array();
