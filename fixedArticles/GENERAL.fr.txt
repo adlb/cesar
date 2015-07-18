@@ -146,3 +146,5 @@ MAINTENANCEPAGE_LINK|Test la page de maintenance
 MAINTENANCEPAGE_REDIRECTION_HELP|To be used if maintenance is a redirection or leave blank and fill the corresponding acticle
 SAVE_AND_SUBMIT|Sauvegarder et demander la validation
 VALIDATE|Valider
+PREFIX_TITRE_ALERT|Information Importante ! 
+READ_MORE|Lire la suite

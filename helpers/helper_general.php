@@ -28,6 +28,14 @@ class WebSite {
     
     function __construct($configFile) {
         $this->services['config'] = new Config($configFile);
+        if (!isset($_SESSION['key'])) {
+            $_SESSION['key'] = $this->services['config']->current['SecretLine'];
+        } else {
+            if ($_SESSION['key'] != $this->services['config']->current['SecretLine']) {
+                session_unset();
+            }
+        }
+        
         $this->services['authentication'] = new Authentication();
         $language = (isset($_GET['language'])) ? $_GET['language'] : substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
                 
