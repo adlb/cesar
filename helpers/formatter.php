@@ -307,7 +307,7 @@ class Transformer {
                 die("can't find type in array. (".json_encode($item).")");
             switch ($item['type']) {
                 case 'text' :
-                    $string .= nl2br(htmlentities($item['content'], 0, "UTF-8"));
+                    $string .= nl2br(htmlspecialchars($item['content'], 0, "UTF-8"));
                     break;
                 case 'paragraph' :
                     if (count($item['content'])==0) { 
@@ -522,7 +522,7 @@ class Transformer {
                         'cx_center');
             $display = '<img class="'.$class.'" src="'.$media['file'].'">';
         } else {
-            $display = htmlentities($display);
+            $display = htmlspecialchars($display);
         }
         
         if ($link == 'home') {
@@ -535,17 +535,17 @@ class Transformer {
             $link = url(array('controller' => 'donation', 'view' => 'donate'));
         } elseif (intval($link)>0 && $this->articleDal->TryGet(intval($link), $article)) {
             if ($display == '') {
-                $display = $this->translator->GetTranslation($article['titleKey']);
+                $display = htmlspecialchars($this->translator->GetTranslation($article['titleKey']));
             }
             $link = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
         } elseif (substr($link, 0, 1) == '@' && $this->gallery->TryGet(substr($link, 1), $media)) {
             if ($display == '') {
-                $display = $media['name'];
+                $display = htmlspecialchars($media['name']);
             }
             $link = $media['file'];
         } elseif ($link != '') {
             if ($display == '') {
-                $display = $link;
+                $display = htmlspecialchars($link);
             }
         } else {
             return $display;

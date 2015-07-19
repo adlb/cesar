@@ -9,7 +9,7 @@
                         <ol class="breadcrumb hidden-print">
                             <?php foreach($obj['article']['links'] as $link) { ?>
                             <li>
-                                <a href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a>
+                                <a href="<?php echo $link['url'] ?>"><?php disp($link, 'name') ?></a>
                             </li>
                             <?php } ?>
                         </ol>

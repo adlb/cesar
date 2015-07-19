@@ -69,7 +69,7 @@
                             <div class="" ng-show="type == 'menu' || type == 'article' || type == 'news'">
                               <label class="col-md-5 control-label" for="titleTrad"><?php t(':TITLE') ?></label>
                               <div class="col-md-7">
-                              <input id="title" name="titleTrad" placeholder="<?php t(':PLACEHOLDER_TITLE') ?>" class="form-control input-md" type="text" value="<?php echo $obj['form']['titleTrad'] ?>">
+                              <input id="title" name="titleTrad" placeholder="<?php t(':PLACEHOLDER_TITLE') ?>" class="form-control input-md" type="text" value="<?php echo disp($obj['form'], 'titleTrad') ?>">
                               </div>
                             </div>
 

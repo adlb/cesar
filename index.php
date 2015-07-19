@@ -1,5 +1,7 @@
 <?php
 date_default_timezone_set('Europe/London');
+mb_internal_encoding("UTF-8");
+mb_http_output( "UTF-8" );
 ini_set("auto_detect_line_endings", true);
 
 @session_start();
