@@ -8,8 +8,8 @@ function ExportToExcel($fileName, $fileContent) {
     $objPHPExcel = new PHPExcel();
 
     // Set document properties
-    $objPHPExcel->getProperties()->setCreator("Malte-Liban")
-                                 ->setLastModifiedBy("Malte-Liban");
+    $objPHPExcel->getProperties()->setCreator("Cesar Web-Site by adlb")
+                                 ->setLastModifiedBy("Cesar Web-Site by adlb");
 
     $objPHPExcel->setActiveSheetIndex(0);
     

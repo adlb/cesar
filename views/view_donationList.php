@@ -69,7 +69,7 @@
                 <tbody>
                     <tr ng-repeat="donation in donations | filter:search | orderBy:predicate:reverse">
                         <td>{{donation.id}}</td>
-                        <td>{{donation.dateInit}}</td>
+                        <td>{{donation.dateInit | date : yyyy-MM-dd}}</td>
                         <td>{{donation.email}}</td>
                         <td>{{donation.firstName}}</td>
                         <td>{{donation.lastName}}</td>

@@ -120,7 +120,7 @@ class ControllerDonation {
         $donation['country'] = $user['country'];
         $donation['phone'] = $user['phone'];
         $donation['externalCheckId'] = '';
-        $donation['dateInit'] = date('Y-m-d');
+        $donation['dateInit'] = date('Y-m-d H:i:s');
         $donation['dateValidation'] = null;
         $donation['status'] = 'promess';
         
@@ -145,6 +145,12 @@ class ControllerDonation {
         if (!isset($param['id']) || !$this->donationDal->tryGet($param['id'], $donation)) {
             $this->webSite->AddMessage('warning', ':DONATION_DOES_NOT_EXIST');
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+        }
+        
+        if (!$this->authentication->CheckRole('Administrator') &&
+            $donation['userid'] != $this->authentication->currentUser['id']) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'home'));
         }
         
         $obj['donation'] = $donation;

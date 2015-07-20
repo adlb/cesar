@@ -22,13 +22,9 @@ class Viewer {
     }
 
     private function view_container(&$obj) {
-        $obj['title'] = 'Malte Liban';
+        $obj['title'] = $this->config->current['Title'];
         $obj['languages'] = $this->config->current['Languages'];
     }
-
-
-
-
 
     private function view_editHelp(&$obj) {
     }
