@@ -32,12 +32,13 @@ class ControllerDonation {
         $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
         $obj['embeddedArticle'] = 'donate';
         $params['titleKey'] = 'Donate';
+        $params['renderType'] = 'withoutColumn';
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     
-    function action_donate(&$obj, $param) {
-        $donation['amount'] = isset($param['amount']) ? $this->Getfloat($param['amount']) : 0;
-        $donation['type'] = isset($param['type']) ? $param['type'] : '';
+    function action_donate(&$obj, $params) {
+        $donation['amount'] = isset($params['amount']) ? $this->Getfloat($params['amount']) : 0;
+        $donation['type'] = isset($params['type']) ? $params['type'] : '';
         $_SESSION['currentDonation'] = $donation;
         if ($donation['amount'] < 1) {
             $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
@@ -60,6 +61,7 @@ class ControllerDonation {
         $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
         $obj['embeddedArticle'] = 'donateCheckname';
         $params['titleKey'] = 'DonateCheckName';
+        $params['renderType'] = 'withoutColumn';
         
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
@@ -148,6 +150,7 @@ class ControllerDonation {
         $obj['donation'] = $donation;
         $obj['embeddedArticle'] = 'donateFinalize';
         $params['titleKey'] = 'DonateThanksForDonation';
+        $params['renderType'] = 'withoutColumn';
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     

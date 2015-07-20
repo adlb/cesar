@@ -1,6 +1,7 @@
 <?php
 
 class Translator {
+    var $config;
     var $textDal;
     var $groupedCache;
     var $cache;
@@ -10,6 +11,7 @@ class Translator {
     var $languages;
 
     function __construct($config, $textDal, $language, $isAdmin) {
+        $this->config = $config;
         $this->textDal = $textDal;
         $this->groupedCache = array();
         $this->cache = array();
@@ -84,17 +86,26 @@ class Translator {
         }
     }
     
-    function GetTranslation($key) {
+    function GetTranslation($key, $macros = array()) {
         if (!is_array($key)) {
-            return $this->InternalGetTranslation($key);
+            $raw = $this->InternalGetTranslation($key);
         } else {
             $k = array_shift($key);
             $trad = $this->InternalGetTranslation($k);
             for($i = 0; $i < count($key); $i++) {
                 $trad = str_replace('{'.$i.'}', $key[$i], $trad);
             }
-            return $trad;
+            $raw = $trad;
         }
+        
+        $macros['title'] = $this->config->current['Title'];
+        $macros['contact'] = $this->config->current['Contact'];
+        
+        foreach($macros as $k => $v) {
+            $raw = str_replace('@@'.$k.'@@', $v, $raw);
+        }
+        
+        return $raw;
     }
 
     //update translation and save with 'ready' : case where you write the article directly

@@ -185,6 +185,7 @@ class QuoteLineDecorator extends LineDecorator {
         $decorator = new TextDecorator('paragraph', 'xxx', '¤¤EOF¤¤', false, true, false, true, false);
         $quote[] = $decorator->Read($string, $pos, $this->textDecorators);
         while (parent::StartHere($string, $pos, $level)) {
+            $pos += strlen($this->identifier);
             $quote[] = $decorator->Read($string, $pos, $this->textDecorators);
         }
         return array('type' => $this->type, 'content' => $quote);

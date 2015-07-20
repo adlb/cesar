@@ -31,10 +31,10 @@
                         <div class="row">
                             <!-- Select Basic -->
                             <div class="form-group-sm">
-                              <label class="col-md-4 control-label" for="type"><?php t(':DONATION_TYPE') ?></label>
+                              <label class="col-md-4 control-label" for="type"><?php t(':TYPE_PAYMENT') ?></label>
                               <div class="col-md-6">
                                 <select id="type" name="type" class="form-control">
-                                  <option value="cb"  <?php echo $obj['form']['type'] == 'cb' ? 'SELECTED' : '' ?>><?php t(':TYPE_PEYMENY_cb') ?></option>
+                                  <option value="cb"  <?php echo $obj['form']['type'] == 'cb' ? 'SELECTED' : '' ?>><?php t(':TYPE_PAYMENT_cb') ?></option>
                                   <option value="vir" <?php echo $obj['form']['type'] == 'vir' ? 'SELECTED' : '' ?>><?php t(':TYPE_PAYMENT_vir') ?></option>
                                   <option value="chq" <?php echo $obj['form']['type'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':TYPE_PAYMENT_chq') ?></option>
                                 </select>
@@ -62,10 +62,10 @@
                         <div class="row">
                             <!-- Text input-->
                             <div class="form-group-sm">
-                              <label class="col-md-4 control-label" for="externalCheckId"><?php t(':externalCheckId')?></label>
+                              <label class="col-md-4 control-label" for="externalCheckId"><?php t(':EXTERNAL_CHECK_ID')?></label>
                               <div class="col-md-6">
-                              <input id="externalCheckId" name="externalCheckId" placeholder="external id" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'externalCheckId') ?>">
-                              <span class="help-block">n° de cheque ou n° de validation paypal</span>
+                              <input id="externalCheckId" name="externalCheckId" placeholder="<?php t(':PLACEHOLDER_EXTERNAL_CHECK_ID')?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'externalCheckId') ?>">
+                              <span class="help-block"><?php t(':HELP_EXTERNAL_CHECK_ID')?></span>
                               </div>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                             <div class="form-group-sm">
                               <label class="col-md-4 control-label" for="addressLine1"><?php t(':ADDRESS_LINE_1')?></label>
                               <div class="col-md-6">
-                              <input id="addressLine1" name="addressLine1" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_1') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
+                              <input id="addressLine1" name="addressLine1" placeholder="<?php t(':PLACEHOLDER_ADDRESS1') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
                               </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                             <div class="form-group-sm">
                               <label class="col-md-4 control-label" for="addressLine2"><?php t(':ADDRESS_LINE_2')?></label>
                               <div class="col-md-6">
-                              <input id="addressLine2" name="addressLine2" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_2') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
+                              <input id="addressLine2" name="addressLine2" placeholder="<?php t(':PLACEHOLDER_ADDRESS2') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
                               </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                             <div class="form-group-sm">
                               <label class="col-md-4 control-label" for="postalCode"><?php t(':POSTAL_CODE')?></label>
                               <div class="col-md-6">
-                              <input id="postalCode" name="postalCode" placeholder="<?php t(':PLACEHOLDER_POSTAL_CODE') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
+                              <input id="postalCode" name="postalCode" placeholder="<?php t(':PLACEHOLDER_POSTALCODE') ?>" class="form-control input-sm" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
                               </div>
                             </div>
                         </div>
@@ -168,10 +168,16 @@
                         <div class="row">
                             <!-- Button (Double) -->
                             <div class="form-group-sm">
-                              <div class="col-md-2 pull-right">
-                                <a class="btn btn-default" href="<?php echo $obj['callback'] ?>"><?php t(':CANCEL') ?></a>
-                                <button id="button2id" name="button2id" class="btn btn-primary"><?php t(':SAVE') ?></button>
-                              </div>
+                                <div class="col-md-12">
+                                    <ul class="list-inline pull-right">
+                                        <li>
+                                            <a class="btn btn-default" href="<?php echo $obj['callback'] ?>"><?php t(':CANCEL') ?></a>
+                                        </li>
+                                        <li>
+                                            <button id="button2id" name="button2id" class="btn btn-primary"><?php t(':SAVE') ?></button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </fieldset>

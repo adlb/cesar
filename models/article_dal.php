@@ -49,7 +49,7 @@ class ArticleDal extends Dal {
                 'alert' => false,
                 'needLogin' => false,
                 'datealert' => '',
-                'status' => 'hide'
+                'status' => 'show'
             );
             $this->TrySave($menu);
         } else {

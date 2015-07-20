@@ -1,0 +1,9 @@
+Confirmation de don '@@title@@'
+Bonjour @@firstName@@ @@lastName@@,
+
+Nous vous confirmons avoir reçu votre promesse de don pour un montant de @@amount@@ euros.
+
+Cordialement
+
+L'équipe de @@title@@
+@@contact@@

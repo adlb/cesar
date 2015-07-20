@@ -80,7 +80,7 @@ MODIFY|Modifier
 UPDATE_USER_INFO|Corriger
 OTHER_USER|Changer d'utilisateur
 DONATION_RESUME|Résumé
-FINALIZE_YOUR_DONATION|Comment finaliser votre donation ?
+FINALIZE_YOUR_DONATION|Comment finaliser votre don ?
 TRANSLATION_READY|Prêt
 TRANSLATION_TOBETRANSLATED|à traduire
 TRANSLATION_TRANSLATIONTOBEVALIDATED|à valider
@@ -168,3 +168,14 @@ PLACEHOLDER_CITY|Ville
 PLACEHOLDER_COUNTRY|Pays
 PLACEHOLDER_PHONE|Téléphone
 I_HAVE_AN_ACCOUNT|J'ai déjà un compte
+ADDRESS|Adresse
+STATUS_PROMESS|Promesse de don
+STATUS_CANCELLED|Annulé
+STATUS_RECEIVED|Reçu
+STATUS_VALIDATED|Validé
+STATUS_ARCHIVED|Archivé
+STATUS_DELETED|Supprimé
+EXTERNAL_CHECK_ID|N° de vérification externe
+PLACEHOLDER_EXTERNAL_CHECK_ID|n° de chèque ou référence de virement
+PLACEHOLDER_EXTERNAL_CHECK_ID|n° de chèque ou référence de virement
+HELP_EXTERNAL_CHECK_ID|n° de cheque ou n° de validation paypal

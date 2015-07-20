@@ -49,20 +49,21 @@ class ControllerSite {
     function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => true, 'status' => 'show'));
         $alertsActives = array();
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         foreach($alerts as $alert) {
             if (strtotime($alert['datealert']) < strtotime(date('Y-m-d'))) {
                 $alert['alert'] = 0;
                 $this->articleDal->TrySave($alert);
             } else {
-                $alertsActives[] = $this->enrich_Article($alert, $this->authentication->CheckRole('Administrator'), true);
+                $alertsActives[] = $this->enrich_Article($alert, $macros, $this->authentication->CheckRole('Administrator'), true);
             }
         }
         $obj['alerts'] = $alertsActives;
         return 'alerts';
     }
 
-    protected function enrich_Article($article, $isAdmin, $html) {
-        $article['rawTitle'] = $this->translator->GetTranslation($article['titleKey']);
+    protected function enrich_Article($article, $macros, $isAdmin, $html) {
+        $article['rawTitle'] = $this->translator->GetTranslation($article['titleKey'], $macros);
         if ($html) {
             $article['htmlTitle'] = htmlspecialchars($article['rawTitle']);
 
@@ -73,7 +74,7 @@ class ControllerSite {
             $article['textTitle'] = $article['rawTitle'];
         }
         
-        $article['rawContent'] = $this->translator->GetTranslation($article['textKey']);
+        $article['rawContent'] = $this->translator->GetTranslation($article['textKey'], $macros);
         if ($html)
             $article['htmlContent'] = $this->formatter->ToHtml($article['rawContent']);
         else
@@ -97,19 +98,21 @@ class ControllerSite {
         }
         $article['url'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
         $article['permalink'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), true);
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         foreach($subArticles as $subArticle)
-            $article['subArticles'][] = $this->enrich_Article($subArticle, $isAdmin, false);
+            $article['subArticles'][] = $this->enrich_Article($subArticle, $macros, $isAdmin, false);
         return $article;
     }
     
     public function view_latestNews(&$obj, $params) {
         $news = $this->articleDal->GetWhere(array('type' => array('article', 'news'), 'status' => 'show'), array('date' => false));
         $obj['latestNews'] = array();
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         for ($i = 0; $i< count($news); $i++) {
             if (count($obj['latestNews']) == 7)
                 break;
             if ($news[$i]['textKey'] != "" && $news[$i]['imageId'] != 0)
-                array_push($obj['latestNews'], $this->enrich_Article($news[$i], false, false));
+                array_push($obj['latestNews'], $this->enrich_Article($news[$i], $macros, false, false));
         }
         
         return 'latestNews';
@@ -132,7 +135,9 @@ class ControllerSite {
             return false;
         }
         
-        $article = $this->enrich_Article($article, $this->authentication->CheckRole('Administrator'), true);
+        $macros = isset($params['macros']) ? $params['macros'] : array();
+        
+        $article = $this->enrich_Article($article, $macros, $this->authentication->CheckRole('Administrator'), true);
         
         $obj['article'] = $article;
         return true;
@@ -162,12 +167,14 @@ class ControllerSite {
         $obj['contact'] = $this->config->current['Contact'];
         $legal = $this->articleDal->GetFixedArticle('Legal');
         $contact = $this->articleDal->GetFixedArticle('Contact');
+        $macros = isset($params['macros']) ? $params['macros'] : array();
+        
         $obj['links'][] = array(
-            'display' => $this->translator->GetTranslation($legal['titleKey']),
+            'display' => $this->translator->GetTranslation($legal['titleKey'], $macros),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $legal['id']))
         );
         $obj['links'][] = array(
-            'display' => $this->translator->GetTranslation($contact['titleKey']),
+            'display' => $this->translator->GetTranslation($contact['titleKey'], $macros),
             'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $contact['id']))
         );
 
@@ -179,13 +186,16 @@ class ControllerSite {
     function view_fixedArticle(&$obj, $params) {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         $article = $this->articleDal->GetFixedArticle($titleKey);
-        $article = $this->enrich_Article($article, $isAdmin, true);
+        $article = $this->enrich_Article($article, $macros, $isAdmin, true);
         $obj['article'] = $article;
         
         $renderType = isset($params['renderType']) ? $params['renderType'] : 'normal';
         if ($renderType == 'raw')
             return 'articleRaw';
+        if ($renderType == 'withoutColumn')
+            return 'articleWithoutColumn';
         else
             return 'article';
     }
@@ -193,8 +203,9 @@ class ControllerSite {
     function view_fixedArticleText(&$obj, $params) {
         $isAdmin = $this->authentication->CheckRole('Administrator');
         $titleKey = $params['titleKey'];
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         $article = $this->articleDal->GetFixedArticle($titleKey);
-        $article = $this->enrich_Article($article, $isAdmin, false);
+        $article = $this->enrich_Article($article, $macros, $isAdmin, false);
         $obj['article'] = $article;
         return 'articleText';
     }
@@ -219,10 +230,11 @@ class ControllerSite {
     function view_articleRightColumn(&$obj, &$params) {
         $linksSource = $this->articleDal->GetWhere(array('type'=>array('article', 'news'), 'status' => 'show'), array('date'=>false));
         $links = array();
+        $macros = isset($params['macros']) ? $params['macros'] : array();
         foreach($linksSource as $item) {
             $links[] = array(
                 'link' => url(array('controller' => 'site', 'view' => 'article', 'id' => $item['id'])),
-                'display' => $this->translator->GetTranslation($item['titleKey'])
+                'display' => $this->translator->GetTranslation($item['titleKey'], $macros)
             );
         }
         $obj['links'] = array_slice($links, 0, 8);
