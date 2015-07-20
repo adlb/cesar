@@ -28,8 +28,10 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-right">
-        <a href="<?php echo url(array('controller' => 'donation', 'action' => 'confirm')) ?>" class="btn btn-primary">
-            <?php t(':DONATION_CONFIRM') ?> <i class="fa fa-arrow-circle-right"></i>
-        </a>
+        <?php if (isset($obj['user'])) { ?>
+            <a href="<?php echo url(array('controller' => 'donation', 'action' => 'confirm')) ?>" class="btn btn-primary">
+                <?php t(':DONATION_CONFIRM') ?> <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        <?php } ?>
     </div>
 </div>

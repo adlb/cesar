@@ -124,7 +124,7 @@
 
                     <!-- Button (Double) -->
                     <div class="form-group">
-                      <div class="col-md-2 text-right">
+                      <div class="col-md-12 text-right">
                         <a class="btn btn-default" href="<?php disp($obj, 'callback') ?>"><?php t(':CANCEL') ?></a>
                         <button id="button2id" name="button2id" class="btn btn-primary"><?php t(':SAVE') ?></button>
                       </div>

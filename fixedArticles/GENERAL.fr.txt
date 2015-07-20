@@ -153,3 +153,18 @@ CANT_DELETE_ARTICLE_WITH_SONS|Impossible de supprimer un article qui a des sous-
 ARTICLE_DELETED|Article supprimé
 CREATE_A_DONATION|Créer un don manuellement
 EXPORT_EXCEL|Exporter vers un fichier Excel
+ADDRESS_LINE_1|Addresse
+ADDRESS_LINE_2|Complément d'addresse
+POSTAL_CODE|Code postal
+CITY|Ville
+COUNTRY|Pays
+PHONE|Téléphone
+PLACEHOLDER_FIRSTNAME|Prénom
+PLACEHOLDER_LASTNAME|Nom
+PLACEHOLDER_ADDRESS1|num, rue
+PLACEHOLDER_ADDRESS2|Bâtiment, étage
+PLACEHOLDER_POSTALCODE|Code postal
+PLACEHOLDER_CITY|Ville
+PLACEHOLDER_COUNTRY|Pays
+PLACEHOLDER_PHONE|Téléphone
+I_HAVE_AN_ACCOUNT|J'ai déjà un compte

@@ -25,7 +25,7 @@
                 } elseif ($obj['donation']['type'] == 'cb') {
                     displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'renderType' => 'raw'));
                 } else {
-                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeCb', 'renderType' => 'raw'));
+                    displayPartial('site', 'fixedArticle', array('titleKey' => 'DonateFinalizeChq', 'renderType' => 'raw'));
                 }
             ?>
         </div>

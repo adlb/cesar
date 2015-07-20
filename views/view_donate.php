@@ -15,9 +15,8 @@
                 <div class="inside">
                     <div class="content">
                         <button type="submit" name="type" value="cb" class="btn btn-primary btn-money text-center">
-                            <P class="donate"><?php t(':CREDIT_CARD') ?></P>
+                            <P class="donate"><?php t(':TYPE_PAYMENT_cb') ?></P>
                             <P><i class="fa fa-credit-card"></i></P>
-                            <small><?php t(':VIA_CB_PARTNER') ?></small>
                         </button>
                     </div>
                 </div>
@@ -26,9 +25,8 @@
                 <div class="inside">
                     <div class="content text-center">
                         <button type="submit" name="type" value="vir" class="btn btn-primary btn-money text-center">
-                            <P><?php t(':VIREMENT') ?></P>
+                            <P><?php t(':TYPE_PAYMENT_vir') ?></P>
                             <P><i class="fa fa-exchange"></i></P>
-                            <small>&nbsp;</small>
                         </button>
                     </div>
                 </div>
@@ -37,9 +35,8 @@
                 <div class="inside">
                     <div class="content">
                         <button type="submit" name="type" value="chq" class="btn btn-primary btn-money text-center">
-                            <P><?php t(':CHEQUE') ?></P>
+                            <P><?php t(':TYPE_PAYMENT_chq') ?></P>
                             <P><i class="fa fa-pencil-square-o"></i></P>
-                            <small>&nbsp;</small>
                         </button>
                     </div>
                 </div>

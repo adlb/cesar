@@ -79,7 +79,7 @@
             <?php t(':I_HAVE_AN_ACCOUNT') ?>
         </a>
         <button type="submit" class="btn btn-primary">
-            <?php t(':CONFIRM') ?> <i class="fa fa-arrow-circle-right"></i>
+            <?php t(':SAVE') ?> <i class="fa fa-arrow-circle-right"></i>
         </a>
     </div>
 </form>

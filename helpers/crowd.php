@@ -47,8 +47,10 @@ class Crowd {
     }
     
     function TryRegister($email, $password, &$error) {
-        if (filter_var($email_a, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = ':EMAIL_IS_NOT_WELL_FORMED';
             return false;
+        }
 
         $users = $this->userDal->GetWhere(array('email' => $email));
         
@@ -99,7 +101,7 @@ class Crowd {
             return false;
         }
 
-        if (!$this->userDal->TryGet($user['id'], $user)) {
+        if (!$this->userDal->TryGet($userToCreate['id'], $user)) {
             $error = ':CANT_CREATE_USER';
             return false;
         }
@@ -112,7 +114,7 @@ class Crowd {
 
     function TryUpdateUser($user, &$error) {
         if (!isset($user['id']) || !$this->userDal->TryGet($user['id'], $userOld)) {
-            $error = ':USER_DOEAS_NOT_EXISTS';
+            $error = ':USER_DOES_NOT_EXISTS';
             return false;
         }
 
@@ -156,6 +158,13 @@ class Crowd {
         return true;
     }
 
+    function UserExists($email) {
+        $users = $this->userShortDal->GetWhere(array('email' => $email));
+        if (count($users) > 0) {
+            return true;
+        }
+    }
+    
     function TryLoginOrCreate($email, $password, &$error) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $error = 'EMAIL_INVALID';

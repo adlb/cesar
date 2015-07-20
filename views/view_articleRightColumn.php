@@ -13,10 +13,6 @@
         <p><?php t(':SUBSCRIBE_TO_OUR_NEWSLETTER') ?></p>
 
         <form method="POST" action="<?php echo url(array('controller' => 'user', 'action' => 'registerNewsLetter')) ?>">
-                <a href="<?php echo url(array('controller' => 'donation', 'view' => 'donate')) ?>" class="btn btn-donate" >
-                        Faire un don <i class="fa fa-arrow-circle-right"></i>
-                </a>
-
             <div class="input-group input-group-lg">
                 <input type="email" class="form-control" name="email" placeholder="<?php t(':PLACEHOLDER_EMAIL') ?>">
                 <span class="input-group-btn">
