@@ -1,9 +1,15 @@
-Confirmation de don '@@title@@'
-Bonjour @@firstName@@ @@lastName@@,
+Finalisation don @@title@@ - Virement
+Cher @@firstName@@ @@lastName@@,
 
-Nous vous confirmons avoir reçu votre promesse de don pour un montant de @@amount@@ euros.
+Vous venez de confirmer un don d'un montant de *@@amount@@* à l'association Malte Liban.
 
-Cordialement
+Pour finaliser votre don, merci de nous faire parvenir votre virement sur le compte suivant :
 
-L'équipe de @@title@@
+IBAN : XXX
+
+Merci de rappeler votre nom ainsi que la référence du don : *@@lastName@@ - @@id@@*.
+
+Un grand merci pour votre soutient.
+
+L'équipe @@title@@
 @@contact@@

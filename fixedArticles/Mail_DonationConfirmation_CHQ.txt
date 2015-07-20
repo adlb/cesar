@@ -1,0 +1,17 @@
+Finalisation don @@title@@ - Chèque
+Cher @@firstName@@ @@lastName@@,
+
+Vous venez de confirmer un don d'un montant de *@@amount@@* à l'association Malte Liban.
+
+Pour finaliser votre don, merci de nous faire parvenir un chèque à :
+
+Association Malte-Liban
+Boite Postale 23407
+75325 Paris Cedex 07
+
+Merci de rappeler votre nom ainsi que la référence du don : *@@lastName@@ - @@id@@*.
+
+Un grand merci pour votre soutient.
+
+L'équipe @@title@@
+@@contact@@

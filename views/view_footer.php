@@ -20,26 +20,25 @@
                     </div>
                     <div class="col-md-4">
                         <h3 class="footer-heading"><?php t(':USEFUL_LINKS') ?></h3>
-                            <ul class="list-unstyled footer-nav">
-                                <li>
-                                    <a href="<?php t('HOME:FOOTER_LINK_0')?>"><?php t('HOME:FOOTER_LINK_0_DISPLAY')?></a>
-                                </li>
-                                <li>
-                                    <a href="<?php t('HOME:FOOTER_LINK_1')?>"><?php t('HOME:FOOTER_LINK_1_DISPLAY')?></a>
-                                </li>
-                                <li>
-                                    <a href="<?php t('HOME:FOOTER_LINK_2')?>"><?php t('HOME:FOOTER_LINK_2_DISPLAY')?></a>
-                                </li>
-                                <li>
-                                    <a href="<?php t('HOME:FOOTER_LINK_3')?>"><?php t('HOME:FOOTER_LINK_3_DISPLAY')?></a>
-                                </li>
-                                <?php foreach($obj['links'] as $link) { ?>
-                                <li>
-                                    <a href="<?php echo $link['link']?>"><?php echo $link['display'] ?></a>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                        </h3>
+                        <ul class="list-unstyled footer-nav">
+                            <li>
+                                <a href="<?php t('HOME:FOOTER_LINK_0')?>"><?php t('HOME:FOOTER_LINK_0_DISPLAY')?></a>
+                            </li>
+                            <li>
+                                <a href="<?php t('HOME:FOOTER_LINK_1')?>"><?php t('HOME:FOOTER_LINK_1_DISPLAY')?></a>
+                            </li>
+                            <li>
+                                <a href="<?php t('HOME:FOOTER_LINK_2')?>"><?php t('HOME:FOOTER_LINK_2_DISPLAY')?></a>
+                            </li>
+                            <li>
+                                <a href="<?php t('HOME:FOOTER_LINK_3')?>"><?php t('HOME:FOOTER_LINK_3_DISPLAY')?></a>
+                            </li>
+                            <?php foreach($obj['links'] as $link) { ?>
+                            <li>
+                                <a href="<?php echo $link['link']?>"><?php echo $link['display'] ?></a>
+                            </li>
+                            <?php } ?>
+                        </ul>
                     </div>
                     <div class="col-md-4">
                         <!-- COLUMN 3 -->

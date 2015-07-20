@@ -1,0 +1,6 @@
+Finalisation don par virement
+Vous allez recevoir un mail (@@useremail@@) avec les coordonnées bancaires de l'association. Vous pourrez ainsi réaliser votre virement.
+
+Merci de rappeler votre nom ainsi que la référence du don : *@@lastName@@ - @@id@@*.
+
+Un grand merci pour votre soutien.

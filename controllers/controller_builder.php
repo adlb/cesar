@@ -44,6 +44,7 @@ class ControllerBuilder extends controllerSite{
             $this->textDal->DeleteWhere(array('key' => $article['titleKey']));
             $this->textDal->DeleteWhere(array('key' => $article['textKey']));
             $this->articleDal->DeleteWhere(array('id' => $article['id']));
+            $obj['status'] = 'ok';
             $this->webSite->AddMessage('success', ':ARTICLE_DELETED');
         } else {
             $this->webSite->AddMessage('warning', array(':ARTICLE_NOT_FOUND_WITH_ID_{0}', $params['id']));
