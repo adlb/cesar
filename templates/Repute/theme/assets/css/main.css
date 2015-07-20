@@ -5225,12 +5225,13 @@ ul.sidebar-nav ul.submenu li:first-child a {
 
 @media screen and (max-width: 480px) {
   .news-item img {
-    float: none !important;
-    width: 100%;
-    margin-bottom: 10px;
+    width: 80px;
   }
   .news-item .right {
-    padding-left: 0;
+    padding-left: 90px;
+  }
+  .news-item.news-featured img {
+    width: 100%;
   }
 }
 @media screen and (max-width: 768px) {
@@ -6437,6 +6438,8 @@ ul.nav-categories > li > a:hover {
     text-align: right;
     max-width:300px;
     display: inline-block;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .btn-donate > img {
@@ -6479,5 +6482,19 @@ ul.nav-categories > li > a:hover {
         height: 429px;
         position: absolute;
         width: 100%;
+    }
+}
+
+.encart {
+    padding: 0 10px 3px 0;
+    float: left;
+    width: 50%;
+}
+
+@media screen and (max-width: 548px) {
+    .encart {
+        padding: 0 0 3px 0;
+        width: 100%;
+        float: none;
     }
 }

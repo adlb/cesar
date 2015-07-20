@@ -25,7 +25,7 @@
 				<div class="row">
 					<div class="col-md-9">
                         <?php if ($obj['article']['image'] != '') { ?>
-						<div class="col-md-6 pull-left" style="padding-left:0;padding-bottom:3px;">
+						<div class="encart">
                             <img class="img-responsive" ng-src="<?php echo $obj['article']['image'] ?>" />
                         </div>
                         <?php } ?>

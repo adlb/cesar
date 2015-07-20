@@ -1,9 +1,9 @@
 <div class="col-md-3">
     <div class="column-title">
-        <div class="btn-donate" >
+        <div class="btn-donate" onclick="location.href='<?php echo url(array('controller' => 'donation', 'view' => 'donate')) ?>';">
             <img src="templates/Repute/theme/assets/img/don_bg.jpg" />
-            <button class="btn" onclick="location.href='<?php echo url(array('controller' => 'donation', 'view' => 'donate')) ?>';">
-                <span><?php t(':MAKE_A_DONATION') ?><i class="fa fa-arrow-circle-right"></i></span>
+            <button class="btn">
+                <span><?php t(':MAKE_A_DONATION') ?> <i class="fa fa-arrow-circle-right"></i></span>
             </button>
         </div>
     </div>
