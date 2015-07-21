@@ -5,7 +5,11 @@ Vous venez de confirmer un don d'un montant de *@@amount@@* à l'association Mal
 
 Pour finaliser votre don, merci de nous faire parvenir votre virement sur le compte suivant :
 
-IBAN : XXX
+Titulaire du Compte : ASSOCIATION MALTE LIBAN
+Domiciliation : PARIS ASSOCIATIONS ET FONDATIONS (02837)
+RIB : 30004 02790 00010210628 48
+IBAN : FR76 3000 4027 9000 0102 1062 848
+BIC : BNPAFRPPPAA
 
 Merci de rappeler votre nom ainsi que la référence du don : *@@lastName@@ - @@id@@*.
 
