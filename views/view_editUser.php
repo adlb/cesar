@@ -35,7 +35,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="addressLine1"><?php t(':ADDRESS_LINE_1')?></label>
                       <div class="col-md-6">
-                      <input id="addressLine1" name="addressLine1" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_1') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
+                      <input id="addressLine1" name="addressLine1" placeholder="<?php t(':PLACEHOLDER_ADDRESS1') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine1') ?>">
                       </div>
                     </div>
 
@@ -43,7 +43,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="addressLine2"><?php t(':ADDRESS_LINE_2')?></label>
                       <div class="col-md-6">
-                      <input id="addressLine2" name="addressLine2" placeholder="<?php t(':PLACEHOLDER_ADDRESS_LINE_2') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
+                      <input id="addressLine2" name="addressLine2" placeholder="<?php t(':PLACEHOLDER_ADDRESS2') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'addressLine2') ?>">
                       </div>
                     </div>
 
@@ -51,7 +51,7 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="postalCode"><?php t(':POSTAL_CODE')?></label>
                       <div class="col-md-6">
-                      <input id="postalCode" name="postalCode" placeholder="<?php t(':PLACEHOLDER_POSTAL_CODE') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
+                      <input id="postalCode" name="postalCode" placeholder="<?php t(':PLACEHOLDER_POSTALCODE') ?>" class="form-control input-md" type="text" value="<?php disp($obj['form'], 'postalCode') ?>">
                       </div>
                     </div>
 

@@ -1,181 +1,273 @@
-LANG_GB|Anglais
-LANG_FR|Français
-LANG_ES|Español
-MY_PROFIL|Mon profil
-LOGOUT|Se déconnecter
-ADMINISTRATION|Administration
-ADD_ARTICLE|Ecrire un article
-GLOBAL_SETUP|Configuration générale
-USER_MANAGEMENT|Gestion des utilisateurs
-DONATION_MANAGEMENT|Gestion des donations
-ARTICLE_MANAGEMENT|Gestion des Articles
-MEDIA_MANAGEMENT|Gestion des Médias
-HELP|Aide
-MAIN_TITLE|Titre Principale
-SUB_TITLE|Sous-Titre
-LATEST NEWS|Dernière nouvelles
-AQUESTION|Une Question ?
 ABOUT_US|A propos de nous
-USEFUL_LINKS|Liens utiles
-SUBSCRIBE_TO_OUR_NEWSLETTER|Abonnez-vous à notre news-letter
-GROUPED_KEY_GENERAL|Titres et boutons
-MODIFY_ARTICLES|Modifier article
-LIST_ARTICLES|Liste des articles
-SEARCH|recherche
-TRANSLATION|Traduction
-LOGIN|Se connecter
-RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
-ENTER_EMAIL_USED_TO_REGISTER|Entrez l'adresse e-mail utilisée pour s'enregistrer
-PLACEHOLDER_EMAIL|votrenom@domain.fr
-SEND|Envoyer
-CANCEL|Annuler
-PLACEHOLDER_PASSWORD|Mot de passe
-PLACEHOLDER_PASSWORD2|Resaisissez votre mot de passe
-LOST_PASSWORD|J'ai oublié mon mot de passe
-PLEASE_SIGN_IN|Connexion
-EMAIL_UNKOWN_CREATE_AN_ACCOUNT|Email inconnu - Créez un compte
-REGISTER|s'enregistrer
-ARTICLE_TYPE|Type d'article
-ARTICLE_MENU|Entrée de menu
-ARTICLE_ARTICLE|Article
-ARTICLE_NEWS|Nouvelle
-ARTICLE_GROUPEDTRAD|Traduction groupée
-TITLE|Titre
-PLACEHOLDER_TITLE|le titre
-SHOW|Rendre public
-ARTICLE_PARENT_MENU|Menu parent
-TOP_LEVEL_MENU|[Menu Principal]
-ARTICLE_IMAGE|Image principale de l'article
-ARTICLE_PLEASE_LINK_IMAGE_480x300|Veuillez selectionner une image de 480x300 pixels
-ARTICLE_DATE|Date de l'article
-HOME|Page d'accueil
-NEED_LOGIN|Indentification nécessaire
-NO_PICTURE|Pas d'image
-SAVE|Enregistrer
-ARTICLE_PARENT_NEWS|Article parent
+ACCOUNT_INFORMATION|Information du profile
+ACTIONS|Actions
+ACTIVATE|Activer
+ACTIVE|Actif
+ADDRESS_LINE_1|Adresse
+ADDRESS_LINE_2|Complément d'addresse
+ADDRESS|Adresse
+ADD_ARTICLE|Ecrire un article
+ADMINISTRATION_DATA|Information administration
+ADMINISTRATION|Administration
 ALERT|Alerte en page d'accueil
-ARTICLE_DATEALERT|Date de fin d'alerte
-ARTICLE_WRITE|Ecrire un article
-USEFUL_LINKS|Liens Utiles
-NEWSLETTER|News-letter
-GET_CONNECTED|Restez connecté
-GET_CONNECTED_BASE_LINE|Vous avez aimé cet article ? Alors partagez-le avec vos amis en cliquant sur les boutons ci-dessous :
-EMAIL|Email
-SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
-A_QUESTION|Une question ?
-SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
-SUBSCRIBE|S'inscrire
-SOME_LINKS|Quelques liens
-AMOUNT|Montant
+ALL_ERRORS|Erreurs
+ALL|Tous
 AMOUNT_HELP|Veuillez saisir le montant que vous souhaitez donner. Minimum 1 €.
-TYPE_PAYMENT|Moyen de paiement
-TYPE_PAYMENT_cb|Carte-Bleue
-TYPE_PAYMENT_vir|Virement
-TYPE_PAYMENT_chq|Chèque
+AMOUNT|Montant
+ANALYTICS|Code Google Analytics
+AN_EMAIL_HAS_BEEN_SENT_TO_{0}|Un mail a été envoyé à {0}
+AQUESTION|Une Question ?
+ARE_YOU_SURE|Etes-vous sûr ?
+ARTICLES_LIST|Liste des articles
+ARTICLE_ARTICLE|Article
+ARTICLE_DATEALERT|Date de fin d'alerte
+ARTICLE_DATE|Date de l'article
+ARTICLE_DELETED|Article supprimé
+ARTICLE_GROUPEDTRAD|Traduction groupée
+ARTICLE_ID|Id de l'article
+ARTICLE_IMAGE|Image principale de l'article
+ARTICLE_MANAGEMENT|Gestion des Articles
+ARTICLE_MENU|Entrée de menu
+ARTICLE_NEWS|Nouvelle
+ARTICLE_NOT_FOUND_WITH_ID_{0}|Aucun article n'a l'id {0}.
+ARTICLE_PARENT_MENU|Menu parent
+ARTICLE_PARENT_NEWS|Article parent
+ARTICLE_PLEASE_LINK_IMAGE_480x300|Veuillez selectionner une image de 480x300 pixels
+ARTICLE_SAVED|Article enregistré
+ARTICLE_TYPE|Type d'article
+ARTICLE_WRITE|Ecrire un article
+A_QUESTION|Une question ?
+BACK|Retour
+BAD_LANGUAGE|Langue inconnue
+BAD_TITLE|Le titre ne peut pas être vide
+CANCEL|Annuler
+CANT SAVE USER|Impossible de sauvegarder l'utilisateur
+CANT_CREATE_USER|Impossible de créer l'utilisateur
+CANT_DELETE_ARTICLE_WITH_SONS|Impossible de supprimer un article qui a des sous-articles rattachés
+CANT_DELETE_YOURSELF|Impossible de vous supprimer vous-même
+CANT_FIND_DONATION_TYPE|Type de don impossible
+CANT_FIND_DONATION|Impossible de trouver ce don.
+CANT_FIND_USER|Impossible de trouver cet utilisateur
+CANT_LOAD_USER|Impossible de charger cet utilisateur
+CANT_REMOVE_ADMIN_RIGHTS_TO_YOURSELF|Impossible de retirer les droits administrateur de vous-même
+CANT_SAVE_Article|Impossible d'enregistrer l'article
+CANT_SAVE_CONFIG|Impossible d'enregistrer la configuration. Vérifiez la connexion à la base de données
+CANT_SAVE_DONATION|Impossible de sauvegarder le don
+CANT_SAVE|Impossible d'enregistrer
+CANT_SEND_EMAIL|Impossible d'envoyer le mail
+CITY|Ville
+COLUMN_DEFINED_TWICE_{0}|La colonne '{0}' est définie deux fois.
+CONFIG_SAVED|Configuration enregistrée
+COUNTRY|Pays
+CREATE_A_DONATION|Créer un don manuellement
+CUSTOM|Personnalisé
+DANGER|Attention
+DATE|Date
+DELETE_CONFIG|Supprimer la configuration
+DISPLAY_ALL|Afficher tout
+DISPLAY_AS_LIST|Afficher en liste
+DONATIONS_LIST|Liste des donations
+DONATION_CANCELLED|Annulée
+DONATION_CANT_BE_LESS_THAN_1_EURO|Montant minimum de 1 euro
+DONATION_CONFIRM|Confirmer votre don
+DONATION_DOES_NOT_EXIST|Ce don n'existe pas.
+DONATION_MANAGEMENT|Gestion des dons
+DONATION_RECEIVED|Reçue
+DONATION_RESUME|Résumé
+DONATION_TYPE_IS_UNKNOWN|Type de don inconnu
 DONATION|Votre don
 DONATOR|Information du donnateur
-VIA_CB_PARTNER|via Hello-Asso
-DONATION_CONFIRM|Confirmer votre don
-MODIFY|Modifier
-UPDATE_USER_INFO|Corriger
-OTHER_USER|Changer d'utilisateur
-DONATION_RESUME|Résumé
-FINALIZE_YOUR_DONATION|Comment finaliser votre don ?
-TRANSLATION_READY|Prêt
-TRANSLATION_TOBETRANSLATED|à traduire
-TRANSLATION_TRANSLATIONTOBEVALIDATED|à valider
-TRANSLATION_TRANSLATIONTOBEUPDATED|à mettre à jour
-TRANSLATION_FIRSTTRANSLATIONTOBEVALIDATED|à valider (première)
-GROUPED_KEY_HOME|Page d'accueil
-ACTIVE|Actif
-ERROR|Erreur
-ARE_YOU_SURE|Etes-vous sûr ?
-DONATIONS_LIST|Liste des donations
-ARTICLES_LIST|Liste des articles
-USERS_LIST|List des utilisateurs
-MONTH_SHORT_JAN|JAN
-MONTH_SHORT_FEB|FEV
-MONTH_SHORT_MAR|MAR
-MONTH_SHORT_APR|AVR
-MONTH_SHORT_MAY|MAY
-MONTH_SHORT_JUN|JUI
-MONTH_SHORT_JUL|JUL
-MONTH_SHORT_AUG|AOU
-MONTH_SHORT_SEP|SEP
-MONTH_SHORT_OCT|OCT
-MONTH_SHORT_NOV|NOV
-MONTH_SHORT_DEC|DEC
-FILE|Fichier (pdf, jpg ou png)
-SIZE|Taille
-CUSTOM|Personnalisé
-SIZE_CUSTOM|Taille personnalisée
-UPLOAD|Télécharger
-DISPLAY_AS_LIST|Afficher en liste
-TRANSLATION_FROM|Traduction depuis
-TRANSLATION_TO|Traduction vers
-ARTICLE_ID|Id de l'article
-STATUS|Statut
-MAKE_A_DONATION|Faire un don
-AN_EMAIL_HAS_BEEN_SENT_TO_{0}|Un mail a été envoyé à {0}
-RESET_PASSWORD_FOR_{0}|Réinitialisation du mot de passe pour {0}
-PASSWORD|Mot de passe
-PASSWORD2|Retapez votre mot de passe
-PASSWORD_RESETED|Mot de Passe réinitialisé
-SUCCESS|
-WARNING|Attention !
-NOT_ALLOWED|Vous n'êtes pas autorisé à réaliser cette action.
-DISPLAY_ALL|Afficher tout
-ID|Id
-DATE|Date
-FIRSTNAME|Prénom
-LASTNAME|Nom
-TYPE|Type
-ACTIONS|Actions
-HOMEPAGE_SETUP|Paramétrage de la page d'accueil
+EDIT|Modifier
+EMAILSTATUS_NotValidYet|Non validé
+EMAILSTATUS_OptOut|Opt-Out
+EMAILSTATUS_Valid|Validé
 EMAIL_CONTACT|Email de contact
-TEMPLATE_NAME|Nom du modèle
-LANGUAGES|Langues
-LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'
-LANGUAGES_ACTIVE|Langues actives
-SECRET_LINE|Chaîne secrète
-SECRET_LINE_HELP|Chaîne devant être gardée secrète assurant la sécurité des utilisateurs.
-ANALYTICS|Code Google Analytics
+EMAIL_IS_NOT_WELL_FORMED|L'email n'est pas valide
+EMAIL_STATUS|Statut
+EMAIL_UNKOWN_CREATE_AN_ACCOUNT|Email inconnu - Créez un compte
+EMAIL|Email
+ENTER_EMAIL_USED_TO_REGISTER|Entrez l'adresse e-mail utilisée pour s'enregistrer
+ERROR|Erreur
+EXPORT_EXCEL|Exporter vers un fichier Excel
+EXTERNAL_CHECK_ID|N° de vérification externe
+FILE|Fichier (pdf, jpg ou png)
+FINALIZE_YOUR_DONATION|Comment finaliser votre don ?
+FIRSTNAME|Prénom
+GET_CONNECTED_BASE_LINE|Vous avez aimé cet article ? Alors partagez-le avec vos amis en cliquant sur les boutons ci-dessous :
+GET_CONNECTED|Restez connecté
 GLOBAL_SETUP_DATABASE|Configuration Base de données
-ACTIVATE|Activer
+GLOBAL_SETUP|Configuration générale
+GROUPED_KEY_GENERAL|Titres et boutons
+GROUPED_KEY_HOME|Page d'accueil
+HEIGHT|Hauteur
+HELP_EXTERNAL_CHECK_ID|n° de cheque ou n° de validation paypal
+HELP|Aide
+HIDE_ARCHIVED|Masquer les archives
+HOMEPAGE_SETUP|Paramétrage de la page d'accueil
+HOME|Page d'accueil
+ID|Id
+INDEX|N°
+INTERNAL_ERROR|Erreur interne
+IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL|Impossible d'envoyer un mail
+I_HAVE_AN_ACCOUNT|J'ai déjà un compte
+LANGUAGES_ACTIVE|Langues actives
+LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'
+LANGUAGES|Langues
+LANG_ES|Español
+LANG_FR|Français
+LANG_GB|Anglais
+LASTNAME|Nom
+LATEST NEWS|Dernière nouvelles
+LIST_ARTICLES|Liste des articles
+LOGIN|Se connecter
+LOGOUT|Se déconnecter
+LOST_PASSWORD|J'ai oublié mon mot de passe
 MAINTENANCEPAGE_LINK|Test la page de maintenance
 MAINTENANCEPAGE_REDIRECTION_HELP|To be used if maintenance is a redirection or leave blank and fill the corresponding acticle
-SAVE_AND_SUBMIT|Sauvegarder et demander la validation
-VALIDATE|Valider
-PREFIX_TITRE_ALERT|Information Importante ! 
-READ_MORE|Lire la suite
-EDIT|Modifier
-CANT_DELETE_ARTICLE_WITH_SONS|Impossible de supprimer un article qui a des sous-articles rattachés
-ARTICLE_DELETED|Article supprimé
-CREATE_A_DONATION|Créer un don manuellement
-EXPORT_EXCEL|Exporter vers un fichier Excel
-ADDRESS_LINE_1|Addresse
-ADDRESS_LINE_2|Complément d'addresse
-POSTAL_CODE|Code postal
-CITY|Ville
-COUNTRY|Pays
+MAIN_TITLE|Titre Principale
+MAKE_A_DONATION|Faire un don
+MEDIA_MANAGEMENT|Gestion des Médias
+MODIFY_ARTICLES|Modifier article
+MODIFY|Modifier
+MONTH_SHORT_APR|AVR
+MONTH_SHORT_AUG|AOU
+MONTH_SHORT_DEC|DEC
+MONTH_SHORT_FEB|FEV
+MONTH_SHORT_JAN|JAN
+MONTH_SHORT_JUL|JUL
+MONTH_SHORT_JUN|JUI
+MONTH_SHORT_MAR|MAR
+MONTH_SHORT_MAY|MAY
+MONTH_SHORT_NOV|NOV
+MONTH_SHORT_OCT|OCT
+MONTH_SHORT_SEP|SEP
+MY_PROFIL|Mon profil
+NAME|Nom
+NEED_AT_LEAST_EMAIL_FIELD|Il faut au moins un champ email
+NEED_LOGIN|Indentification nécessaire
+NEWSLETTER|News-letter
+NEW|Nouveau
+NEXT|Suivant
+NOT_ALLOWED|Vous n'êtes pas autorisé à réaliser cette action.
+NOT_AUTHORIZED_TITLE_{0}|Titre non autorisé. Il ne peut pas être vide.
+NO_ARTICLE_CONTENT|Vous n'avez peut-être pas encore défini votre page d'accueil.
+NO_ARTICLE|Aucun article à afficher
+NO_MENUFATHER|Il manque le menu parent.
+NO_NEWSFATHER|Il manque l'article parent.
+NO_PASSWORD1|Le mot de passe est vide
+NO_PASSWORD2|Le mot de passe 2 est vide
+NO_PICTURE|Pas d'image
+NO_TYPE_PROVIDED|Il manque le type
+Nothing_to_upload|Rien à charger.
+OTHER_USER|Changer d'utilisateur
+PASSWORD1|Mot de passe
+PASSWORD2|Retapez votre mot de passe
+PASSWORD_ARE_NOT_THE_SAME|Les mots de passes ne correspondent pas
+PASSWORD_RESETED|Mot de Passe réinitialisé
+PASSWORD|Mot de passe
 PHONE|Téléphone
-PLACEHOLDER_FIRSTNAME|Prénom
-PLACEHOLDER_LASTNAME|Nom
 PLACEHOLDER_ADDRESS1|num, rue
 PLACEHOLDER_ADDRESS2|Bâtiment, étage
-PLACEHOLDER_POSTALCODE|Code postal
+PLACEHOLDER_AMOUNT|Montant
 PLACEHOLDER_CITY|Ville
 PLACEHOLDER_COUNTRY|Pays
+PLACEHOLDER_DATEALERT|Date
+PLACEHOLDER_DATE|Date
+PLACEHOLDER_EMAIL|votrenom@domain.fr
+PLACEHOLDER_EXTERNAL_CHECK_ID|n° de chèque ou référence de virement
+PLACEHOLDER_FIRSTNAME|Prénom
+PLACEHOLDER_LASTNAME|Nom
+PLACEHOLDER_PASSWORD2|Resaisissez votre mot de passe
+PLACEHOLDER_PASSWORD|Mot de passe
 PLACEHOLDER_PHONE|Téléphone
-I_HAVE_AN_ACCOUNT|J'ai déjà un compte
-ADDRESS|Adresse
-STATUS_PROMESS|Promesse de don
+PLACEHOLDER_POSTALCODE|Code postal
+PLACEHOLDER_TITLE|le titre
+PLEASE_SIGN_IN|Connexion
+POSTAL_CODE|Code postal
+PREFIX_TITRE_ALERT|Information Importante ! 
+PREVIOUS_DONATIONS|Dons précédents
+PROFILE|Profile
+RAWLINE|Ligne initiale
+READ_MORE|Lire la suite
+RECREATE_TABLES|Recréer les tables (efface tout)
+REGISTER_ACCOUNT|S'inscrire
+REGISTER|s'enregistrer
+REMOVE_UP_TO_DATE|Retirer les éléments à jour
+RESET_PASSWORD_FOR_{0}|Réinitialisation du mot de passe pour {0}
+RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
+RESUME_OF_PAIEMENT|Résumé du don
+ROLE_Administrator|Administrateur
+ROLE_NewsLetter|Newsletter
+ROLE_Translator|Traducteur
+ROLE_Visitor|Visiteur
+ROLE|Rôle
+SAVED|Enregistré
+SAVE_AND_SUBMIT|Sauvegarder et demander la validation
+SAVE|Enregistrer
+SEARCH|recherche
+SECRET_LINE_HELP|Chaîne devant être gardée secrète assurant la sécurité des utilisateurs.
+SECRET_LINE|Chaîne secrète
+SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
+SEND|Envoyer
+SHOW|Rendre public
+SIZE_CUSTOM|Taille personnalisée
+SIZE|Taille
+SOME_LINKS|Quelques liens
+STATUS_ARCHIVED|Archivé
 STATUS_CANCELLED|Annulé
+STATUS_DELETED|Supprimé
+STATUS_PROMESS|Promesse de don
 STATUS_RECEIVED|Reçu
 STATUS_VALIDATED|Validé
-STATUS_ARCHIVED|Archivé
-STATUS_DELETED|Supprimé
-EXTERNAL_CHECK_ID|N° de vérification externe
-PLACEHOLDER_EXTERNAL_CHECK_ID|n° de chèque ou référence de virement
-PLACEHOLDER_EXTERNAL_CHECK_ID|n° de chèque ou référence de virement
-HELP_EXTERNAL_CHECK_ID|n° de cheque ou n° de validation paypal
+STATUS|Statut
+SUBSCRIBE_TO_OUR_NEWSLETTER|Abonnez-vous à notre news-letter
+SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
+SUBSCRIBE|S'inscrire
+SUB_TITLE|Sous-Titre
+SUCCESS|OK
+TEMPLATE_NAME|Nom du modèle
+THIS_TOPIC_DOES_NOT_EXIST|Ce sujet n'existe pas
+THIS_USER_DOES_NOT_EXIST|Cet utilisateur n'existe pas
+TITLE_CANT_BE_EMPTY|Le titre ne peut pas être vide
+TITLE|Titre
+TOO_FEW_LINES|Trop peu de lignes
+TOP_LEVEL_MENU|[Menu Principal]
+TRANSLATION_FIRSTTRANSLATIONTOBEVALIDATED|à valider (première)
+TRANSLATION_FROM|Traduction depuis
+TRANSLATION_READY|Prêt
+TRANSLATION_TOBETRANSLATED|à traduire
+TRANSLATION_TO|Traduction vers
+TRANSLATION_TRANSLATIONTOBEUPDATED|à mettre à jour
+TRANSLATION_TRANSLATIONTOBEVALIDATED|à valider
+TRANSLATION|Traduction
+TYPE_PAYMENT_cb|Carte-Bleue
+TYPE_PAYMENT_chq|Chèque
+TYPE_PAYMENT_vir|Virement
+TYPE_PAYMENT|Moyen de paiement
+TYPE|Type
+UPDATE_ALL|Tout mettre à jour
+UPDATE_USER_INFO|Corriger
+UPDATE|Mettre à jout
+UPLOAD|Télécharger
+USEFUL_LINKS|Liens utiles
+USERORIGIN_External|Externe
+USERORIGIN_NewsLetter|Newsletter
+USERORIGIN_Payment|Paiement
+USERORIGIN_Register|Enregistrement
+USERS_LIST|List des utilisateurs
+USER_DOES_NOT_EXISTS|L'utilisateur n'existe pas
+USER_EXISTS|L'utilisateur existe déjà
+USER_MANAGEMENT|Gestion des utilisateurs
+USER_ORIGIN|Origine de l'utilisateur
+VALIDATE|Valider
+WARNING|Attention 
+WIDTH|Largeur
+WRONG_PASSWORD1|Erreur de mot de passe
+WRONG_PASSWORD2|Erreur de mot de passe
+YOU_CAN_ONLY_ARCHIVE_VALIDATED_DONATION|Vous ne pouvez archiver que des dons validés
+YOU_HAVE_BEEN_UNSUBSCRIBED_FROM_NEWSLETTER|Vous avez été désinscrit de la newsletter
+YOU_HAVE_SUBSCRIBE_TO_NEWS_LETTER|Vous êtes inscrit à notre newsletter
+A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT|Un utilisateur avec la même adresse email existe déjà
+YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER|Vous êtes déjà inscrit à notre newsletter
+MODIFY_USER_INFO|Modifer
+MODIFY_USER_PASSWORD|Changer de mot de passe

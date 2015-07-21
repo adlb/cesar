@@ -83,7 +83,7 @@ class ControllerDonation {
             $_SESSION['currentDonation'] = $donation;
             
             if ($this->crowd->UserExists($params['email'])) {
-                $this->webSite->AddMessage('info', ":A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT");
+                $this->webSite->AddMessage('info', ':A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT');
                 return $this->view_donateCheckname($obj, $params);
             } else {
                 if (!$this->crowd->TryRegister($params['email'], uniqid("don_"), $error)) {

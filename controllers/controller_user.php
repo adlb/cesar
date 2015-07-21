@@ -180,9 +180,11 @@ class ControllerUser {
         $obj['user'] = $user;
         
         $obj['user']['donations'] = $this->donationDal->GetWhere(array('userid' => $id), array('dateInit' => false));
+        
         if ($this->crowd->TryGetKey($obj['user']['email'], $key)) {
             $obj['user']['key'] = $key;
         }
+        
         return 'profil';
     }
     

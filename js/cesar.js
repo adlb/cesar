@@ -428,6 +428,12 @@ cesarApp.controller('donationsListCtrl', ['$rootScope', '$scope', function($root
     };
 }]);
 
+cesarApp.controller('donationsShortListCtrl', ['$scope', function($scope) {
+    $scope.init = function(donations) {
+        $scope.donations = donations;
+    };
+}]);
+
 cesarApp.controller('loginFormCtrl', ['$scope', function($scope) {
   $scope.init = function(getTimesUrl) {
     $scope.getTimesUrl = getTimesUrl;

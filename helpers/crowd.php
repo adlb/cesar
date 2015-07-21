@@ -61,7 +61,7 @@ class Crowd {
                     $this->userDal->TrySave($users[0]);
                     return true;
                 }
-                $error = ":YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER";
+                $error = ':YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER';
                 return false;
             }
             $userToCreate = array(
