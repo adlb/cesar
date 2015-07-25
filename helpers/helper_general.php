@@ -128,10 +128,8 @@ function disp($obj, $key) {
         return;
 }
 
-function url($param, $full = false) {
-    $url = '?'.http_build_query($param, '', '&');
-    if ($full)
-        return $_SERVER['PHP_SELF'].$url;
+function url($param, $prefix = '') {
+    $url = $prefix.'?'.http_build_query($param, '', '&');
     return $url;
 }
 

@@ -35,6 +35,14 @@ class DonationDal extends Dal {
     
     var $keyName = 'id';
     var $tableSuffix = "donations";
+    
+    function GetDonationKey($donationId, $secret) {
+        return md5($donationId.'*DONATION*'.$secret);
+    }
+    
+    function CheckDonationKey($donationId, $secret, $key) {
+        return $this->GetDonationKey($donationId, $secret) == $key;
+    }
 }
 
 ?>

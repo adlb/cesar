@@ -97,7 +97,7 @@ class ControllerSite {
             $article['image'] = '';
         }
         $article['url'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
-        $article['permalink'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), true);
+        $article['permalink'] = url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']), $this->webSite->urlPrefix);
         $macros = isset($params['macros']) ? $params['macros'] : array();
         foreach($subArticles as $subArticle)
             $article['subArticles'][] = $this->enrich_Article($subArticle, $macros, $isAdmin, false);

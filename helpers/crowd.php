@@ -122,8 +122,12 @@ class Crowd {
 
         if ($this->authentication->CheckRole('Administrator')) {
             $role = $user['role'];
+            $emailStatus = $user['emailStatus'];
+            $origin = $user['origin'];
         } else {
             $role = $userOld['role'];
+            $emailStatus = $user['email'] == $userOld['email'] ? $userOld['emailStatus'] : 'NotValidYet';
+            $origin = $userOld['origin'];
         }
         
         if ($userOld['role'] == 'Administrator' && $role != 'Administrator' && $this->authentication->currentUser['id'] == $user['id']) {
@@ -145,8 +149,8 @@ class Crowd {
             'country' => $user['country'],
             'phone' => $user['phone'],
             'role' => $role,
-            'emailStatus' => $user['email'] == $userOld['email'] ? $userOld['emailStatus'] : 'NotValidYet',
-            'origin' => $userOld['origin']
+            'emailStatus' => $emailStatus,
+            'origin' => $origin
         );
 
         if (!$this->userDal->TrySave($userToUpdate)) {

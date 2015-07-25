@@ -134,6 +134,12 @@ class ControllerDonation {
         $_SESSION['currentDonation'] = null;
         unset($_SESSION['currentDonation']);
         
+        $key = $this->donationDal->GetDonationKey($donation['id'], $this->config->current['SecretLine']);
+        $donation['linkForDonation'] = url(array(
+            'controller' => 'donation', 
+            'view' => 'donateFinalize', 
+            'id' => $donation['id'], 
+            'key' => $key),$this->webSite->urlPrefix);
         if (!$this->mailer->TrySendDonationConfirmationMail($donation)) {
             $this->webSite->AddMessage('warning', ':IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL');
         }
@@ -141,16 +147,18 @@ class ControllerDonation {
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id']));
     }
     
-    function view_donateFinalize(&$obj, $param) {
-        if (!isset($param['id']) || !$this->donationDal->tryGet($param['id'], $donation)) {
+    function view_donateFinalize(&$obj, $params) {
+        if (!isset($params['id']) || !$this->donationDal->tryGet($params['id'], $donation)) {
             $this->webSite->AddMessage('warning', ':DONATION_DOES_NOT_EXIST');
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
         }
         
         if (!$this->authentication->CheckRole('Administrator') &&
-            $donation['userid'] != $this->authentication->currentUser['id']) {
+            $donation['userid'] != $this->authentication->currentUser['id'] &&
+            !(isset($params['key']) && $this->donationDal->CheckDonationKey($params['id'], $this->config->current['SecretLine'], $params['key']))
+            ) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
-            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'home'));
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
         }
         
         $obj['donation'] = $donation;
@@ -218,27 +226,6 @@ class ControllerDonation {
         return 'donationList';
     }
     
-    
-    function view_donation(&$obj, $params) {
-        if (!isset($params['id']) || !$this->donationDal->TryGet($params['id'], $donation)) {
-            $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION');
-            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-            die();
-        }
-        $obj['donation'] = $donation;
-        if ($donation['type'] == 'vir') {
-            return 'virement';
-        } elseif ($donation['type'] == 'chq') {
-            return 'cheque';
-        } elseif  ($donation['type'] == 'cb') {
-            $obj['paypalId'] = $this->config->current['PaypalButtonId'];
-            return 'paypal';
-        }
-        $this->webSite->AddMessage('warning', ':CANT_FIND_DONATION_TYPE');
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-        die();
-    }
-
     public function action_cancel(&$obj, $params) {
         $donation = GetDonationForChange($params);
         
@@ -343,7 +330,7 @@ class ControllerDonation {
         return;
     }
     
-    function view_export(&$obj, $param) {
+    function view_export(&$obj, $params) {
         if (!$this->authentication->CheckRole('Administrator')) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));

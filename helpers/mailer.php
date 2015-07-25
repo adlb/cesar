@@ -103,7 +103,6 @@ class Mailer {
     public function TrySendDonationConfirmationMail($donation) {
         $macros = $donation;
         $macros['amount'] = number_format($macros['amount'], 2);
-        
         switch($donation['type']) {
             case 'cb' :
                 return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_CB', $macros);
