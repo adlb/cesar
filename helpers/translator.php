@@ -204,6 +204,7 @@ class Translator {
             return;
         }
         
+        //Get any previous text
         $oldTexts = $this->textDal->GetWhere(array('key' => $key));
         
         if (count($oldTexts) == 0) {
@@ -215,7 +216,7 @@ class Translator {
                 'text' => '',
                 'nextText' => $value,
                 'usage' => $usage,
-                'textStatus' => 'notTranslated',
+                'textStatus' => 'notTranslated'
             );
         } else {
             $oldText = $oldTexts[0];
@@ -228,7 +229,7 @@ class Translator {
             'text' => '',
             'nextText' => $value,
             'usage' => $oldText['usage'],
-            'textStatus' => 'toBeTranslated',
+            'textStatus' => 'toBeTranslated'
         );
 
         $oldTexts = $this->textDal->GetWhere(array('key' => $key, 'language' => $language));
@@ -236,6 +237,8 @@ class Translator {
             $text['id'] = $oldTexts[0]['id'];
             $text['text'] = $oldTexts[0]['text'];
             $text['textStatus'] = $oldTexts[0]['textStatus'];
+        } elseif ($this->textDal->TryGetFromFile($key, $language, $data)) {
+            $text['text'] = $data;
         }
         
         switch ($action) {
@@ -264,7 +267,7 @@ class Translator {
         
         $split = explode(':', $key);
         if (count($split) == 2 && $split[0] == 'file') {
-            if ($this->TryGetFromFile($split[1], $this->language, $data)) {
+            if ($this->textDal->TryGetFromFile($split[1], $this->language, $data)) {
                 return $data;
             } else {
                 return $split[1];
@@ -283,7 +286,7 @@ class Translator {
         if (count($lines) == 0) {
             $lines = $this->textDal->GetWhere(array('key' => $key, 'language' => $this->defaultLanguage));
             if (count($lines) == 0) {
-                if ($this->TryGetFromFile($key, $this->language, $data)) {
+                if ($this->textDal->TryGetFromFile($key, $this->language, $data)) {
                     return $data;
                 }
                 return '['.$key.']';
@@ -351,48 +354,6 @@ class Translator {
         $new['text'] = join("\n", $lines);
         $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);
-    }
-    
-    private function TryGetFromFile($key, $language, &$data) {
-        $keyClean;
-        
-        if (substr($key, -8) == '_content') {
-            $keyClean = substr($key, 0, -8);
-        } else {
-            $keyClean = $key;
-        }
-        $fileName = 'fixedArticles/'.$keyClean.'.'.$language.'.txt';
-                
-        if (!file_exists($fileName))
-        {
-            $fileName = 'fixedArticles/'.$keyClean.'.txt';
-            if (!file_exists($fileName))
-                return false;
-        }
-        
-        if ($keyClean == $key) {
-            $f = @fopen($fileName, 'r');
-            if ($f == null)
-                return false;
-            $data = fgets($f);
-            fclose($f);
-            return $data != '';
-        }
-        
-        $f = @fopen($fileName, 'r');
-        if ($f == null)
-            return false;
-        $head = fgets($f);
-        $result = '';
-        while (($line = fgets($f)) !== false) {
-            $result .= $line;
-        }
-        fclose($f);
-        
-        $data = $result;
-        $data = str_replace("\r\n", "\n", $data);
-        $data = str_replace("\r", "\n", $data);
-        return true;
     }
 }
 

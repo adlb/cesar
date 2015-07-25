@@ -115,7 +115,15 @@ LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'
 LANGUAGES|Langues
 LANG_ES|Español
 LANG_FR|Français
-LANG_GB|Anglais
+LANG_GB|English
+LANG_CH|Switzerland
+LANG_CN|China
+LANG_DE|Deutchland
+LANG_EN|English
+LANG_IT|Italian
+LANG_JP|Japanese
+LANG_LB|Libanais
+LANG_US|American
 LASTNAME|Nom
 LATEST NEWS|Dernière nouvelles
 LIST_ARTICLES|Liste des articles

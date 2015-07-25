@@ -4,12 +4,9 @@
                     <img src="templates/Repute/theme/assets/img/logo.png" alt="<?php disp($obj,'title'); ?>">
                 </a>
                 
-                <div class="navbar-header" style="height:20px;">
-                </div>
-
                 <div class="topbar">
-                    <div id="top-nav" class="navbar-collapse collapse">
-				        <ul class="list-inline top-nav">
+                    <div id="top-nav">
+                        <ul class="list-inline top-nav">
                             <?php if (count($obj['languages'])>1) { ?>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button">

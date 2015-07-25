@@ -70,7 +70,7 @@
                             <ul class="list-inline">
                                 <li>
                                     <a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
                                     </a>
                                 </li>
                                 <li>
@@ -78,7 +78,7 @@
                                         href="#" ng-show="article.id != 0"
                                         ng-real-click="deleteArticle(article.id);" 
                                         ng-confirm-click="<?php t(':ARE_YOU_SURE') ?>">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
                                     </a>
                                 </li>
                             </ul>

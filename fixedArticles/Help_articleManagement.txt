@@ -1,2 +1,31 @@
-h1. Gestion des articles
+Aide sur la Gestion des articles
+
+La gestion des articles permet de:
+* Lister tous les articles
+* Modifier les articles
+* Gerer les traductions
+* Supprimer les articles
+
+h2. Tableau des articles
+Le tableau contient la liste de tous les articles du site.
+* *Id de l'article* : Identifiant de l'article
+* *Status* : Status (show: l'article est visible, hide: l'article est caché)
+* *Titre* : Titre de l'article
+* *Type d'article* : (cf Aide/Ecrire un article)
+** Traduction groupée : article contenant toutes les traductions des textes du site (boutons, liens, etc...)
+** Entrée de menu : article sans contenu pour une entrée de menu
+** Article : Titre + Contenu
+** Nouvelle : Article pouvant être rattaché à un autre article.
+* *fr, gb, etc...* : Une colonne par langue présente sur le site. Pour chaque article et chaque langue, le status de la traduction.
+* *Actions* :
+** ¤edit¤ : modifie l'article
+** ¤trash¤ : supprime l'article
+
+h4 remarques
+Certains articles sont préfixés avec une icône :
+¤home¤ : Article principal de la page d'accueil.
+¤envelope¤ : Article utilisé comme modèle de mail.
+
+Certains articles ont une version par défaut. Le fait de supprimer l'article va permettre de revenir à la version par défaut. Cette version par défaut réapparaitra dans la liste à la première utilisation de l'article.
+
 

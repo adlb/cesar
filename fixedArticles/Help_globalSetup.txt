@@ -3,5 +3,41 @@ h2. Menu Configuration Générale
 La configuration du site se fait via le menu Administration/Configuration Générale. Ce menu n'est accessible qu'aux administrateurs du site.
 
 h2. Configuration générale
-|Title
+h4. Titre
+Titre du site web. Il apparaitra dans le titre de la fenêtre du navigateur de l'utilisateur et dans les mails.
+h4. Email de contact
+Cet email est d'adresse utilisée par le site pour envoyer des mails.
+h4. Nom du modèle
+C'est le design utilisé par le site. Il n'existe pour le moment qu'un seul design : 'Repute/theme'.
+h4. Langues
+Ce sont les langues configurables dans le site. Il faut inscrire les langues en norme [https://fr.wikipedia.org/wiki/ISO_3166-1_alpha-2|ISO à 2 caractères].
+Certaines langues nécessiteront l'ajout d'image dans le template pour le drapeau.
+Les images déjà présentes sont :
+Suisse (ch), Chine (cn), Allemagne (de), Espagne (es), France (fr), Royaume-Unis (gb), Italie (it), Japon (jp), Liban (lb), Etats-Unis (us)
+_remarque_ : Attention ! pour l'anglais : utiliser le code "gb".
+h4. Langues actives
+Les langues actives sont celles présentes sur le site publique. Les autres langues ne sont visibles qu'aux administrateurs et aux traducteurs.
+h4. Chaîne secrète
+Court texte permettant de sécurisé le site. ce texte doit être unique et gardé secret.
+h4. Code Google Analytics
+Ce code est déposé sur chaque page du site et permet de comptabiliser le nombre de visite. [https://www.google.com/analytics/]
 
+h2. Configuration de la base de données
+h4. ConnectionString, DB User et DB Password
+Ces paramètres sont passé à l'[http://php.net/manual/fr/book.pdo.php|objet PDO] de PHP pour se connecter à la base de données. Ces données doivent être justes pour enregistrer la configuration. Si la connection echoue alors la configuration n'est pas sauvée.
+h4. DB Prefix
+Cette chaine est utilisée pour préfixer toutes les tables utilisées par le site dans la base de donnée. Cela permet d'heberger plusieurs instance du site dans la même base de données.
+
+h2. Configuration Mail
+Configuration email standard.
+
+h2. Configuration page de maintenance
+La page de maintenance est une page qui s'affiche quand le site est en maintenance.
+h4. Maintenance Page (Activer)
+Cette case à cocher permet d'activer la page de maintenance.
+Le lien "Test de la page de maintenance" permet d'afficher la page de maintenance.
+h4. Redirection
+Permet de définir la page de maintenance à l'exterieur du site. Lorsque cette case est remplie, la page de maintenance redirige vers le lien fourni ici.
+Lorsqu'aucune redirection n'est fournie, la page de maintenance est un des articles du site qui peut-être modifié.
+h4. Force non maintenance
+Permet de désactiver la page de maintenance uniquement sur l'ordinateur courant. Cela permet de faire des tests complet avant de rendre à nouveau le site opérationnel.

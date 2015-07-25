@@ -158,7 +158,10 @@ class ControllerTranslationManager {
         }
         foreach($this->translator->languages as $lg) {
             if (!isset($texts[$lg['name']])) {
-                $texts[$lg['name']] = array('nextText' => $key, 'language' => $lg['name']);
+                if (!$this->textDal->TryGetFromFile($key, $lg['name'], $data)) {
+                    $data = $key;
+                }
+                $texts[$lg['name']] = array('nextText' => $data, 'language' => $lg['name']);
             }
         }
         return $texts;

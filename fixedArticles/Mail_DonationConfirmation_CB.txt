@@ -13,7 +13,7 @@ c. {html}
     <input type="hidden" name="item_name" value="Référence @@id@@ - @@firstName@@ @@lastName@@">
     <input type="hidden" name="amount" value="@@amount@@">
     <input type="hidden" name="charset" value="utf-8">
-    <input type="image" src="img/paypal.png" name="submit" alt="Effectuez votre don via PayPal : une solution rapide, gratuite et sécurisée !">
+    <button name="submit" type="submit" alt="Effectuez votre don via PayPal : une solution rapide, gratuite et sécurisée !">Paypal</button>
 </form>
 {/html}
 

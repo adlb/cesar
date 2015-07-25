@@ -25,6 +25,48 @@ class TextDal extends Dal {
     );
     var $keyName = 'id';
     var $tableSuffix = "texts";
+    
+    function TryGetFromFile($key, $language, &$data) {
+        $keyClean;
+        
+        if (substr($key, -8) == '_content') {
+            $keyClean = substr($key, 0, -8);
+        } else {
+            $keyClean = $key;
+        }
+        $fileName = 'fixedArticles/'.$keyClean.'.'.$language.'.txt';
+                
+        if (!file_exists($fileName))
+        {
+            $fileName = 'fixedArticles/'.$keyClean.'.txt';
+            if (!file_exists($fileName))
+                return false;
+        }
+        
+        if ($keyClean == $key) {
+            $f = @fopen($fileName, 'r');
+            if ($f == null)
+                return false;
+            $data = fgets($f);
+            fclose($f);
+            return $data != '';
+        }
+        
+        $f = @fopen($fileName, 'r');
+        if ($f == null)
+            return false;
+        $head = fgets($f);
+        $result = '';
+        while (($line = fgets($f)) !== false) {
+            $result .= $line;
+        }
+        fclose($f);
+        
+        $data = $result;
+        $data = str_replace("\r\n", "\n", $data);
+        $data = str_replace("\r", "\n", $data);
+        return true;
+    }
 }
 
 ?>
