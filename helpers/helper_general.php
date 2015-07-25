@@ -62,7 +62,7 @@ class WebSite {
         
         if (!isset($_GET['language'])) {
             $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            header('Location: '.$this->services['translator']->language.'/');
+            header('Location: '.$this->services['translator']->language.'/'.url($_GET));
             die();
         }
         

@@ -1,5 +1,5 @@
 <div class="page-container">
-    <div class="container" id="articleCtrl" ng-controller="articleCtrl">
+    <div class="container" ng-controller="menuConfigCtrl" ng-init="fnm=<?php echo $obj['IsForceNonMaintenance']?>">
         <form class="form-horizontal" method="POST" action="<?php echo url(array('controller' => 'builder', 'action' => 'saveConfig'))?>">
             <div class="row">
                 <fieldset>
@@ -35,8 +35,8 @@
                     <div class="form-group">
                       <label class="col-md-4 control-label" for="Languages"><?php t(':LANGUAGES') ?></label>
                       <div class="col-md-5">
-                      <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'LANGUAGES_HELP'); ?>">
-                      <span class="help-block"><?php t(':EMAIL_CONTACT') ?></span>
+                      <input id="Languages" name="Languages" placeholder="languages" class="form-control input-md" type="text" value="<?php disp($obj['config'], 'Languages'); ?>">
+                      <span class="help-block"><?php t(':LANGUAGES_HELP') ?></span>
                       </div>
                     </div>
 
@@ -166,6 +166,26 @@
                       <div class="col-md-6">
                       <input id="MaintenanceRedirection" name="MaintenanceRedirection" placeholder="http://defaultpage" class="form-control input-md" type="text" value="<?php echo $obj['config']['MaintenanceRedirection']; ?>">
                       <span class="help-block"><?php t(':MAINTENANCEPAGE_REDIRECTION_HELP') ?></span>
+                      </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="MaintenanceRedirection">Force non-maintenance</label>
+                      <div class="col-md-6">
+                        <div ng-show="fnm">
+                            <p>
+                                <?php t(':MAINTENANCEPAGE_FORCE_ACTIVE') ?>
+                                <a class="btn btn-default" href ng-click="removeFnm()"><?php t(':UNACTIVATE') ?></a>
+                            </p>
+                        </div>
+                        <div ng-hide="fnm">
+                            <p>
+                                <?php t(':MAINTENANCEPAGE_FORCE_INACTIVE') ?>
+                                <a class="btn btn-default" href ng-click="activeFnm()"><?php t(':ACTIVATE') ?></a>
+                            </p>
+                        </div>
+                        <span class="help-block"><?php t(':MAINTENANCEPAGE_FORCE_HELP') ?></span>
                       </div>
                     </div>
 

@@ -14,7 +14,7 @@ class Crowd {
     }
 
     function GetTimes($email) {
-        $res = $this->userDal->GetWhere(array('email' => $email));
+        $res = $this->userDal->GetWhere(array('email' => strtolower($email)));
         $nb = 0;
         if (count($res) == 0) {
             $nb = 1000;
@@ -25,7 +25,7 @@ class Crowd {
     }
     
     function TryGetKey($email, &$key) {
-        if (!$this->TryGetFromEmail($email, $user)) {
+        if (!$this->TryGetFromEmail(strtolower($email), $user)) {
             return false;
         }
         $key = md5($this->salt.$user['email'].$user['times'].$user['id']);
@@ -33,6 +33,7 @@ class Crowd {
     }
     
     function CheckKey($email, $key, &$user) {
+        $email = strtolower($email);
         if (!$this->TryGetFromEmail($email, $user)) {
             return false;
         }
@@ -41,18 +42,19 @@ class Crowd {
     }
     
     function TryUpdateUserPassword($user, $passwordHashed) {
+        $user['email'] = strtolower($user['email']);
         $user['passwordHashed'] = md5($passwordHashed.$this->salt);
         $user['times'] = 1000;
         return $this->userDal->TrySave($user);
     }
     
     function TryRegister($email, $password, &$error) {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var(strtolower($email), FILTER_VALIDATE_EMAIL)) {
             $error = ':EMAIL_IS_NOT_WELL_FORMED';
             return false;
         }
 
-        $users = $this->userDal->GetWhere(array('email' => $email));
+        $users = $this->userDal->GetWhere(array('email' => strtolower($email)));
         
         if (!isset($password) || trim($password) == '') {
             if (count($users) != 0) {
@@ -65,7 +67,7 @@ class Crowd {
                 return false;
             }
             $userToCreate = array(
-                'email' => $email,
+                'email' => strtolower($email),
                 'passwordHashed' => '',
                 'times' => 1001,
                 'role' => 'NewsLetter',
@@ -90,7 +92,7 @@ class Crowd {
         }
 
         $userToCreate = array(
-            'email' => $email,
+            'email' => strtolower($email),
             'passwordHashed' => md5($password.$this->salt),
             'times' => 1000,
             'role' => $role
@@ -132,7 +134,7 @@ class Crowd {
         
         $userToUpdate = array(
             'id' => $user['id'],
-            'email' => $user['email'],
+            'email' => strtolower($user['email']),
             'firstName' => $user['firstName'],
             'lastName' => $user['lastName'],
             'passwordHashed' => $userOld['passwordHashed'],
@@ -159,13 +161,15 @@ class Crowd {
     }
 
     function UserExists($email) {
-        $users = $this->userShortDal->GetWhere(array('email' => $email));
+        $users = $this->userShortDal->GetWhere(array('email' => strtolower($email)));
         if (count($users) > 0) {
             return true;
         }
     }
     
     function TryLoginOrCreate($email, $password, &$error) {
+        $email = strtolower($email);
+        
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $error = 'EMAIL_INVALID';
             return 'false';
@@ -227,7 +231,7 @@ class Crowd {
     }
 
     function TryGetFromEmail($email, &$user) {
-        $users = $this->userDal->GetWhere(array('email' => $email));
+        $users = $this->userDal->GetWhere(array('email' => strtolower($email)));
         if (count($users) == 0)
             return false;
         $user = $users[0];
@@ -251,11 +255,11 @@ class Crowd {
         $columns = array();
         foreach($columnTitles as $title) {
             $title = trim($title);
-            if (in_array($title, $columnsSet)) {
+            if ($this->in_array_without_case($title, $columnsSet)) {
                 $errors[] = array(':COLUMN_DEFINED_TWICE_{0}', $title);
                 $ready = false;
             }
-            if (!in_array($title, $authorisedTitles)) {
+            if (!$this->in_array_without_case($title, $authorisedTitles)) {
                 $errors[] = array(':NOT_AUTHORIZED_TITLE_{0}', $title);
                 $columns[] = array('title' => $title, 'keep' => false);
                 $ready = false;
@@ -287,7 +291,7 @@ class Crowd {
             $status = $this->GetValidationStatus($columns, $line, $emailSet, $object);
             $newResult = array('index' => $i, 'rawLine' => $line, 'object' => $object, 'status' => $status);
             if (isset($object['email']))
-                $newResult['email'] = $object['email'];
+                $newResult['email'] = strtolower($object['email']);
             if (isset($object['lastName']))
                 $newResult['lastName'] = $object['lastName'];
 
@@ -315,6 +319,8 @@ class Crowd {
                 $potentialResult[$columns[$i]['title']] = trim($fields[$i]);
             }
         }
+        $potentialResult['email'] = strtolower($potentialResult['email']);
+        
         if (!filter_var($potentialResult['email'], FILTER_VALIDATE_EMAIL)) {
             return 'ERROR_INVALID_EMAIL';
         }
@@ -343,7 +349,15 @@ class Crowd {
         return 'NEW';
     }
     
-    
+    function in_array_without_case(&$title, $array) {
+        foreach($array as $item) {
+            if (strtolower($item) == strtolower($title)) {
+                $title = $item;
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 ?>

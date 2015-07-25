@@ -193,4 +193,24 @@ h4. Exemple
 \{pre\}<strong>Un mot</strong>\{/pre\} va s'afficher {pre}<strong>Un mot</strong>{/pre}
 {html}</div>{/html}
 
-
+h4. Quelques exemples d'icônes
+{html}
+<div class="row" style="font-size:18px;">
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-ambulance"></i> ambulance</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-h-square"></i> h-square</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heart"></i> heart</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heart-o"></i> heart-o</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-heartbeat"></i> heartbeat</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-hospital-o"></i> hospital-o</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-medkit"></i> medkit</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-plus-square"></i> plus-square</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-stethoscope"></i> stethoscope</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-user-md"></i> user-md</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-wheelchair"></i> wheelchair</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-globe"></i> globe</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-users"></i> users</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-check"></i> check</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-thumbs-up"></i> thumbs-up</div>
+    <div class="col-md-3 col-sm-4 col-xs-6"><i class="fa fa-cubes"></i> cubes</div>    
+</div>
+{/html}

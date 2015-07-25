@@ -1,0 +1,14 @@
+Aide rapide. Une aide plus complète est disponible dans le menu Aide/Gestion des utilisateurs
+
+Remplir le champ ci-dessous avec la liste des utilisateurs que vous souhaiter ajouter.
+* Première ligne : liste des champs séparés par des points-virgules.
+* Lignes suivantes : les données séparées par des points-virgules.
+
+Les champs possibles sont :
+|Nom |Valeur |Nom |Valeur |
+|*email* |e-mail |*postalCode* |Code postal |
+|*firstName* |Prénom |*city* |Ville |
+|*lastName* |Nom |*country* |Pays |
+|*addressLine1* |Adresse |*phone* |Téléphone |
+|*addressLine2* |Complément d'adresse
+

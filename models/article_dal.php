@@ -69,7 +69,10 @@ class ArticleDal extends Dal {
             'status' => 'hide'
         );
         
-        $this->TrySave($article);            
+        if (substr($titleKey,0,5) != 'file:')
+            $this->TrySave($article);
+        else
+            $article['id'] = null;
         return $article;
     }
 }

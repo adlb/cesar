@@ -108,6 +108,30 @@ class Config {
         }
         return false;
     }
+
+    function IsForceNonMaintenance() {
+        if (!isset($_COOKIE['fnm']))
+            return false;
+        if ($this->current == null)
+            return false;
+        if (!isset($this->current['SecretLine']))
+            return false;
+        $c = $_COOKIE['fnm'];
+        $salt = substr($c, 0, 8);
+        $hash = substr($c, 8);
+        return $hash == md5($salt.$this->current['SecretLine']);
+    }
+    
+    function SetForceNonMaintenance() {
+        $salt = substr(uniqid(), 0, 8);
+        $hash = md5($salt.$this->current['SecretLine']);
+        setcookie('fnm', $salt.$hash, time()+3600);
+    }
+    
+    function RemoveForceNonMaintenance() {
+        unset($_COOKIE['fnm']);
+        setcookie('fnm', null, -1);
+    }
 }
 
 ?>

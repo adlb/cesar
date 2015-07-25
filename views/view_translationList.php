@@ -16,7 +16,6 @@
             );}
     });
 </script>
-
     <div class="page-header">
         <div class="container">
             <h1 class="page-title pull-left"> <?php t(':ARTICLE_MANAGEMENT') ?> </h1>

@@ -51,10 +51,10 @@
         </div>
         
         <!-- FOOTER -->
-        <footer class="hidden-print footer">
+        <footer class="hidden-print footer" style="height:49px">
             <!-- COPYRIGHT -->
             <div class="text-center copyright">
-                &copy;2015 adlb. All Rights Reserved. <a href="<?php echo url(array('controller' => 'user', 'view' => 'login')) ?>"><?php t(':LOGIN') ?></a>
+                &copy;2015 adlb. All Rights Reserved.
             </div>
             <!-- END COPYRIGHT -->
         </footer>

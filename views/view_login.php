@@ -2,7 +2,7 @@
 <script language="javascript">
 <!--
     function emailUpdated(getTimesUrl) {
-        var email = document.getElementById("email").value;
+        var email = document.getElementById("email").value.toLowerCase();
         $.ajax({
             type: "GET",
             url: getTimesUrl,
@@ -25,7 +25,7 @@
     }
     
     function doChallengeResponse(getTimesUrl) {
-        var email = document.getElementById("email").value;
+        var email = document.getElementById("email").value.toLowerCase();
         $.ajax({
             type: "GET",
             url: getTimesUrl,

@@ -149,7 +149,7 @@ NEWSLETTER|News-letter
 NEW|Nouveau
 NEXT|Suivant
 NOT_ALLOWED|Vous n'êtes pas autorisé à réaliser cette action.
-NOT_AUTHORIZED_TITLE_{0}|Titre non autorisé. Il ne peut pas être vide.
+NOT_AUTHORIZED_TITLE_{0}|Champ non autorisé ({0}). Veuillez vérifier dans l'aide la liste des champs autorisés.
 NO_ARTICLE_CONTENT|Vous n'avez peut-être pas encore défini votre page d'accueil.
 NO_ARTICLE|Aucun article à afficher
 NO_MENUFATHER|Il manque le menu parent.
@@ -191,7 +191,7 @@ RAWLINE|Ligne initiale
 READ_MORE|Lire la suite
 RECREATE_TABLES|Recréer les tables (efface tout)
 REGISTER_ACCOUNT|S'inscrire
-REGISTER|s'enregistrer
+REGISTER|S'inscrire
 REMOVE_UP_TO_DATE|Retirer les éléments à jour
 RESET_PASSWORD_FOR_{0}|Réinitialisation du mot de passe pour {0}
 RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
@@ -247,7 +247,7 @@ TYPE_PAYMENT|Moyen de paiement
 TYPE|Type
 UPDATE_ALL|Tout mettre à jour
 UPDATE_USER_INFO|Corriger
-UPDATE|Mettre à jout
+UPDATE|Mettre à jour
 UPLOAD|Télécharger
 USEFUL_LINKS|Liens utiles
 USERORIGIN_External|Externe
@@ -271,3 +271,13 @@ A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT|Un utilisateu
 YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER|Vous êtes déjà inscrit à notre newsletter
 MODIFY_USER_INFO|Modifer
 MODIFY_USER_PASSWORD|Changer de mot de passe
+MAINTENANCEPAGE_FORCE_HELP|Vous pouvez forcer le mode "non maintenance" pour vous permettre de tester le site comme s'il n'était pas en maintenance. Ce test n'est actif que sur l'ordinateur ou vous l'activez et pendant une heure. Une fois ce délai passé, le site se comporte à nouveau dans son mode standard.
+UNACTIVATE|Désactiver
+MAINTENANCEPAGE_FORCE_ACTIVE|Le forçage à non-maintenance est actif sur ce PC.
+MAINTENANCEPAGE_FORCE_INACTIVE|Le forçage à non-maintenance est inactif sur ce PC.
+ERROR_FIELDS_ARE_MISSING|champs manquants
+ERROR_INVALID_EMAIL|adresse mail invalide
+ERROR_EMAIL_TWICE|adresse mail en double
+ERROR_WHILE_UPLOADING|erreur pendant la mise à jour
+TO_UPDATE|à mettre à jour
+UP_TO_DATE|à jour

@@ -273,7 +273,7 @@ class Translator {
         
         if (count($split) == 2) {
             $group = $split[0] == '' ? $this->defaultGroupKey : $split[0];
-            return htmlspecialchars($this->GetGroupedTranslation($group, $split[1]));
+            return $this->GetGroupedTranslation($group, $split[1]);
         }
         
         if (isset($this->cache[$key]))

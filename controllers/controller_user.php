@@ -90,7 +90,7 @@ class ControllerUser {
 
         if (!$this->crowd->TryLoginOrCreate($email, $password, $error)) {
             $this->webSite->AddMessage('warning', $error);
-            $obj['email'] = $email;
+            $obj['email'] = strtolower($email);
             $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));
             $obj['callback'] = $redirect;
             return 'login';
@@ -248,6 +248,17 @@ class ControllerUser {
             return;
         }
         $analyse = $this->crowd->AnalyzeLines($lines, $analyzedColumns['columns']);
+        $translations = array(
+            'ERROR_FIELDS_ARE_MISSING' => $this->translator->GetTranslation(':ERROR_FIELDS_ARE_MISSING'),
+            'ERROR_INVALID_EMAIL' => $this->translator->GetTranslation(':ERROR_INVALID_EMAIL'),
+            'ERROR_EMAIL_TWICE' => $this->translator->GetTranslation(':ERROR_EMAIL_TWICE'),
+            'TO_UPDATE' => $this->translator->GetTranslation(':TO_UPDATE'),
+            'UP_TO_DATE' => $this->translator->GetTranslation(':UP_TO_DATE'),
+            'NEW' => $this->translator->GetTranslation(':NEW')
+        );
+        foreach($analyse as &$line) {
+            $line['statusTranslated'] = $translations[$line['status']];
+        }
         $obj['usersAnalysed'] = array('analyzedColumns' => $analyzedColumns, 'lines' => $analyse);
     }
 
@@ -260,10 +271,13 @@ class ControllerUser {
             $lines = $_POST['lines'];
             foreach($lines as &$line) {
                 $errors = array();
-                if (!$this->crowd->Update($line['object'], $errors))
+                if (!$this->crowd->Update($line['object'], $errors)) {
                     $line['status'] = 'ERROR_WHILE_UPLOADING';
-                else
+                    $line['statusTranslated'] = $this->translator->GetTranslation(':ERROR_WHILE_UPLOADING');
+                } else {
                     $line['status'] = 'UP_TO_DATE';
+                    $line['statusTranslated'] = $this->translator->GetTranslation(':UP_TO_DATE');
+                }
                 unset($line);
             }
             $obj['lines'] = $lines;
@@ -283,7 +297,7 @@ class ControllerUser {
             $this->webSite->AddMessage('warning', ':THIS_USER_DOES_NOT_EXIST');
             return 'lostPassword';
         }
-        if ($this->mailer->TrySendForgotPasswordMail($email)) {
+        if ($this->mailer->TrySendForgotPasswordMail(strtolower($email))) {
             $this->webSite->AddMessage('success', array(':AN_EMAIL_HAS_BEEN_SENT_TO_{0}', $email));
             $this->journal->LogEvent('user', 'retreivePassword', $email);
             $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'login'));

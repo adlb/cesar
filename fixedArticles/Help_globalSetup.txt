@@ -1,7 +1,7 @@
-Aide sur la configuration générale
-h2. Menu Configuration Générale
-La configuration du site se fait via le menu Administration/Configuration Générale. Ce menu n'est accessibla qu'aux administrateurs du site.
+Aide sur la configuration gÃ©nÃ©rale
+h2. Menu Configuration GÃ©nÃ©rale
+La configuration du site se fait via le menu Administration/Configuration GÃ©nÃ©rale. Ce menu n'est accessible qu'aux administrateurs du site.
 
-h2. Configuration générale
+h2. Configuration gÃ©nÃ©rale
 |Title
 

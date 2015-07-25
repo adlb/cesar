@@ -244,6 +244,8 @@ class ControllerBuilder extends controllerSite{
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
         }
+        
+        $obj['IsForceNonMaintenance'] = $this->config->IsForceNonMaintenance();
         return 'config';
     }
 
@@ -270,7 +272,7 @@ class ControllerBuilder extends controllerSite{
     }
 
     function action_saveConfig(&$obj, $params) {
-        if ($params['todo'] == 'cancel') {
+        if ($params['todo'] != 'update') {
             $this->webSite->RedirectTo(array('controller' => 'site'));    
         }
         if (!$this->config->configExists || $this->authentication->CheckRole('Administrator')) {
@@ -312,5 +314,26 @@ class ControllerBuilder extends controllerSite{
         $this->config->deleteConfig();
         $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
     }
+    
+    function action_activateFnm(&$obj, &$params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $obj['status'] = 'nok';
+            return;
+        }
+        $this->config->SetForceNonMaintenance();
+        $obj['status'] = 'ok';
+        return;
+    }
+    
+    function action_unactivateFnm(&$obj, &$params) {
+        if (!$this->authentication->CheckRole('Administrator')) {
+            $obj['status'] = 'nok';
+            return;
+        }
+        $this->config->RemoveForceNonMaintenance();
+        $obj['status'] = 'ok';
+        return;
+    }
+    
 }
 ?>

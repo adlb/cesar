@@ -198,6 +198,7 @@ cesarApp.controller('usersCtrl', ['$rootScope', '$scope', function($rootScope, $
                             $("#uploadButton_"+index).css('display','block');
                             $scope.usersAnalysed.lines[index].uploadLaunched = false;
                             $scope.usersAnalysed.lines[index].status = data.lines[i].status;
+                            $scope.usersAnalysed.lines[index].statusTranslated = data.lines[i].statusTranslated;
                         }
                     }
                     if (data.messages) {
@@ -426,6 +427,33 @@ cesarApp.controller('donationsListCtrl', ['$rootScope', '$scope', function($root
         });
         saveAs(blob, "Donations.xls");
     };
+}]);
+
+cesarApp.controller('menuConfigCtrl', ['$scope', function($scope) {
+    $scope.activateFnmUrl = '?controller=builder&action=activateFnm';
+    $scope.unactivateFnmUrl = '?controller=builder&action=unactivateFnm';
+    
+    $scope.activeFnm = function() {
+        $.post($scope.activateFnmUrl)
+            .success(function(data) {
+                $scope.$apply(function($scope) {
+                    if (data.status == 'ok') {
+                        $scope.fnm = true;
+                    }
+                });
+            });
+    }
+    
+    $scope.removeFnm = function () {
+        $.post($scope.unactivateFnmUrl)
+            .success(function(data) {
+                $scope.$apply(function($scope) {
+                    if (data.status == 'ok') {
+                        $scope.fnm = false;
+                    }
+                });
+            });
+    }
 }]);
 
 cesarApp.controller('donationsShortListCtrl', ['$scope', function($scope) {

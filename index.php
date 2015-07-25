@@ -25,10 +25,10 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : '';
 //small check to avoid automatic creation of article from outside.
 $view = ($view == 'fixedArticle') ? $defaultView : $view;
 
-if (isset($_GET['fm']) || (
+if (!$webSite->services['config']->IsForceNonMaintenance() && (isset($_GET['fm']) || (
     $webSite->services['config']->current['Maintenance'] && 
     !$webSite->services['authentication']->CheckRole('Administrator') && 
-    $controller != 'user')) {
+    $controller != 'user'))) {
     $controller = 'maintenance';
     $view = 'maintenance';
 }
