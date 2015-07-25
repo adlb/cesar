@@ -26,7 +26,7 @@
                             <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
                         </li>
                         <li>
-                            <a href="<?php echo url(array('controller' => 'user', 'view' => 'register')) ?>"><span class="glyphicon glyphicon-plus"></span></a>
+                            <a href="<?php echo url(array('controller' => 'user', 'view' => 'login', 'type' => 'register')) ?>"><span class="glyphicon glyphicon-plus"></span></a>
                         </li>
                         <li>
                             <a href="<?php echo url(array('controller' => 'user', 'view' => 'userInsert')) ?>"><span class="glyphicon glyphicon-th-list"></span></a>

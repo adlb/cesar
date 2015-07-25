@@ -289,3 +289,5 @@ ERROR_EMAIL_TWICE|adresse mail en double
 ERROR_WHILE_UPLOADING|erreur pendant la mise à jour
 TO_UPDATE|à mettre à jour
 UP_TO_DATE|à jour
+PASSWORDS_ARE_NOT_THE_SAME|Les mots de passe ne sont pas identiques
+PASSWORD_IS_TOO_SHORT|Le mot de passe choisi est trop court

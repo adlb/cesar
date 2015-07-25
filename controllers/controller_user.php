@@ -84,15 +84,32 @@ class ControllerUser {
         } else {
             $redirect = url(array('controller' => 'site'));
         }
+        if (isset($params['type']) && $params['type']=='login') {
+            $type = 'login';
+        } else {
+            $type = 'register';
+        }
     
         $email = isset($params['email']) ? $params['email'] : "";
         $password = isset($params['password']) ? $params['password'] : "";
 
+        $obj['email'] = strtolower($email);
+            
+        if ($password == 'mismatch') {
+            $this->webSite->AddMessage('warning', ':PASSWORDS_ARE_NOT_THE_SAME');
+            return $this->view_login($obj, $params);
+        }
+        
+        if ($password == 'tooshort') {
+            $this->webSite->AddMessage('warning', ':PASSWORD_IS_TOO_SHORT');
+            return $this->view_login($obj, $params);
+        }
+        
         if (!$this->crowd->TryLoginOrCreate($email, $password, $error)) {
             $this->webSite->AddMessage('warning', $error);
-            $obj['email'] = strtolower($email);
             $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));
             $obj['callback'] = $redirect;
+            $obj['type'] = $type;
             return 'login';
         }
         
@@ -142,20 +159,22 @@ class ControllerUser {
             $redirect = url(array('controller' => 'site'));
         }
     
-        if ($this->authentication->CheckRole('Logged'))
+        if (isset($params['type']) && $params['type'] == 'register') {
+            $obj['type'] = 'register';
+        } else {
+            $obj['type'] = 'login';
+        }
+    
+        if ($this->authentication->CheckRole('Administrator')) {
+            $obj['type'] = 'register';
+        }
+        
+        if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
             $this->webSite->RedirectTo($redirect);
         
         $obj['GetTimesUrl'] = url(array('controller' => 'user', 'view' => 'nbTimes'));
         $obj['callback'] = $redirect;
         return 'login';
-    }
-
-    function view_register(&$obj, $params) {
-        if ($this->authentication->CheckRole('Logged') && !$this->authentication->CheckRole('Administrator'))
-            $this->webSite->RedirectTo(array('controller' => 'user', 'view' => 'profil'));
-
-        $obj['form'] = array();
-        return 'register';
     }
 
     function view_profil(&$obj, $params) {

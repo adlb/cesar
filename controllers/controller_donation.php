@@ -113,7 +113,13 @@ class ControllerDonation {
         $donation['dateInit'] = date('Y-m-d H:i:s');
         $donation['dateValidation'] = null;
         $donation['status'] = 'promess';
-        $donation['saved'] = true;
+        
+        if (!filter_var(strtolower($params['email']), FILTER_VALIDATE_EMAIL)) {
+            $this->webSite->AddMessage('warning', ':EMAIL_IS_NOT_WELL_FORMED');
+        } else {
+            $donation['saved'] = true;
+        }
+        
         $_SESSION['currentDonation'] = $donation;
         
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckName'));
