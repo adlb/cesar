@@ -1,6 +1,6 @@
     <!-- HERO UNIT -->
     <section class="hero-unit">
-        <div id="carousel-hero">
+        <div id="hero">
             <div class="container">
                 <div class="hero-left pull-left">
                     <div class="hero-text">

@@ -1,8 +1,8 @@
 
-	<section>
+    <section>
         <!-- BREADCRUMBS -->
-		<div class="page-header">
-			<div class="container">
+        <div class="page-header">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-title"> <?php echo $obj['article']['htmlTitle'] ?> </h1>
@@ -15,22 +15,22 @@
                         </ol>
                     </div>
                 </div>
-			</div>
-		</div>
-		<!-- END BREADCRUMBS -->
+            </div>
+        </div>
+        <!-- END BREADCRUMBS -->
 
         <!-- PAGE CONTENT -->
-		<div class="page-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-9">
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
                         <?php if ($obj['article']['image'] != '') { ?>
-						<div class="encart">
+                        <div class="encart">
                             <img class="img-responsive" ng-src="<?php echo $obj['article']['image'] ?>" />
                         </div>
                         <?php } ?>
                         <!-- BLOG SINGLE -->
-						<div class="blog single full-thumbnail">
+                        <div class="blog single full-thumbnail">
                             <article>
                                 <?php echo $obj['article']['htmlContent']; ?>
                             </article>
