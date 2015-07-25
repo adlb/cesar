@@ -17,10 +17,10 @@
                 <?php t(':DONATOR') ?>
             </h3>
             <?php
-                if (isset($obj['user'])) {
-                    renderPartial('donateChecknameDonatorLogged', $obj['user']);
+                if (isset($obj['currentDonation']['saved']) && $obj['currentDonation']['saved']) {
+                    renderPartial('donateChecknameDonatorSaved', $obj['currentDonation']);
                 } else {
-                    renderPartial('donateChecknameDonatorNotLogged', $obj['currentDonation']);
+                    renderPartial('donateChecknameDonatorNotSaved', $obj['currentDonation']);
                 }
             ?>
         </div>
@@ -28,7 +28,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 text-right">
-        <?php if (isset($obj['user'])) { ?>
+        <?php if (isset($obj['currentDonation']['saved']) && $obj['currentDonation']['saved']) { ?>
             <a href="<?php echo url(array('controller' => 'donation', 'action' => 'confirm')) ?>" class="btn btn-primary">
                 <?php t(':DONATION_CONFIRM') ?> <i class="fa fa-arrow-circle-right"></i>
             </a>

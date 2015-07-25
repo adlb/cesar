@@ -56,6 +56,7 @@ class Crowd {
 
         $users = $this->userDal->GetWhere(array('email' => strtolower($email)));
         
+        //NewsLetter
         if (!isset($password) || trim($password) == '') {
             if (count($users) != 0) {
                 if ($users[0]['emailStatus'] == 'OptOut') {
@@ -170,7 +171,8 @@ class Crowd {
             return true;
         }
     }
-    
+
+
     function TryLoginOrCreate($email, $password, &$error) {
         $email = strtolower($email);
         

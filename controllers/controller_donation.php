@@ -29,16 +29,46 @@ class ControllerDonation {
     }
     
     function view_donate(&$obj, $params) {
-        $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
+        $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array();
+        if (!isset($obj['currentDonation']['amount']))
+            $obj['currentDonation']['amount'] = 10;
         $obj['embeddedArticle'] = 'donate';
         $params['titleKey'] = 'Donate';
         $params['renderType'] = 'withoutColumn';
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
     
+    function action_unsaved(&$obj, $params) {
+        $donation = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array();
+        if ($this->authentication->currentUser == null) {
+            $donation['saved'] = false;
+        }
+        $_SESSION['currentDonation'] = $donation;
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckname'));
+    }
+    
     function action_donate(&$obj, $params) {
         $donation['amount'] = isset($params['amount']) ? $this->Getfloat($params['amount']) : 0;
         $donation['type'] = isset($params['type']) ? $params['type'] : '';
+        $donation['externalCheckId'] = '';
+        $donation['dateValidation'] = null;
+        $donation['status'] = 'promess';
+
+        if ($this->authentication->currentUser != null) {
+            $user = $this->authentication->currentUser;
+            $donation['userId'] = $user['id'];
+            $donation['email'] = $user['email'];
+            $donation['firstName'] = $user['firstName'];
+            $donation['lastName'] = $user['lastName'];
+            $donation['addressLine1'] = $user['addressLine1'];
+            $donation['addressLine2'] = $user['addressLine2'];
+            $donation['postalCode'] = $user['postalCode'];
+            $donation['city'] = $user['city'];
+            $donation['country'] = $user['country'];
+            $donation['phone'] = $user['phone'];
+            $donation['saved'] = true;
+        }
+        
         $_SESSION['currentDonation'] = $donation;
         if ($donation['amount'] < 1) {
             $this->webSite->AddMessage('warning', ':DONATION_CANT_BE_LESS_THAN_1_EURO');
@@ -55,76 +85,59 @@ class ControllerDonation {
     function view_donateCheckname(&$obj, $params) {
         if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-        if ($this->authentication->currentUser != null) {
-            $obj['user'] = $this->authentication->currentUser;
-        }
-        $obj['currentDonation'] = isset($_SESSION['currentDonation']) ? $_SESSION['currentDonation'] : array('amount' => 10, 'type' => '');
+        
+        $obj['currentDonation'] = $_SESSION['currentDonation'];
+        $obj['currentDonation']['isLogged'] = $this->authentication->currentUser != null;
         $obj['embeddedArticle'] = 'donateCheckname';
         $params['titleKey'] = 'DonateCheckName';
         $params['renderType'] = 'withoutColumn';
         
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }
-    
-    function action_confirm(&$obj, $params) {
+
+    function action_saveDonationForm(&$obj, $params) {
         if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
-        $donation = $_SESSION['currentDonation'];
-        if ($this->authentication->currentUser == null) {
-            $donation['email'] = $params['email'];
-            $donation['firstName'] = $params['firstName'];
-            $donation['lastName'] = $params['lastName'];
-            $donation['addressLine1'] = $params['addressLine1'];
-            $donation['addressLine2'] = $params['addressLine2'];
-            $donation['postalCode'] = $params['postalCode'];
-            $donation['city'] = $params['city'];
-            $donation['country'] = $params['country'];
-            $donation['phone'] = $params['phone'];
-            $_SESSION['currentDonation'] = $donation;
-            
-            if ($this->crowd->UserExists($params['email'])) {
-                $this->webSite->AddMessage('info', ':A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT');
-                return $this->view_donateCheckname($obj, $params);
-            } else {
-                if (!$this->crowd->TryRegister($params['email'], uniqid("don_"), $error)) {
-                    $this->webSite->AddMessage('warning', $error);
-                    return $this->view_donateCheckname($obj, $params);
-                }
-                $user=$this->authentication->currentUser;
-                
-                $user['firstName'] = $params['firstName'];
-                $user['lastName'] = $params['lastName'];
-                $user['addressLine1'] = $params['addressLine1'];
-                $user['addressLine2'] = $params['addressLine2'];
-                $user['postalCode'] = $params['postalCode'];
-                $user['city'] = $params['city'];
-                $user['country'] = $params['country'];
-                $user['phone'] = $params['phone'];
-                if (!$this->crowd->TryUpdateUser($user, $error)) {
-                    $this->webSite->AddMessage('warning', $error);
-                    return $this->view_donateCheckname($obj, $params);
-                }
-            }
-            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckName'));
-        }
         
-        $user = $this->authentication->currentUser;
-        $donation['userid'] = $user['id'];
-        $donation['email'] = $user['email'];
-        $donation['firstName'] = $user['firstName'];
-        $donation['lastName'] = $user['lastName'];
-        $donation['addressLine1'] = $user['addressLine1'];
-        $donation['addressLine2'] = $user['addressLine2'];
-        $donation['postalCode'] = $user['postalCode'];
-        $donation['city'] = $user['city'];
-        $donation['country'] = $user['country'];
-        $donation['phone'] = $user['phone'];
+        $donation = $_SESSION['currentDonation'];
+        $donation['email'] = $params['email'];
+        $donation['firstName'] = $params['firstName'];
+        $donation['lastName'] = $params['lastName'];
+        $donation['addressLine1'] = $params['addressLine1'];
+        $donation['addressLine2'] = $params['addressLine2'];
+        $donation['postalCode'] = $params['postalCode'];
+        $donation['city'] = $params['city'];
+        $donation['country'] = $params['country'];
+        $donation['phone'] = $params['phone'];
         $donation['externalCheckId'] = '';
         $donation['dateInit'] = date('Y-m-d H:i:s');
         $donation['dateValidation'] = null;
         $donation['status'] = 'promess';
-        
+        $donation['saved'] = true;
         $_SESSION['currentDonation'] = $donation;
+        
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckName'));
+    }
+
+    function action_confirm(&$obj, $params) {
+        if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
+            $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
+        $donation = $_SESSION['currentDonation'];
+        
+        if (!$this->crowd->TryGetFromEmail($donation['email'], $previousUser)) {
+            if ($this->crowd->TryRegister($donation['email'], '', $error) &&
+                $this->crowd->TryGetFromEmail($donation['email'], $user)) {
+                $user['firstName'] = $donation['firstName'];
+                $user['lastName'] = $donation['lastName'];
+                $user['addressLine1'] = $donation['addressLine1'];
+                $user['addressLine2'] = $donation['addressLine2'];
+                $user['postalCode'] = $donation['postalCode'];
+                $user['city'] = $donation['city'];
+                $user['country'] = $donation['country'];
+                $user['phone'] = $donation['phone'];
+                $this->crowd->TryUpdateUser($user, $error);
+            }
+        }
         
         if (!$this->donationDal->TrySave($donation)) {
             $this->webSite->AddMessage('warning', ':CANT_SAVE_DONATION');
@@ -144,7 +157,7 @@ class ControllerDonation {
             $this->webSite->AddMessage('warning', ':IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL');
         }
         
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id']));
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id'], 'key' => $key));
     }
     
     function view_donateFinalize(&$obj, $params) {
