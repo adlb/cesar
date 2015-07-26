@@ -18,9 +18,9 @@
             </h3>
             <?php
                 if (isset($obj['currentDonation']['saved']) && $obj['currentDonation']['saved']) {
-                    renderPartial('donateChecknameDonatorSaved', $obj['currentDonation']);
+                    renderPartial('donateCheckSaved', $obj['currentDonation']);
                 } else {
-                    renderPartial('donateChecknameDonatorNotSaved', $obj['currentDonation']);
+                    renderPartial('donateCheckNotSaved', $obj['currentDonation']);
                 }
             ?>
         </div>

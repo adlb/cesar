@@ -73,7 +73,16 @@ class ControllerTranslationManager {
         $this->articleDal = $services['articleDal'];
     }
 
+    private function CheckRights($role) {
+        if (!$this->authentication->CheckRole($role)) {
+            $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
+            $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
+        }
+    }
+
     function action_saveText(&$obj, $params) {
+        $this->CheckRights(array('Administrator', 'Translator'));
+            
         $redirect = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'translationManager', 'view' => 'translationList'));
         if (!isset($params['actionPushed']) || $params['actionPushed'] == 'cancel') {
             $this->webSite->RedirectTo($redirect);
@@ -101,6 +110,8 @@ class ControllerTranslationManager {
     }
 
     function view_translationList(&$obj, $params) {
+        $this->CheckRights(array('Administrator', 'Translator'));
+        
         $languages = $this->translator->languages;
         $textManager = new TextManager($this->textShortDal, $languages, $this->translator);
         
@@ -168,6 +179,8 @@ class ControllerTranslationManager {
     }
     
     function view_editArticleTrad(&$obj, $params) {
+        $this->CheckRights(array('Administrator', 'Translator'));
+        
         $lg = (isset($params['lg']) && in_array($params['lg'], $this->config->current['Languages'])) ? $params['lg'] : $this->config->current['Languages'][0];
 
         $obj['titleKey'] = isset($params['titleKey']) ? $params['titleKey'] : '';

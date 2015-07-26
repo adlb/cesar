@@ -26,7 +26,7 @@ class ControllerBuilder extends controllerSite{
         $this->authentication = $webSite->services['authentication'];
     }
 
-    private function CheckRights($role, $obj) {
+    private function CheckRights($role) {
         if (!$this->authentication->CheckRole($role)) {
             $this->webSite->AddMessage('warning', ':NOT_ALLOWED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));
@@ -34,7 +34,7 @@ class ControllerBuilder extends controllerSite{
     }
 
     function action_deleteArticle(&$obj, $params) {
-        $this->CheckRights('Administrator', $obj);
+        $this->CheckRights('Administrator');
         if (isset($params['id']) && $this->articleDal->TryGet($params['id'], $article)) {
             $children = $this->articleDal->GetWhere(array('father' => $article['id']));
             if (count($children) > 0) {
@@ -73,7 +73,7 @@ class ControllerBuilder extends controllerSite{
     }
     
     function action_saveArticle(&$obj, $params) {
-        $this->CheckRights('Administrator', $obj);
+        $this->CheckRights('Administrator');
         
         if (isset($params['callback'])) {
             $redirect = $params['callback'];
@@ -113,7 +113,7 @@ class ControllerBuilder extends controllerSite{
             return 'editArticle';
         }
         
-        if (trim($_POST['id']) == '' || !$this->articleDal->TryGet($_POST['id'], $articleSaved)) {
+        if (trim($params['id']) == '' || !$this->articleDal->TryGet($params['id'], $articleSaved)) {
             $article['rank'] = 1000;
         }
         
@@ -133,17 +133,25 @@ class ControllerBuilder extends controllerSite{
             $article['home'] = 0;
         }
         
-        $article['titleKey'] = $this->translator->DirectUpdate($params['language'], $article['titleKey'], $params['titleTrad'], 1, 'pureText');
-        $article['textKey'] = $this->translator->DirectUpdate($params['language'], $article['textKey'], $params['textTrad'], 0, 'decoratedText');
         $article['status'] = $article['show'] == 1 ? "show" : "hide";
 
         $isHome = ($article['home'] == 1); 
         
         if (!$this->articleDal->TrySave($article)) {
-            $this->webSite->AddMessage('warning', ':CANT_SAVE_Article');
+            $this->webSite->AddMessage('warning', ':CANT_SAVE_ARTICLE');
             return 'editArticle';
         }
-
+        
+        $article['titleKey'] = 'Article('.$article['id'].')';
+        $article['textKey'] = 'Article-Content('.$article['id'].')';
+        $this->translator->DirectUpdate($params['language'], $article['titleKey'], $params['titleTrad'], 1, 'pureText');
+        $this->translator->DirectUpdate($params['language'], $article['textKey'], $params['textTrad'], 0, 'decoratedText');
+        
+        if (!$this->articleDal->TrySave($article)) {
+            $this->webSite->AddMessage('warning', ':CANT_SAVE_ARTICLE');
+            return 'editArticle';
+        }
+        
         if ($isHome)
             $this->config->Set('Home', $article['id']);
 
@@ -218,7 +226,7 @@ class ControllerBuilder extends controllerSite{
     }
     
     function view_editArticle(&$obj, &$params) {
-        $this->CheckRights('Administrator', $obj);
+        $this->CheckRights('Administrator');
         if (!(isset($params['id']) && $this->articleDal->TryGet($params['id'], $article))) {
             $article = array('id' => '');
         }
@@ -250,13 +258,13 @@ class ControllerBuilder extends controllerSite{
     }
 
     function action_format(&$obj, &$params) {
-        $this->CheckRights(array('Administrator', 'Translator'), $obj);
+        $this->CheckRights(array('Administrator', 'Translator'));
         $rawData = file_get_contents("php://input");
         $obj['formattedText'] = $this->formatter->ToHtml($rawData);
     }
 
     function action_moveEntry(&$obj) {
-        $this->CheckRights('Administrator', $obj);
+        $this->CheckRights('Administrator');
         $rows = $_POST['row'];
 
         $i = 0;

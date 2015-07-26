@@ -23,7 +23,6 @@ class ControllerDonation {
         $this->translator = $services['translator'];
         $this->journal = $services['journal'];
         $this->config = $services['config'];
-        $this->translator->fetchGroup('DONATION');
         $this->donationDal = $services['donationDal'];
         $this->crowd = $services['crowd'];
     }
@@ -44,7 +43,7 @@ class ControllerDonation {
             $donation['saved'] = false;
         }
         $_SESSION['currentDonation'] = $donation;
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckname'));
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheck'));
     }
     
     function action_donate(&$obj, $params) {
@@ -79,17 +78,17 @@ class ControllerDonation {
             return $this->view_donate($obj, array());
         }
         
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckname'));
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheck'));
     }
     
-    function view_donateCheckname(&$obj, $params) {
+    function view_donateCheck(&$obj, $params) {
         if (!isset($_SESSION['currentDonation']) || $_SESSION['currentDonation']<1 || !in_array($_SESSION['currentDonation']['type'], array('vir', 'cb', 'chq')))
             $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donate'));
         
         $obj['currentDonation'] = $_SESSION['currentDonation'];
         $obj['currentDonation']['isLogged'] = $this->authentication->currentUser != null;
-        $obj['embeddedArticle'] = 'donateCheckname';
-        $params['titleKey'] = 'DonateCheckName';
+        $obj['embeddedArticle'] = 'donateCheck';
+        $params['titleKey'] = 'DonateCheck';
         $params['renderType'] = 'withoutColumn';
         
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
@@ -122,7 +121,7 @@ class ControllerDonation {
         
         $_SESSION['currentDonation'] = $donation;
         
-        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheckName'));
+        $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateCheck'));
     }
 
     function action_confirm(&$obj, $params) {
@@ -182,7 +181,7 @@ class ControllerDonation {
         
         $obj['donation'] = $donation;
         $obj['embeddedArticle'] = 'donateFinalize';
-        $params['titleKey'] = 'DonateThanksForDonation';
+        $params['titleKey'] = 'DonateFinalize';
         $params['renderType'] = 'withoutColumn';
         return $this->webSite->controllerFactory->GetController('site')->view_fixedArticle($obj, $params);
     }

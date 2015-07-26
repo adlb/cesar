@@ -23,21 +23,6 @@
                                 <p><?php t(':NO_ARTICLE_CONTENT') ?></p>
                             </article>
                         </div>
-                        <?php if (count($obj['article']['subArticles'])>0) { ?>
-                        <hr/>
-                        <div class="blog medium-thumbnail margin-bottom-30px">
-                            <?php foreach($obj['article']['subArticles'] as $article)
-                                renderPartial('news', $article);
-                            ?>
-                            <hr />
-                        </div>
-                        <?php } ?>
-                        
-                        <?php
-                            if (isset($obj['embeddedArticle'])) {
-                                renderPartial($obj['embeddedArticle'], $obj);
-                            }
-                        ?>
                     </div>
                     
                     <?php displayPartial('site', 'articleRightColumn', array()) ?>

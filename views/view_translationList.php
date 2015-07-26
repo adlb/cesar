@@ -25,7 +25,7 @@
         <div class="container">
             <table class="table table-hover table-bordered table-condensed table-striped">
                 <caption>
-                    <?php t(':ARTICLES_LIST') ?>
+                    <?php t(':ARTICLES_LIST') ?> ({{articlesFiltered.length}}/{{articles.length}})
                     <ul class="list-inline pull-right">
                         <li>
                             <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" />
@@ -44,6 +44,7 @@
                 <thead>
                     <tr>
                       <th ng-click="predicate=='id' ? reverse = !reverse : predicate='id';saveLocal();"><?php t(':ARTICLE_ID') ?></th>
+                      <th ng-click="predicate=='titleKey' ? reverse = !reverse : predicate='titleKey';saveLocal();"><?php t(':TITLEKEY') ?></th>
                       <th ng-click="predicate=='status' ? reverse = !reverse : predicate='status';saveLocal();"><?php t(':STATUS') ?></th>
                       <th ng-click="predicate=='titleTrad' ? reverse = !reverse : predicate='titleTrad';saveLocal();"><?php t(':TITLE') ?></th>
                       <th ng-click="predicate=='translatedType' ? reverse = !reverse : predicate='translatedType';saveLocal();"><?php t(':ARTICLE_TYPE') ?></th>
@@ -54,14 +55,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="article in articles | filter:search | orderBy:predicate:reverse">
+                    <tr ng-repeat="article in articlesFiltered = (articles | filter:search | orderBy:predicate:reverse)">
                         <th>{{ article.id }}</th>
-                        <th>{{ article.status }}</th>
-                        <td><a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">
+                        <td>{{ article.titleKey }}</td>
+                        <td>{{ article.status }}</td>
+                        <th><a ng-href="{{ prefixUrlArticle }}&id={{ article.id }}" ng-show="article.link">
                             <i class="fa fa-home" ng-show="{{ article.home }}"></i>
                             <i class="fa fa-envelope" ng-show="{{ article.mail }}"></i>
                             {{ article.titleTrad }}</a>
-                            <span ng-hide="article.link">{{ article.titleTrad }}</span></td>
+                            <span ng-hide="article.link">{{ article.titleTrad }}</span></th>
                         <td>{{ article.translatedType }}</span></td>
                         <td class="clickableCell" ng-repeat="language in languages" href="{{ prefixUrl }}&titleKey={{ article.titleKey }}&textKey={{ article.textKey }}&lg={{ language.name }}">
                             {{ article.StatusPerLanguage[language.name] || '<?php t(':ERROR') ?>' }}

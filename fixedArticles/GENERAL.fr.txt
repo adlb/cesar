@@ -4,7 +4,7 @@ ACTIONS|Actions
 ACTIVATE|Activer
 ACTIVE|Actif
 ADDRESS_LINE_1|Adresse
-ADDRESS_LINE_2|Complément d'addresse
+ADDRESS_LINE_2|Complément d'adresse
 ADDRESS|Adresse
 ADD_ARTICLE|Ecrire un article
 ADMINISTRATION_DATA|Information administration
@@ -50,7 +50,7 @@ CANT_FIND_DONATION|Impossible de trouver ce don.
 CANT_FIND_USER|Impossible de trouver cet utilisateur
 CANT_LOAD_USER|Impossible de charger cet utilisateur
 CANT_REMOVE_ADMIN_RIGHTS_TO_YOURSELF|Impossible de retirer les droits administrateur de vous-même
-CANT_SAVE_Article|Impossible d'enregistrer l'article
+CANT_SAVE_ARTICLE|Impossible d'enregistrer l'article
 CANT_SAVE_CONFIG|Impossible d'enregistrer la configuration. Vérifiez la connexion à la base de données
 CANT_SAVE_DONATION|Impossible de sauvegarder le don
 CANT_SAVE|Impossible d'enregistrer
@@ -291,3 +291,4 @@ TO_UPDATE|à mettre à jour
 UP_TO_DATE|à jour
 PASSWORDS_ARE_NOT_THE_SAME|Les mots de passe ne sont pas identiques
 PASSWORD_IS_TOO_SHORT|Le mot de passe choisi est trop court
+TITLEKEY|Clé
