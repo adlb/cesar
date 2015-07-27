@@ -142,8 +142,8 @@ class ControllerBuilder extends controllerSite{
             return 'editArticle';
         }
         
-        $article['titleKey'] = 'Article('.$article['id'].')';
-        $article['textKey'] = 'Article-Content('.$article['id'].')';
+        $article['titleKey'] = $params['titleKey'] != '' ? $params['titleKey'] : 'Article('.$article['id'].')';
+        $article['textKey'] = $params['textKey'] != '' ? $params['textKey'] : 'Article-Content('.$article['id'].')';
         $this->translator->DirectUpdate($params['language'], $article['titleKey'], $params['titleTrad'], 1, 'pureText');
         $this->translator->DirectUpdate($params['language'], $article['textKey'], $params['textTrad'], 0, 'decoratedText');
         
@@ -237,7 +237,7 @@ class ControllerBuilder extends controllerSite{
         $obj['images'] = $this->gallery->GetStandardSizedImages();
         array_unshift($obj['images'], array('id' => 0, 'name' => $this->translator->GetTranslation(':NO_PICTURE')));
         
-        $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
+        $obj['callback'] = isset($params['callback']) ? $params['callback'] : "";
 
         return 'editArticle';
     }
