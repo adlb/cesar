@@ -21,54 +21,64 @@
     <div class="page-container" id="mediaCtrlDiv" ng-controller="mediaCtrl" ng-cloak>
         <div class="container">    
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-md-8">
                     <div class="well">
-                        <form enctype="multipart/form-data" type="POST" ng-submit="uploadMedia();">
-                            <div class="form-group row">
-                                <label for="files" class="col-lg-3 control-label"><?php t(':FILE') ?></label>
-                                <div class="col-lg-5">
-                                    <input id="mediaFiles" type="file" name="mediaFiles[]" multiple="true" onchange="angular.element(this).scope().setFiles(this)" />
+                        <form class="form-horizontal" enctype="multipart/form-data" type="POST" ng-submit="uploadMedia();">
+                            <div class="form-group">
+                                <label for="mediaFiles" class="col-sm-3 control-label"><?php t(':FILE') ?></label>
+                                <div class="col-sm-4">
+                                    <span class="btn btn-default btn-file form-control" >
+                                        <?php t(':SELECT_FILES') ?>
+                                        <input id="mediaFiles" type="file" name="mediaFiles[]" multiple="true" onchange="angular.element(this).scope().setFiles(this)" />
+                                    </span>
+                                </div>
+                                <div class="col-sm-5">
+                                    <small id="FileSelectFeedback" class="form-control btn-file-caption">
+                                    </small>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="size" class="col-lg-3 control-label"><?php t(':SIZE') ?></label>
-                                <div class="col-lg-3">
-                                    <select id="size" name="size" ng-hide="custom" ng-model="selectedSize" ng-options="size[0] + 'x' + size[1] for size in sizes">
+                            <div class="form-group">
+                                <label for="sizeType" class="col-sm-3 control-label"><?php t(':CUSTOM') ?></label>
+                                <div class="col-sm-9">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="sizeType" value="1" type="checkbox" ng-model="custom" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="custom" >
+                                <label for="width" class="col-sm-3 control-label"><?php t(':SIZE_CUSTOM') ?></label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="width" name="width" ng-model="customWidth" />
+                                        <div class="input-group-addon">x</div>
+                                        <input type="text" class="form-control" placeholder="height" name="height" ng-model="customHeight" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-hide="custom" >
+                                <label for="size" class="col-sm-3 control-label"><?php t(':SIZE') ?></label>
+                                <div class="col-sm-3">
+                                    <select id="size" name="size" class="form-control" ng-model="selectedSize" ng-options="size[0] + 'x' + size[1] for size in sizes">
                                     </select>
                                 </div>
-                                <div class="col-lg-2 text-right">
-                                    <label for="sizeType" class="control-label">
-                                        <?php t(':CUSTOM') ?>
-                                    </label>
-                                </div>
-                                <div class="col-lg-1">
-                                    <input id="sizeType" value="1" type="checkbox" ng-model="custom" />
-                                </div>
-                            </div>
-                            <div class="form-group row" ng-show="custom" >
-                                <label for="width" class="col-lg-3 control-label"><?php t(':SIZE_CUSTOM') ?></label>
-                                <div class="col-lg-2">
-                                    <input type="text" name="width" ng-model="customWidth" />
-                                </div> 
-                                <label for="height" class="col-lg-1 control-label">x</label>
-                                <div class="col-lg-2">
-                                    <input type="text" name="height" ng-model="customHeight" />
-                                </div>
+                                
                             </div>
                             <div class="form-group row" >
-                                <div class="col-lg-12 text-right">
+                                <div class="col-sm-12 text-right">
                                     <button class="btn btn-default" type="submit"><?php t(':UPLOAD') ?></button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="form-group row">
-                        <label for="search" class="col-lg-2 control-label"><?php t(':SEARCH')?></label>
-                        <div class="col-lg-3">
+                        <label for="search" class="col-sm-2 control-label"><?php t(':SEARCH')?></label>
+                        <div class="col-sm-3">
                             <input type="text" placeholder="<?php t(':SEARCH')?>" ng-model="search" ng-change="saveLocal()" />
                         </div>
-                        <label for="displayAsList" class="col-lg-3 control-label text-right"><?php t(':DISPLAY_AS_LIST')?></label>
-                        <div class="col-lg-1">
+                        <label for="displayAsList" class="col-sm-3 control-label text-right"><?php t(':DISPLAY_AS_LIST')?></label>
+                        <div class="col-sm-1">
                             <input type="checkbox" name="list" 
                                     ng-change="saveLocal()" 
                                     ng-model="displayAsList"
@@ -76,18 +86,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4" ng-show="selectedMedia">
+                <div class="col-md-4" ng-show="selectedMedia">
                     <ul class="list-inline pull-right">
                         <li>
                             <a  href="";
                                 ng-real-click="deleteMedia(selectedMedia.id);" 
                                 ng-confirm-click="<?php t(':ARE_YOU_SURE') ?>">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li>
                             <a ng-href="{{ selectedMedia.file }}">
-                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                                <i class="fa fa-arrows-alt" aria-hidden="true"></i>
                             </a>
                         </li>
                     </ul>
@@ -109,7 +119,7 @@
             </div>
             
             <div class="row" ng-hide="displayAsList == true">
-                <div class="col-sm-3 col-md-2" ng-repeat="media in mediasFiltered = (medias | filter:search | orderBy:predicate:reverse) track by media.id">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-6" ng-repeat="media in mediasFiltered = (medias | filter:search | orderBy:predicate:reverse) track by media.id">
                     <div class="thumbnail galleryThumb">
                         <a ng-href="" ng-click="selectMedia(media);">
                             <img class="img-responsive" ng-src="{{ media.thumb }}" ng-alt="{{ media.file }}" />
@@ -147,7 +157,7 @@
                                     href="" ng-click="selectMedia(media);"
                                     data-container="body" data-toggle="popover" data-placement="top" data-html="true"
                                     data-trigger="hover"
-                                    data-content="<img class='img-responsive' src='{{media.file}}' />"
+                                    data-content="<img class='img-responsive' src='{{getMediaFile(media.file)}}' />"
                                     >
                                     {{media.name}}
                                 </a>

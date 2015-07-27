@@ -16,7 +16,7 @@ class ControllerMedias {
             $width = $params['width'];
             $height = $params['height'];
         } else {
-            $output['errors'][] = "Bad width and height";
+            $output['errors'][] = "Bad width and height or file too big";
         }
         if (isset($_FILES['files'])) {
             foreach($this->diverse_array($_FILES['files']) as $file) {

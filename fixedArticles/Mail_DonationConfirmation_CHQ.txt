@@ -1,7 +1,7 @@
 Finalisation don @@title@@ - Chèque
 Cher @@firstName@@ @@lastName@@,
 
-Vous venez de confirmer un don d'un montant de *@@amount@@* à l'association Malte Liban.
+Vous venez de confirmer un don d'un montant de *@@amountFormatted@@ €* à l'association Malte Liban.
 
 Pour finaliser votre don, merci de nous faire parvenir un chèque à :
 

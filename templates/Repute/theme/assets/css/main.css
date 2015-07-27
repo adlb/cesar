@@ -2122,6 +2122,38 @@ ul.sidebar-nav ul.submenu li:first-child a {
     width: 50%;
 }
 
+/* Button File upload for Media Management
+*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.btn-file-caption{
+    font-size: auto;
+    background-color: transparent;
+    border: 0 solid transparent;
+    box-shadow: none;
+    overflow: hidden;
+    text-overflow: elipsis;
+    -o-text-overflow: elipsis;
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 548px) {
     .encart {
         padding: 0 0 3px 0;

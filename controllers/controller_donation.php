@@ -153,14 +153,26 @@ class ControllerDonation {
         unset($_SESSION['currentDonation']);
         
         $key = $this->donationDal->GetDonationKey($donation['id'], $this->config->current['SecretLine']);
+        
+        $typeTrans = array(
+            'cb' => $this->translator->GetTranslation(':TYPE_PAYMENT_cb'),
+            'vir' => $this->translator->GetTranslation(':TYPE_PAYMENT_vir'),
+            'chq' => $this->translator->GetTranslation(':TYPE_PAYMENT_chq')
+        );
+        
         $donation['linkForDonation'] = url(array(
             'controller' => 'donation', 
             'view' => 'donateFinalize', 
             'id' => $donation['id'], 
             'key' => $key),$this->webSite->urlPrefix);
+        $donation['amountFormatted'] = number_format($donation['amount'], 2);
+        $donation['typeTranslated'] = $typeTrans[$donation['type']];
+        
         if (!$this->mailer->TrySendDonationConfirmationMail($donation)) {
             $this->webSite->AddMessage('warning', ':IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL');
         }
+        
+        $this->mailer->TrySendDonationConfirmationMailAsso($donation);
         
         $this->webSite->RedirectTo(array('controller' => 'donation', 'view' => 'donateFinalize', 'id' => $donation['id'], 'key' => $key));
     }

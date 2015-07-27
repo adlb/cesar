@@ -1,7 +1,7 @@
 Finalisation don @@title@@ - Carte-bleue
 Cher @@firstName@@ @@lastName@@,
 
-Vous venez de confirmer un don d'un montant de *@@amount@@* à l'association Malte Liban.
+Vous venez de confirmer un don d'un montant de *@@amountFormatted@@ €* à l'association Malte Liban.
 
 Pour finaliser votre don, et si vous ne l'avez pas encore fait, merci de vous rendre sur PayPal via le lien suivant :
 

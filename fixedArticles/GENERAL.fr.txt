@@ -71,7 +71,7 @@ DONATION_CANCELLED|Annulée
 DONATION_CANT_BE_LESS_THAN_1_EURO|Montant minimum de 1 euro
 DONATION_CONFIRM|Confirmer votre don
 DONATION_DOES_NOT_EXIST|Ce don n'existe pas.
-DONATION_MANAGEMENT|Gestion des dons
+DONATION_MANAGEMENT|Gestion des Dons
 DONATION_RECEIVED|Reçue
 DONATION_RESUME|Résumé
 DONATION_TYPE_IS_UNKNOWN|Type de don inconnu
@@ -265,7 +265,7 @@ USERORIGIN_Register|Enregistrement
 USERS_LIST|List des utilisateurs
 USER_DOES_NOT_EXISTS|L'utilisateur n'existe pas
 USER_EXISTS|L'utilisateur existe déjà
-USER_MANAGEMENT|Gestion des utilisateurs
+USER_MANAGEMENT|Gestion des Utilisateurs
 USER_ORIGIN|Origine de l'utilisateur
 VALIDATE|Valider
 WARNING|Attention 
@@ -292,3 +292,6 @@ UP_TO_DATE|à jour
 PASSWORDS_ARE_NOT_THE_SAME|Les mots de passe ne sont pas identiques
 PASSWORD_IS_TOO_SHORT|Le mot de passe choisi est trop court
 TITLEKEY|Clé
+DONATION_WORKFLOW|Séquence des dons
+SELECT_FILES|Parcourir...
+ERROR_ACTION_UNKOWN|Action inconnue.

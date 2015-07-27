@@ -9,6 +9,7 @@ La gestion des articles permet de:
 h2. Tableau des articles
 Le tableau contient la liste de tous les articles du site.
 * *Id de l'article* : Identifiant de l'article
+* *Clé* : Clé de l'article (utile pour les articles fixes tels que les mails)
 * *Status* : Status (show: l'article est visible, hide: l'article est caché)
 * *Titre* : Titre de l'article
 * *Type d'article* : (cf Aide/Ecrire un article)

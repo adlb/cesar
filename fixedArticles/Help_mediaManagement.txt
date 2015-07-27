@@ -1,2 +1,21 @@
-h1. Gestion des Images
+Gestion des Medias
+On entend par média les documents externes qui peuvent être ajoutés au site.
+Le site accepte :
+* des images (extension png, gif ou jpg)
+* des fichiers PDF
+
+Allez sur Administration/Gestion des Medias
+
+h2. Mise en ligne d'une nouvelle image
+Selectionnez le ou les fichiers que vous souhaitez mettre sur le site. (bouton Parcourir...)
+Selectionnez ensuite la taille souhaitée parmis les tailles standard ou bien personalisez la taille. (la taille n'intervient pas dans le cas d'un fichier PDF)
+Cliquez sur 'Télécharger'
+
+h2. Affichage en taille réel
+Lorsque vous cliquez sur une image, celle-ci est selectionnée dans le haut de l'écran à droite (à côté du formulaire de téléchargement).
+L'icône ¤arrows-alt¤ permet d'afficher l'image ou le fichier PDF en plein ecran.
+
+h2. Utilisation des medias
+Pour afficher les image ou créer un lien depuis une page vers un fichier PDF, référez-vous à l'aide : "Ecrire un Article".
+
 

@@ -1,5 +1,49 @@
-Alban
-{html}
-qsl<strong>kf</strong>j
-{/html}
-the end
+Gestion des Dons
+Les dons sont fait au travers de quelques écrans.
+
+h1. Workflow Utilisateur
+h2. Faire un don
+{html}<img width=300 style="float:left;" src="img/donationWorkflow_01.png"/>{/html}
+_Texte paramétrable_ : clé='Donate'
+----
+h2. Faire un don - Coordonnées
+{html}<img width=300 style="float:left;" src="img/donationWorkflow_02.png"/>{/html}
+_Texte paramétrable_ : clé='DonateCheck'
+----
+h2. Faire un don - Coordonnées (Sauvegardé)
+{html}<img width=300 style="float:left;" src="img/donationWorkflow_03.png"/>{/html}
+_Texte paramétrable_ : clé='DonateCheck'
+----
+h2. Finalisation
+{html}<img width=300 style="float:left;" src="img/donationWorkflow_04.png"/>{/html}
+_Texte paramétrable_ : clé='DonateFinalizeCb', 'DonateFinalizeVir', 'DonateFinalizeChq'
+----
+h2. Mail de Confirmation
+{html}<img width=300 style="float:left;" src="img/donationWorkflow_05.png"/>{/html}
+_Texte paramétrable_ : clé='Mail_DonationConfirmation_CB', 'Mail_DonationConfirmation_VIR', 'Mail_DonationConfirmation_CHQ'
+----
+h1. Comment modifier le texte
+h3. Gestion des articles
+Rendez-vous dans Administration/Gestion des Articles pour voir la liste des articles.
+Selectionnez ensuite la langue que vous souhaitez mettre à jour en cliquant dans la colonne correspondante.
+L'écriture d'un article se fait en suivant les recommendations de Administration/Ecrire un article.
+
+*remarque :* Pour les mails, ne pas inclure d'images.
+h3. Insertions de macros
+Pour les articles 'Finalisation' et 'Mail de Confirmation' utilisés ici, il est possible d'y inclure certaines informations en provenance du don.
+Pour inclure ces informations, il suffit d'ajouter dans l'article @@macro@@. La liste des macros autorisées est la suivante :
+@@id@@ : n° du don tel qu'il apparait dans Administration/Gestion des dons
+@@amount@@ : montant du don
+@@amountFormatted@@ : montant du don normalisé avec 2 chiffres après la virgule
+@@type@@ : Type de don (cb, vir ou chq)
+@@typeTranslated@@ : Affichage du type en clair dans sa version traduite (Carte-bancaire, Virement, Chèque).
+@@email@@ : email du donateur
+@@firstName@@ : prénom du donateur
+@@lastName@@ : nom du donateur
+@@addressLine1@@ : adresse du donateur
+@@addressLine2@@ : adresse (ligne 2) du donateur
+@@postalCode@@ : code postal du donateur
+@@city@@ : ville du donateur
+@@country@@ : pays du donateur
+@@phone@@ : téléphone du donateur
+@@dateInit@@ => date du don

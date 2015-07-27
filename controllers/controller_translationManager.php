@@ -84,7 +84,9 @@ class ControllerTranslationManager {
         $this->CheckRights(array('Administrator', 'Translator'));
             
         $redirect = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'translationManager', 'view' => 'translationList'));
+        
         if (!isset($params['actionPushed']) || $params['actionPushed'] == 'cancel') {
+            $this->webSite->AddMessage('warning', ':ERROR_ACTION_UNKOWN');
             $this->webSite->RedirectTo($redirect);
         }
     

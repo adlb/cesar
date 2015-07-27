@@ -1,0 +1,21 @@
+Finalisation don @@title@@
+Cher @@useremail@@,
+
+Un don d'un montant de *@@amountFormatted@@* € à l'association Malte Liban vient d'être réalisé sur le site @@title@@.
+
+Le don porte les informations suivantes :
+* Nom : @@lastName@@
+* Prénom : @@firstName@@
+* Adresse : @@addressLine1@@
+* Adresse suite : @@addressLine2@@
+* Code postal : @@postalCode@@
+* Ville : @@city@@
+* Pays : @@country@@
+* Téléphone : @@phone@@
+* eMail : @@email@@
+
+* Type : @@type@@ (@@typeTranslated@@)
+* Montant : @@amount@@ (@@amountFormatted@@ €)
+
+Cordialement
+@@contact@@

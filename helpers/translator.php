@@ -139,6 +139,7 @@ class Translator {
     
     private function Validate(&$text) {
         $text['text'] = $text['nextText'];
+        $text['nextText'] = '';
         $text['textStatus'] = 'ready';
     }
     
@@ -176,7 +177,7 @@ class Translator {
                 'language' => $language,
                 'prefetch' => $prefetch,
                 'text' => $value,
-                'nextText' => $value,
+                'nextText' => '',
                 'usage' => $usage,
                 'textStatus' => 'ready',
             );
@@ -256,7 +257,7 @@ class Translator {
                 break;
         }
 
-        $this->textDal->TrySave($text);
+        $res = $this->textDal->TrySave($text);
         return;
     }
     
@@ -345,6 +346,7 @@ class Translator {
                 'language' => $this->language,
                 'prefetch' => false,
                 'usage' => 'grouped',
+                'nextText' => '',
                 'textStatus' => 'notTranslated',
             );
         } else {
@@ -352,7 +354,6 @@ class Translator {
         }
         sort($lines);
         $new['text'] = join("\n", $lines);
-        $new['nextText'] = join("\n", $lines);
         $this->textDal->TrySave($new);
     }
 }

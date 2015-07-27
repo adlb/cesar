@@ -101,8 +101,15 @@ class Mailer {
     }
     
     public function TrySendDonationConfirmationMail($donation) {
+        $typeTrans = array(
+            'cb' => $this->translator->GetTranslation(':TYPE_PAYMENT_cb'),
+            'vir' => $this->translator->GetTranslation(':TYPE_PAYMENT_vir'),
+            'chq' => $this->translator->GetTranslation(':TYPE_PAYMENT_chq')
+        );
+        
         $macros = $donation;
-        $macros['amount'] = number_format($macros['amount'], 2);
+        $macros['amountFormatted'] = number_format($macros['amount'], 2);
+        $macros['typeTranslated'] = $typeTrans[$macros['type']];
         switch($donation['type']) {
             case 'cb' :
                 return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_CB', $macros);
@@ -111,6 +118,22 @@ class Mailer {
             case 'chq' :
                 return $this->TrySendTemplatedEmail($donation['email'], 'Mail_DonationConfirmation_CHQ', $macros);
         }
+        
+        return false;
+    }
+    
+    public function TrySendDonationConfirmationMailAsso($donation) {
+        $typeTrans = array(
+            'cb' => $this->translator->GetTranslation(':TYPE_PAYMENT_cb'),
+            'vir' => $this->translator->GetTranslation(':TYPE_PAYMENT_vir'),
+            'chq' => $this->translator->GetTranslation(':TYPE_PAYMENT_chq')
+        );
+        
+        $macros = $donation;
+        $macros['amountFormatted'] = number_format($macros['amount'], 2);
+        $macros['typeTranslated'] = $typeTrans[$macros['type']];
+        
+        return $this->TrySendTemplatedEmail($this->config->current['Contact'], 'Mail_DonationConfirmation_Asso', $macros);
         
         return false;
     }

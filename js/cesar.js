@@ -97,6 +97,13 @@ cesarApp.controller('mediaCtrl', ['$scope', function($scope) {
         localStorage.setItem("mediaCtrl.predicate", $scope.predicate);
         localStorage.setItem("mediaCtrl.reverse", $scope.reverse);
     };
+    
+    $scope.getMediaFile = function(file) {
+        if (file.substring(file.length-3, file.length).toLowerCase() == 'pdf') {
+            return 'img/thumb_pdf.png';
+        }
+        return file;
+    };
 }]);
 
 cesarApp.controller('usersCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
@@ -617,4 +624,27 @@ cesarApp.directive("deferredCloak", function () {
             element.removeClass("deferred-cloak");
         }
     };
+});
+
+$(document).on('change', '.btn-file :file', function() {
+    var input = $(this);
+    var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+    var labels = [];
+    if (numFiles == 1) {
+        labels.push(input.val().replace(/\\/g, '/').replace(/.*\//, ''));
+    } else {
+        for (var i = 0; i < input.get(0).files.length; i++) {
+            labels.push(input.get(0).files[i].name.replace(/\\/g, '/').replace(/.*\//, ''));
+        }
+    }
+    input.trigger('fileselect', [numFiles, labels]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, labels) {
+        if (labels.length == 1)
+            $('#FileSelectFeedback').text(labels[0]);
+        else
+            $('#FileSelectFeedback').text(labels.length + " files");
+    });
 });
