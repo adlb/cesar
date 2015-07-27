@@ -197,13 +197,6 @@
                         <button id="update" name="todo" class="btn btn-primary" value="update"><?php t(':SAVE') ?></button>
                       </div>
                     </div>
-
-                    
-                    <legend>Maintenance</legend>
-                    <ul>
-                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'reCreateTablesXXX')) ?>"><?php t(':RECREATE_TABLES')?></a></li>
-                        <li><a href="<?php echo url(array('controller' => 'builder', 'action' => 'deleteConfigXXX')) ?>"><?php t(':DELETE_CONFIG')?></a></li>
-                    </ul>
                 </fieldset>
             </div>
         </form>
