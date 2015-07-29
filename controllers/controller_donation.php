@@ -66,6 +66,10 @@ class ControllerDonation {
             $donation['country'] = $user['country'];
             $donation['phone'] = $user['phone'];
             $donation['saved'] = true;
+            $donation['externalCheckId'] = '';
+            $donation['dateInit'] = date('Y-m-d H:i:s');
+            $donation['dateValidation'] = null;
+            $donation['status'] = 'promess';
         }
         
         $_SESSION['currentDonation'] = $donation;
@@ -249,6 +253,19 @@ class ControllerDonation {
         } else {
             $obj['isFiltered'] = false;
             $donations = $this->donationDal->GetWhere(array());
+        }
+        
+        $trans = array(
+            'promess' => $this->translator->GetTranslation(':STATUS_PROMESS'),
+            'canceled' => $this->translator->GetTranslation(':STATUS_CANCELLED'),
+            'received' => $this->translator->GetTranslation(':STATUS_RECEIVED'),
+            'validated' => $this->translator->GetTranslation(':STATUS_VALIDATED'),
+            'archived' => $this->translator->GetTranslation(':STATUS_ARCHIVED'),
+            'deleted' => $this->translator->GetTranslation(':STATUS_DELETED')
+        );
+        
+        foreach ($donations as &$donation) {
+            $donation['statusTranslated'] = $trans[$donation['status']];
         }
         $obj['donations'] = $donations;
         $obj['callback'] = url(array('controller' => 'donation', 'view' => 'donationList', 'isFiltered' => $isFiltered));

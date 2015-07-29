@@ -62,7 +62,7 @@
                         <th ng-click="predicate=='lastName' ? reverse = !reverse : predicate='lastName'; saveLocal();"><?php t(':LASTNAME') ?></th>
                         <th ng-click="predicate=='amount' ? reverse = !reverse : predicate='amount'; saveLocal();"><?php t(':AMOUNT') ?></th>
                         <th ng-click="predicate=='type' ? reverse = !reverse : predicate='type'; saveLocal();"><?php t(':TYPE') ?></th>
-                        <th ng-click="predicate=='status' ? reverse = !reverse : predicate='status'; saveLocal();"><?php t(':STATUS') ?></th>
+                        <th ng-click="predicate=='statusTranslated' ? reverse = !reverse : predicate='statusTranslated'; saveLocal();"><?php t(':STATUS') ?></th>
                         <th class="text-center"><?php t(':ACTIONS') ?></th>
                     </tr>
                 </thead>
@@ -75,7 +75,7 @@
                         <td>{{donation.lastName}}</td>
                         <td class="text-right">{{donation.amount | number:2}}</td>
                         <td>{{donation.type}}</td>
-                        <td>{{donation.status}}</td>
+                        <td>{{donation.statusTranslated}}</td>
                         <td class="text-center">
                             <ul class="list-inline">
                                 <li>

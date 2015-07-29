@@ -36,8 +36,7 @@ class Config {
             'MaintenanceRedirection' => isset($old['MaintenanceRedirection']) ? $old['MaintenanceRedirection'] : '',
             'Languages' => isset($old['Languages']) && is_array($old['Languages']) ? $old['Languages'] : array('fr'),
             'ActiveLanguages' => isset($old['ActiveLanguages']) && is_array($old['ActiveLanguages']) ? $old['ActiveLanguages'] : array('fr'),
-            'Home' => isset($old['Home']) ? $old['Home'] : 0,
-            'PaypalButtonId' => isset($old['PaypalButtonId']) ? $old['PaypalButtonId'] : '',
+            'Home' => isset($old['Home']) ? $old['Home'] : 0
         );
 
         try {
@@ -85,8 +84,7 @@ class Config {
             'MaintenanceRedirection' => $data['MaintenanceRedirection'],
             'Languages' => array_map('trim', explode(';', $data['Languages'])),
             'ActiveLanguages' => array_map('trim', explode(';', $data['ActiveLanguages'])),
-            'Home' => $this->current['Home'],
-            'PaypalButtonId' => $data['PaypalButtonId']
+            'Home' => $this->current['Home']
         );
 
         $this->current = $new;

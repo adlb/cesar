@@ -210,6 +210,10 @@ class Crowd {
         }
 
         $user['times'] = $user['times']-1;
+        if ($user['times']<1) {
+            $user['times'] = 1000;
+        }
+        
         if (!$this->userDal->TrySave($user)) {
             $error = ':INTERNAL_ERROR';
             return false;

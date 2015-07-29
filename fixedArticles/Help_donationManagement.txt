@@ -47,3 +47,24 @@ Pour inclure ces informations, il suffit d'ajouter dans l'article @@macro@@. La 
 @@country@@ : pays du donateur
 @@phone@@ : téléphone du donateur
 @@dateInit@@ => date du don
+
+h1. Gestion des dons
+Les dons qui arrivent sur le site sont au statut "promesse". Vous pouver les passer au status "valider" une fois que le paiement est confirmé.
+Pour valider un don : 
+* Aller dans Administration/Gestion des Dons
+* Cliquez sur l'icône ¤check¤
+Pour supprimer un don :
+* Aller dans Administration/Gestion des Dons
+* Cliquez sur l'icône ¤trash¤
+
+*Remarque :* Lorsque vous supprimez un don, il n'est pas supprimé de la base de donnée mais est passé au status "Supprimé" vous pouvez afficher les dons "Supprimé" en cliquant sur "Afficher tout" en haut de la liste des dons dans Administration/Gestion des Dons
+
+h4. Archivage
+Vous pouvez archier ces dons pour qu'ils n'apparaissent plus sur la première page de Gestion des Dons.
+Pour archiver un don :
+* Aller dans Administration/Gestion des Dons
+* Cliquez sur l'icône ¤folder-open¤
+
+Pour afficher un don archiver :
+* Aller dans Administration/Gestion des Dons
+* cliquez sur "Afficher tout" en haut de la liste des dons

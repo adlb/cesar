@@ -48,12 +48,12 @@
                               <label class="col-md-4 control-label" for="status"><?php t(':STATUS') ?></label>
                               <div class="col-md-6">
                                 <select id="status" name="status" class="form-control">
-                                  <option value="promess"  <?php echo $obj['form']['status'] == 'cb' ? 'SELECTED' : '' ?>><?php t(':STATUS_PROMESS') ?></option>
-                                  <option value="cancelled" <?php echo $obj['form']['status'] == 'vir' ? 'SELECTED' : '' ?>><?php t(':STATUS_CANCELLED') ?></option>
-                                  <option value="received" <?php echo $obj['form']['status'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':STATUS_RECEIVED') ?></option>
-                                  <option value="validated" <?php echo $obj['form']['status'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':STATUS_VALIDATED') ?></option>
-                                  <option value="archived" <?php echo $obj['form']['status'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':STATUS_ARCHIVED') ?></option>
-                                  <option value="deleted" <?php echo $obj['form']['status'] == 'chq' ? 'SELECTED' : '' ?>><?php t(':STATUS_DELETED') ?></option>
+                                  <option value="promess"  <?php echo $obj['form']['status'] == 'promess' ? 'SELECTED' : '' ?>><?php t(':STATUS_PROMESS') ?></option>
+                                  <option value="cancelled" <?php echo $obj['form']['status'] == 'cancelled' ? 'SELECTED' : '' ?>><?php t(':STATUS_CANCELLED') ?></option>
+                                  <option value="received" <?php echo $obj['form']['status'] == 'received' ? 'SELECTED' : '' ?>><?php t(':STATUS_RECEIVED') ?></option>
+                                  <option value="validated" <?php echo $obj['form']['status'] == 'validated' ? 'SELECTED' : '' ?>><?php t(':STATUS_VALIDATED') ?></option>
+                                  <option value="archived" <?php echo $obj['form']['status'] == 'archived' ? 'SELECTED' : '' ?>><?php t(':STATUS_ARCHIVED') ?></option>
+                                  <option value="deleted" <?php echo $obj['form']['status'] == 'deleted' ? 'SELECTED' : '' ?>><?php t(':STATUS_DELETED') ?></option>
                                 </select>
                               </div>
                             </div>

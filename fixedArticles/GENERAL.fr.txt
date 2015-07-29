@@ -66,7 +66,7 @@ DATE|Date
 DELETE_CONFIG|Supprimer la configuration
 DISPLAY_ALL|Afficher tout
 DISPLAY_AS_LIST|Afficher en liste
-DONATIONS_LIST|Liste des donations
+DONATIONS_LIST|Liste des dons
 DONATION_CANCELLED|Annulée
 DONATION_CANT_BE_LESS_THAN_1_EURO|Montant minimum de 1 euro
 DONATION_CONFIRM|Confirmer votre don
