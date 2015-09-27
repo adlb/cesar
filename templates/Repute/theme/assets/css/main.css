@@ -1059,11 +1059,11 @@ div[class*="col-"] > .form-group {
   margin-bottom: 35px;
 }
 .boxed-content > i {
-  font-size: 8em;
+  font-size: 6em;
   color: #132a13;
 }
 .boxed-content .boxed-content-title {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1072,29 +1072,29 @@ div[class*="col-"] > .form-group {
 }
 .boxed-content.left-aligned .boxed-content-title {
   margin-bottom: 10px;
-  line-height: 28px;
+  line-height: 22px;
   font-weight: normal;
 }
 .boxed-content.left-aligned i {
   float: left;
   margin-right: 10px;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .boxed-content.left-boxed-icon i {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  padding: 10px;
-  width: 60px;
-  height: 60px;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
   background: #132a13;
   color: #fff;
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
 }
 .boxed-content.left-boxed-icon .boxed-content-title,
 .boxed-content.left-boxed-icon p {
-  padding-left: 80px;
+  padding-left: 60px;
 }
 
 /* testimonial */
