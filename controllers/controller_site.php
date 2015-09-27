@@ -105,7 +105,7 @@ class ControllerSite {
     }
     
     public function view_latestNews(&$obj, $params) {
-        $news = $this->articleDal->GetWhere(array('type' => array('article', 'news'), 'status' => 'show'), array('date' => false));
+        $news = $this->articleDal->GetWhere(array('type' => array('news'), 'status' => 'show'), array('date' => false));
         $obj['latestNews'] = array();
         $macros = isset($params['macros']) ? $params['macros'] : array();
         for ($i = 0; $i< count($news); $i++) {
