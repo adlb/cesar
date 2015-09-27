@@ -51,6 +51,7 @@ A utiliser en début de ligne suivi d'un espace.
 * 'h3. ' : Titre 3
 * 'h4. ' : Titre 4
 * 'c. ' : Place le contenu en milieu de ligne
+* 'r. ' : Place le contenu sur la droite de la ligne
 * 'q. ' : Met en avant le texte.
 * '* ' : Va démarrer une liste.
 * '** ' : Va continuer la liste avec un décalage d'un niveau.
@@ -62,6 +63,7 @@ h2. h2. Titre 2
 h3. h3. Titre 3
 h4. h4. Titre 4
 c. c. Affiche au centre
+r. r. Affiche à droite
 q. q. Met du text en avant
 * \* démarrage d'une liste de points
 * \* on continue la liste

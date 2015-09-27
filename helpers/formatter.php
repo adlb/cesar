@@ -255,6 +255,7 @@ class LexerParser {
             new LineDecorator('head3', 'h3. ', $this->textDecoratorMinimalSet),
             new LineDecorator('head4', 'h4. ', $this->textDecoratorMinimalSet),
             new LineDecorator('center', 'c. ', $this->textDecoratorFullSet),
+            new LineDecorator('right', 'r. ', $this->textDecoratorFullSet),
             new LineDecorator('separator', '----', $this->textDecoratorMinimalSet),
             new ArrayLineDecorator('table', '|', $this->textDecoratorMinimalSet),
             new QuoteLineDecorator('quote', 'q. ', $this->textDecoratorFullSet),
@@ -333,7 +334,10 @@ class Transformer {
                     $string .= '<H4>'.$this->Encode($item['content']).'</H4>';
                     break;
                 case 'center' :
-                    $string .= '<CENTER>'.$this->Encode($item['content']).'</CENTER>';
+                    $string .= '<p style="text-align: center;">'.$this->Encode($item['content']).'</p>';
+                    break;
+                case 'right' :
+                    $string .= '<p style="text-align: right;">'.$this->Encode($item['content']).'</p>';
                     break;
                 case 'html' :
                     $string .= $item['content'][0]['content'];
@@ -438,6 +442,9 @@ class Transformer {
                     $string .= PHP_EOL."      ".$this->EncodeText($item['content']).PHP_EOL;
                     break;
                 case 'center' :
+                    $string .= $this->EncodeText($item['content']);
+                    break;
+                case 'right' :
                     $string .= $this->EncodeText($item['content']);
                     break;
                 case 'html' :
