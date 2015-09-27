@@ -1,18 +1,18 @@
 BOXES_0_CONTENT|L'association Malte Liban est résolument engagée dans l'accueil et l'accompagnement des personnes en situation de précarité.
 BOXES_0_ICON|heart
 BOXES_0_TITLE|SOLIDARITE
-BOXES_1_CONTENT|L'association Malte Liban inscrit son action dans l'ensemble de la chaîne des secours en particuliers en soutient aux missions d'urgence liées aux grandes catastrophes naturelles ou humanitaires.
+BOXES_1_CONTENT|L'association Malte Liban inscrit son action dans l'ensemble de la chaîne des secours en particulier, en soutien aux missions d'urgence humanitaire.
 BOXES_1_ICON|ambulance
 BOXES_1_TITLE|SECOURS
-BOXES_2_CONTENT|L'association Malte Liban soutient des établissements médico-sociaux et hospitaliers qui font référence dans les régions les plus pauvres.
+BOXES_2_CONTENT|L'association Malte Liban soutient des établissements médico-sociaux et hospitaliers sur l'ensemble du territoire libanais.
 BOXES_2_ICON|wheelchair
 BOXES_2_TITLE|SANTE
 BOXES_3_CONTENT|La fondation de l'Ordre de Malte pour le Liban a été mise en place à Beyrouth. Elle assure la transparence des transferts de fonds.
 BOXES_3_ICON|cog
-BOXES_3_TITLE|ORDRE DE MATLE
+BOXES_3_TITLE|ORDRE DE MALTE
 FOOTER_ADDRESS2|75325 Paris Cedex 07
 FOOTER_ADDRESS_PHONE|Tél : +33 1 58 60 12 50
-FOOTER_ADDRESS|Boite Postale 234.07
+FOOTER_ADDRESS|Boite Postale 23407
 FOOTER_LINK_0_DISPLAY|Ordre de Malte - Liban
 FOOTER_LINK_0|http://www.orderofmaltalebanon.org/fr/services
 FOOTER_LINK_1_DISPLAY|Ordre de Malte - France
@@ -22,21 +22,21 @@ FOOTER_LINK_2|http://www.orderofmalta.int
 FOOTER_LINK_3_DISPLAY|
 FOOTER_LINK_3|
 FOOTER_NOM|Association Malte Liban
-FOOTER_TEXT_UNDER_LOGO|Le courage des Libanais est légendaire, encore faut-il leur donner la chance de vivre. Chers Amis, le Liban, et nous avec lui, voulons suivre le regard du berger qui guette l'aurore, certains que cette aurore va bientôt se lever sur un pays que tant de souffrances partagées ont fait profondément naître.
+FOOTER_TEXT_UNDER_LOGO|L'association a pour but de mobiliser les aides nécessaires à l'action de bienfaisance et d'assistance mise en oeuvre par la "Fondation de l'Ordre de Malte pour le Liban" dans ses réalisations hospitalières, sociales et humanitaires.
 MAIN_TITLE|Malte Liban
 NUMBERS_0_ICON|heartbeat
 NUMBERS_0_NUMBER|28
 NUMBERS_0_TEXT|Années d'existence
 NUMBERS_1_ICON|users
-NUMBERS_1_NUMBER|283
-NUMBERS_1_TEXT|Projects
+NUMBERS_1_NUMBER|340
+NUMBERS_1_TEXT|Médecins spécialistes
 NUMBERS_2_ICON|medkit
-NUMBERS_2_NUMBER|250 000
-NUMBERS_2_TEXT|Actes de soin
+NUMBERS_2_NUMBER|175 000
+NUMBERS_2_TEXT|Actes de soin par an
 NUMBERS_3_ICON|globe
-NUMBERS_3_NUMBER|7
+NUMBERS_3_NUMBER|10
 NUMBERS_3_TEXT|Centres de soins
-SUB_TITLE|28 ans sur le terrain au service des libannais
+SUB_TITLE|28 ans sur le terrain au service des Libannais
 TESTIMONIAL_AUTHOR|Pasteur
 TESTIMONIAL_PHRASE|Je ne te demande pas quelle est ta race ou ta religion, mais quelle est ta souffrance.
 TESTIMONIAL_QUALITY|
