@@ -1,0 +1,6 @@
+Gestion des Utilisaterus
+h2. La gestion des utilisateurs
+Les utilisateurs qui se connecte au site, qui font un don ou qui s'inscrive à la newsletter viennent automatiquement s'ajouter à la liste des utilisateurs du site.
+Pour acceder à cette liste, il faut se rendre sur Administration/Gestion des Utilisateurs
+
+La liste peut-être exportée vers Excel en utilisant le bouton : ¤download-alt¤

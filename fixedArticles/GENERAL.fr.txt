@@ -295,3 +295,4 @@ TITLEKEY|Clé
 DONATION_WORKFLOW|Séquence des dons
 SELECT_FILES|Parcourir...
 ERROR_ACTION_UNKOWN|Action inconnue.
+RESET|Réinitialiser

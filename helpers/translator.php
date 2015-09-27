@@ -139,11 +139,15 @@ class Translator {
     
     private function Validate(&$text) {
         $text['text'] = $text['nextText'];
-        $text['nextText'] = '';
+        //$text['nextText'] = '';
         $text['textStatus'] = 'ready';
     }
     
     private function Save(&$text) {
+    }
+    
+    private function Reset(&$text) {
+        $text['nextText'] = $text['text'];
     }
     
     private function SubmitForValidation(&$text) {
@@ -251,6 +255,9 @@ class Translator {
                 break;
             case 'submitForValidation':
                 $this->SubmitForValidation($text);
+                break;
+            case 'reset':
+                $this->Reset($text);
                 break;
             default:
                 return;

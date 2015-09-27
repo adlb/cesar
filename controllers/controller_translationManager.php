@@ -196,6 +196,7 @@ class ControllerTranslationManager {
         $obj['languages'] = $this->translator->languages;
         
         $obj['actions'] = array();
+        $obj['actions'][] = array('name' => ':RESET', 'type' => 'primary', 'value' => 'reset');
         $obj['actions'][] = array('name' => ':SAVE', 'type' => 'primary', 'value' => 'save');
         $obj['actions'][] = array('name' => ':SAVE_AND_SUBMIT', 'type' => 'primary', 'value' => 'submitForValidation');
         if ($this->authentication->CheckRole('Administrator'))
