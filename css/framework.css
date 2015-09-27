@@ -25,6 +25,11 @@ article p {
     margin: 0;
 }
 
+article a, a:focus, a:hover, a:active {
+    text-decoration: underline;
+    color: #132a13;
+}
+
 [deferred-cloak], [data-deferred-cloak], [x-deferred-cloak], .deferred-cloak {
     display: none;
 }

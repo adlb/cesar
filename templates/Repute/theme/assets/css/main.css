@@ -1916,9 +1916,9 @@ ul.sidebar-nav ul.submenu li:first-child a {
 /* Blog list, blog single item
 /* ----------------------------------------------------- */
 /* blog list */
-.blog a:hover, .blog a:focus {
+/*.blog a:hover, .blog a:focus {
   text-decoration: none;
-}
+}*/
 .blog .entry-title a {
   color: inherit;
 }
