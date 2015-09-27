@@ -2,7 +2,7 @@ Finalisation don par chèque
 Pour finaliser votre donation, merci de nous faire parvenir un chèque à :
 
 Association Malte-Liban
-Boite Postale 23407
+Boite Postale 234.07
 75325 Paris Cedex 07
 
 Merci de rappeler votre nom ainsi que la référence du don : *@@lastName@@ - @@id@@*.

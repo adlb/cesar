@@ -12,7 +12,7 @@ BOXES_3_ICON|cog
 BOXES_3_TITLE|ORDRE DE MATLE
 FOOTER_ADDRESS2|75325 Paris Cedex 07
 FOOTER_ADDRESS_PHONE|Tél : +33 1 58 60 12 50
-FOOTER_ADDRESS|Boite Postale 23407
+FOOTER_ADDRESS|Boite Postale 234.07
 FOOTER_LINK_0_DISPLAY|Ordre de Malte - Liban
 FOOTER_LINK_0|http://www.orderofmaltalebanon.org/fr/services
 FOOTER_LINK_1_DISPLAY|Ordre de Malte - France
