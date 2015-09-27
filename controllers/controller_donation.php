@@ -52,6 +52,7 @@ class ControllerDonation {
         $donation['externalCheckId'] = '';
         $donation['dateValidation'] = null;
         $donation['status'] = 'promess';
+        $donation['dateInit'] = date('Y-m-d H:i:s');
 
         if ($this->authentication->currentUser != null) {
             $user = $this->authentication->currentUser;
@@ -67,7 +68,6 @@ class ControllerDonation {
             $donation['phone'] = $user['phone'];
             $donation['saved'] = true;
             $donation['externalCheckId'] = '';
-            $donation['dateInit'] = date('Y-m-d H:i:s');
             $donation['dateValidation'] = null;
             $donation['status'] = 'promess';
         }
