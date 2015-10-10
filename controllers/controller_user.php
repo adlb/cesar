@@ -362,7 +362,7 @@ class ControllerUser {
         } elseif (!isset($params['password2'])) {
             $this->webSite->AddMessage('warning', ':NO_PASSWORD2');
         } elseif ($params['password1'] != $params['password2']) {
-            $this->webSite->AddMessage('warning', ':PASSWORD_ARE_NOT_THE_SAME');
+            $this->webSite->AddMessage('warning', ':PASSWORDS_ARE_NOT_THE_SAME');
         } elseif ($this->crowd->TryUpdateUserPassword($user, $params['password1'])) {
             $this->webSite->AddMessage('success', ':PASSWORD_RESETED');
             $this->webSite->RedirectTo(array('controller' => 'site', 'view' => 'home'));

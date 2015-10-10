@@ -37,6 +37,7 @@ ARTICLE_SAVED|Article enregistré
 ARTICLE_TYPE|Type d'article
 ARTICLE_WRITE|Ecrire un article
 A_QUESTION|Une question ?
+A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT|Un utilisateur avec la même adresse email existe déjà
 BACK|Retour
 BAD_LANGUAGE|Langue inconnue
 BAD_TITLE|Le titre ne peut pas être vide
@@ -75,6 +76,7 @@ DONATION_MANAGEMENT|Gestion des Dons
 DONATION_RECEIVED|Reçue
 DONATION_RESUME|Résumé
 DONATION_TYPE_IS_UNKNOWN|Type de don inconnu
+DONATION_WORKFLOW|Séquence des dons
 DONATION|Votre don
 DONATOR|Information du donnateur
 EDIT|Modifier
@@ -87,6 +89,11 @@ EMAIL_STATUS|Statut
 EMAIL_UNKOWN_CREATE_AN_ACCOUNT|Email inconnu - Créez un compte
 EMAIL|Email
 ENTER_EMAIL_USED_TO_REGISTER|Entrez l'adresse e-mail utilisée pour s'enregistrer
+ERROR_ACTION_UNKOWN|Action inconnue.
+ERROR_EMAIL_TWICE|adresse mail en double
+ERROR_FIELDS_ARE_MISSING|champs manquants
+ERROR_INVALID_EMAIL|adresse mail invalide
+ERROR_WHILE_UPLOADING|erreur pendant la mise à jour
 ERROR|Erreur
 EXPORT_EXCEL|Exporter vers un fichier Excel
 EXTERNAL_CHECK_ID|N° de vérification externe
@@ -113,13 +120,13 @@ I_HAVE_AN_ACCOUNT|J'ai déjà un compte
 LANGUAGES_ACTIVE|Langues actives
 LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'
 LANGUAGES|Langues
-LANG_ES|Español
-LANG_FR|Français
-LANG_GB|English
 LANG_CH|Switzerland
 LANG_CN|China
 LANG_DE|Deutchland
 LANG_EN|English
+LANG_ES|Español
+LANG_FR|Français
+LANG_GB|Anglais
 LANG_IT|Italian
 LANG_JP|Japanese
 LANG_LB|Libanais
@@ -130,12 +137,17 @@ LIST_ARTICLES|Liste des articles
 LOGIN|Se connecter
 LOGOUT|Se déconnecter
 LOST_PASSWORD|J'ai oublié mon mot de passe
+MAINTENANCEPAGE_FORCE_ACTIVE|Le forçage à non-maintenance est actif sur ce PC.
+MAINTENANCEPAGE_FORCE_HELP|Vous pouvez forcer le mode "non maintenance" pour vous permettre de tester le site comme s'il n'était pas en maintenance. Ce test n'est actif que sur l'ordinateur ou vous l'activez et pendant une heure. Une fois ce délai passé, le site se comporte à nouveau dans son mode standard.
+MAINTENANCEPAGE_FORCE_INACTIVE|Le forçage à non-maintenance est inactif sur ce PC.
 MAINTENANCEPAGE_LINK|Test la page de maintenance
 MAINTENANCEPAGE_REDIRECTION_HELP|To be used if maintenance is a redirection or leave blank and fill the corresponding acticle
 MAIN_TITLE|Titre Principale
 MAKE_A_DONATION|Faire un don
 MEDIA_MANAGEMENT|Gestion des Médias
 MODIFY_ARTICLES|Modifier article
+MODIFY_USER_INFO|Modifer
+MODIFY_USER_PASSWORD|Changer de mot de passe
 MODIFY|Modifier
 MONTH_SHORT_APR|AVR
 MONTH_SHORT_AUG|AOU
@@ -170,7 +182,8 @@ Nothing_to_upload|Rien à charger.
 OTHER_USER|Changer d'utilisateur
 PASSWORD1|Mot de passe
 PASSWORD2|Retapez votre mot de passe
-PASSWORD_ARE_NOT_THE_SAME|Les mots de passes ne correspondent pas
+PASSWORDS_ARE_NOT_THE_SAME|Les mots de passe ne sont pas identiques
+PASSWORD_IS_TOO_SHORT|Le mot de passe choisi est trop court
 PASSWORD_RESETED|Mot de Passe réinitialisé
 PASSWORD|Mot de passe
 PHONE|Téléphone
@@ -203,6 +216,7 @@ REGISTER|S'inscrire
 REMOVE_UP_TO_DATE|Retirer les éléments à jour
 RESET_PASSWORD_FOR_{0}|Réinitialisation du mot de passe pour {0}
 RESET_YOUR_PASSWORD|Réinitialiser votre mot de passe
+RESET|Réinitialiser
 RESUME_OF_PAIEMENT|Résumé du don
 ROLE_Administrator|Administrateur
 ROLE_NewsLetter|Newsletter
@@ -215,6 +229,7 @@ SAVE|Enregistrer
 SEARCH|recherche
 SECRET_LINE_HELP|Chaîne devant être gardée secrète assurant la sécurité des utilisateurs.
 SECRET_LINE|Chaîne secrète
+SELECT_FILES|Parcourir...
 SEND_A_MAIL_AT_{0}|Envoyez-nous un mail à {0}
 SEND|Envoyer
 SHOW|Rendre public
@@ -228,18 +243,19 @@ STATUS_PROMESS|Promesse de don
 STATUS_RECEIVED|Reçu
 STATUS_VALIDATED|Validé
 STATUS|Statut
-SUBSCRIBE_TO_OUR_NEWSLETTER|Abonnez-vous à notre news-letter
-SUBSCRIBE_TO_OUR_NEWSLETTER|Inscrivez-vous à notre news-letter
+SUBSCRIBE_TO_OUR_NEWSLETTER|Recevez Malte Liban Information, note newsletter :
 SUBSCRIBE|S'inscrire
 SUB_TITLE|Sous-Titre
 SUCCESS|OK
 TEMPLATE_NAME|Nom du modèle
 THIS_TOPIC_DOES_NOT_EXIST|Ce sujet n'existe pas
 THIS_USER_DOES_NOT_EXIST|Cet utilisateur n'existe pas
+TITLEKEY|Clé
 TITLE_CANT_BE_EMPTY|Le titre ne peut pas être vide
 TITLE|Titre
 TOO_FEW_LINES|Trop peu de lignes
 TOP_LEVEL_MENU|[Menu Principal]
+TO_UPDATE|à mettre à jour
 TRANSLATION_FIRSTTRANSLATIONTOBEVALIDATED|à valider (première)
 TRANSLATION_FROM|Traduction depuis
 TRANSLATION_READY|Prêt
@@ -253,10 +269,12 @@ TYPE_PAYMENT_chq|Chèque
 TYPE_PAYMENT_vir|Virement
 TYPE_PAYMENT|Moyen de paiement
 TYPE|Type
+UNACTIVATE|Désactiver
 UPDATE_ALL|Tout mettre à jour
 UPDATE_USER_INFO|Corriger
 UPDATE|Mettre à jour
 UPLOAD|Télécharger
+UP_TO_DATE|à jour
 USEFUL_LINKS|Liens utiles
 USERORIGIN_External|Externe
 USERORIGIN_NewsLetter|Newsletter
@@ -268,31 +286,12 @@ USER_EXISTS|L'utilisateur existe déjà
 USER_MANAGEMENT|Gestion des Utilisateurs
 USER_ORIGIN|Origine de l'utilisateur
 VALIDATE|Valider
+VIA_CB_PARTNER|via Hello-Asso
 WARNING|Attention 
 WIDTH|Largeur
 WRONG_PASSWORD1|Erreur de mot de passe
 WRONG_PASSWORD2|Erreur de mot de passe
 YOU_CAN_ONLY_ARCHIVE_VALIDATED_DONATION|Vous ne pouvez archiver que des dons validés
+YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER|Vous êtes déjà inscrit à notre newsletter
 YOU_HAVE_BEEN_UNSUBSCRIBED_FROM_NEWSLETTER|Vous avez été désinscrit de la newsletter
 YOU_HAVE_SUBSCRIBE_TO_NEWS_LETTER|Vous êtes inscrit à notre newsletter
-A_USER_WITH_THE_SAME_EMAIL_ALREADY_EXISTS_SELECT_I_HAVE_AN_ACCOUNT|Un utilisateur avec la même adresse email existe déjà
-YOU_HAVE_ALREADY_SUBSCRIBE_TO_NEWSLETTER|Vous êtes déjà inscrit à notre newsletter
-MODIFY_USER_INFO|Modifer
-MODIFY_USER_PASSWORD|Changer de mot de passe
-MAINTENANCEPAGE_FORCE_HELP|Vous pouvez forcer le mode "non maintenance" pour vous permettre de tester le site comme s'il n'était pas en maintenance. Ce test n'est actif que sur l'ordinateur ou vous l'activez et pendant une heure. Une fois ce délai passé, le site se comporte à nouveau dans son mode standard.
-UNACTIVATE|Désactiver
-MAINTENANCEPAGE_FORCE_ACTIVE|Le forçage à non-maintenance est actif sur ce PC.
-MAINTENANCEPAGE_FORCE_INACTIVE|Le forçage à non-maintenance est inactif sur ce PC.
-ERROR_FIELDS_ARE_MISSING|champs manquants
-ERROR_INVALID_EMAIL|adresse mail invalide
-ERROR_EMAIL_TWICE|adresse mail en double
-ERROR_WHILE_UPLOADING|erreur pendant la mise à jour
-TO_UPDATE|à mettre à jour
-UP_TO_DATE|à jour
-PASSWORDS_ARE_NOT_THE_SAME|Les mots de passe ne sont pas identiques
-PASSWORD_IS_TOO_SHORT|Le mot de passe choisi est trop court
-TITLEKEY|Clé
-DONATION_WORKFLOW|Séquence des dons
-SELECT_FILES|Parcourir...
-ERROR_ACTION_UNKOWN|Action inconnue.
-RESET|Réinitialiser

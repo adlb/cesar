@@ -1114,6 +1114,7 @@ div[class*="col-"] > .form-group {
 
 .testimonial-author {
   padding-top: 20px;
+  text-align: right;
 }
 .testimonial-author img {
   -moz-border-radius: 50%;
