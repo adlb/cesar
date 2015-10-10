@@ -64,8 +64,10 @@ class Translator {
             if (count($lines) == 1) {
                 foreach(explode("\n", $lines[0]['text']) as $line) {
                     $split = explode('|', $line);
-                    if (count($split) >= 2)
+                    if (count($split) >= 2) {
+                        $split[1] = join('|', array_slice($split, 1));
                         $this->groupedCache[$groupKey][$split[0]] = $split[1];
+                    }
                 }
             }
             if (file_exists('fixedArticles/'.$groupKey.'.'.$this->language.'.txt')) {
@@ -74,6 +76,8 @@ class Translator {
                     while (($line = fgets($handle)) !== false) {
                         $line = trim($line);
                         $split = explode('|', $line);
+                        if (count($split) >= 2)
+                            $split[1] = join('|', array_slice($split, 1));
                         if (count($split) >= 2 && 
                         (!isset($this->groupedCache[$groupKey][$split[0]]) || $this->groupedCache[$groupKey][$split[0]] == $split[0]))
                             $this->groupedCache[$groupKey][$split[0]] = $split[1];

@@ -7,7 +7,7 @@ BOXES_1_TITLE|SOLIDARITE
 BOXES_2_CONTENT|L'association Malte Liban inscrit son action dans l'ensemble de la chaîne des secours, en particulier en soutien aux missions d'urgence humanitaire.
 BOXES_2_ICON|ambulance
 BOXES_2_TITLE|SECOURS
-BOXES_3_CONTENT|La [fondation de l'Ordre de Malte pour le Liban|http://www.orderofmaltalebanon.org] a été mise en place à Beyrouth pour assurer la transparence des transferts de fonds.
+BOXES_3_CONTENT|La [http://www.orderofmaltalebanon.org|Fondation de l'Ordre de Malte pour le Liban] a été mise en place à Beyrouth pour assurer la transparence des transferts de fonds.
 BOXES_3_ICON|cog
 BOXES_3_TITLE|FONDATION DE L'ORDRE DE MALTE POUR LE LIBAN
 FOOTER_ADDRESS2|75325 Paris Cedex 07
@@ -34,7 +34,7 @@ NUMBERS_2_ICON|globe
 NUMBERS_2_NUMBER|10
 NUMBERS_2_TEXT|Centres de soins
 NUMBERS_3_ICON|users
-NUMBERS_3_NUMBER|340
+NUMBERS_3_NUMBER|151
 NUMBERS_3_TEXT|Médecins spécialistes
 SUB_TITLE|28 ans sur le terrain au service des Libanais
 TESTIMONIAL_AUTHOR|Pasteur

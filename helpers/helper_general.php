@@ -116,9 +116,14 @@ if (get_magic_quotes_gpc()) {
 }
 
 //shortcut for translation
-function t($key) {
+function t($key, $transform = false) {
     global $webSite;
-    echo htmlspecialchars($webSite->services['translator']->GetTranslation($key));
+    $value = $webSite->services['translator']->GetTranslation($key);
+    if ($transform == true) {
+        echo $webSite->services['formatter']->ToHtml($value);
+    } else {
+        echo htmlspecialchars($value);
+    }
 }
 
 function disp($obj, $key) {

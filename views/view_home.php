@@ -66,7 +66,7 @@
                     <div class="boxed-content left-aligned left-boxed-icon">
                         <i class="fa fa-<?php t("HOME:BOXES_${i}_ICON") ?>"></i>
                         <h2 class="boxed-content-title"><?php t("HOME:BOXES_${i}_TITLE") ?></h2>
-                        <p><?php t("HOME:BOXES_${i}_CONTENT") ?></p>
+                        <p><?php t("HOME:BOXES_${i}_CONTENT", true) ?></p>
                     </div>
                 </div>
                 
