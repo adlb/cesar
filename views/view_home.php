@@ -24,21 +24,6 @@
     <?php displayPartial('site', 'alerts', $obj) ?>
     
     <section>
-        <!-- BREADCRUMBS -->
-        <div class="page-header">
-			<div class="container">
-				<h1 class="page-title pull-left"> <?php echo $obj['article']['htmlTitle'] ?> </h1>
-				<ol class="breadcrumb">
-					<?php foreach($obj['article']['links'] as $link) { ?>
-                    <li>
-                        <a href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a>
-                    </li>
-                    <?php } ?>
-				</ol>
-			</div>
-		</div>
-    	<!-- END BREADCRUMBS -->
-        
         <!-- PAGE CONTENT -->
 		<div class="page-content">
 			<div class="container">
