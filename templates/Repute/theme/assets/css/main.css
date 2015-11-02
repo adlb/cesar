@@ -688,6 +688,12 @@ footer .logo {
 .hero-unit .hero-button:hover, .hero-unit .hero-button:focus {
   background-color: #3c6699;
 }
+
+
+.hero-right {
+  margin-top: 150px;
+}
+
 @media screen and (max-width: 1200px) {
   .hero-unit .hero-left {
     max-width: 100%;
@@ -705,11 +711,15 @@ footer .logo {
     float: none !important;
     text-align: center;
   }
+  .hero-right {
+	margin-top:0;
+  }
 }
 
 .hero-left {
   max-width: 50%;
 }
+
 /* ----------------------------------------------------- */
 /* BOOTSTRAP UI ELEMENTS 
 /* All styles that override bootstrap elements
