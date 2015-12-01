@@ -57,6 +57,7 @@ CANT_SAVE_DONATION|Impossible de sauvegarder le don
 CANT_SAVE|Impossible d'enregistrer
 CANT_SEND_EMAIL|Impossible d'envoyer le mail
 CITY|Ville
+CLOSE|Fermer
 COLUMN_DEFINED_TWICE_{0}|La colonne '{0}' est définie deux fois.
 CONFIG_SAVED|Configuration enregistrée
 COUNTRY|Pays
@@ -116,6 +117,7 @@ ID|Id
 INDEX|N°
 INTERNAL_ERROR|Erreur interne
 IT_WAS_IMPOSSIBLE_TO_SEND_YOU_A_CONFIRMATION_EMAIL|Impossible d'envoyer un mail
+I_GIVE|Je fais un don
 I_HAVE_AN_ACCOUNT|J'ai déjà un compte
 LANGUAGES_ACTIVE|Langues actives
 LANGUAGES_HELP|Langues (code iso-2) séparées par les ';'

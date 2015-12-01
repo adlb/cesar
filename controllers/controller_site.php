@@ -46,6 +46,13 @@ class ControllerSite {
         return 'menu';
     }
 
+    function view_alerts2(&$obj, $params) {
+    
+        if (!isset($_SESSION['alertsviewed']) || strlen($_SERVER['QUERY_STRING']) == 11)
+            $this->view_alerts($obj, $params);
+        $_SESSION['alertsviewed'] = true;
+        return 'alerts2';
+    }
     function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => true, 'status' => 'show'));
         $alertsActives = array();
@@ -58,6 +65,12 @@ class ControllerSite {
                 $alertsActives[] = $this->enrich_Article($alert, $macros, $this->authentication->CheckRole('Administrator'), true);
             }
         }
+        for($i=0; $i< count($alertsActives); $i++) {
+            $re = "/[^<]*<[^>]+>([^<]+)<.*/"; 
+            preg_match($re, $alertsActives[$i]['htmlContent'], $matches);
+            $alertsActives[$i]['caption'] = $matches[1];
+        }
+        
         $obj['alerts'] = $alertsActives;
         return 'alerts';
     }

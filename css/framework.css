@@ -30,6 +30,9 @@ article a, a:focus, a:hover, a:active {
     color: #132a13;
 }
 
+article.entry-post a, a:focus, a:hover, a:active {
+    text-decoration: none;
+}
 [deferred-cloak], [data-deferred-cloak], [x-deferred-cloak], .deferred-cloak {
     display: none;
 }

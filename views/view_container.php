@@ -29,7 +29,8 @@
 <body>
 	<!-- WRAPPER -->
 	<div class="wrapper" ng-app="cesarApp">
-		<!-- NAVBAR -->
+    <?php displayPartial('site', 'alerts2', $obj) ?>
+	<!-- NAVBAR -->
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="container">
 				<?php displayPartial('site', 'menu', null); ?>
@@ -54,7 +55,7 @@
 	<script src="templates/Repute/theme/assets/js/repute-scripts.js"></script>
     <script src="js/uicustom/jquery-ui.min.js"></script>
     <script src="js/angular.min.js"></script>
-    <script src="js/ui-bootstrap-0.12.1.min.js"></script>
+    <script src="js/ui-bootstrap-tpls.min.js"></script>
     <script src="js/smart-table.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>

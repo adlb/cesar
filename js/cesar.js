@@ -648,3 +648,5 @@ $(document).ready( function() {
             $('#FileSelectFeedback').text(labels.length + " files");
     });
 });
+
+$('#modal-alerts').modal();

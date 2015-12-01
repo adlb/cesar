@@ -694,7 +694,7 @@ footer .logo {
   margin-top: 150px;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 650px) {
   .hero-unit .hero-left {
     max-width: 100%;
     float: none !important;
@@ -712,7 +712,7 @@ footer .logo {
     text-align: center;
   }
   .hero-right {
-	margin-top:0;
+    margin-top:0;
   }
 }
 
@@ -2184,4 +2184,31 @@ ul.sidebar-nav ul.submenu li:first-child a {
     article {
       font-size: 13px;
     }
+}
+
+.carousel .alerts {
+    font-size: 40px;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+}
+
+@media screen and (min-width: 480px) {
+    .custom-modal {
+        margin: 100px auto;
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .custom-modal {
+        margin: 100px auto;
+        width: 800px;
+    }
+}
+
+.btn-don {
+    background-color: #a23a13;
+    color: #fff;
 }

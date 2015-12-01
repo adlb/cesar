@@ -21,8 +21,6 @@
     </section>
     <!-- END HERO UNIT -->
 
-    <?php displayPartial('site', 'alerts', $obj) ?>
-    
     <section>
         <!-- PAGE CONTENT -->
 		<div class="page-content">

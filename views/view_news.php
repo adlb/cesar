@@ -22,11 +22,12 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="excerpt">
-                                            <p style="overflow:hidden;text-overflow:ellipsis;height:110pt;">
+                                            <p style="overflow:hidden;text-overflow:ellipsis;height:120pt;">
                                                 <?php echo str_replace(PHP_EOL, '<br />', $obj['textContent']) ?>
                                             </p>
+                                            
                                             <p class="read-more pull-right">
-                                                <a href="<?php echo $obj['url'] ?>" class="btn btn-primary"> <?php t('READ_MORE')?> <i class="fa fa-long-arrow-right"></i></a>
+                                                <a href="<?php echo $obj['url'] ?>" class="btn btn-primary"> <?php t(':READ_MORE') ?> <i class="fa fa-long-arrow-right"></i></a>
                                             </p>
                                         </div>
                                     </div>
