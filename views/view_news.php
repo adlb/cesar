@@ -12,9 +12,9 @@
                                         <figure class="featured-image">
                                             <a href="<?php echo $obj['url']; ?>">
                                                 <div class="post-date-info clearfix">
-                                                    <span class="post-month"><?php t(':MONTH_SHORT_'.strtoupper(date("M", time($obj['date'])))) ?></span>
-                                                    <span class="post-date"><?php echo date('j', time($obj['date'])) ?></span>
-                                                    <span class="post-year"><?php echo date('Y', time($obj['date'])) ?></span>
+                                                    <span class="post-month"><?php t(':MONTH_SHORT_'.strtoupper(date("M", strtotime($obj['date'])))) ?></span>
+                                                    <span class="post-date"><?php echo date('j', strtotime($obj['date'])) ?></span>
+                                                    <span class="post-year"><?php echo date('Y', strtotime($obj['date'])) ?></span>
                                                 </div>
                                                 <img src="<?php echo $obj['image']; ?>" class="img-responsive" alt="featured-image">
                                             </a>

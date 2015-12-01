@@ -48,11 +48,12 @@ class ControllerSite {
 
     function view_alerts2(&$obj, $params) {
     
-        if (!isset($_SESSION['alertsviewed']) || strlen($_SERVER['QUERY_STRING']) == 11)
-            $this->view_alerts($obj, $params);
+        $obj['show-alerts'] = (!isset($_SESSION['alertsviewed']) || strlen($_SERVER['QUERY_STRING']) == 11);
         $_SESSION['alertsviewed'] = true;
+        $this->view_alerts($obj, $params);
         return 'alerts2';
     }
+    
     function view_alerts(&$obj, $params) {
         $alerts = $this->articleDal->GetWhere(array('alert' => true, 'status' => 'show'));
         $alertsActives = array();

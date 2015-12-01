@@ -1,5 +1,8 @@
+<script>
+    showModal = <?php if ($obj['show-alerts']) { echo 'true'; } else { echo 'false'; } ?>;
+</script>
 <?php if (count($obj['alerts'])>0) { ?>
-    <div id="modal-alerts" class="modal" tabindex="-1" role="dialog">
+    <div id="modal-alerts" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog custom-modal">
         <div class="modal-content">
           <div class="modal-body">
@@ -20,7 +23,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6 col-xs-6" style="text-align:center; font-size:2em;">
-                        <a class="btn btn-primary" href="?controller=site&view=article&id=35">
+                        <a class="btn btn-primary" href="<?php echo url(array('controller' => 'site', 'view' => 'article', 'id' => $obj['alerts'][$i]['id'])) ?>">
                             <?php t(':READ_MORE') ?> <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>

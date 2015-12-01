@@ -20,12 +20,17 @@
         </div>
     </section>
     <!-- END HERO UNIT -->
-
+    
     <section>
         <!-- PAGE CONTENT -->
 		<div class="page-content">
 			<div class="container">
 				<div class="row">
+                    <div class="col-md-12">
+                        <?php displayPartial('site', 'alerts', $obj) ?>
+                    </div>
+                </div>
+                <div class="row">
 					<div class="col-md-12">
 						<!-- BLOG SINGLE -->
 						<div class="blog single full-thumbnail">

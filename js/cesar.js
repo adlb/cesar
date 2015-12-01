@@ -649,4 +649,4 @@ $(document).ready( function() {
     });
 });
 
-$('#modal-alerts').modal();
+$('#modal-alerts').modal({show: showModal});
