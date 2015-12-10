@@ -552,7 +552,10 @@ class Transformer {
             if ($display == '') {
                 $display = htmlspecialchars($media['name']);
             }
-            $link = $media['file'];
+            if ($media['original'] == '')
+                $link = $media['file'];
+            else
+                $link = $media['original'];
         } elseif ($link != '') {
             if ($display == '') {
                 $display = htmlspecialchars($link);
