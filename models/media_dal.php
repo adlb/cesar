@@ -10,6 +10,7 @@ class MediaDal extends Dal {
         'width' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
         'height' => array('create' => 'int(11)', 'bind' => PDO::PARAM_INT),
         'thumb' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
+        'original' => array('create' => 'varchar(255)', 'bind' => PDO::PARAM_STR),
     );
     var $keyName = 'id';
     var $tableSuffix = "medias";

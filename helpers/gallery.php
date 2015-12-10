@@ -65,7 +65,7 @@ class Gallery {
         if ($newExtension == 'pdf' && !$this->TrySavePDF($file, $newBaseName, $newExtension, $media, $error))
             return false;
 
-        if ($newExtension != 'pdf' && !$this->TrySaveImage($file, $width, $height, $newBaseName, $newExtension, $media, $error))
+        if ($newExtension != 'pdf' && !$this->TrySaveImage($file, $width, $height, $newBaseName, $newExtension, $extension, $media, $error))
             return false;
 
         if (!$this->mediaDal->TrySave($media)) {
@@ -101,10 +101,11 @@ class Gallery {
         return true;
     }
 
-    private function TrySaveImage($file, $width, $height, $newBaseName, $newExtension, &$media, &$error) {
-        $target = $this->targetPath.$newBaseName.'.'.$newExtension;
+    private function TrySaveImage($file, $width, $height, $newBaseName, $newExtension, $oldExtension, &$media, &$error) {
+        $target = $this->targetPath.$newBaseName.'_tg.'.$newExtension;
         $targetTh = $this->targetPath.$newBaseName.'_th.'.$newExtension;
-
+        $targetOriginal = $this->targetPath.$newBaseName.'.'.$oldExtension;
+        
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         switch ($extension) {
             case 'jpg':
@@ -122,6 +123,11 @@ class Gallery {
             echo $source;
         }
 
+        if (!move_uploaded_file($file['tmp_name'], $targetOriginal)) {
+            $error = 'Error while moving '.$file['name'].' to its destination ('.$target.').';
+            return false;
+        }
+        
         $this->ResizeAndCopy($source, $target, $width, $height);
         $this->ResizeAndCopy($source, $targetTh, $this->thWidth, $this->thHeight);
 
@@ -130,7 +136,8 @@ class Gallery {
             'width' => $width,
             'height' => $height,
             'file' => $target,
-            'thumb' => $targetTh
+            'thumb' => $targetTh,
+            'original' => $targetOriginal
         );
 
         return true;

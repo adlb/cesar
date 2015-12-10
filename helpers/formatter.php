@@ -529,6 +529,8 @@ class Transformer {
                         $pos == 'left' ? 'cx_left' :
                         'cx_center');
             $display = '<img class="'.$class.'" src="'.$media['file'].'">';
+            if ($link == '' && $media['original'] != '')
+                $link = $media['original'];
         } else {
             $display = htmlspecialchars($display);
         }
