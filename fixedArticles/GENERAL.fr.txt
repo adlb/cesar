@@ -277,6 +277,7 @@ UPDATE_USER_INFO|Corriger
 UPDATE|Mettre à jour
 UPLOAD|Télécharger
 UP_TO_DATE|à jour
+URGENT_MESSAGE|Message Urgent
 USEFUL_LINKS|Liens utiles
 USERORIGIN_External|Externe
 USERORIGIN_NewsLetter|Newsletter
