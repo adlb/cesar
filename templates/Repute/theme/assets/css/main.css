@@ -22,6 +22,13 @@ article {
   font-size: 16px;
 }
 
+article p:first-letter
+{
+  font-size: 20px;
+  font-weight: 700;
+  color: #132a13;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-top: 5px;
   font-family: "Roboto Condensed", sans-serif;
