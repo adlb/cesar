@@ -237,7 +237,7 @@ class ControllerBuilder extends controllerSite{
         $obj['images'] = $this->gallery->GetStandardSizedImages();
         array_unshift($obj['images'], array('id' => 0, 'name' => $this->translator->GetTranslation(':NO_PICTURE')));
         
-        $obj['callback'] = isset($params['callback']) ? $params['callback'] : "";
+        $obj['callback'] = isset($params['callback']) ? $params['callback'] : url(array('controller' => 'site', 'view' => 'article', 'id' => $article['id']));
 
         return 'editArticle';
     }
